@@ -1,4 +1,5 @@
 import random
+import sympy
 
 
 class PogojNiIzpolnjen(Exception):
@@ -20,6 +21,15 @@ def racionalna(razpon=(-9, 9), st_nicel=3, st_polov=3):
         'nicle': nicle,
         'poli': poli,
     }
+def poisci_nicle_polinoma(od=-7, do=7 , stevilo_nicel=3):
+    seme = 1
+    random.seed(seme)
+    nicle = random.sample(range(od, do), stevilo_nicel)  # Naredi seznam treh celih ničel #TODO kako je bolje izbrati ničle*
+    x = sympy.symbols('x')
+    polinom = '*'.join('(x-{0})'.format(nicla) for nicla in nicle)
+    naloga = sympy.latex(sympy.expand(polinom))
+    resitev = "Ničle polinoma so " + ', '.join('{0}'.format(nicla) for nicla in nicle) + "."
+    return naloga, resitev
 
 
 def poskusi_sestaviti(naloga, parametri):
@@ -36,4 +46,6 @@ def generiraj(naloga, vzorec, **parametri):
     return vzorec.format(**podatki)
 
 
-print(generiraj(racionalna, 'Funkcija {funkcija} ima ničle: {nicle}', st_polov=100))
+print(generiraj(racionalna, 'Funkcija {funkcija} ima ničle: {nicle}', st_polov=5))
+
+print(poisci_nicle_polinoma(-20,10,4))
