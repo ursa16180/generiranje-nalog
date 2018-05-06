@@ -6,7 +6,7 @@ import shutil
 
 def sestaviVseTeste(datoteka_seznam_dijakov, naloge, ime_naloge=date.today().strftime("%d-%B-%Y"), zdruzene_resitve=True): ###TODO če ni seznama naredi 1 test
     stevilo_nalog = len(naloge)
-    seznam_ljudi = open(datoteka_seznam_dijakov).readlines() #TODO close
+    seznam_ljudi = open(datoteka_seznam_dijakov, encoding="utf8").readlines() #TODO close? #TODO če ni seznama naredi samo 1 test
     podmapa = ime_naloge
     potResitve = podmapa+"/rešitve"
     potNaloge = podmapa+"/naloge"
@@ -25,9 +25,9 @@ def sestaviVseTeste(datoteka_seznam_dijakov, naloge, ime_naloge=date.today().str
     napisiVzorecResitev(stevilo_nalog,podmapa)
     for dijak in seznam_ljudi:
         dijak = dijak.strip()
-        napisiTest(podmapa+"/vzorec_testa.txt", naloge, dijak, potNaloge)
+        napisiTest(podmapa+"/vzorec_testa.txt",podmapa+"/vzorec_resitev.txt", naloge, dijak, potNaloge, potResitve)
     if zdruzene_resitve:
-        print("tuki bodo rešitve")
+        print("TODO") #TODO združevanje rešitev
         #zdruziVseResitve()
     else:
         vzorec_resitev = napisiVzorecResitev(stevilo_nalog, podmapa)
@@ -36,23 +36,38 @@ def sestaviVseTeste(datoteka_seznam_dijakov, naloge, ime_naloge=date.today().str
 
     return "bu"
 
-def napisiTest(vzorec_testa, naloge, dijak, potNaloge):
+def napisiTest(vzorec_testa, vzorec_resitev, naloge, dijak, potNaloge, potResitve): #Napiše naloge in njihove rešitve #TODO rešitve kot txt?
     ### Napiše Naloge (že v tex obliki)
-    dokument = open(vzorec_testa, encoding="utf8")
-    vzorec = Template(dokument.read())
-    slovar_za_vstavljanje={"ime_dijaka": dijak}
+    dokumentNaloge = open(vzorec_testa, encoding="utf8")
+    vzorecNaloge = Template(dokumentNaloge.read())
+    dokumentResitve = open(vzorec_resitev, encoding="utf8")
+    vzorecResitve = Template(dokumentResitve.read())
+
+    slovar_za_vstavljanje_nalog={"ime_dijaka": dijak}
+    slovar_za_vstavljanje_resitev = {"ime_dijaka": dijak}
     for zaporedna_stevilka, naloga in enumerate(naloge):
-        slovar_za_vstavljanje['naloga%d'%(zaporedna_stevilka +1)] = naloga(dijak)[0]
+        (besediloNaloge, besediloResitve) = naloga(seme=dijak, primeri=1) #TODO Kako podaš že nekej argumentov
+        slovar_za_vstavljanje_nalog['naloga%d'%(zaporedna_stevilka +1)] = besediloNaloge
+        slovar_za_vstavljanje_resitev['naloga%d' % (zaporedna_stevilka + 1)] = besediloNaloge
+        slovar_za_vstavljanje_resitev['resitev%d' % (zaporedna_stevilka + 1)] = besediloResitve
 
     #naloga1 = generiranje.poisci_nicle_polinoma()[0]
     #naloga2 = generiranje.racionalna()["funkcija"]
-    #slovar_za_vstavljanje = {"naslov":naslov, "naloga1":naloga1, "naloga2":naloga2}
-    koncni_dokument = vzorec.substitute(slovar_za_vstavljanje)
-    #print(koncni_dokument)
-    dokument.close()
-    izhodna = open("%s/%s.tex" %(potNaloge, dijak), "w+", encoding="utf8")
-    izhodna.write(koncni_dokument)
-    izhodna.close()
+    #slovar_za_vstavljanje_nalog = {"naslov":naslov, "naloga1":naloga1, "naloga2":naloga2}
+    koncni_dokumentNaloge = vzorecNaloge.substitute(slovar_za_vstavljanje_nalog)
+    koncniDokumentResitve =vzorecResitve.substitute(slovar_za_vstavljanje_resitev)
+    #print(koncni_dokumentNaloge)
+    dokumentNaloge.close()
+    dokumentResitve.close()
+
+    izhodneNaloge = open("%s/%s.tex" %(potNaloge, dijak), "w+", encoding="utf8")
+    izhodneNaloge.write(koncni_dokumentNaloge)
+    izhodneNaloge.close()
+
+    izhodneResitve = open("%s/%s.tex" %(potResitve, dijak), "w+", encoding="utf8")
+    izhodneResitve.write(koncniDokumentResitve)
+    izhodneResitve.close()
+
 
 
 
@@ -72,10 +87,13 @@ def napisiVzorecResitev(steviloNalog, podmapa):
         vzorec_resitev.writelines(["\\documentclass{article}\n\n","\\usepackage[utf8]{inputenc}\n\n","\\begin{document}\n\n",
                                 "\\title{Rešitve: %s}\n"%podmapa,"\\author{$ime_dijaka}\n","\\maketitle\n", "\\begin{enumerate}\n"])
         for i in range(1,steviloNalog+1):
-            vzorec_resitev.write("\\item $resitev%d\n\n" %i)
+            vzorec_resitev.write("\\item $naloga%d\n" %i)
+            vzorec_resitev.write("$resitev%d\n\n" %i)
         vzorec_resitev.writelines(["\\end{enumerate}\n","\\end{document}"])
 
-sestaviVseTeste("dijaki.txt",[generiranje.poisci_nicle_polinoma],"ULTIMATE POSKUS")
+sestaviVseTeste("dijaki.txt",[generiranje.poisci_nicle_polinoma,generiranje.nalogaRacionalna],"Test za testiranje")
+#TODO Kako lahko daš nekatere zahteve notr
+#TODO Če daš dvakrat isto nalogo na seznam vzame enako seme - torej enaki primeri
 
 
 
