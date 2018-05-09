@@ -17,20 +17,65 @@ slovarKratkihNalog = {"poisci_nicle_polinoma": "Poišči vse ničle polinoma $p(
 
 slovarDolgihNalog = {"poisci_nicle_polinoma": "Poišči ničle polinomov:\n\\begin{enumerate}\n"}
 
+def narediSeznamPolovick(od=-5, do=5):
+    seznamPolovick = [x * (1 / 2) for x in range(2 * od, 2 * do)]
+    seznamPolovick.remove(0)
+    return seznamPolovick
+
+def narediSezamTretjin(od=-5, do=5):
+    seznamTretjin =[x * (1 / 3) for x in range(3 * od, 3 * do)]
+    seznamTretjin.remove(0)
+    return seznamTretjin
+
+def resitevVecPrimerov(seznamResitev): #TODO kaj je lepše + ali želim imeti tudi naloge v rešitvah
+    return "Rešitve:\n\\begin{enumerate}\n" + "".join(["\item ${0}$\n".format(x) for x in seznamResitev]) + "\end{enumerate}"
+
 
 ############################## Naloge
 
 ############################## 1.letnik
 def narisiLinearnoFunkcijo():
-    return "TODO"
+    return "bu" #TODO
+
+def razstaviVieta(od = -6, do = 6, seme="Padawan", primeri=1):
+    if primeri == 1:
+        random.seed(seme)
+        x1 = random.randrange(od, do)
+        x2 = random.randrange(od, do)
+        x = sympy.symbols('x')
+        #TODO ne sme biti 0  - preveri pogoj ali že odstarnimo nič s seznama
+        #TODO ali je vseeno če sta enaka (kvadrat dvočlenika)?
+        naloga = "(x-{0})*(x-{1})".format(x1,x2)
+        besedilo_naloge = "Razstavi izraz ${0}$.".format(sympy.latex(sympy.expand(naloga))) #Ali sympy.latex potrebn?
+        besedilo_resitve = "${0}$".format(sympy.latex(naloga))
+    else:
+        besedilo_naloge= "Razstavi izraze:\n\\begin{enumerate}\n"
+        seznamResitev = [] #TODO kaj je lepše?
+        #besedilo_resitve = "\\begin{enumerate}\n"
+        for i in range(1, primeri+1):
+            random.seed(seme+str(i))
+            x1 = random.randrange(od, do)
+            x2 = random.randrange(od, do)
+            x = sympy.symbols('x')
+            # TODO ali je vseeno če sta enaka (kvadrat dvočlenika)?
+            naloga = "(x-{0})*(x-{1})".format(x1, x2)
+            besedilo_naloge += "\item ${0}$\n".format(sympy.latex(sympy.expand(naloga)))
+            seznamResitev.append(sympy.latex(naloga))
+            #besedilo_resitve += "\item ${0}$\n".format(sympy.latex(naloga))
+        besedilo_naloge += "\end{enumerate}"
+        #besedilo_resitve += "\end{enumerate}"
+        besedilo_resitve = resitevVecPrimerov(seznamResitev)
+    return besedilo_naloge, besedilo_resitve
+
+
 
 ############################## 2.letnik
 
 def izračunajNicleTemeKvadratne():
-    return "TODO"
+    return "bu" #TODO
 
 ############################## 3.letnik
-def racionalna(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3):
+def racionalna(razpon=(-9, 9), st_nicel=3, st_polov=3, seme="Padawan"):
     random.seed(seme)
     od, do = razpon
     nicle = [random.randint(od, do) for _ in range(st_nicel)]
@@ -41,7 +86,7 @@ def racionalna(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3):
     imenovalec = '*'.join('(x-{0})'.format(pol) for pol in poli)
     naloga = sympy.expand(stevec) / sympy.expand(imenovalec)
     resitev = "Ničle funkcije so " + ', '.join('{0}'.format(nicla) for nicla in nicle) + ", poli pa so " + ', '.join(
-        '{0}'.format(pol) for pol in poli) + "."
+        '{0}'.format(pol) for pol in poli) + "." #TODO rešitev v celih stavkih?
     # print(naloga)
     return (naloga, resitev)
     # return {
@@ -51,7 +96,7 @@ def racionalna(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3):
     # }
 
 
-def nalogaNiclePoliRacionalne(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3, primeri=1):
+def nalogaNiclePoliRacionalne(razpon=(-9, 9), st_nicel=3, st_polov=3, seme="Padawan", primeri=1):
     if primeri == 1:
         naloga, resitev = racionalna(seme, razpon, st_nicel, st_polov)
         besedilo_naloge = "Izračunaj ničle in pole funkcije $q(x) = %s$." % sympy.latex(naloga)
@@ -69,28 +114,30 @@ def nalogaNiclePoliRacionalne(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_pol
     return (besedilo_naloge, besedilo_resitve)
 
 
-def nalogaGrafRacionalne(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3, primeri=1):
+def nalogaGrafRacionalne(razpon=(-9, 9), st_nicel=3, st_polov=3, seme="Padawan", primeri=1):
     if primeri == 1:
-        naloga, resitev = racionalna(seme, razpon, st_nicel, st_polov)
+        naloga, resitev = racionalna(razpon, st_nicel, st_polov, seme)
         besedilo_naloge = "Nariši graf funkcije $q(x) = %s$." % sympy.latex(naloga)
         graf_funkcije = str(naloga).replace("**", "^")
-        besedilo_resitve = "\\begin{tikzpicture}\n\\begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$]\n\\addplot[domain =-7:7, color=black]{%s};\n\\end{axis}\n\\end{tikzpicture}\n" % graf_funkcije
+        besedilo_resitve = "Rešitev: \\begin{tikzpicture}\n\\begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$]\n" \
+                           "\\addplot[domain =-7:7, color=black]{%s};\n\\end{axis}\n\\end{tikzpicture}\n" % graf_funkcije
     else:
         besedilo_naloge = "Nariši grafe funkcij:\n \\begin{enumerate}\n"
         besedilo_resitve = "Rešitve: \n\\begin{enumerate}\n"
         for i in range(1, primeri + 1):
             seme += str(i)
-            naloga, resitev = racionalna(seme, razpon, st_nicel, st_polov)
+            naloga, resitev = racionalna(razpon, st_nicel, st_polov, seme)
             besedilo_naloge += "\item $q(x) = %s$\n" % sympy.latex(naloga)
             graf_funkcije = str(naloga).replace("**", "^")
             besedilo_resitve += "\item \\begin{tikzpicture}\n\\begin{axis}[axis lines=middle, xlabel=$x$, " \
-                                "ylabel=$y$]\n\\addplot[domain =-7:7, color=black]{%s};\n\end{axis}\n\end{tikzpicture}\n" % graf_funkcije  # TODO nariši asimpotote
+                                "ylabel=$y$]\n\\addplot[domain =-7:7, color=black]{%s};\n\end{axis}\n\end{tikzpicture}" \
+                                "\n" % graf_funkcije  # TODO nariši asimpotote
         besedilo_resitve += "\end{enumerate}"
         besedilo_naloge += "\end{enumerate}"
     return (besedilo_naloge, besedilo_resitve)
 
 
-def poisci_nicle_polinoma(od=-7, do=7, stevilo_nicel=3, seme="Padawan", primeri=1):
+def poisci_nicle_polinoma(od=-7, do=7, stevilo_nicel=3, seme="Padawan", primeri=1): #TODO uredi besedilo
     random.seed(seme)
     # print(seme)
     if primeri == 1:
@@ -99,11 +146,11 @@ def poisci_nicle_polinoma(od=-7, do=7, stevilo_nicel=3, seme="Padawan", primeri=
         polinom = '*'.join('(x-{0})'.format(nicla) for nicla in nicle)
         naloga = slovarKratkihNalog["poisci_nicle_polinoma"] % sympy.latex(sympy.expand(polinom))
         # print(naloga)
-        resitev = "Ničle polinoma so " + ', '.join('{0}'.format(nicla) for nicla in nicle) + "."
+        resitev = "Ničle polinoma so " + ', '.join('{0}'.format(nicla) for nicla in nicle) + "." #TODO rešitev v celoh stavkih
         return naloga, resitev
     else:
         naloge = slovarDolgihNalog["poisci_nicle_polinoma"]
-        resitve = "\\begin{enumerate}"
+        resitve = "Rešitve:\n\\begin{enumerate}"
         for i in range(primeri):
             random.seed(seme + str(i))
             nicle = [random.randint(od, do) for _ in
@@ -121,8 +168,7 @@ def poisci_nicle_polinoma(od=-7, do=7, stevilo_nicel=3, seme="Padawan", primeri=
 ############################## 4.letnik
 
 def splosniClenAritmericnegaZaporedja(od=-5, do=5, seme="Padawan", primeri=1):
-    seznamPolovick = [x * (1 / 2) for x in range(2 * od, 2 * do)]
-    seznamPolovick.remove(0)  # TODO numpy za seznam polovičk?
+    seznamPolovick = narediSeznamPolovick(-5,5)
     if primeri == 1:
         random.seed(seme)
         a1 = random.choice(seznamPolovick)
@@ -134,12 +180,11 @@ def splosniClenAritmericnegaZaporedja(od=-5, do=5, seme="Padawan", primeri=1):
         an2 = sympy.latex(sympy.nsimplify(a1 + (n2 - 1) * d))
         besedilo_naloge = "Določi splošni člen aritmetičnega zaporedja, če je $a_{{{0}}}={1}$ in $a_{{{2}}}={3}$." \
             .format(n1, an1, n2, an2)
-        besedilo_rešitve = "$a_n={0}+(n-1)*{1}$".format(sympy.latex(sympy.nsimplify(a1)),
+        besedilo_rešitve = "Rešitev: $a_n={0}+(n-1)*{1}$".format(sympy.latex(sympy.nsimplify(a1)),
                                                         sympy.latex(sympy.nsimplify(d)))
-        return besedilo_naloge, besedilo_rešitve
     else:
         besedilo_naloge = "Določi splošni člen aritmetičnega zaporedja, če je:\n \\begin{enumerate}\n"
-        besedilo_resitve = "Splošni člen zaporedja je:\n \\begin{enumerate}\n"
+        besedilo_resitve = "Rešitve:\nSplošni člen zaporedja je:\n \\begin{enumerate}\n"
         for i in range(1, primeri + 1):
             random.seed(seme + str(i))
             a1 = random.choice(seznamPolovick)
@@ -154,7 +199,7 @@ def splosniClenAritmericnegaZaporedja(od=-5, do=5, seme="Padawan", primeri=1):
                                                                      sympy.latex(sympy.nsimplify(d)))
         besedilo_naloge += "\end{enumerate}"
         besedilo_resitve += "\end{enumerate}"
-        return besedilo_naloge, besedilo_resitve
+    return besedilo_naloge, besedilo_resitve
 
 
 def poskusi_sestaviti(naloga, parametri):

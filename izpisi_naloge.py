@@ -11,8 +11,8 @@ def sestaviVseTeste(datoteka_seznam_dijakov, naloge, ime_naloge=date.today().str
     seznam_ljudi = open(datoteka_seznam_dijakov,
                         encoding="utf8").readlines()  # TODO close? #TODO če ni seznama naredi samo 1 test
     podmapa = ime_naloge
-    potResitve = podmapa + "/rešitve"
-    potNaloge = podmapa + "/naloge"
+    potResitve = podmapa + "/Rešitve"
+    potNaloge = podmapa + "/Naloge"
 
     if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
         shutil.rmtree(podmapa)
@@ -104,7 +104,7 @@ def napisiVzorecResitev(steviloNalog, podmapa):
 
 sestaviVseTeste("dijaki.txt",
                 [generiranje.poisci_nicle_polinoma, generiranje.nalogaGrafRacionalne,
-                 generiranje.splosniClenAritmericnegaZaporedja],
+                 generiranje.splosniClenAritmericnegaZaporedja, generiranje.razstaviVieta],
                 "Test za testiranje")
 
 # TODO Kako lahko daš nekatere zahteve notr
