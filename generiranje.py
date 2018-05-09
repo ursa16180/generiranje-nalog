@@ -20,6 +20,16 @@ slovarDolgihNalog = {"poisci_nicle_polinoma": "Poišči ničle polinomov:\n\\beg
 
 ############################## Naloge
 
+############################## 1.letnik
+def narisiLinearnoFunkcijo():
+    return "TODO"
+
+############################## 2.letnik
+
+def izračunajNicleTemeKvadratne():
+    return "TODO"
+
+############################## 3.letnik
 def racionalna(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3):
     random.seed(seme)
     od, do = razpon
@@ -32,7 +42,7 @@ def racionalna(seme="Padawan", razpon=(-9, 9), st_nicel=3, st_polov=3):
     naloga = sympy.expand(stevec) / sympy.expand(imenovalec)
     resitev = "Ničle funkcije so " + ', '.join('{0}'.format(nicla) for nicla in nicle) + ", poli pa so " + ', '.join(
         '{0}'.format(pol) for pol in poli) + "."
-    print(naloga)
+    # print(naloga)
     return (naloga, resitev)
     # return {
     #     'funkcija': 'x / (x - 1)',
@@ -108,6 +118,44 @@ def poisci_nicle_polinoma(od=-7, do=7, stevilo_nicel=3, seme="Padawan", primeri=
         resitve += "\end{enumerate}"
         return naloge, resitve
 
+############################## 4.letnik
+
+def splosniClenAritmericnegaZaporedja(od=-5, do=5, seme="Padawan", primeri=1):
+    seznamPolovick = [x * (1 / 2) for x in range(2 * od, 2 * do)]
+    seznamPolovick.remove(0)  # TODO numpy za seznam polovičk?
+    if primeri == 1:
+        random.seed(seme)
+        a1 = random.choice(seznamPolovick)
+        d = random.choice(seznamPolovick)
+        n1 = random.randrange(2, 10)
+        n2 = random.randrange(2, 15)
+        # preveri(n1 != n2) #TODO preveri
+        an1 = sympy.latex(sympy.nsimplify(a1 + (n1 - 1) * d))
+        an2 = sympy.latex(sympy.nsimplify(a1 + (n2 - 1) * d))
+        besedilo_naloge = "Določi splošni člen aritmetičnega zaporedja, če je $a_{{{0}}}={1}$ in $a_{{{2}}}={3}$." \
+            .format(n1, an1, n2, an2)
+        besedilo_rešitve = "$a_n={0}+(n-1)*{1}$".format(sympy.latex(sympy.nsimplify(a1)),
+                                                        sympy.latex(sympy.nsimplify(d)))
+        return besedilo_naloge, besedilo_rešitve
+    else:
+        besedilo_naloge = "Določi splošni člen aritmetičnega zaporedja, če je:\n \\begin{enumerate}\n"
+        besedilo_resitve = "Splošni člen zaporedja je:\n \\begin{enumerate}\n"
+        for i in range(1, primeri + 1):
+            random.seed(seme + str(i))
+            a1 = random.choice(seznamPolovick)
+            d = random.choice(seznamPolovick)
+            n1 = random.randrange(2, 10)
+            n2 = random.randrange(2, 15)
+            # preveri(n1 != n2) #TODO preveri
+            an1 = sympy.latex(sympy.nsimplify(a1 + (n1 - 1) * d))
+            an2 = sympy.latex(sympy.nsimplify(a1 + (n2 - 1) * d))
+            besedilo_naloge += "\item $a_{{{0}}}={1}$ in $a_{{{2}}}={3}$\n".format(n1, an1, n2, an2)
+            besedilo_resitve += "\item $a_n={0}+(n-1)*{1}$\n".format(sympy.latex(sympy.nsimplify(a1)),
+                                                                     sympy.latex(sympy.nsimplify(d)))
+        besedilo_naloge += "\end{enumerate}"
+        besedilo_resitve += "\end{enumerate}"
+        return besedilo_naloge, besedilo_resitve
+
 
 def poskusi_sestaviti(naloga, parametri):
     try:
@@ -122,11 +170,10 @@ def generiraj(naloga, vzorec, **parametri):
         podatki = poskusi_sestaviti(naloga, parametri)
     return vzorec.format(**podatki)
 
-
 # print(generiraj(racionalna, 'Funkcija {funkcija} ima ničle: {nicle}', st_polov=5))
 
 # print(poisci_nicle_polinoma( "B",-20,10,4))
 # print(poisci_nicle_polinoma(primeri=2))
 
 # print(nalogaRacionalna(primeri=3))
-print(racionalna())
+# print(splosniClenAritmericnegaZaporedja(primeri=2))

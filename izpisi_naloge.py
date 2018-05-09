@@ -35,9 +35,9 @@ def sestaviVseTeste(datoteka_seznam_dijakov, naloge, ime_naloge=date.today().str
     else:
         vzorec_resitev = napisiVzorecResitev(stevilo_nalog, podmapa)
         # todo vpiši rešitve iz textov
-        # todo delete text files
-
-    return "bu"
+        # todo delete text files resitev
+    os.remove(podmapa + "/vzorec_testa.txt")
+    os.remove(podmapa + "/vzorec_resitev.txt")
 
 
 def napisiTest(vzorec_testa, vzorec_resitev, naloge, dijak, potNaloge,
@@ -54,7 +54,7 @@ def napisiTest(vzorec_testa, vzorec_resitev, naloge, dijak, potNaloge,
         (besediloNaloge, besediloResitve) = naloga(seme=dijak, primeri=2)  # TODO Kako podaš že nekej argumentov
         slovar_za_vstavljanje_nalog['naloga%d' % (zaporedna_stevilka + 1)] = besediloNaloge
         slovar_za_vstavljanje_resitev['naloga%d' % (
-                    zaporedna_stevilka + 1)] = besediloNaloge  # TODO izmenično primer/rešitev če imaš namen izpisovat naloge v rešitvah
+                zaporedna_stevilka + 1)] = besediloNaloge  # TODO izmenično primer/rešitev če imaš namen izpisovat naloge v rešitvah
         slovar_za_vstavljanje_resitev['resitev%d' % (zaporedna_stevilka + 1)] = besediloResitve
 
     # naloga1 = generiranje.poisci_nicle_polinoma()[0]
@@ -90,7 +90,7 @@ def napisiVzorecTesta(steviloNalog, podmapa):  # TODO grafi
         vzorec_testa.writelines(["\\end{enumerate}\n", "\\end{document}"])
 
 
-def napisiVzorecResitev(steviloNalog, podmapa):  # TODO grafi
+def napisiVzorecResitev(steviloNalog, podmapa):
     with open("%s/vzorec_resitev.txt" % podmapa, "w+", encoding="utf8") as vzorec_resitev:
         vzorec_resitev.writelines(
             ["\\documentclass{article}\n\n", "\\usepackage[utf8]{inputenc}\n\n", "\\usepackage{tikz}\n",
@@ -102,7 +102,10 @@ def napisiVzorecResitev(steviloNalog, podmapa):  # TODO grafi
         vzorec_resitev.writelines(["\\end{enumerate}\n", "\\end{document}"])
 
 
-sestaviVseTeste("dijaki.txt", [generiranje.poisci_nicle_polinoma, generiranje.nalogaGrafRacionalne],
+sestaviVseTeste("dijaki.txt",
+                [generiranje.poisci_nicle_polinoma, generiranje.nalogaGrafRacionalne,
+                 generiranje.splosniClenAritmericnegaZaporedja],
                 "Test za testiranje")
+
 # TODO Kako lahko daš nekatere zahteve notr
 # TODO Če daš dvakrat isto nalogo na seznam vzame enako seme - torej enaki primeri
