@@ -103,7 +103,7 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
             seznam_vseh_resitev.append({'ucenec': ucenec, 'resitve': seznam_resitev})
         else:
             napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, potResitve)
-    if zdruzene_resitve:
+    if zdruzene_resitve: # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
         napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve)
 
 
@@ -124,5 +124,8 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve):  # Napiš
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
     datoteka_test.close()
 
-#sestavi_vse_teste([generiranje.Polinom(), generiranje.Polinom(st_nalog=5)],"Polinomi","dijaki.txt",)
+sestavi_vse_teste([generiranje.Polinom(), generiranje.Polinom(st_nalog=5),
+                   generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
+                   generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4)],
+                  "Tester","dijaki.txt",)
 
