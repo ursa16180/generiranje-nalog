@@ -126,6 +126,7 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve):  # Napiš
 
 sestavi_vse_teste([generiranje.Polinom(), generiranje.Polinom(st_nalog=5),
                    generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
-                   generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4)],
+                   generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
+                   generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)],
                   "Tester","dijaki.txt",)
 

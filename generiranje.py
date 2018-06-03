@@ -182,7 +182,8 @@ class Polinom(Naloga):
         preveri(self.min_stopnja <= len(nicle) <= self.max_stopnja)
         x = sympy.symbols('x')
         polinom = sympy.latex(
-            sympy.expand('{0}*('.format(vodilni_koeficient)+'*'.join('(x-{0})'.format(nicla) for nicla in nicle)+')'))  # jinja2 ne prebavi fukcije sympy.latex
+            sympy.expand('{0}*('.format(vodilni_koeficient) + '*'.join(
+                '(x-{0})'.format(nicla) for nicla in nicle) + ')'))  # jinja2 ne prebavi fukcije sympy.latex
         return {
             'polinom': polinom,
             'nicle': ', '.join('${0}$'.format(nicla) for nicla in nicle),
@@ -237,7 +238,7 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         if stopnja_stevca < stopnja_imenovalca:
             asimptota = 0
         elif stopnja_stevca == stopnja_imenovalca:
-            asimptota = sympy.latex(sympy.nsimplify(vodilni_stevca/vodilni_imenovalca))
+            asimptota = sympy.latex(sympy.nsimplify(vodilni_stevca / vodilni_imenovalca))
         elif stopnja_stevca > stopnja_imenovalca:
             q, r = sympy.div(stevec, imenovalec, x)
             asimptota = sympy.latex(q)
@@ -250,4 +251,44 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
 
         return {'naloga': naloga, 'resitev': resitev}
 
+
 # ~~~~~~~~~~~~~~~~~~~~~4.letnik~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class SplosniClenAritmeticnegaZaporedja(Naloga):
+    def __init__(self, od=-5, do=5, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template("Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{naloga.naloga[0]}} }={{naloga.naloga[1]}}$ in $a_{ {{naloga.naloga[2]}} }={{naloga.naloga[3]}}$")
+        self.besedilo_vecih = jinja2.Template('Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena'
+                                                 '\\begin{enumerate}'
+                                                 '{% for naloga in naloge %}'
+                                                 '\\item $a_{ {{naloga.naloga[0]}} }={{naloga.naloga[1]}}$ in $a_{ {{naloga.naloga[2]}} }={{naloga.naloga[3]}}$'
+                                                 '{% endfor %}'
+                                                 '\\end{enumerate}')
+        self.resitev_posamezne = jinja2.Template('Splošni člen zaporedja je ${{naloga.resitev}}$.')
+        self.resitev_vecih = jinja2.Template('Spločni členi aritmetičnih zaporedij so: '
+                                             '\\begin{enumerate}'
+                                             '{% for naloga in naloge %}'
+                                             '\\item ${{naloga.resitev}}$'
+                                             '{% endfor %}'
+                                             '\\end{enumerate}')
+        if do < od:
+            self.od = do
+            self.do = od
+        else:
+            self.od = od
+            self.do = do
+
+    def poskusi_sestaviti(self):
+        seznam_polovick = [1 / 2 * x for x in range(2 * self.od, 2 * self.do + 1)]
+        seznam_polovick.remove(0)
+        a1 = random.choice(seznam_polovick)
+        d = random.choice(seznam_polovick)
+        n1 = random.randrange(2, 10)
+        n2 = random.randrange(2, 15)
+        preveri(n1 != n2)
+        an1 = sympy.latex(sympy.nsimplify(a1 + (n1 - 1) * d))
+        an2 = sympy.latex(sympy.nsimplify(a1 + (n2 - 1) * d))
+        naloga = (n1, an1, n2, an2)
+        n = sympy.symbols('n')
+        resitev = sympy.latex("{0}+({1})(n-1)".format(sympy.latex(sympy.nsimplify(a1)), sympy.latex(sympy.nsimplify(d)))) #TODO lepše izpisovanje množenja
+        return {'naloga': naloga, 'resitev': resitev}
