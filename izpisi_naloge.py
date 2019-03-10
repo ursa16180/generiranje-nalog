@@ -1,10 +1,9 @@
-from string import Template
 from datetime import date
-import generiranje
 import os
+import random
 import shutil
 import jinja2
-import random
+import generiranje
 
 vzorec_testa = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
@@ -83,13 +82,9 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
 
     if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
         shutil.rmtree(podmapa)
-        os.makedirs(podmapa)
-        os.makedirs(potNaloge)
-        os.makedirs(potResitve)
-    else:
-        os.makedirs(podmapa)
-        os.makedirs(potNaloge)
-        os.makedirs(potResitve)
+    os.makedirs(podmapa)
+    os.makedirs(potNaloge)
+    os.makedirs(potResitve)
 
     seznam_vseh_resitev = []
     for ucenec in seznam_ljudi:
@@ -124,9 +119,10 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve):  # Napiš
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
     datoteka_test.close()
 
-sestavi_vse_teste([generiranje.Polinom(), generiranje.Polinom(st_nalog=5),
-                   generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
-                   generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
-                   generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)],
-                  "Tester","dijaki.txt",)
+sestavi_vse_teste([generiranje.Polinom(),generiranje.OblikeEnacbPremice(st_nalog=5)# generiranje.Polinom(st_nalog=5),
+                   # generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
+                   # generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
+                   # generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)
+                   ],
+                  "Tester2019","dijaki.txt",)
 
