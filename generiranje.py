@@ -6,22 +6,29 @@ import sympy
 class NapacnaNaloga(Exception):
     pass
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~Pomožne funkcije
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~Pomožne funkcije
 def seznamPolovick(od=-10, do=10):
-     return [x / 2 for x in range(2 * od, 2 * do) if x != 0]
-     #funkcija vrne seznam polovičk brez ničle
+    return [sympy.Rational(x, 2) for x in range(2 * od, 2 * (do + 1)) if x != 0]
+    # funkcija vrne seznam polovičk brez ničle
+
+
+def seznamTretinj(od=-10, do=10):
+    return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
+    # funkcija vrne seznam polovičk brez ničle
+
 
 def izberiKoordinato(od=-10, do=10):
-     koordinata= random.randint(od, do)
-     return koordinata
-#~~~~~~~~~~~~~~~~~~~~~
+    koordinata = random.randint(od, do)
+    return koordinata
+
+
+# ~~~~~~~~~~~~~~~~~~~~~
 
 
 def preveri(pogoj):
     if not pogoj:
         raise NapacnaNaloga
-
-
 
 
 class Naloga:
@@ -103,20 +110,20 @@ class VzorecNaloge(Naloga):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(r''' ''')
         self.besedilo_vecih = jinja2.Template(r'''
-                                              \begin{enumerate}
-                                              {% for naloga in naloge %}
-                                              \item
-                                              {% endfor %}
-                                              \end{enumerate}
-                                              ''')
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item
+        {% endfor %}
+        \end{enumerate}
+        ''')
         self.resitev_posamezne = jinja2.Template(r''' ''')
         self.resitev_vecih = jinja2.Template(r'''
-                                            \begin{enumerate}
-                                             {% for naloga in naloge %}
-                                             \item
-                                             {% endfor %}
-                                             \end{enumerate}
-                                             ''')
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item
+         {% endfor %}
+         \end{enumerate}
+         ''')
 
     def poskusi_sestaviti(self):
         return {'naloga': 1, 'resitev': 2}
@@ -162,10 +169,12 @@ class RazstaviVieta(Naloga):
 
         return {'naloga': naloga, 'resitev': resitev}
 
-class RazdaljaMedTockama(Naloga): #Todo težja racionalne koordinate?
+
+class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate?
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Natančno izračunaj razdaljo med točkama $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$.''')
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Natančno izračunaj razdaljo med točkama $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$.''')
         self.besedilo_vecih = jinja2.Template(r'''Natančno izračunaj razdaljo med točkama
                                               \begin{enumerate}
                                               {% for naloga in naloge %}
@@ -181,18 +190,20 @@ class RazdaljaMedTockama(Naloga): #Todo težja racionalne koordinate?
                                              \end{enumerate}''')
 
     def poskusi_sestaviti(self):
-        x1=izberiKoordinato()
+        x1 = izberiKoordinato()
         y1 = izberiKoordinato()
         x2 = izberiKoordinato()
         y2 = izberiKoordinato()
-        preveri(x1!=x2 and y1!=y2)
-        razdalja = sympy.latex(sympy.simplify(sympy.sqrt(((x1-x2)**2+(y1-y2)**2))))
-        return {'x1':x1,'y1':y1,'x2':x2,'y2':y2,'razdalja':razdalja}
+        preveri(x1 != x2 and y1 != y2)
+        razdalja = sympy.latex(sympy.simplify(sympy.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2))))
+        return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'razdalja': razdalja}
+
 
 class OblikeEnacbPremice(Naloga):
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Zapiši implicitno in odsekovno obliko premice podane z enačbo ${{naloga.implicitna}}$''')
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Zapiši implicitno in odsekovno obliko premice podane z enačbo ${{naloga.implicitna}}$''')
         self.besedilo_vecih = jinja2.Template(r''' Zapiši implicitno in odsekovno obliko premice podane z enačbo:
                                             \begin{enumerate}
                                               {% for naloga in naloge %}
@@ -209,26 +220,134 @@ class OblikeEnacbPremice(Naloga):
                                               ''')
 
     def poskusi_sestaviti(self):
-        seznamStevil=[x for x in range(-10,10) if x!=0]
-        a=random.choice(seznamStevil)
-        b=random.choice(seznamStevil)
-        c=random.choice(seznamStevil)
-        print(a,b,c)
+        seznamStevil = [x for x in range(-10, 10) if x != 0]
+        a = random.choice(seznamStevil)
+        b = random.choice(seznamStevil)
+        c = random.choice(seznamStevil)
+        print(a, b, c)
         x = sympy.symbols('x')
         y = sympy.symbols('y')
-        implicitna = sympy.latex(sympy.Eq(sympy.simplify(a*x+b*y+c),0))
+        implicitna = sympy.latex(sympy.Eq(sympy.simplify(a * x + b * y + c), 0))
         eksplicitna = sympy.latex(sympy.Eq(y,
-            sympy.Rational(-a,b)*x + sympy.Rational(-c,b)))
-        #odsekovna = sympy.latex(x/sympy.Rational(c,-a)+y/sympy.Rational(c,-b)) #TODO avtomatičen izpis dvojnih ulomkov s simboli
-        odsekovna = '\\frac{x}{'+sympy.latex(sympy.Rational(c,-a))+'}+\\frac{y}{'+sympy.latex(sympy.Rational(c,-b))+'}=1'
-        return {'implicitna': implicitna, 'eksplicitna':eksplicitna, 'odsekovna':odsekovna}
+                                           sympy.Rational(-a, b) * x + sympy.Rational(-c, b)))
+        # odsekovna = sympy.latex(x/sympy.Rational(c,-a)+y/sympy.Rational(c,-b)) #TODO avtomatičen izpis dvojnih ulomkov s simboli
+        odsekovna = '\\frac{x}{' + sympy.latex(sympy.Rational(c, -a)) + '}+\\frac{y}{' + sympy.latex(
+            sympy.Rational(c, -b)) + '}=1'
+        return {'implicitna': implicitna, 'eksplicitna': eksplicitna, 'odsekovna': odsekovna}
+
+
+class PremiceTrikotnik(Naloga):
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(
+            r''' Izračunaj ploščino trikotnika, ki ga premici ${{naloga.premica1}}$ in ${{naloga.premica2}}$ oklepata z abscisno osjo. ''')
+        self.besedilo_vecih = jinja2.Template(r''' Izračunaj ploščino trikotnika, ki ga premici oklepata z abscisno osjo:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{naloga.premica1}}$ in ${{naloga.premica2}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$S={{naloga.ploscina}}$ ''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $S={{naloga.ploscina}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+
+    def poskusi_sestaviti(self):
+        x1 = izberiKoordinato(1, 5)
+        y1 = 0
+        x2 = random.choice([x for x in range(-5, 6) if x != 0])
+        y2 = random.choice([x for x in range(-5, 6) if x != 0])
+        x3 = izberiKoordinato(-5, 0)
+        y3 = 0
+        x = sympy.symbols('x')
+        y = sympy.symbols('y')
+        preveri(x2 != x1 and x2 != x3)  # premici sta vzporedni
+        if x2 == x1:
+            premica1 = sympy.Eq(x, x1)
+        else:
+            k1 = sympy.Rational((y2 - y1), (x2 - x1))
+            n1 = y1 - k1 * x1
+            premica1 = sympy.latex(sympy.Eq(y, k1 * x + n1))
+        if x3 == x2:
+            premica2 = sympy.Eq(x, x3)
+        else:
+            k2 = sympy.Rational((y3 - y2), (x3 - x2))
+            n2 = y3 - k2 * x3
+            premica2 = sympy.latex(sympy.Eq(y, k2 * x + n2))
+
+        ploscinaTrikotnika = sympy.simplify(abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2).evalf(3)
+        # TODO ne prikazuj nepotrebnih ničel v decimalnem zapisu
+
+        return {'premica1': premica1, 'premica2': premica2, 'ploscina': ploscinaTrikotnika}
+
+
+class NarisiLinearnoFukcijo(Naloga):
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(r'''Nariši graf funkcije linearne ${{naloga.linearna}}$.''')
+        self.besedilo_vecih = jinja2.Template(r''' Nariši graf linearne funkcije:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{naloga.linearna}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        # TODO slike takoj za številko naloge!!! minipage?
+        self.resitev_posamezne = jinja2.Template(r'''${{naloga.linearna}}$
+        \begin{figure}[!h]
+        \centering
+        \begin{tikzpicture}[baseline]
+        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5]
+        \addplot[domain =-5:5, color=black]{ {{naloga.linearnaNarisi}} };
+        \draw (0, {{naloga.n}}) node[anchor=west] {${{naloga.n}}$};
+        \draw ({{naloga.nicla}}, 0) node[anchor=south] {${{naloga.nicla}}$};
+        \end{axis}
+        \end{tikzpicture}
+        \end{figure}''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item ${{naloga.linearna}}$
+         \begin{figure}[!h]
+        \centering
+        \begin{tikzpicture}[baseline]
+        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5]
+        \addplot[domain =-5:5, color=black]{ {{naloga.linearnaNarisi}} };
+        \draw (0, {{naloga.n}}) node[anchor=west] {${{naloga.n}}$};
+        \draw ({{naloga.nicla}}, 0) node[anchor=south] {${{naloga.nicla}}$};
+        \end{axis}
+        \end{tikzpicture}
+        \end{figure}
+         {% endfor %}
+         \end{enumerate}
+         ''')
+
+    def poskusi_sestaviti(self):
+        k = random.choice(seznamPolovick(-3, 3) + seznamTretinj(-3, 3))
+        n = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
+        x = sympy.symbols('x')
+        y = sympy.symbols('y')
+        f = sympy.symbols('f(x)')
+        nicla = (-n) / k
+        print(nicla, n)
+        linearna = sympy.latex(sympy.Eq(f, k * x + n))
+        linearnaNarisi = k * x + n
+        print(linearnaNarisi)
+        return {'linearna': linearna, 'linearnaNarisi': linearnaNarisi, 'n': n, 'nicla': nicla}
 
 
 # ~~~~~~~~~~~~~~~~~~~~~2.letnik~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~3.letnik~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class Polinom(Naloga):
-    print("polinom")
     def __init__(self, min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, **kwargs):
         print("predSuperPoli")
         super().__init__(self, **kwargs)
@@ -353,13 +472,15 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
 class SplosniClenAritmeticnegaZaporedja(Naloga):
     def __init__(self, od=-5, do=5, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template("Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{naloga.naloga[0]}} }={{naloga.naloga[1]}}$ in $a_{ {{naloga.naloga[2]}} }={{naloga.naloga[3]}}$")
-        self.besedilo_vecih = jinja2.Template('Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena'
-                                                 '\\begin{enumerate}'
-                                                 '{% for naloga in naloge %}'
-                                                 '\\item $a_{ {{naloga.naloga[0]}} }={{naloga.naloga[1]}}$ in $a_{ {{naloga.naloga[2]}} }={{naloga.naloga[3]}}$'
-                                                 '{% endfor %}'
-                                                 '\\end{enumerate}')
+        self.besedilo_posamezne = jinja2.Template(
+            "Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{naloga.naloga[0]}} }={{naloga.naloga[1]}}$ in $a_{ {{naloga.naloga[2]}} }={{naloga.naloga[3]}}$")
+        self.besedilo_vecih = jinja2.Template(
+            'Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena'
+            '\\begin{enumerate}'
+            '{% for naloga in naloge %}'
+            '\\item $a_{ {{naloga.naloga[0]}} }={{naloga.naloga[1]}}$ in $a_{ {{naloga.naloga[2]}} }={{naloga.naloga[3]}}$'
+            '{% endfor %}'
+            '\\end{enumerate}')
         self.resitev_posamezne = jinja2.Template('Splošni člen zaporedja je ${{naloga.resitev}}$.')
         self.resitev_vecih = jinja2.Template(r'''Spločni členi aritmetičnih zaporedij so: '
                                              '\\begin{enumerate}'
@@ -390,10 +511,12 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
         n = sympy.symbols('n')
         sympy.simplify(a1 + d * (n - 1))
 
-        
-        resitev = sympy.latex("{0}+({1})(n-1)".format(sympy.latex(sympy.nsimplify(a1)), sympy.latex(sympy.nsimplify(d)))) #TODO lepše izpisovanje množenja
+        resitev = sympy.latex("{0}+({1})(n-1)".format(sympy.latex(sympy.nsimplify(a1)), sympy.latex(
+            sympy.nsimplify(d))))  # TODO lepše izpisovanje množenja
         return {'naloga': naloga, 'resitev': resitev}
 
 
-#print(Polinom().poskusi_sestaviti()['polinom'])
-print(OblikeEnacbPremice().poskusi_sestaviti())
+# print(Polinom().poskusi_sestaviti()['polinom'])
+# print(OblikeEnacbPremice().poskusi_sestaviti())
+# print(PremiceTrikotnik().poskusi_sestaviti())
+print(NarisiLinearnoFukcijo().poskusi_sestaviti())
