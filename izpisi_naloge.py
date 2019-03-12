@@ -4,6 +4,7 @@ import random
 import shutil
 import jinja2
 import generiranje
+import linearnaFunkcija
 
 vzorec_testa = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
@@ -90,7 +91,8 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
     for ucenec in seznam_ljudi:
         ucenec = ucenec.strip()
         random.seed(ucenec)
-        seznam_nalog = [naloga.besedilo() for naloga in naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
+        seznam_nalog = [naloga.besedilo() for naloga in
+                        naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
         napisi_test(ime_testa, seznam_nalog, ucenec, potNaloge)
 
         seznam_resitev = [naloga['resitev'] for naloga in seznam_nalog]
@@ -98,7 +100,7 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
             seznam_vseh_resitev.append({'ucenec': ucenec, 'resitve': seznam_resitev})
         else:
             napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, potResitve)
-    if zdruzene_resitve: # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
+    if zdruzene_resitve:  # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
         napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve)
 
 
@@ -109,7 +111,7 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, potNaloge):  # Napiše naloge
 
 
 def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, potResitve):  # Napiše posamezne rešitve
-    datoteka_test = open("{0}/{1}.tex".format(potResitve, ucenec), "w+", encoding="utf8")
+    datoteka_test = open("{0}/{1}-rešitve.tex".format(potResitve, ucenec), "w+", encoding="utf8")
     datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
     datoteka_test.close()
 
@@ -119,10 +121,14 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve):  # Napiš
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
     datoteka_test.close()
 
-sestavi_vse_teste([generiranje.Polinom(),generiranje.OblikeEnacbPremice(st_nalog=5)# generiranje.Polinom(st_nalog=5),
-                   # generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
-                   # generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
-                   # generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)
-                   ],
-                  "Tester2019","dijaki.txt",)
 
+sestavi_vse_teste([
+    linearnaFunkcija.VrednostiLinearne(), linearnaFunkcija.VrednostiLinearne(st_nalog=5)
+    #linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
+        #generiranje.PremiceTrikotnik(), generiranje.PremiceTrikotnik(st_nalog=5)
+       # generiranje.Polinom(),generiranje.Polinom(st_nalog=5),
+       # generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
+       # generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
+       # generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)
+       ],
+      "Tester2019", "dijaki.txt")
