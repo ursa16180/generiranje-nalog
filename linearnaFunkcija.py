@@ -137,10 +137,14 @@ class NarisiLinearnoFukcijo(Naloga):
         \begin{tikzpicture}[baseline]
         \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
         xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5]
+        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+        extra x ticks={ {{naloga.nicla}} },
+        extra y ticks={ {{naloga.n}} },
+        extra x tick labels={ ${{latex(naloga.nicla)}}$ },
+        extra y tick labels={ ${{latex(naloga.n)}}$},
+        extra x tick style={xticklabel style={above},},
+        extra y tick style={yticklabel style={right},},]
         \addplot[domain =-5:5, color=black]{ {{naloga.linearna}} };
-        \draw (0, {{naloga.n}}) node[anchor=west] {${{latex(naloga.n)}}$};
-        \draw ({{naloga.nicla}}, 0) node[anchor=south] {${{latex(naloga.nicla)}}$};
         \end{axis}
         \end{tikzpicture}
         \end{minipage}''')
@@ -153,10 +157,14 @@ class NarisiLinearnoFukcijo(Naloga):
         \centering
         \begin{tikzpicture}[baseline]
         \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5]
+        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+        extra x ticks={ {{naloga.nicla}} },
+        extra y ticks={ {{naloga.n}} },
+        extra x tick labels={ ${{latex(naloga.nicla)}}$ },
+        extra y tick labels={ ${{latex(naloga.n)}}$},
+        extra x tick style={xticklabel style={above},},
+        extra y tick style={yticklabel style={right},},]
         \addplot[domain =-5:5, color=black]{ {{naloga.linearna}} };
-        \draw (0, {{naloga.n}}) node[anchor=west] {${{latex(naloga.n)}}$};
-        \draw ({{naloga.nicla}}, 0) node[anchor=south] {${{latex(naloga.nicla)}}$};
         \end{axis}
         \end{tikzpicture}
         \end{minipage}

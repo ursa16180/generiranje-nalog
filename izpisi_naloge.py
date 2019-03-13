@@ -5,6 +5,9 @@ import shutil
 import jinja2
 import generiranje
 import linearnaFunkcija
+import kvadratnaFunkcija
+import polinom
+import zaporedja
 
 vzorec_testa = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
@@ -123,12 +126,13 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve):  # Napiš
 
 
 sestavi_vse_teste([
-    linearnaFunkcija.VrednostiLinearne(), linearnaFunkcija.VrednostiLinearne(st_nalog=5)
-    #linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
+    kvadratnaFunkcija.IzracunajNicle(lazja=False), kvadratnaFunkcija.IzracunajNicle(st_nalog=3),
+    kvadratnaFunkcija.NarisiGraf(),kvadratnaFunkcija.NarisiGraf(st_nalog=5),
+    linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
         #generiranje.PremiceTrikotnik(), generiranje.PremiceTrikotnik(st_nalog=5)
        # generiranje.Polinom(),generiranje.Polinom(st_nalog=5),
        # generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
        # generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
        # generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)
        ],
-      "Tester2019", "dijaki.txt")
+      "Tester2019", "dijaki.txt",zdruzene_resitve=False)
