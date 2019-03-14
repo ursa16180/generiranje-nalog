@@ -1,5 +1,5 @@
 from generiranje import *
-
+import linearnaFunkcija
 
 def nicelnaOblika(od=-5, do=5):
     odDejanski = min(od, do)
@@ -160,8 +160,156 @@ class NarisiGraf(Naloga):
         [a, x1, x2, nicelna] = nicelnaOblika(-3, 3)
         funkcija = sympy.expand(nicelna)
         [p, q] = izracunajTeme(a, -a * (x1 + x2), a * x1 * x2)
-        preveri(abs(q)<=5)
+        preveri(abs(q) <= 5)
         zacetna = funkcija.subs(x, 0)
-        return {'funkcija': funkcija, 'narisiFunkcijo':nicelna, 'p': p, 'q': q, 'x1': x1, 'x2': x2, 'zacetna': zacetna}
+        return {'funkcija': funkcija, 'narisiFunkcijo': nicelna, 'p': p, 'q': q, 'x1': x1, 'x2': x2, 'zacetna': zacetna}
 
 
+class TemenskaOblika(Naloga):
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Zapiši temensko obliko funkcije $f(x)={{latex(naloga.splosna)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Zapiši temensko obliko naslednjih kvadratnih funkcij:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item $f(x)={{latex(naloga.splosna)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(
+            r'''$f(x)={{latex(naloga.a)}}(x-{{latex(naloga.p)}})^2+{{latex(naloga.q)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $f(x)={{latex(naloga.a)}}(x-{{latex(naloga.p)}})^2+{{latex(naloga.q)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        [a, b, c, splosna] = splosnaOblika()
+        D = diskriminanta(a, b, c)
+        preveri(D >= 0)
+        [p, q] = izracunajTeme(a, b, c)
+        return {'splosna': splosna, 'p': p, 'q': q, 'a': a}
+
+
+class Presecisce(Naloga):
+    def __init__(self,lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(r''' ''')
+        self.besedilo_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r''' ''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        x=sympy.symbols('x')
+        kvadratna = splosnaOblika()[-1]
+        premica = linearnaFunkcija.eksplicitnaPremica()[-1]
+        presecisce = sympy.solve(sympy.Eq(kvadratna,premica),x)
+        if self.lazja:
+            preveri(len(presecisce) != 0 and presecisce[0].is_real)
+        else:
+            preveri(len(presecisce)!=0) #Ker želimo imeti rešitve
+
+        print(presecisce, len(presecisce))
+
+
+        return {'naloga': 1, 'resitev': 2}
+
+class Neenacba(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(r'''Reši kvadratno neenačbo ${{latex(naloga.neenakost)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Reši kvadratne neenačbe:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{latex(naloga.neenakost)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$x \in {{latex(naloga.resitev)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item$x \in {{latex(naloga.resitev)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):  # TODO ali želimo lepše rešitve
+        x = sympy.symbols('x')
+        splosna1 = splosnaOblika()[-1]
+        if self.lazja:
+            primerjava = random.choice(seznamPolovick(-10, 10) + seznamTretinj(-10, 10))
+        else:
+            primerjava = splosnaOblika()[-1]
+        preveri(splosna1 != primerjava)
+        neenacaj = random.choice(['<', '<=', '>', '>='])
+        neenakost = sympy.Rel(splosna1, primerjava, neenacaj)
+        nicli=sympy.solve(sympy.Eq(splosna1,primerjava),x)
+        #tODO: preveri(nicli[0].is_real)#TODO preveri da dela + pazi kaj če ni rešitev?
+        resitev = sympy.solveset(neenakost, domain=sympy.S.Reals)
+        return {'neenakost': neenakost, 'resitev': resitev}
+
+
+class SkoziTocke(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Graf kvadratne funkcije $f$ poteka skozi točke $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
+            $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$ in $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$. Določi 
+            predpis funkcije $f.$''')
+        self.besedilo_vecih = jinja2.Template(r''' Določi predpis kvadratne funkcije $f$, katere graf poteka skozi točke:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
+            $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$, $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.funkcija)}}$ ''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $f(x)={{latex(naloga.funkcija)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        [a, nicla1, nicla2, funkcija] = nicelnaOblika()
+        if self.lazja:
+            x1 = nicla1
+            x2 = 0
+        else:
+            x1 = random.randint(-5, 5)
+            x2 = random.randint(-5, 5)
+
+        x3 = random.randint(-5, 5)
+        y1 = funkcija.subs(x, x1)
+        y2 = funkcija.subs(x, x2)
+        y3 = funkcija.subs(x, x3)
+
+        preveri(len({x1, x2, x3}) == 3)
+        return {'x1': x1, 'x2': x2, 'x3': x3, 'y1': y1, 'y2': y2, 'y3': y3, 'funkcija': sympy.expand(funkcija)}
+
+Presecisce().poskusi_sestaviti()
