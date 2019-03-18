@@ -8,11 +8,13 @@ import linearnaFunkcija
 import kvadratnaFunkcija
 import polinom
 import zaporedja
+import kompleksnaStevila
 
 vzorec_testa = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
 \\usepackage{tikz}
 \\usepackage{pgfplots}
+\\usepackage{amsmath}
 
 \\pgfplotsset{compat=1.16}
 
@@ -33,6 +35,7 @@ vzorec_posameznih_resitev = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
 \\usepackage{tikz}
 \\usepackage{pgfplots}
+\\usepackage{amsmath}
 
 \\pgfplotsset{compat=1.16}
 
@@ -53,6 +56,7 @@ vzorec_skupnih_resitev = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
 \\usepackage{tikz}
 \\usepackage{pgfplots}
+\\usepackage{amsmath}
 
 \\pgfplotsset{compat=1.16}
 
@@ -126,13 +130,26 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve):  # Napiš
 
 
 sestavi_vse_teste([
-    kvadratnaFunkcija.IzracunajNicle(lazja=False), kvadratnaFunkcija.IzracunajNicle(st_nalog=3),
-    kvadratnaFunkcija.NarisiGraf(),kvadratnaFunkcija.NarisiGraf(st_nalog=5),
-    linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
-        #generiranje.PremiceTrikotnik(), generiranje.PremiceTrikotnik(st_nalog=5)
-       # generiranje.Polinom(),generiranje.Polinom(st_nalog=5),
-       # generiranje.RazstaviVieta(lazja=False), generiranje.RazstaviVieta(st_nalog=3),
-       # generiranje.DolociNiclePoleAsimptotoRacionalne(), generiranje.DolociNiclePoleAsimptotoRacionalne(st_nalog=4),
-       # generiranje.SplosniClenAritmeticnegaZaporedja(), generiranje.SplosniClenAritmeticnegaZaporedja(st_nalog=5)
+    kompleksnaStevila.NarisiTocke(),kompleksnaStevila.NarisiTocke(st_nalog=3),
+    #  kompleksnaStevila.Racunanje(),kompleksnaStevila.Racunanje(st_nalog=3),
+    # kompleksnaStevila.Ulomek(lazja=False),kompleksnaStevila.Ulomek(st_nalog=3),
+    # kompleksnaStevila.VsotaRazlika(),kompleksnaStevila.VsotaRazlika(st_nalog=3),
+    # kompleksnaStevila.Mnozenje(),kompleksnaStevila.Mnozenje(st_nalog=3),
+    #polinom.DolociNiclePoleAsimptotoRacionalne(),
+    # polinom.DolociNiclePoleAsimptotoRacionalne(st_nalog=3),
+    # polinom.NiclePolinoma(),
+    # polinom.NiclePolinoma(st_nalog=3),
+    # polinom.GrafPolinoma(),
+    # polinom.GrafPolinoma(st_nalog=3),
+    # polinom.DvojnaNicla(),
+    # polinom.DvojnaNicla(st_nalog=3),
+    # polinom.ParameteraDvojna(),
+    # polinom.ParameteraDvojna(st_nalog=3)
+    #kvadratnaFunkcija.TemenskaOblika(), kvadratnaFunkcija.TemenskaOblika(st_nalog=3),
+    #kvadratnaFunkcija.Neenacba(lazja=False), kvadratnaFunkcija.Neenacba(st_nalog=3),
+    #kvadratnaFunkcija.Presecisce(),kvadratnaFunkcija.Presecisce(st_nalog=5),
+    #kvadratnaFunkcija.IzracunajNicle(lazja=False), kvadratnaFunkcija.IzracunajNicle(st_nalog=3),
+    #kvadratnaFunkcija.NarisiGraf(),kvadratnaFunkcija.NarisiGraf(st_nalog=5),
+    #linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
        ],
-      "Tester2019", "dijaki.txt",zdruzene_resitve=False)
+      "Tester", "dijaki.txt",zdruzene_resitve=False)
