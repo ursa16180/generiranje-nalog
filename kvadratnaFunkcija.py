@@ -1,19 +1,28 @@
 from generiranje import *
 import linearnaFunkcija
 
-def nicelnaOblika(od=-5, do=5):
+
+def nicelnaOblika(od=-5, do=5, risanje=False):
     odDejanski = min(od, do)
     doDejanski = max(od, do)
-    a = random.choice(seznamPolovick(-2, 2) + seznamTretinj(-2, 2))
+    if risanje:
+        a = random.choice([-2, -1, sympy.Rational(-1, 2), sympy.Rational(1, 2), 1, 2])
+    else:
+        a = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
     x1 = random.choice(seznamPolovick(odDejanski, doDejanski) + seznamTretinj(odDejanski, doDejanski))
     x2 = random.choice(seznamPolovick(odDejanski, doDejanski) + seznamTretinj(odDejanski, doDejanski))
     x = sympy.symbols('x')
-    nicelna = a * (x - x1) * (x - x2)  # TODO nej se ničle ne poenostavljajo in a zmnoži not (factor ne pomaga)
+    nicelna = a * (x - x1) * (x - x2)
+    #nicelna =sympy.Mul(a,x-x1,x-x2, evaluate=False)# TODO nej se ničle ne poenostavljajo in a zmnoži not (factor ne pomaga) #TODO preveri če Mul pomaga
     return [a, x1, x2, nicelna]
 
 
-def splosnaOblika():
-    a = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
+def splosnaOblika(risanje=False):
+    if risanje:
+        a = random.choice([-2, -1, sympy.Rational(-1, 2), sympy.Rational(1, 2), 1, 2])
+    else:
+        a = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
+
     b = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
     c = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
     x = sympy.symbols('x')
@@ -42,32 +51,7 @@ def diskriminanta(a, b, c):
     return b ** 2 - 4 * a * c
 
 
-# ~~~~~~~~~~~~~VZOREC za nalogo
-class VzorecNaloge(Naloga):
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r''' ''')
-        self.besedilo_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r''' ''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item
-         {% endfor %}
-         \end{enumerate}
-         ''')
-
-    def poskusi_sestaviti(self):
-        return {'naloga': 1, 'resitev': 2}
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~Naloge in sklopa: Kvadratna funkcija
 
 class IzracunajNicle(Naloga):
     # Lažja različica ima realne ničle, težja pa kompleksne
@@ -95,9 +79,9 @@ class IzracunajNicle(Naloga):
     def poskusi_sestaviti(self):
         [a, b, c, splosna] = splosnaOblika()
         if self.lazja:
-            preveri(diskriminanta(a, b, c) > 0)
+            preveri(diskriminanta(a, b, c) > 0 and abs(diskriminanta(a, b, c)) <= 200)
         else:
-            preveri(diskriminanta(a, b, c) <= 0)
+            preveri(diskriminanta(a, b, c) <= 0 and abs(diskriminanta(a, b, c)) <= 200)
         [x1, x2] = nicle(a, b, c)
         return {'splosna': splosna, 'x1': x1, 'x2': x2}
 
@@ -157,7 +141,7 @@ class NarisiGraf(Naloga):
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
-        [a, x1, x2, nicelna] = nicelnaOblika(-3, 3)
+        [a, x1, x2, nicelna] = nicelnaOblika(-3, 3, risanje=True)
         funkcija = sympy.expand(nicelna)
         [p, q] = izracunajTeme(a, -a * (x1 + x2), a * x1 * x2)
         preveri(abs(q) <= 5)
@@ -191,46 +175,49 @@ class TemenskaOblika(Naloga):
         x = sympy.symbols('x')
         [a, b, c, splosna] = splosnaOblika()
         D = diskriminanta(a, b, c)
-        preveri(D >= 0)
+        preveri(D >= 0 and abs(diskriminanta(a, b, c)) <= 200)
         [p, q] = izracunajTeme(a, b, c)
         return {'splosna': splosna, 'p': p, 'q': q, 'a': a}
 
 
-class Presecisce(Naloga):
-    def __init__(self,lazja=True, **kwargs):
+class Presecisce(Naloga):  # TODO zagotovi lepše rezultate #Todo navodila
+    def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r''' ''')
-        self.besedilo_vecih = jinja2.Template(r'''
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Izračunaj presečišče parabole $y={{latex(naloga.parabola)}}$ in premice $y={{latex(naloga.premica)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Izračunaj presečišče parabole in premice:
         \begin{enumerate}
         {% for naloga in naloge %}
-        \item
+        \item $y={{latex(naloga.parabola)}}$, $y={{latex(naloga.premica)}}$
         {% endfor %}
         \end{enumerate}
         ''')
-        self.resitev_posamezne = jinja2.Template(r''' ''')
+        self.resitev_posamezne = jinja2.Template(
+            r'''$T_1({{latex(naloga.x1)}},{{latex(naloga.y1)}})$,$T_2({{latex(naloga.x2)}},{{latex(naloga.y2)}})$''')
         self.resitev_vecih = jinja2.Template(r'''
         \begin{enumerate}
          {% for naloga in naloge %}
-         \item
+         \item $T_1({{latex(naloga.x1)}},{{latex(naloga.y1)}})$,$T_2({{latex(naloga.x2)}},{{latex(naloga.y2)}})$
          {% endfor %}
          \end{enumerate}
          ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
-        x=sympy.symbols('x')
-        kvadratna = splosnaOblika()[-1]
-        premica = linearnaFunkcija.eksplicitnaPremica()[-1]
-        presecisce = sympy.solve(sympy.Eq(kvadratna,premica),x)
-        if self.lazja:
-            preveri(len(presecisce) != 0 and presecisce[0].is_real)
-        else:
-            preveri(len(presecisce)!=0) #Ker želimo imeti rešitve
+        x = sympy.symbols('x')
+        b = sympy.symbols('b')
+        c = sympy.symbols('c')
+        a = random.choice([-2, -1, sympy.Rational(-1, 2), sympy.Rational(1, 2), 1, 2])
+        x1 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
+        x2 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
+        y1 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
+        y2 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
+        premica = linearnaFunkcija.skoziTocki(x1,y1,x2,y2)[-1]
+        koeficienta = sympy.solve((a * x1 ** 2 + b * x1 + c - y1, a * x2 ** 2 + b * x2 + c - y2), b, c)
+        preveri(koeficienta[b] < 5 and koeficienta[c] < 5)
+        kvadratna = a * x ** 2 + koeficienta[b] * x + koeficienta[c]
+        return {'parabola': kvadratna, 'premica': premica, 'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2}
 
-        print(presecisce, len(presecisce))
-
-
-        return {'naloga': 1, 'resitev': 2}
 
 class Neenacba(Naloga):
     def __init__(self, lazja=True, **kwargs):
@@ -255,7 +242,7 @@ class Neenacba(Naloga):
 
     def poskusi_sestaviti(self):  # TODO ali želimo lepše rešitve
         x = sympy.symbols('x')
-        splosna1 = splosnaOblika()[-1]
+        splosna1 = splosnaOblika(risanje=True)[-1]
         if self.lazja:
             primerjava = random.choice(seznamPolovick(-10, 10) + seznamTretinj(-10, 10))
         else:
@@ -263,9 +250,14 @@ class Neenacba(Naloga):
         preveri(splosna1 != primerjava)
         neenacaj = random.choice(['<', '<=', '>', '>='])
         neenakost = sympy.Rel(splosna1, primerjava, neenacaj)
-        nicli=sympy.solve(sympy.Eq(splosna1,primerjava),x)
-        #tODO: preveri(nicli[0].is_real)#TODO preveri da dela + pazi kaj če ni rešitev?
+        nicli = sympy.solve(sympy.Eq(splosna1, primerjava), x)
+        if len(nicli) == 0:  # TODO preveri da dela
+            pass
+        else:
+            preveri(
+                nicli[0].is_real and abs(max(nicli, key=abs)) < 10 and sympy.denom(max(nicli, key=sympy.denom)) < 20)
         resitev = sympy.solveset(neenakost, domain=sympy.S.Reals)
+        # print(nicli, sympy.denom(max(nicli, key=sympy.denom)))
         return {'neenakost': neenakost, 'resitev': resitev}
 
 
@@ -296,7 +288,7 @@ class SkoziTocke(Naloga):
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
-        [a, nicla1, nicla2, funkcija] = nicelnaOblika()
+        [a, nicla1, nicla2, funkcija] = nicelnaOblika(risanje=True)
         if self.lazja:
             x1 = nicla1
             x2 = 0
@@ -311,5 +303,3 @@ class SkoziTocke(Naloga):
 
         preveri(len({x1, x2, x3}) == 3)
         return {'x1': x1, 'x2': x2, 'x3': x3, 'y1': y1, 'y2': y2, 'y3': y3, 'funkcija': sympy.expand(funkcija)}
-
-Presecisce().poskusi_sestaviti()
