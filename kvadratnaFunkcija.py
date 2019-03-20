@@ -2,6 +2,16 @@ from generiranje import *
 import linearnaFunkcija
 
 
+def seznamPolovick(od=-10, do=10):
+    return [sympy.Rational(x, 2) for x in range(2 * od, 2 * (do + 1)) if x != 0]
+    # funkcija vrne seznam polovičk brez ničle
+
+
+def seznamTretinj(od=-10, do=10):
+    return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
+    # funkcija vrne seznam polovičk brez ničle
+
+
 def nicelnaOblika(od=-5, do=5, risanje=False):
     odDejanski = min(od, do)
     doDejanski = max(od, do)
@@ -13,7 +23,7 @@ def nicelnaOblika(od=-5, do=5, risanje=False):
     x2 = random.choice(seznamPolovick(odDejanski, doDejanski) + seznamTretinj(odDejanski, doDejanski))
     x = sympy.symbols('x')
     nicelna = a * (x - x1) * (x - x2)
-    #nicelna =sympy.Mul(a,x-x1,x-x2, evaluate=False)# TODO nej se ničle ne poenostavljajo in a zmnoži not (factor ne pomaga) #TODO preveri če Mul pomaga
+    # nicelna =sympy.Mul(a,x-x1,x-x2, evaluate=False)# TODO nej se ničle ne poenostavljajo in a zmnoži not (factor ne pomaga) #TODO preveri če Mul pomaga
     return [a, x1, x2, nicelna]
 
 
@@ -212,7 +222,7 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate #Todo navodila
         x2 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
         y1 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
         y2 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
-        premica = linearnaFunkcija.skoziTocki(x1,y1,x2,y2)[-1]
+        premica = linearnaFunkcija.skoziTocki(x1, y1, x2, y2)[-1]
         koeficienta = sympy.solve((a * x1 ** 2 + b * x1 + c - y1, a * x2 ** 2 + b * x2 + c - y2), b, c)
         preveri(koeficienta[b] < 5 and koeficienta[c] < 5)
         kvadratna = a * x ** 2 + koeficienta[b] * x + koeficienta[c]

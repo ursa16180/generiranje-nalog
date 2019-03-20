@@ -142,13 +142,15 @@ class Racunanje(Naloga):
     def poskusi_sestaviti(self):
         z = sympy.symbols('z')
         z0 = izberiKompleksnoStevilo()
-        racun =  sympy.Pow(z, random.randint(2,3)) +   sympy.Mul(sympy.Pow(sympy.I, random.randint(1991,2018),evaluate=False),sympy.conjugate(z), evaluate=False)+ abs(z) ** 2
+        racun = sympy.Pow(z, random.randint(2, 3)) + sympy.Mul(
+            sympy.Pow(sympy.I, random.randint(1991, 2018), evaluate=False), sympy.conjugate(z), evaluate=False) + abs(
+            z) ** 2
         rezultat = sympy.simplify(racun.subs(z, z0))
         return {'stevilo': z0, 'racun': racun, 'rezultat': rezultat}
 
 
 class Enacba(Naloga):
-    def __init__(self,lazja, **kwargs):
+    def __init__(self, lazja, **kwargs):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(
             r'''Katero kompleksno število $z$ zadošča enačbi ${{latex(naloga.enacba)}}$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.''')
@@ -159,7 +161,8 @@ class Enacba(Naloga):
         {% endfor %}
         \end{enumerate}
         ''')
-        self.resitev_posamezne = jinja2.Template(r'''$z={{latex(naloga.resitev)}}$, $\operatorname{Re}(z)={{latex(naloga.realna)}}$, $\operatorname{Im}(z)={{latex(naloga.imaginarna)}}$, $\left|z\right|={{latex(naloga.absolutna)}}$''')
+        self.resitev_posamezne = jinja2.Template(
+            r'''$z={{latex(naloga.resitev)}}$, $\operatorname{Re}(z)={{latex(naloga.realna)}}$, $\operatorname{Im}(z)={{latex(naloga.imaginarna)}}$, $\left|z\right|={{latex(naloga.absolutna)}}$''')
         self.resitev_vecih = jinja2.Template(r'''
         \begin{enumerate}
          {% for naloga in naloge %}
@@ -174,11 +177,11 @@ class Enacba(Naloga):
         z1 = izberiKompleksnoStevilo()
         resitev = izberiKompleksnoStevilo()
         if self.lazja:
-            enacba = z1*z
+            enacba = z1 * z
 
         else:
             z2 = izberiKompleksnoStevilo()
-            enacba = z1*z + z2*sympy.conjugate(z)
+            enacba = z1 * z + z2 * sympy.conjugate(z)
         z3 = sympy.simplify(enacba.subs(z, resitev))
         im = sympy.im(resitev)
         re = sympy.re(resitev)
@@ -187,10 +190,12 @@ class Enacba(Naloga):
         return {'enacba': sympy.Eq(enacba, z3), 'resitev': resitev, 'imaginarna': im, 'realna': re,
                 'absolutna': absolutna}
 
+
 class NarisiTocke(Naloga):
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''V kompleksno ravnino nariši števila $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$.''')
+        self.besedilo_posamezne = jinja2.Template(
+            r'''V kompleksno ravnino nariši števila $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$.''')
         self.besedilo_vecih = jinja2.Template(r'''V kompleksno ravnino nariši števila:
         \begin{enumerate}
         {% for naloga in naloge %}
@@ -245,13 +250,14 @@ class NarisiTocke(Naloga):
          ''')
 
     def poskusi_sestaviti(self):
-        z1 = izberiKompleksnoStevilo(-5,5)
-        z2 = izberiKompleksnoStevilo(-5,5)
-        z3 = izberiKompleksnoStevilo(-5,5)
-        z4 = izberiKompleksnoStevilo(-5,5)
-        preveri(len(set(z1,z2,z3,z4))==4)
-        koordinatiz1=(sympy.re(z1), sympy.im(z1))
-        koordinatiz2=(sympy.re(z2), sympy.im(z2))
-        koordinatiz3=(sympy.re(z3), sympy.im(z3))
-        koordinatiz4=(sympy.re(z4), sympy.im(z4))
-        return {'z1':z1,'z2':z2,'z3':z3,'z4':z4, 'koordinatiz1':koordinatiz1 ,'koordinatiz2':koordinatiz2 ,'koordinatiz3':koordinatiz3 ,'koordinatiz4':koordinatiz4 }
+        z1 = izberiKompleksnoStevilo(-5, 5)
+        z2 = izberiKompleksnoStevilo(-5, 5)
+        z3 = izberiKompleksnoStevilo(-5, 5)
+        z4 = izberiKompleksnoStevilo(-5, 5)
+        preveri(len({z1, z2, z3, z4}) == 4)
+        koordinatiz1 = (sympy.re(z1), sympy.im(z1))
+        koordinatiz2 = (sympy.re(z2), sympy.im(z2))
+        koordinatiz3 = (sympy.re(z3), sympy.im(z3))
+        koordinatiz4 = (sympy.re(z4), sympy.im(z4))
+        return {'z1': z1, 'z2': z2, 'z3': z3, 'z4': z4, 'koordinatiz1': koordinatiz1, 'koordinatiz2': koordinatiz2,
+                'koordinatiz3': koordinatiz3, 'koordinatiz4': koordinatiz4}

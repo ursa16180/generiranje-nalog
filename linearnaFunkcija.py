@@ -40,9 +40,14 @@ def skoziTocki(x1, y1, x2, y2):
     return [k, n, k * x + n]
 
 
+def izberiKoordinato(od=-10, do=10):
+    koordinata = random.randint(od, do)
+    return koordinata
+
+
 # ~~~~~Posamezne naloge iz poglavja Linearna funkcija
 
-class VzorecNaloge(Naloga):
+class PremicaSkoziTocki(Naloga):
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(
@@ -71,6 +76,7 @@ class VzorecNaloge(Naloga):
         preveri(x1 != x2 and y1 != y2)  # Preveri, da sta 2 vzporedni točki in nista vzporedni osem
         premica = sympy.latex(skoziTocki(x1, y1, x2, y2)[-1])
         return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'premica': premica}
+
 
 class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO preveri jinja latex
     def __init__(self, **kwargs):
@@ -290,3 +296,106 @@ class VrednostiLinearne(Naloga):
         return {'linearna': sympy.latex(sympy.Eq(f, funkcija)), 'x1': sympy.latex(x1), 'x2': sympy.latex(x2),
                 'y1': sympy.latex(y1), 'y2': sympy.latex(y2), 'negativno': negativno}
 
+
+class SistemDvehEnacb(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$ in ${{latex(naloga.enacba2)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Reši sistem enačb:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        y = sympy.symbols('y')
+        izborCela = [x for x in range(-5, 6) if x != 0]
+        izborUlomki = [sympy.Rational(x, 2) for x in [-3, -1, 1, 3]] + [sympy.Rational(x, 3) for x in
+                                                                        [-2, -1, 1, 2]] + [sympy.Rational(x, 4) for x in
+                                                                                           [-3, -1, 1, 3]]
+        if self.lazja:
+            x1 = random.choice(izborCela + [0])
+            y1 = random.choice(izborCela + [0])
+        else:
+            x1 = random.choice(izborCela + izborUlomki + [0])
+            y1 = random.choice(izborCela + izborUlomki + [0])
+        a = random.choice(izborCela)
+        b = random.choice(izborCela)
+        d = random.choice(izborCela)
+        e = random.choice(izborCela)
+        preveri((a, b) != (d, e) and (x1 != 0 or y1 != 0))
+        c = a * x1 + b * y1
+        f = d * x1 + e * y1
+        enacba1 = a * x + b * y
+        enacba2 = d * x + e * y
+        return {'enacba1': sympy.Eq(enacba1, c), 'enacba2': sympy.Eq(enacba2, f), 'x': x1, 'y': y1}
+
+
+class SistemTrehEnacb(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$ in ${{latex(naloga.enacba3)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Reši sistem enačb:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$, ${{latex(naloga.enacba3)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(
+            r'''$x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$, $z={{latex(naloga.z)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$, $z={{latex(naloga.z)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        y = sympy.symbols('y')
+        z = sympy.symbols('z')
+        if self.lazja:
+            izborCela = [-2, -1, 0, 1, 2]
+        else:
+            izborCela = list(range(-5, 6))
+        x1 = random.choice(izborCela)
+        y1 = random.choice(izborCela)
+        z1 = random.choice(izborCela)
+
+        a = random.choice(izborCela)
+        b = random.choice(izborCela)
+        c = random.choice(izborCela)
+        e = random.choice(izborCela)
+        f = random.choice(izborCela)
+        g = random.choice(izborCela)
+        i = random.choice(izborCela)
+        j = random.choice(izborCela)
+        k = random.choice(izborCela)
+
+        preveri((a, b, c) != (e, f, g) and (a, b, c) != (i, j, k) and (i, j, k) != (e, f, g) and (
+                x1 != 0 or y1 != 0 or z1 != 0))
+        d = a * x1 + b * y1 + c * z1
+        h = e * x1 + f * y1 + g * z1
+        l = i * x1 + j * y1 + k * z1
+        enacba1 = a * x + b * y + c * z
+        enacba2 = e * x + f * y + g * z
+        enacba3 = i * x + j * y + k * z
+        return {'enacba1': sympy.Eq(enacba1, d), 'enacba2': sympy.Eq(enacba2, h), 'enacba3': sympy.Eq(enacba3, l),
+                'x': x1, 'y': y1, 'z': z1}

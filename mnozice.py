@@ -33,7 +33,7 @@ class ElementiMnozice(Naloga):
          {% endfor %}
          \end{enumerate}
          ''')
-        self.lazja=lazja
+        self.lazja = lazja
 
     def poskusi_sestaviti(self):
         pogoj = random.choice(['|', '<', '<='])
@@ -53,13 +53,15 @@ class ElementiMnozice(Naloga):
         elif pogoj == '<=':
             stevilo = random.randint(5, 8)
             ustrezni = list(range(stevilo + 1))
-        mnozica = set([a * x + b for x in ustrezni if a * x + b>0])
-        return {'n': sympy.simplify(a * n + b), 'pogoj': pogoj, 'stevilo':stevilo, 'mnozica': mnozica}
+        mnozica = set([a * x + b for x in ustrezni if a * x + b > 0])
+        return {'n': sympy.simplify(a * n + b), 'pogoj': pogoj, 'stevilo': stevilo, 'mnozica': mnozica}
+
 
 class PotencnaMnozica(Naloga):
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Zapiši potenčno množico množice $ \mathcal{A} ={{latex(naloga.mnozica)}}$''')
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Zapiši potenčno množico množice $ \mathcal{A} ={{latex(naloga.mnozica)}}$''')
         self.besedilo_vecih = jinja2.Template(r'''Zapiši potenčno množico množice $ \mathcal{A} $:
         \begin{enumerate}
         {% for naloga in naloge %}
@@ -77,14 +79,15 @@ class PotencnaMnozica(Naloga):
          ''')
 
     def poskusi_sestaviti(self):
-        velikost=random.randint(2,3)
-        mnozice = [['a', 'b','c'], [1,2,3],['x', 'y','z'],['alpha', 'beta','gamma'],['Pi','Phi','Xi'],[3,6,9],[3,7,42]]
+        velikost = random.randint(2, 3)
+        mnozice = [['a', 'b', 'c'], [1, 2, 3], ['x', 'y', 'z'], ['alpha', 'beta', 'gamma'], ['Pi', 'Phi', 'Xi'],
+                   [3, 6, 9], [3, 7, 42]]
         mnozica = sympy.FiniteSet(*random.choice(mnozice)[:velikost])
         potencna = mnozica.powerset()
-        return {'mnozica':mnozica, 'potencna':potencna}
+        return {'mnozica': mnozica, 'potencna': potencna}
 
 
-class UnijaPresekRazlika(Naloga):
+class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo presek razliko dovolj 2
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(r'''Dane so množice $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$ in $ \mathcal{C} ={{latex(naloga.C)}}$.

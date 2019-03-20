@@ -74,6 +74,7 @@ class NiclePolinoma(Naloga):
             'polinom': sympy.expand(polinom),
             'nicle': nicle}
 
+
 class DvojnaNicla(Naloga):
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
@@ -98,11 +99,12 @@ class DvojnaNicla(Naloga):
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
         dvojna = random.choice([-5, -4, -3, -2, -1, 2, 3, 4, 5])  # Nočem da je dvojna nišla 0 ali 1 ker prelahko
-        [vodilni_koeficient, nicle, stopnja, polinomBrezDvojne] = narediPolinom(2, 2, -5,5)
-        [x3,x4]=nicle
+        [a, b, c, splosna] = kvadratnaFunkcija.splosnaOblika()
+        [x3, x4] = kvadratnaFunkcija.nicle(a, b, c)
         preveri(x3 != dvojna and x4 != dvojna)
-        polinom = sympy.expand('(x - {0}) ** 2 *'.format(dvojna)+ polinomBrezDvojne)
+        polinom = sympy.expand(sympy.Mul((x - dvojna) ** 2, splosna))
         return {'polinom': polinom, 'dvojna': dvojna, 'x3': x3, 'x4': x4}
+
 
 class ParameteraDvojna(Naloga):
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-5, max_nicla=5, **kwargs):
@@ -156,8 +158,10 @@ class ParameteraDvojna(Naloga):
         b = koeficienti[-2]
         koeficienti[-3] = 'a'
         koeficienti[-2] = 'b'
-        polinom = sympy.Poly(koeficienti,x).as_expr() #TODO Ne glede na to ali niz ali poly vedno uredi a na začetku polinoma: če je pa na roke napisan niz pa ne poračuna -- potence o ipd
+        polinom = sympy.Poly(koeficienti,
+                             x).as_expr()  # TODO Ne glede na to ali niz ali poly vedno uredi a na začetku polinoma: če je pa na roke napisan niz pa ne poračuna -- potence o ipd
         return {'polinom': polinom, 'polinomResitev': polinomResitev, 'dvojna': dvojna, 'a': a, 'b': b}
+
 
 class GrafPolinoma(Naloga):
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-3, max_nicla=3, **kwargs):
@@ -233,7 +237,8 @@ class GrafPolinoma(Naloga):
 
         return {'polinom': polinom, 'nicelna': nicelnaOblika, 'nicle': nicle, 'zacetna': zacetna}
 
-#TODO ideja: deljenje polinomov
+
+# TODO ideja: deljenje polinomov
 # ~~~~~~Naloge iz sklopa: Racionalna funkcija
 class DolociNiclePoleAsimptotoRacionalne(Naloga):
     def __init__(self, min_stopnja_stevca=3, max_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3,
@@ -301,7 +306,7 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         racionalna = sympy.latex(sympy.expand(stevec) / sympy.expand(imenovalec))
         return {'racionalna': racionalna, 'nicle': nicle, 'poli': poli, 'asimptota': asimptota}
 
-#TODO ideja: matura 94/7,8 : definicijsko območje in enačbe
+# TODO ideja: matura 94/7,8 : definicijsko območje in enačbe
 
 # class GrafRacionalne(Naloga): #Ta naloga je skoraj nemogoča, saj latex ne more narisati grafa racionalne, ker se ne zna izognit polom Ideja: samles, unbounded coords=jump
 #     def __init__(self, min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=2, max_stopnja_imenovalca=4,

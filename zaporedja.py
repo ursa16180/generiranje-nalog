@@ -1,7 +1,7 @@
-from generiranje import*
+from generiranje import *
 
 
-class SplosniClenAritmeticnegaZaporedja(Naloga): #TODO preveri jinja latex
+class SplosniClenAritmeticnegaZaporedja(Naloga):  # TODO preveri jinja latex
     def __init__(self, od=-5, do=5, **kwargs):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(
