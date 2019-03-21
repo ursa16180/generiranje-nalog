@@ -1,25 +1,30 @@
-from generiranje import *
+from generiranje import Naloga
+import random
+import sympy
 
 
 class PotencaDvoclenika(Naloga):
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Potenciraj izraz ${{latex(naloga.izraz)}}$''')
-        self.besedilo_vecih = jinja2.Template(r'''Potenciraj izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.potenciran)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.potenciran)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+        super().__init__(
+            self,
+            besedilo_posamezne=r'''Potenciraj izraz ${{latex(naloga.izraz)}}$''',
+            besedilo_vecih=r'''Potenciraj izraze:
+                         \begin{enumerate}
+                         {% for naloga in naloge %}
+                         \item ${{latex(naloga.izraz)}}$
+                         {% endfor %}
+                         \end{enumerate}
+                         ''',
+            resitev_posamezne=r'''${{latex(naloga.potenciran)}}$''',
+            resitev_vecih=r'''
+                         \begin{enumerate}
+                          {% for naloga in naloge %}
+                          \item ${{latex(naloga.potenciran)}}$
+                          {% endfor %}
+                          \end{enumerate}
+                          ''',
+            **kwargs)
+
         self.lazja = lazja
         self.min_potenca = int(min(min_potenca, max_potenca))
         self.max_potenca = int(max(min_potenca, max_potenca))
@@ -50,23 +55,26 @@ class PotencaDvoclenika(Naloga):
 
 class PotencaTroclenika(Naloga):
     def __init__(self, min_potenca=2, max_potenca=2, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Potenciraj izraz ${{latex(naloga.izraz)}}$''')
-        self.besedilo_vecih = jinja2.Template(r'''Potenciraj izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.potenciran)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.potenciran)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+        super().__init__(
+            self,
+            besedilo_posamezne=r'''Potenciraj izraz ${{latex(naloga.izraz)}}$''',
+            besedilo_vecih=r'''Potenciraj izraze:
+            \begin{enumerate}
+            {% for naloga in naloge %}
+            \item ${{latex(naloga.izraz)}}$
+            {% endfor %}
+            \end{enumerate}
+            ''',
+            resitev_posamezne=r'''${{latex(naloga.potenciran)}}$''',
+            resitev_vecih=r'''
+            \begin{enumerate}
+             {% for naloga in naloge %}
+             \item ${{latex(naloga.potenciran)}}$
+             {% endfor %}
+             \end{enumerate}
+             ''',
+            **kwargs)
+
         self.min_potenca = int(min(min_potenca, max_potenca))
         self.max_potenca = int(max(min_potenca, max_potenca))
 
@@ -86,21 +94,23 @@ class PotencaTroclenika(Naloga):
 class RazstaviVieta(Naloga):
     def __init__(self, minimalna_vrednost=-9, maksimalna_vrednost=9, lazja=True,
                  **kwargs):  # TODO ali so te min maks vrednosti smiselne?
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template('Razstavi izraz ${{latex(naloga.nerazstavljeno)}}$.')
-        self.besedilo_vecih = jinja2.Template('Razstavi naslednje izraze '
-                                              '\\begin{enumerate}'
-                                              '{% for naloga in naloge %}'
-                                              '\\item ${{latex(naloga.nerazstavljeno)}}=$'
-                                              '{% endfor %}'
-                                              '\\end{enumerate}'
-                                              )
-        self.resitev_posamezne = jinja2.Template('${{latex(naloga.razstavljeno)}}$')
-        self.resitev_vecih = jinja2.Template('\\begin{enumerate}'
-                                             '{% for naloga in naloge %}'
-                                             '\\item ${{latex(naloga.razstavljeno)}}$'
-                                             '{% endfor %}'
-                                             '\\end{enumerate}')
+        super().__init__(
+            self,
+            besedilo_posamezne=r'''Razstavi izraz ${{latex(naloga.nerazstavljeno)}}$.''',
+            besedilo_vecih=r'''Razstavi naslednje izraze '
+                                        '\\begin{enumerate}'
+                                        '{% for naloga in naloge %}'
+                                        '\\item ${{latex(naloga.nerazstavljeno)}}=$'
+                                        '{% endfor %}'
+                                        '\\end{enumerate}''',
+            resitev_posamezne=r'''${{latex(naloga.razstavljeno)}}$''',
+            resitev_vecih=r'''\\begin{enumerate}'
+                                       '{% for naloga in naloge %}'
+                                       '\\item ${{latex(naloga.razstavljeno)}}$'
+                                       '{% endfor %}'
+                                       '\\end{enumerate}''',
+            **kwargs)
+
         self.minimalna_vrednost = int(min(minimalna_vrednost, maksimalna_vrednost))
         self.maksimalna_vrednost = int(max(minimalna_vrednost, maksimalna_vrednost))
         self.lazja = lazja
@@ -120,26 +130,33 @@ class RazstaviVieta(Naloga):
 
 class RazstaviRazliko(Naloga):
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Razstavi izraz ${{latex(naloga.izraz)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Razstavi izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.razstavljen)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.razstavljen)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+        super().__init__(
+            self,
+            besedilo_posamezne=r'''Razstavi izraz ${{latex(naloga.izraz)}}$.''',
+            besedilo_vecih=r'''Razstavi izraze:
+                \begin{enumerate}
+                {% for naloga in naloge %}
+                \item${{latex(naloga.izraz)}}$
+                {% endfor %}
+                \end{enumerate}
+                ''',
+            resitev_posamezne=r'''${{latex(naloga.razstavljen)}}$''',
+            resitev_vecih=r'''
+                \begin{enumerate}
+                 {% for naloga in naloge %}
+                 \item ${{latex(naloga.razstavljen)}}$
+                 {% endfor %}
+                 \end{enumerate}
+                 ''',
+            **kwargs
+        )
+        # if lazja not in [True, False]:
+        #     raise TypeError('Argument lazja mora biti True ali False')
+        if min_potenca > max_potenca:
+            raise ValueError('Maksimalna potenca mora biti večja ali enaka minimalni potenci.')
         self.lazja = lazja
-        self.min_potenca = int(min(min_potenca, max_potenca))
-        self.max_potenca = int(max(min_potenca, max_potenca))
+        self.min_potenca = min_potenca
+        self.max_potenca = max_potenca
 
     def poskusi_sestaviti(self):
         potenca = random.randint(self.min_potenca, self.max_potenca)
@@ -164,7 +181,7 @@ class RazstaviRazliko(Naloga):
             m = random.randint(1, 3)
             y = sympy.symbols(random.choice(simboli))
         izraz = (a * x ** n) ** potenca - (
-                    b * y ** m) ** potenca  # Todo kako preprečiti da so členi po abecedi? -4b**2+y**2
+                b * y ** m) ** potenca  # Todo kako preprečiti da so členi po abecedi? -4b**2+y**2
         razstavljen = sympy.factor(izraz)
 
         return {'izraz': izraz, 'razstavljen': razstavljen}
@@ -172,23 +189,26 @@ class RazstaviRazliko(Naloga):
 
 class RazstaviPotenco(Naloga):
     def __init__(self, min_potenca=2, max_potenca=3, min_clenov=2, max_clenov=2, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Razstavi izraz ${{latex(naloga.izraz)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Razstavi izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.razstavljen)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.razstavljen)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+        super().__init__(
+            self,
+            besedilo_posamezne=r'''Razstavi izraz ${{latex(naloga.izraz)}}$.''',
+            besedilo_vecih=r'''Razstavi izraze:
+            \begin{enumerate}
+            {% for naloga in naloge %}
+            \item${{latex(naloga.izraz)}}$
+            {% endfor %}
+            \end{enumerate}
+            ''',
+            resitev_posamezne=r'''${{latex(naloga.razstavljen)}}$''',
+            resitev_vecih=r'''
+            \begin{enumerate}
+             {% for naloga in naloge %}
+             \item ${{latex(naloga.razstavljen)}}$
+             {% endfor %}
+             \end{enumerate}
+             ''',
+            **kwargs)
+
         self.min_potenca = int(min(min_potenca, max_potenca))
         self.max_potenca = int(max(min_potenca, max_potenca))
         self.min_clenov = int(min(min_clenov, max_clenov))
