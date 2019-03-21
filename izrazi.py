@@ -1,4 +1,4 @@
-from generiranje import Naloga
+from generiranje import Naloga, preveri
 import random
 import sympy
 
