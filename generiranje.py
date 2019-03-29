@@ -16,48 +16,45 @@ class Naloga:
                  st_nalog=None, **kwargs):
         self.st_nalog = st_nalog
 
-        if besedilo_posamezne is None:
-            besedilo_posamezne = '''
-                Reši nalogo: ${{ naloga }}$
-            '''
-
-        if besedilo_vecih is None:
-            besedilo_vecih = r'''
-                Reši sledeče naloge:
-                \begin{enumerate}
-                {% for naloga in naloge %}
-                \item ${{ naloga }}$
-                {% endfor %}
-                \end{enumerate}
-            '''
-
-        if resitev_posamezne is None:
-            resitev_posamezne = r'''
-                Rešitev: ${{ naloga }}$ 
-            '''
-        if resitev_vecih is None:
-            resitev_vecih = r'''
-                Rešitve nalog:
-                \begin{enumerate}
-                {% for naloga in naloge %}
-                \item ${{ naloga }}$
-                {% endfor %}
-                \end{enumerate}
-            '''
-
-        self.besedilo_posamezne = jinja2.Template(besedilo_posamezne)
-        self.besedilo_vecih = jinja2.Template(besedilo_vecih)
-        self.resitev_posamezne = jinja2.Template(resitev_posamezne)
-        self.resitev_vecih = jinja2.Template(resitev_vecih)
-
-        razsiritve = {
-            'latex': sympy.latex, 'expand': sympy.expand
-        }
-
-        self.besedilo_posamezne.globals.extend(razsiritve)
-        self.besedilo_vecih.globals.extend(razsiritve)
-        self.resitev_posamezne.globals.extend(razsiritve)
-        self.resitev_vecih.globals.extend(razsiritve)
+        if besedilo_posamezne:
+            self.besedilo_posamezne = besedilo_posamezne
+        else:
+            self.besedilo_posamezne = jinja2.Template('''
+                        Reši nalogo: ${{ naloga }}$
+                    ''')
+        if besedilo_vecih:
+            self.besedilo_vecih = besedilo_vecih
+        else:
+            self.besedilo_vecih = jinja2.Template('''
+                        Reši sledeče naloge:
+                        \\begin{enumerate}
+                        {% for naloga in naloge %}
+                        \\item${{ naloga }}$
+                        {% endfor %}
+                        \\end{enumerate}
+                    ''')
+        if resitev_posamezne:
+            self.resitev_posamezne = resitev_posamezne
+        else:
+            self.resitev_posamezne = jinja2.Template('''
+                        Rešitev: ${{ naloga }}$ 
+                    ''')
+        if resitev_vecih:
+            self.resitev_vecih = resitev_vecih
+        else:
+            self.resitev_vecih = jinja2.Template('''
+                        Rešitve nalog:
+                        \\begin{enumerate}
+                        {% for naloga in naloge %}
+                        \\item${{ naloga }}$
+                        {% endfor %}
+                        \\end{enumerate}
+                    ''')
+        # TODO: template se kliče samo enkrat - če kličeš na tem mestu besedilo_posamezne, je to objekt naloga in ne dejansko besedilo
+        # self.besedilo_posamezne = jinja2.Template(besedilo_posamezne)
+        # self.besedilo_vecih = jinja2.Template(besedilo_vecih)
+        # self.resitev_posamezne = jinja2.Template(resitev_posamezne)
+        # self.resitev_vecih = jinja2.Template(resitev_vecih)
 
     def poskusi_sestaviti(self):
         pass
@@ -76,6 +73,25 @@ class Naloga:
         return naloge
 
     def besedilo(self):
+        # TODO expand funkcija samo podalsuje senzame
+        # razsiritve = {
+        #     'latex': sympy.latex, 'expand': sympy.expand
+        # }
+        # print(self.besedilo_posamezne)
+        # self.besedilo_posamezne.globals.extend(razsiritve)
+        # self.besedilo_vecih.globals.extend(razsiritve)
+        # self.resitev_posamezne.globals.extend(razsiritve)
+        # self.resitev_vecih.globals.extend(razsiritve)
+
+        razsiritve = {
+            'latex': sympy.latex, 'expand': sympy.expand
+        }
+
+        for kljuc, vrednost in razsiritve.items():
+            self.besedilo_posamezne.globals[kljuc] = vrednost
+            self.besedilo_vecih.globals[kljuc] = vrednost
+            self.resitev_posamezne.globals[kljuc] = vrednost
+            self.resitev_vecih.globals[kljuc] = vrednost
 
         if self.st_nalog is None:
             naloga = self.sestavi()
