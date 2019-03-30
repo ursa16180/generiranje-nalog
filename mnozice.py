@@ -1,10 +1,13 @@
-from generiranje import *
+from generiranje import Naloga, preveri
+import random
+import sympy
+import jinja2
 import itertools  # potrebujemo za kartezični produkt
 
 
 def izberiMnozico(velikost=4, od=1, do=10):
     izbor = [x for x in range(od, do + 1)]
-    mnozica = set(random.sample(izbor, velikost))
+    mnozica = sympy.FiniteSet(*random.sample(izbor, velikost))
     return mnozica
 
 
@@ -53,7 +56,7 @@ class ElementiMnozice(Naloga):
         elif pogoj == '<=':
             stevilo = random.randint(5, 8)
             ustrezni = list(range(stevilo + 1))
-        mnozica = set([a * x + b for x in ustrezni if a * x + b > 0])
+        mnozica = sympy.FiniteSet(*[a * x + b for x in ustrezni if a * x + b > 0])
         return {'n': sympy.simplify(a * n + b), 'pogoj': pogoj, 'stevilo': stevilo, 'mnozica': mnozica}
 
 
@@ -87,7 +90,7 @@ class PotencnaMnozica(Naloga):
         return {'mnozica': mnozica, 'potencna': potencna}
 
 
-class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo presek razliko dovolj 2
+class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo presek razliko dovolj 2 #Todo ime naloge?
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(r'''Dane so množice $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$ in $ \mathcal{C} ={{latex(naloga.C)}}$.
@@ -120,10 +123,10 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
         C = izberiMnozico(2, 1, 6)
         AunijaC = A.union(C)
         ApresekB = A.intersection(B)
-        AbrezC = A.difference(C)
-        CbrezB = C.difference(B)
-        AkartezicnoC = set(itertools.product(A, C))  # TODO izbriši presledek v tuplu(a, b)
-        AunijaCbrezApresekB = AunijaC.difference(ApresekB)
+        AbrezC = sympy.Complement(A, C)
+        CbrezB = sympy.Complement(C, B)
+        AkartezicnoC = sympy.FiniteSet(*A * C)
+        AunijaCbrezApresekB = sympy.Complement(AunijaC, ApresekB)
         return {'A': A, 'B': B, 'C': C, 'AunijaC': AunijaC, 'ApresekB': ApresekB, 'AbrezC': AbrezC, 'CbrezB': CbrezB,
                 'AkartezicnoC': AkartezicnoC, 'AunijaCbrezApresekB': AunijaCbrezApresekB}
 
@@ -163,15 +166,17 @@ class IzpeljaneMnozice(Naloga):
         d = random.choice([-4, -3, -2, -1, 0, 1, 2, 3, 4])
         preveri(abs(b) != a and abs(d) != c)
         velikostUniverzalne = random.randint(12, 20)
-        univerzalna = set(range(1, velikostUniverzalne + 1))
+        univerzalna = sympy.FiniteSet(*range(1, velikostUniverzalne + 1))
         navodiloA = a * k + b
         navodiloB = c * k + d
-        A = set([a * x + b for x in range(1, velikostUniverzalne + 1) if 0 < a * x + b <= velikostUniverzalne])
-        B = set([c * x + d for x in range(1, velikostUniverzalne + 1) if 0 < a * x + b <= velikostUniverzalne])
-        C = set(random.sample(univerzalna, 8))
+        A = sympy.FiniteSet(
+            *[a * x + b for x in range(1, velikostUniverzalne + 1) if 0 < a * x + b <= velikostUniverzalne])
+        B = sympy.FiniteSet(
+            *[c * x + d for x in range(1, velikostUniverzalne + 1) if 0 < a * x + b <= velikostUniverzalne])
+        C = sympy.FiniteSet(*random.sample(set(univerzalna), 8))
         AunijaB = A.union(B)
-        Ckomplement = univerzalna.difference(C)
-        BbrezA = B.difference(A)
+        Ckomplement = sympy.Complement(univerzalna, C)
+        BbrezA = sympy.Complement(B, A)
 
         return {'navodiloA': navodiloA, 'navodiloB': navodiloB, 'A': A, 'B': B, 'C': C,
                 'AunijaB': AunijaB, 'Ckomplement': Ckomplement, 'BbrezA': BbrezA,

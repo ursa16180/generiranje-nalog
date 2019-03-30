@@ -1,4 +1,7 @@
-from generiranje import *
+from generiranje import Naloga, preveri
+import random
+import sympy
+import jinja2
 
 
 def izberiKompleksnoStevilo(od=-5, do=5):
@@ -71,7 +74,8 @@ class Ulomek(Naloga):
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
-        izbor = [x for x in range(-5, 6) if x != 0] + [x * sympy.I for x in range(-5, 6) if x != 0]
+        izbor = list(range(1, 6)) + [x * sympy.I for x in range(-5, 6) if
+                                     x != 0]  # TODO dodaj odštevanje ulomkov- če izbere celo negativno število, se račun poenostavi
         if self.lazja:
             a = random.choice(izbor)
             b = random.choice(izbor)
@@ -82,10 +86,12 @@ class Ulomek(Naloga):
         z1 = izberiKompleksnoStevilo(-3, 3)
         z2 = izberiKompleksnoStevilo(-3, 3)
         preveri(a != z1 and b != z2 and z1 != z2)
-
-        racun = '\\frac{{{0}}}{{{1}}} +\\frac{{{2}}}{{{3}}}'.format(sympy.latex(a), sympy.latex(z1), sympy.latex(b),
-                                                                    sympy.latex(
-                                                                        z2))  # TODO kako avomatično zapisati neporačunan ulomek
+        racun = sympy.Add(sympy.Mul(a, sympy.Pow(z1, -1, evaluate=False), evaluate=False),
+                          sympy.Mul(b, sympy.Pow(z2, -1, evaluate=False), evaluate=False),
+                          evaluate=False)
+        # racun = '\\frac{{{0}}}{{{1}}} +\\frac{{{2}}}{{{3}}}'.format(sympy.latex(a), sympy.latex(z1), sympy.latex(b),
+        #                                                             sympy.latex(
+        #                                                                 z2))  # TODO kako avomatično zapisati neporačunan ulomek tudi če so cela negativna števila v števcu
         rezultat = sympy.simplify(a / z1 + b / z2)
         return {'racun': racun, 'rezultat': rezultat}
 
