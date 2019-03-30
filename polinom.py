@@ -1,4 +1,7 @@
-from generiranje import *
+from generiranje import Naloga, preveri, MinMaxNapaka
+import random
+import sympy
+import jinja2
 import kvadratnaFunkcija
 
 
@@ -21,7 +24,7 @@ def narediPolinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risan
         nicle.append(nicla)
     polinom = '{0}*('.format(vodilni_koeficient) + '*'.join(
         '(x-{0})'.format(nicla) for nicla in nicle) + ')'
-
+    nicle.sort()
     return [vodilni_koeficient, nicle, stopnja, polinom]
 
 
@@ -159,7 +162,7 @@ class ParameteraDvojna(Naloga):
         koeficienti[-3] = 'a'
         koeficienti[-2] = 'b'
         polinom = sympy.Poly(koeficienti,
-                             x).as_expr()  # TODO Ne glede na to ali niz ali poly vedno uredi a na začetku polinoma: če je pa na roke napisan niz pa ne poračuna -- potence o ipd
+                             x).as_expr()  # TODO Ne glede na to ali niz ali poly vedno uredi a na začetku polinoma: če je pa na roke napisan niz pa ne poračuna -- potence  ipd
         return {'polinom': polinom, 'polinomResitev': polinomResitev, 'dvojna': dvojna, 'a': a, 'b': b}
 
 
@@ -306,109 +309,128 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         racionalna = sympy.latex(sympy.expand(stevec) / sympy.expand(imenovalec))
         return {'racionalna': racionalna, 'nicle': nicle, 'poli': poli, 'asimptota': asimptota}
 
+
 # TODO ideja: matura 94/7,8 : definicijsko območje in enačbe
 
-# class GrafRacionalne(Naloga): #Ta naloga je skoraj nemogoča, saj latex ne more narisati grafa racionalne, ker se ne zna izognit polom Ideja: samles, unbounded coords=jump
-#     def __init__(self, min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=2, max_stopnja_imenovalca=4,
-#                  min_nicla=-3, max_nicla=3, lazja=True, **kwargs):
-#         super().__init__(self, **kwargs)
-#         self.besedilo_posamezne = jinja2.Template(
-#             r'''Nariši graf racionalne funkcije $r(x)= {{naloga.racionalna}}$.''')
-#
-#         self.besedilo_vecih = jinja2.Template(r'''
-#         Nariši grafe racionalnih funkcij:
-#         \begin{enumerate}
-#         {% for naloga in naloge%}
-#         \item $r(x)={{naloga.racionalna}}$
-#         {% endfor %}
-#         \end{enumerate}''')
-#
-#         self.resitev_posamezne = jinja2.Template(r'''$r(x)={{latex(naloga.racionalna)}}$\par
-#         \begin{minipage}{\linewidth}
-#         \centering
-#         \begin{tikzpicture}[baseline]
-#         \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
-#         xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
-#         xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-#         \addplot[domain =-5:5,samples=10, color=black, smooth,]{ {{naloga.nicelna}} };
-#         \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
-#         \end{axis}
-#         \end{tikzpicture}
-#         \end{minipage}
-#         ''')
-#
-#         self.resitev_vecih = jinja2.Template(r'''
-#         \begin{enumerate}
-#         {% for naloga in naloge%}
-#         \item $r(x)={{latex(naloga.racionalna)}}$\par
-#         \begin{minipage}{\linewidth}
-#         \centering
-#         \begin{tikzpicture}[baseline]
-#         \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
-#         xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
-#         xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-#         \addplot[domain =-5:5,samples=10, color=black, smooth,unbounded coords=jump,]{ {{naloga.nicelna}} };
-#         \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
-#         \end{axis}
-#         \end{tikzpicture}
-#         \end{minipage}
-#         {% endfor %}
-#         \end{enumerate}''')
-#
-#         if min_stopnja_stevca < 0:  # Preveri da ni vpisano kaj čudnega
-#             self.min_stopnja_stevca = 0
-#         else:
-#             self.min_stopnja_stevca = int(min_stopnja_stevca)
-#         if max_stopnja_stevca < 0:
-#             self.max_stopnja_stevca = 0
-#         else:
-#             self.max_stopnja_stevca = int(max_stopnja_stevca)
-#
-#         if min_stopnja_imenovalca < 0:  # Preveri da ni vpisano kaj čudnega
-#             self.min_stopnja_imenovalca = 0
-#         else:
-#             self.min_stopnja_imenovalca = int(min_stopnja_imenovalca)
-#         if max_stopnja_imenovalca < 0:
-#             self.max_stopnja_imenovalca = 0
-#         else:
-#             self.max_stopnja_imenovalca = int(max_stopnja_imenovalca)
-#         self.min_nicla = min_nicla
-#         self.max_nicla = max_nicla
-#         self.lazja = lazja
-#
-#     def poskusi_sestaviti(self):
-#         [vodilni_stevca, nicle, stopnja_stevca, stevec] = narediPolinom(self.min_stopnja_stevca,
-#                                                                         self.max_stopnja_stevca, self.min_nicla,
-#                                                                         self.max_nicla, risanje=True)
-#         [vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec] = narediPolinom(self.min_stopnja_imenovalca,
-#                                                                                    self.max_stopnja_imenovalca,
-#                                                                                    self.min_nicla, self.max_nicla,
-#                                                                                    risanje=True)
-#         razlika_stopenj = stopnja_stevca - stopnja_imenovalca
-#         preveri(set(nicle) & set(poli) == set() and
-#                 razlika_stopenj < 3)  # Ker ne znajo narisati asimptot3 3.stopnje
-#         if self.lazja:
-#             preveri(razlika_stopenj < 1)
-#         else:
-#             preveri(1 <= razlika_stopenj <= 2)  # Poševna asimptota in kvadratna sta težki za dijake
-#         x = sympy.symbols('x')
-#
-#         if stopnja_stevca < stopnja_imenovalca:
-#             asimptota = 0
-#         elif stopnja_stevca == stopnja_imenovalca:
-#             asimptota = vodilni_stevca / vodilni_imenovalca
-#         elif stopnja_stevca > stopnja_imenovalca:
-#
-#             q, r = sympy.div(stevec, imenovalec, x)
-#             asimptota = q
-#         if razlika_stopenj == 2:
-#             asimptota = sympy.latex(asimptota.evalf())
-#             #print(asimptota)
-#
-#         nicelna = '(' + stevec + ')/(' + imenovalec + ')'
-#         #nicelna= str(sympy.N(sympy.factor(stevec)) / sympy.N(sympy.factor(imenovalec))).replace('**','^')
-#         print(nicelna)
-#         racionalna = sympy.latex(sympy.expand(stevec) / sympy.expand(imenovalec))
-#
-#
-#         return {'racionalna': racionalna, 'nicelna': nicelna, 'nicle': nicle, 'poli': poli, 'asimptota': asimptota}
+class GrafRacionalne(
+    Naloga):  # TODO stacionarne točke naj bodo manjše od 5, drugače ni vej na grafu (funkcija.diff je odvod)
+    def __init__(self, min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=2, max_stopnja_imenovalca=4,
+                 min_nicla=-5, max_nicla=5, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+
+        if min_nicla > max_nicla or min_stopnja_stevca > max_stopnja_stevca or min_stopnja_imenovalca > max_stopnja_imenovalca:
+            raise MinMaxNapaka
+        if min_stopnja_imenovalca < 0 or min_stopnja_stevca < 0:
+            raise ValueError('Stopnja polinoma mora biti večja od nič.')
+
+        self.besedilo_posamezne = jinja2.Template(
+            r'''Nariši graf racionalne funkcije $r(x)= {{naloga.racionalna}}$.''')
+
+        self.besedilo_vecih = jinja2.Template(r'''
+        Nariši grafe racionalnih funkcij:
+        \begin{enumerate}
+        {% for naloga in naloge%}
+        \item $r(x)={{naloga.racionalna}}$
+        {% endfor %}
+        \end{enumerate}''')
+
+        self.resitev_posamezne = jinja2.Template(r'''$r(x)={{latex(naloga.racionalna)}}$\par
+        \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzpicture}[baseline]
+        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
+        xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+        xmin=-5.5, xmax=5.5, 
+        restrict y to domain=-5.5:5.5,]
+        
+        {% for i in range( naloga.domenaPoli|count -1) %}
+        \addplot[domain ={{naloga.domenaPoli[i]}}+0.1 : {{naloga.domenaPoli[i+1]}}-0.1, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
+        {% endfor %}
+        
+        {% for i in range(1, naloga.domenaPoli|count -1) %}
+        \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
+        {% endfor %}
+        
+        
+        
+        \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
+        \end{axis}
+        \end{tikzpicture}
+        \end{minipage}
+        ''')
+
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+        {% for naloga in naloge%}
+        \item $r(x)={{latex(naloga.racionalna)}}$\par
+        \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzpicture}[baseline]
+        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
+        xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+        xmin=-5.5, xmax=5.5,
+        restrict y to domain=-5.5:5.5,]
+
+        {% for i in range( naloga.domenaPoli|count -1) %}
+        \addplot[domain ={{naloga.domenaPoli[i]}}+0.3 : {{naloga.domenaPoli[i+1]}}-0.3, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
+        {% endfor %}
+        
+        {% for i in range(1, naloga.domenaPoli|count -1) %}
+        \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
+        {% endfor %}
+        
+        \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
+        \end{axis}
+        \end{tikzpicture}
+        \end{minipage}
+        {% endfor %}
+        \end{enumerate}''')
+
+        self.min_stopnja_stevca = min_stopnja_stevca
+        self.max_stopnja_stevca = max_stopnja_stevca
+        self.min_stopnja_imenovalca = min_stopnja_imenovalca
+        self.max_stopnja_imenovalca = max_stopnja_imenovalca
+        self.min_nicla = min_nicla
+        self.max_nicla = max_nicla
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        [vodilni_stevca, nicle, stopnja_stevca, stevec] = narediPolinom(self.min_stopnja_stevca,
+                                                                        self.max_stopnja_stevca, self.min_nicla,
+                                                                        self.max_nicla, risanje=True)
+        [vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec] = narediPolinom(self.min_stopnja_imenovalca,
+                                                                                   self.max_stopnja_imenovalca,
+                                                                                   self.min_nicla, self.max_nicla,
+                                                                                   risanje=True)
+        razlika_stopenj = stopnja_stevca - stopnja_imenovalca
+        preveri(set(nicle) & set(poli) == set() and
+                razlika_stopenj < 3)  # Ker ne znajo narisati asimptot3 3.stopnje
+        if self.lazja:
+            preveri(razlika_stopenj < 1)
+        else:
+            preveri(1 <= razlika_stopenj <= 2)  # Poševna asimptota in kvadratna sta težki za dijake
+
+        x = sympy.symbols('x')
+
+        if stopnja_stevca < stopnja_imenovalca:
+            asimptota = 0
+        elif stopnja_stevca == stopnja_imenovalca:
+            asimptota = vodilni_stevca / vodilni_imenovalca
+        elif stopnja_stevca > stopnja_imenovalca:
+            q, r = sympy.div(stevec, imenovalec, x)
+            asimptota = q
+        if razlika_stopenj == 2:
+            asimptota = sympy.latex(asimptota.evalf())
+
+        nicelna = '(' + stevec + ')/(' + imenovalec + ')'
+        # nicelna= str(sympy.N(sympy.factor(stevec)) / sympy.N(sympy.factor(imenovalec))).replace('**','^')
+        # print(nicelna)
+        racionalna = sympy.latex(sympy.expand(stevec) / sympy.expand(imenovalec))
+        print(racionalna)
+        domenaPoli = [-5.8] + list(set(poli)) + [5.8]
+
+        return {'racionalna': racionalna, 'nicelna': nicelna, 'nicle': nicle, 'poli': poli, 'asimptota': asimptota,
+                'domenaPoli': domenaPoli}
+
+
+GrafRacionalne().poskusi_sestaviti()
