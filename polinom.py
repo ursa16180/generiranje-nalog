@@ -431,6 +431,3 @@ class GrafRacionalne(
 
         return {'racionalna': racionalna, 'nicelna': nicelna, 'nicle': nicle, 'poli': poli, 'asimptota': asimptota,
                 'domenaPoli': domenaPoli}
-
-
-GrafRacionalne().poskusi_sestaviti()

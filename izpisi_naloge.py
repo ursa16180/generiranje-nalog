@@ -4,6 +4,7 @@ import random
 import shutil
 import jinja2
 import generiranje
+import naravnaStevila
 import mnozice
 import izrazi
 import linearnaFunkcija
@@ -146,14 +147,10 @@ sestavi_vse_teste([
     # kompleksnaStevila.Mnozenje(),kompleksnaStevila.Mnozenje(st_nalog=3),
     # polinom.DolociNiclePoleAsimptotoRacionalne(),
     # polinom.DolociNiclePoleAsimptotoRacionalne(st_nalog=3),
-    # polinom.NiclePolinoma(),
-    # polinom.NiclePolinoma(st_nalog=3),
-    # polinom.GrafPolinoma(),
-    # polinom.GrafPolinoma(st_nalog=3),
-    # polinom.DvojnaNicla(),
-    # polinom.DvojnaNicla(st_nalog=3),
-    # polinom.ParameteraDvojna(),
-    # polinom.ParameteraDvojna(st_nalog=3)
+    # polinom.NiclePolinoma(),polinom.NiclePolinoma(st_nalog=3),
+    # polinom.GrafPolinoma(),polinom.GrafPolinoma(st_nalog=3),
+    # polinom.DvojnaNicla(),polinom.DvojnaNicla(st_nalog=3),
+    # polinom.ParameteraDvojna(),polinom.ParameteraDvojna(st_nalog=3),
     # kvadratnaFunkcija.TemenskaOblika(), kvadratnaFunkcija.TemenskaOblika(st_nalog=3),
     # kvadratnaFunkcija.Neenacba(lazja=False), kvadratnaFunkcija.Neenacba(st_nalog=3),
     # kvadratnaFunkcija.Presecisce(),kvadratnaFunkcija.Presecisce(st_nalog=5),
@@ -162,10 +159,14 @@ sestavi_vse_teste([
     # linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
     # linearnaFunkcija.SistemDvehEnacb(lazja=False),linearnaFunkcija.SistemDvehEnacb(st_nalog=3),
     # linearnaFunkcija.SistemTrehEnacb(lazja=False),linearnaFunkcija.SistemTrehEnacb(st_nalog=3),
+    linearnaFunkcija.Neenacba(lazja=False), linearnaFunkcija.Neenacba(st_nalog=3),
     # izrazi.PotencaDvoclenika(lazja=False),izrazi.PotencaDvoclenika(st_nalog=3),
     # izrazi.PotencaTroclenika(),izrazi.PotencaTroclenika(st_nalog=3),
     # izrazi.RazstaviRazliko(lazja=False), izrazi.RazstaviRazliko(st_nalog=3),
-    # izrazi.RazstaviPotenco(lazja=False), izrazi.RazstaviPotenco(st_nalog=3),
+    naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
+    naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
+    naravnaStevila.DeliteljVeckratnik(), naravnaStevila.DeliteljVeckratnik(st_nalog=3)
+
 
 ],
-    "Tester", "dijaki.txt")  # ,zdruzene_resitve=False)
+    "Tester", "dijaki.txt")#,zdruzene_resitve=False)

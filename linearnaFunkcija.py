@@ -16,6 +16,7 @@ def seznamTretinj(od=-10, do=10):
 
 
 def eksplicitnaPremica():
+    # Funkcija vrne naključno eksplicitno podano premico
     k = random.choice(seznamPolovick(-3, 3) + seznamTretinj(-3, 3))
     n = random.choice(seznamPolovick(-4, 4) + seznamTretinj(-4, 4))
     x = sympy.symbols('x')
@@ -49,6 +50,7 @@ def izberiKoordinato(od=-10, do=10):
 
 
 # ~~~~~Posamezne naloge iz poglavja Linearna funkcija
+#TODO ideja: reši linearno (ne)enačbo (težja s kvadrati ki se odštejejo)
 
 class PremicaSkoziTocki(Naloga):
     def __init__(self, **kwargs):
@@ -145,7 +147,6 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
         return {'implicitna': implicitna, 'eksplicitna': eksplicitna, 'odsekovna': odsekovna}
 
 
-OblikeEnacbPremice().poskusi_sestaviti()
 class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
@@ -302,6 +303,55 @@ class VrednostiLinearne(Naloga):
         return {'linearna': sympy.latex(sympy.Eq(f, funkcija)), 'x1': sympy.latex(x1), 'x2': sympy.latex(x2),
                 'y1': sympy.latex(y1), 'y2': sympy.latex(y2), 'negativno': negativno}
 
+
+class Neenacba(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        # if min_potenca > max_potenca:
+        #     raise MinMaxNapaka
+        self.besedilo_posamezne = jinja2.Template(r'''Reši neenačbo ${{latex(naloga.neenacba)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Reši neenačbo:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{latex(naloga.neenacba)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$x \in {{latex(naloga.resitev)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $x \in {{latex(naloga.resitev)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        izbor = [x for x in range(-5, 5) if x != 0]
+        if self.lazja:
+            a = random.choice(izbor)
+            b = random.choice(izbor)
+            c = random.choice(izbor)
+            d = random.choice(izbor)
+            leva = a * x + b
+            desna = c * x + d
+        else:
+            a = random.choice(izbor)
+            x1 = random.choice(izbor)
+            x2 = random.choice(izbor)
+            x3 = random.choice(izbor)
+            x4 = random.choice(izbor)
+            leva = sympy.Mul(a, (x - x1), (x - x2), evaluate=False)
+            desna = a * (x - x3) * (x - x4)
+
+        neenacaj = random.choice(['<', '<=', '>', '>='])
+        neenacba = sympy.Rel(leva, desna, neenacaj)
+        print(neenacba)
+        resitev = sympy.solveset(sympy.expand(neenacba), x, domain=sympy.S.Reals)
+        print(resitev)
+        return {'neenacba': neenacba, 'resitev': resitev}
 
 class SistemDvehEnacb(Naloga):
     def __init__(self, lazja=True, **kwargs):
