@@ -348,9 +348,7 @@ class Neenacba(Naloga):
 
         neenacaj = random.choice(['<', '<=', '>', '>='])
         neenacba = sympy.Rel(leva, desna, neenacaj)
-        print(neenacba)
         resitev = sympy.solveset(sympy.expand(neenacba), x, domain=sympy.S.Reals)
-        print(resitev)
         return {'neenacba': neenacba, 'resitev': resitev}
 
 class SistemDvehEnacb(Naloga):

@@ -1,0 +1,112 @@
+from generiranje import Naloga, preveri
+import sympy
+import random
+import jinja2
+
+
+def narediEksponentno(do=3, celaOsnova=False, premik=0):
+    x = sympy.symbols('x')
+    izbor = list(range(2, do + 1))
+    if not celaOsnova:
+        izbor += [sympy.Rational(x, 2) for x in range(1, 2 * (do)) if x != 2] + [sympy.Rational(x, 3) for x in
+                                                                                 range(1, 3 * (do)) if x != 3] + [
+                     sympy.Rational(x, 4) for x in range(1, 4 * (do)) if x != 4] + [sympy.Rational(x, 5) for x in
+                                                                                    range(1, 5 * (do)) if x != 5]
+    osnova = random.choice(izbor)
+    return [osnova, premik, sympy.Add(sympy.Pow(osnova, x), premik, evaluate=False)]
+
+
+class GrafEksponentne(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(
+            r'''V isti koordinatni sistem nariši grafa funkcij $f(x)={{latex(naloga.eksponentna1)}}$ in $g(x)={{latex(naloga.eksponentna2)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''V isti koordinatni sistem nariši grafa funkcij:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item $f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        # TODO izpisovanje imena funkcij
+        self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
+        \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzpicture}[baseline]
+        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
+        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
+        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
+        \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
+        \end{axis}
+        \end{tikzpicture}
+        \end{minipage}''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
+        \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzpicture}[baseline]
+        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
+        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
+        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
+        \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
+        \end{axis}
+        \end{tikzpicture}
+        \end{minipage}
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        if self.lazja:
+            [osnova, premik, eksponentna1] = narediEksponentno(celaOsnova=True)
+        else:
+            [osnova, premik, eksponentna1] = narediEksponentno(celaOsnova=False)
+        predznak = random.choice([1, -1])
+        premik2 = random.choice([x for x in range(-3, 4) if x != 0])
+        eksponentna2 = sympy.Add(predznak * sympy.Pow(osnova, x, evaluate=False), premik2, evaluate=False)
+        narisiEksponentna1 = str(eksponentna1).replace('**', '^')
+        narisiEksponentna2 = str(eksponentna2).replace('**', '^')
+        return {'eksponentna1': eksponentna1, 'eksponentna2': eksponentna2, 'narisiEksponentna1': narisiEksponentna1,
+                'narisiEksponentna2': narisiEksponentna2, 'premik2': premik2}
+
+
+class Enacba(Naloga):  # TODO težja različica
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
+        # if min_potenca > max_potenca:
+        #     raise MinMaxNapaka
+        self.besedilo_posamezne = jinja2.Template(r'''Reši enačbo ${{latex(naloga.enacba)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Reši enačbe:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{latex(naloga.enacba)}}$
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$x={{latex(naloga.resitev)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $x={{latex(naloga.resitev)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+
+    def poskusi_sestaviti(self):
+        x = sympy.symbols('x')
+        osnova = sympy.Pow(random.randint(1, 5), random.choice([-2, -1, 1, 2]))
+        a = random.choice([-3, -2, -1, 1, 2, 3])
+        b = random.choice([-3, -2, -1, 1, 2, 3])
+        x1 = random.choice([-3, -2, -1, 0, 1, 2, 3])
+        vrednost = osnova ** (a * x1 + b)
+        enacba = sympy.Eq(sympy.Pow(osnova, (a * x + b)), vrednost)
+
+        return {'enacba': enacba, 'resitev': x1}
