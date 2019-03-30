@@ -1,4 +1,7 @@
-from generiranje import *
+from generiranje import Naloga, preveri
+import random
+import sympy
+import jinja2
 import linearnaFunkcija
 
 
@@ -22,8 +25,8 @@ def nicelnaOblika(od=-5, do=5, risanje=False):
     x1 = random.choice(seznamPolovick(odDejanski, doDejanski) + seznamTretinj(odDejanski, doDejanski))
     x2 = random.choice(seznamPolovick(odDejanski, doDejanski) + seznamTretinj(odDejanski, doDejanski))
     x = sympy.symbols('x')
-    nicelna = a * (x - x1) * (x - x2)
-    # nicelna =sympy.Mul(a,x-x1,x-x2, evaluate=False)# TODO nej se ničle ne poenostavljajo in a zmnoži not (factor ne pomaga) #TODO preveri če Mul pomaga
+    # nicelna = a * (x - x1) * (x - x2)
+    nicelna = sympy.Mul(a, x - x1, x - x2, evaluate=False)
     return [a, x1, x2, nicelna]
 
 
@@ -190,7 +193,7 @@ class TemenskaOblika(Naloga):
         return {'splosna': splosna, 'p': p, 'q': q, 'a': a}
 
 
-class Presecisce(Naloga):  # TODO zagotovi lepše rezultate #Todo navodila
+class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
         self.besedilo_posamezne = jinja2.Template(

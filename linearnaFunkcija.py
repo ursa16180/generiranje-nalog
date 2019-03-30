@@ -1,4 +1,7 @@
-from generiranje import *
+from generiranje import Naloga, preveri
+import random
+import sympy
+import jinja2
 
 
 # ~~~~~Pomožne funkcije
@@ -134,12 +137,15 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
         implicitna = sympy.latex(sympy.Eq(implicitnaOblika, 0))
         eksplicitna = sympy.latex(sympy.Eq(y,
                                            sympy.Rational(-a, b) * x + sympy.Rational(-c, b)))
-        # odsekovna = sympy.latex(x/sympy.Rational(c,-a)+y/sympy.Rational(c,-b)) #TODO avtomatičen izpis dvojnih ulomkov s simboli
-        odsekovna = '\\frac{x}{' + sympy.latex(sympy.Rational(c, -a)) + '}+\\frac{y}{' + sympy.latex(
-            sympy.Rational(c, -b)) + '}=1'
+        odsekovna = sympy.latex(
+            sympy.Eq(sympy.Add(sympy.Mul(x, sympy.Pow(sympy.Rational(c, -a), -1, evaluate=False), evaluate=False),
+                               sympy.Mul(y, sympy.Pow(sympy.Rational(c, -b), -1, evaluate=False), evaluate=False),
+                               evaluate=False), 1))
+
         return {'implicitna': implicitna, 'eksplicitna': eksplicitna, 'odsekovna': odsekovna}
 
 
+OblikeEnacbPremice().poskusi_sestaviti()
 class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
@@ -184,8 +190,8 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
             n2 = y3 - k2 * x3
             premica2 = sympy.Eq(y, k2 * x + n2)
 
-        ploscinaTrikotnika = sympy.simplify(abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2).evalf(3)
-        # TODO ne prikazuj nepotrebnih nul v decimalnem zapisu
+        ploscinaTrikotnika = sympy.latex(
+            sympy.simplify(abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2).evalf(3)).rstrip('0').rstrip('.')
 
         return {'premica1': sympy.latex(premica1), 'premica2': sympy.latex(premica2), 'ploscina': ploscinaTrikotnika}
 
