@@ -78,8 +78,8 @@ class GrafEksponentne(Naloga):
                 'narisiEksponentna2': narisiEksponentna2, 'premik2': premik2}
 
 
-class Enacba(Naloga):  # TODO težja različica
-    def __init__(self, **kwargs):
+class Enacba(Naloga):
+    def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
         # if min_potenca > max_potenca:
         #     raise MinMaxNapaka
@@ -99,14 +99,70 @@ class Enacba(Naloga):  # TODO težja različica
          {% endfor %}
          \end{enumerate}
          ''')
+        self.lazja = lazja
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
-        osnova = sympy.Pow(random.randint(1, 5), random.choice([-2, -1, 1, 2]))
-        a = random.choice([-3, -2, -1, 1, 2, 3])
-        b = random.choice([-3, -2, -1, 1, 2, 3])
+
+        if self.lazja:
+            osnova = sympy.Pow(random.choice([2, 3, 4, 5, 7, 10]), random.choice([-2, -1, sympy.Rational(1, 2), 1, 2]))
+            a = random.choice([ -2, -1, 1, 2])
+            b = random.choice([ -2, -1, 1, 2])
+            d = 0
+            k = 0
+        else:
+            osnova = random.choice([2, 3, 4, 5, 7, 10])
+            a = 1
+            b = random.choice([-3, -2, -1, 1, 2, 3])
+            d = random.choice([-3, -2, -1, 1, 2, 3])
+            k = random.choice([-3, -2, -1, 1, 2, 3])
         x1 = random.choice([-3, -2, -1, 0, 1, 2, 3])
-        vrednost = osnova ** (a * x1 + b)
-        enacba = sympy.Eq(sympy.Pow(osnova, (a * x + b)), vrednost)
+        vrednost = osnova ** (a * x1 + b) + k * (osnova) ** (x1 + d)
+        enacba = sympy.Eq(sympy.Pow(osnova, (a * x + b)) + k * sympy.Pow(osnova, (x + d)), vrednost)
 
         return {'enacba': enacba, 'resitev': x1}
+
+
+class Enacba2osnovi(Naloga):
+    def __init__(self, lazja=True, **kwargs):
+        super().__init__(self, **kwargs)
+        self.besedilo_posamezne = jinja2.Template(r'''Reši enačbo ${{latex(naloga.enacba)}}$.''')
+        self.besedilo_vecih = jinja2.Template(r'''Reši enačbe:
+        \begin{enumerate} 
+        {% for naloga in naloge %}
+        \item ${{latex(naloga.enacba)}}$.
+        {% endfor %}
+        \end{enumerate}
+        ''')
+        self.resitev_posamezne = jinja2.Template(r'''$x={{latex(naloga.resitev)}}$''')
+        self.resitev_vecih = jinja2.Template(r'''
+        \begin{enumerate}
+         {% for naloga in naloge %}
+         \item $x={{latex(naloga.resitev)}}$
+         {% endfor %}
+         \end{enumerate}
+         ''')
+        self.lazja = lazja
+
+    def poskusi_sestaviti(self):
+        [osnova1, osnova2] = random.sample([2, 3, 5, 7, 10], 2)
+        x = sympy.symbols('x')
+        a = random.randint(-5, 5)
+        if self.lazja:
+            u = 0
+            v = 0
+        else:
+            u = random.choice([0, 1, 2, 3])
+            v = random.choice([0, 1, 2, 3])
+        e = a - v + u
+        b = random.choice([1, 2])
+        f = random.choice([1, 2])
+        c = random.choice([1, 2, 3, 4, 5])
+        g = random.choice([1, 2, 3, 4, 5])
+        d = osnova2 ** u - osnova1 ** b * c
+        h = osnova1 ** v - osnova2 ** f * g
+        resitev = -(a - v)
+        enacba = sympy.Eq(sympy.simplify(c * osnova1 ** (x + a + b) - g * osnova2 ** (x + e + f)),
+                          sympy.simplify(-d * osnova1 ** (x + a) + h * osnova2 ** (x + e)))
+        preveri(max([abs(d), abs(h)]) < 201)  # Zagotovi, da v enačbi ne nastopajo prevelike vrednosti.
+        return {'enacba': enacba, 'resitev': resitev}
