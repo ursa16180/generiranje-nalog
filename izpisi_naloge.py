@@ -9,6 +9,7 @@ import mnozice
 import izrazi
 import linearnaFunkcija
 import kvadratnaFunkcija
+import eksponentnaFunkcija
 import polinom
 import zaporedja
 import kompleksnaStevila
@@ -115,6 +116,7 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
             napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, potResitve)
     if zdruzene_resitve:  # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
         napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, potResitve)
+    print('Test {} je sestavljen.'.format(ime_testa))
 
 
 def napisi_test(ime_testa, seznam_nalog, ucenec, potNaloge):  # Napiše naloge
@@ -159,14 +161,20 @@ sestavi_vse_teste([
     # linearnaFunkcija.NarisiLinearnoFukcijo(), linearnaFunkcija.NarisiLinearnoFukcijo(st_nalog=5)
     # linearnaFunkcija.SistemDvehEnacb(lazja=False),linearnaFunkcija.SistemDvehEnacb(st_nalog=3),
     # linearnaFunkcija.SistemTrehEnacb(lazja=False),linearnaFunkcija.SistemTrehEnacb(st_nalog=3),
-    linearnaFunkcija.Neenacba(lazja=False), linearnaFunkcija.Neenacba(st_nalog=3),
+    #linearnaFunkcija.Neenacba(lazja=False), linearnaFunkcija.Neenacba(st_nalog=3),
     # izrazi.PotencaDvoclenika(lazja=False),izrazi.PotencaDvoclenika(st_nalog=3),
     # izrazi.PotencaTroclenika(),izrazi.PotencaTroclenika(st_nalog=3),
     # izrazi.RazstaviRazliko(lazja=False), izrazi.RazstaviRazliko(st_nalog=3),
-    naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
-    naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
-    naravnaStevila.DeliteljVeckratnik(), naravnaStevila.DeliteljVeckratnik(st_nalog=3)
-
+    #naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
+    #naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
+    #naravnaStevila.DeliteljVeckratnik(), naravnaStevila.DeliteljVeckratnik(st_nalog=3),
+    #eksponentnaFunkcija.GrafEksponentne(lazja=False),
+    #eksponentnaFunkcija.Enacba(lazja=False), eksponentnaFunkcija.Enacba(st_nalog=3),
+    #eksponentnaFunkcija.Enacba2osnovi(lazja=False), eksponentnaFunkcija.Enacba2osnovi(st_nalog=3),
+    # zaporedja.SplosniClen(),zaporedja.SplosniClen(lazja=False, st_nalog=5),
+    # zaporedja.SplosniClenAritmeticnegaZaporedja(),zaporedja.SplosniClenAritmeticnegaZaporedja(st_nalog=3),
+    # zaporedja.SplosniClenAritmeticnegaEnacbi(),zaporedja.SplosniClenAritmeticnegaEnacbi(st_nalog=3),
+    zaporedja.VsotaAritmeticnega(st_nalog=3), zaporedja.VsotaAritmeticnega(lazja=False)
 
 ],
-    "Tester", "dijaki.txt")#,zdruzene_resitve=False)
+    "Tester", "dijaki.txt",zdruzene_resitve=False)
