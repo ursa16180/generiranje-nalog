@@ -105,3 +105,10 @@ class Naloga:
             naloge = self.sestavi_vec(self.st_nalog)
             return {'naloga': self.besedilo_vecih.render(naloge=naloge),
                     'resitev': self.resitev_vecih.render(naloge=naloge)}
+
+# operatorji= {
+#     '+': lambda a, b: a + b,
+#     '-': lambda a, b: a - b,
+#     '\cdot': lambda a, b: a * b,
+#     '/': lambda a, b: a / b,
+# }
