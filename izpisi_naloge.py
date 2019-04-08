@@ -8,11 +8,13 @@ import naravnaStevila
 import mnozice
 import izrazi
 import linearnaFunkcija
+import kompleksnaStevila
 import kvadratnaFunkcija
 import eksponentnaFunkcija
 import polinom
+import stoznice
 import zaporedja
-import kompleksnaStevila
+import odvodi
 
 vzorec_testa = jinja2.Template("""\\documentclass{article}
 \\usepackage[utf8]{inputenc}
@@ -20,8 +22,9 @@ vzorec_testa = jinja2.Template("""\\documentclass{article}
 \\usepackage{pgfplots}
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
+\\usepackage{gensymb}
 
-\\pgfplotsset{compat=1.16}
+\\pgfplotsset{compat=1.7}
 
 \\begin{document}
 
@@ -42,8 +45,9 @@ vzorec_posameznih_resitev = jinja2.Template("""\\documentclass{article}
 \\usepackage{pgfplots}
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
+\\usepackage{gensymb}
 
-\\pgfplotsset{compat=1.16}
+\\pgfplotsset{compat=1.7}
 
 \\begin{document}
 
@@ -64,8 +68,9 @@ vzorec_skupnih_resitev = jinja2.Template("""\\documentclass{article}
 \\usepackage{pgfplots}
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
+\\usepackage{gensymb}
 
-\\pgfplotsset{compat=1.16}
+\\pgfplotsset{compat=1.7}
 
 \\begin{document}
 
@@ -171,10 +176,23 @@ sestavi_vse_teste([
     #eksponentnaFunkcija.GrafEksponentne(lazja=False),
     #eksponentnaFunkcija.Enacba(lazja=False), eksponentnaFunkcija.Enacba(st_nalog=3),
     #eksponentnaFunkcija.Enacba2osnovi(lazja=False), eksponentnaFunkcija.Enacba2osnovi(st_nalog=3),
-    # zaporedja.SplosniClen(),zaporedja.SplosniClen(lazja=False, st_nalog=5),
+    # zaporedja.SplosniClenZaporedja(),zaporedja.SplosniClenZaporedja(lazja=False, st_nalog=5),
     # zaporedja.SplosniClenAritmeticnegaZaporedja(),zaporedja.SplosniClenAritmeticnegaZaporedja(st_nalog=3),
     # zaporedja.SplosniClenAritmeticnegaEnacbi(),zaporedja.SplosniClenAritmeticnegaEnacbi(st_nalog=3),
-    zaporedja.VsotaAritmeticnega(st_nalog=3), zaporedja.VsotaAritmeticnega(lazja=False)
+    # zaporedja.VsotaAritmeticnega(st_nalog=3), zaporedja.VsotaAritmeticnega(lazja=False),
+    # zaporedja.PrviCleniAritmeticnega(), zaporedja.PrviCleniAritmeticnega(st_nalog=3),
+    # zaporedja.PrviCleniGeometrijskega(), zaporedja.PrviCleniGeometrijskega(st_nalog=3),
+    # zaporedja.SplosniClenGeometrijskega(), zaporedja.SplosniClenGeometrijskega(st_nalog=3),
+    # zaporedja.SplosniClenGeometrijskegaEnacbi(), zaporedja.SplosniClenGeometrijskegaEnacbi(st_nalog=3),
+    # zaporedja.VsotaGeometrijskega(), zaporedja.VsotaGeometrijskega(st_nalog=3),
+    # zaporedja.VsotaGeometrijskeVrste(lazja=False), zaporedja.VsotaGeometrijskeVrste(st_nalog=3),
+    # odvodi.KotMedPremicama(lazja=False),odvodi.KotMedPremicama(st_nalog=3),
+    # odvodi.OdvodElementarne(lazja=False), odvodi.OdvodElementarne(st_nalog=3),
+    # odvodi.OdvodSestavljenih(),odvodi.OdvodSestavljenih(st_nalog=3),
+    # odvodi.KotMedGrafoma(),odvodi.KotMedGrafoma(st_nalog=3),
+    stoznice.NarisiKrivuljo(),stoznice.NarisiKrivuljo(st_nalog=3),
+    stoznice.PreseciscaKroznic(),stoznice.PreseciscaKroznic(st_nalog=3),
+    stoznice.TemeGorisceEnacba()
 
 ],
-    "Tester", "dijaki.txt",zdruzene_resitve=False)
+    "Tester", "dijaki.txt")#,zdruzene_resitve=False)
