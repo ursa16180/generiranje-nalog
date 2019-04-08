@@ -53,18 +53,14 @@ class NiclePolinoma(Naloga):
             \item {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}
             {% endfor %}
             \end{enumerate}''')
-
-        if min_stopnja < 0:  # Preveri da ni vpisano kaj čudnega
-            self.min_stopnja = 0
-        else:
-            self.min_stopnja = int(min_stopnja)
-        if max_stopnja < 0:
-            self.max_stopnja = 0
-        else:
-            self.max_stopnja = int(max_stopnja)
-
-        self.min_nicla = int(min_nicla)
-        self.max_nicla = int(max_nicla)
+        if min_stopnja<0:
+            raise ValueError('Stopnja polinoma mora biti celo neničelno število.')
+        if min_stopnja>max_stopnja or min_nicla>max_nicla:
+            raise MinMaxNapaka
+        self.min_stopnja = min_stopnja
+        self.max_stopnja = max_stopnja
+        self.min_nicla = min_nicla
+        self.max_nicla = max_nicla
 
     def poskusi_sestaviti(self):
 
@@ -266,24 +262,14 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         \item Ničle: {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}poli: {% for pol in naloga.poli %}$x_{ {{loop.index}} }={{pol}}$ {% endfor %}asimptota: $y={{naloga.asimptota}}$
         {% endfor %}
         \end{enumerate}''')
-
-        if min_stopnja_stevca < 0:  # Preveri da ni vpisano kaj čudnega
-            self.min_stopnja_stevca = 0
-        else:
-            self.min_stopnja_stevca = int(min_stopnja_stevca)
-        if max_stopnja_stevca < 0:
-            self.max_stopnja_stevca = 0
-        else:
-            self.max_stopnja_stevca = int(max_stopnja_stevca)
-
-        if min_stopnja_imenovalca < 0:  # Preveri da ni vpisano kaj čudnega
-            self.min_stopnja_imenovalca = 0
-        else:
-            self.min_stopnja_imenovalca = int(min_stopnja_imenovalca)
-        if max_stopnja_imenovalca < 0:
-            self.max_stopnja_imenovalca = 0
-        else:
-            self.max_stopnja_imenovalca = int(max_stopnja_imenovalca)
+        if min_stopnja_stevca<0 or min_stopnja_imenovalca<0:
+            raise ValueError('Stopnja polinoma mora biti neničelno celo število.')
+        if min_stopnja_imenovalca>max_stopnja_imenovalca or min_stopnja_stevca>max_stopnja_stevca or min_nicla>max_nicla:
+            raise MinMaxNapaka
+        self.min_stopnja_stevca = min_stopnja_stevca
+        self.max_stopnja_stevca = max_stopnja_stevca
+        self.min_stopnja_imenovalca = min_stopnja_imenovalca
+        self.max_stopnja_imenovalca = int(max_stopnja_imenovalca)
         self.min_nicla = min_nicla
         self.max_nicla = max_nicla
 
