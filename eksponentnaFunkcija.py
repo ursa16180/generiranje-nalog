@@ -28,7 +28,7 @@ class GrafEksponentne(Naloga):
         {% endfor %}
         \end{enumerate}
         ''')
-        # TODO izpisovanje imena funkcij
+        # TODO izpisovanje imena funkcij na grafu
         self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
         \begin{minipage}{\linewidth}
         \centering

@@ -48,6 +48,11 @@ def izberiKoordinato(od=-10, do=10):
     koordinata = random.randint(od, do)
     return koordinata
 
+def razdaljaMedTockama(x1,y1,x2,y2):
+    razdalja =sympy.Point(x1,y1).distance(sympy.Point(x2,y2)) #Todo preveri da deluje razdalja
+    #razdalja =sympy.simplify(sympy.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)))
+    return razdalja
+
 
 # ~~~~~Posamezne naloge iz poglavja Linearna funkcija
 #TODO ideja: reši linearno (ne)enačbo (težja s kvadrati ki se odštejejo)
@@ -108,7 +113,7 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
         x2 = izberiKoordinato()
         y2 = izberiKoordinato()
         preveri(x1 != x2 and y1 != y2)
-        razdalja = sympy.latex(sympy.simplify(sympy.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2))))
+        razdalja = sympy.latex(razdaljaMedTockama(x1,y1,x2,y2))
         return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'razdalja': razdalja}
 
 
