@@ -14,28 +14,29 @@ def izberiMnozico(velikost=4, od=1, do=10):
 # TODO ali smiselno delat besedilne naloge? Sklanjanje?
 
 class ElementiMnozice(Naloga):
+    besedilo_posamezne = r'''Zapiši elemente množice $ \mathcal{A} =\{ {{latex(naloga.n)}}; 
+    (n \in \mathbb{N}) \land (n{{latex(naloga.pogoj)}} {{latex(naloga.stevilo)}} ) \} $.'''
+
+    besedilo_vecih = r'''Zapiši elemente množic:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $ \mathcal{A} =\{ {{latex(naloga.n)}}; 
+    (n \in \mathbb{N}) \land (n{{latex(naloga.pogoj)}} {{latex(naloga.stevilo)}} ) \} $
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$ \mathcal{A} ={{latex(naloga.mnozica)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $ \mathcal{A} ={{latex(naloga.mnozica)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
 
-        self.besedilo_posamezne = jinja2.Template(r'''Zapiši elemente množice $ \mathcal{A} =\{ {{latex(naloga.n)}}; 
-        (n \in \mathbb{N}) \land (n{{latex(naloga.pogoj)}} {{latex(naloga.stevilo)}} ) \} $.''')
-
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši elemente množic:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $ \mathcal{A} =\{ {{latex(naloga.n)}}; 
-        (n \in \mathbb{N}) \land (n{{latex(naloga.pogoj)}} {{latex(naloga.stevilo)}} ) \} $
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$ \mathcal{A} ={{latex(naloga.mnozica)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $ \mathcal{A} ={{latex(naloga.mnozica)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -61,25 +62,25 @@ class ElementiMnozice(Naloga):
 
 
 class PotencnaMnozica(Naloga):
+    besedilo_posamezne = r'''Zapiši potenčno množico množice $ \mathcal{A} ={{latex(naloga.mnozica)}}$'''
+    besedilo_vecih = r'''Zapiši potenčno množico množice $ \mathcal{A} $:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $ \mathcal{A} ={{latex(naloga.mnozica)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$\mathcal{P}( \mathcal{A} ) ={{latex(naloga.potencna)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $\mathcal{P}( \mathcal{A} ) ={{latex(naloga.potencna)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši potenčno množico množice $ \mathcal{A} ={{latex(naloga.mnozica)}}$''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši potenčno množico množice $ \mathcal{A} $:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $ \mathcal{A} ={{latex(naloga.mnozica)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$\mathcal{P}( \mathcal{A} ) ={{latex(naloga.potencna)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $\mathcal{P}( \mathcal{A} ) ={{latex(naloga.potencna)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         velikost = random.randint(2, 3)
@@ -91,31 +92,31 @@ class PotencnaMnozica(Naloga):
 
 
 class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo presek razliko dovolj 2 #Todo ime naloge?
+    besedilo_posamezne = r'''Dane so množice $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$ in $ \mathcal{C} ={{latex(naloga.C)}}$.
+    Zapiši množice $ \mathcal{A} \cup  \mathcal{C} $, $ \mathcal{A} \cap  \mathcal{B} $, $ \mathcal{A} - \mathcal{C} $, $ \mathcal{C} - \mathcal{B} $, $ \mathcal{A} \times  \mathcal{C} $ in $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )$.'''
+
+    besedilo_vecih = r''' Za dane množice $ \mathcal{A} $, $ \mathcal{B} $ in $ \mathcal{C} $ zapiši množice $ \mathcal{A} \cup  \mathcal{C} $, $ \mathcal{A} \cap  \mathcal{B} $, $ \mathcal{A} - \mathcal{C} $, $ \mathcal{C} - \mathcal{B} $, $ \mathcal{A} \times  \mathcal{C} $ in $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )$
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$, $ \mathcal{C} ={{latex(naloga.C)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+
+    resitev_posamezne = r'''$ \mathcal{A} \cup  \mathcal{C} ={{latex(naloga.AunijaC)}}$, $ \mathcal{A} \cap  \mathcal{B} ={{latex(naloga.ApresekB)}}$, $ \mathcal{A} - \mathcal{C} ={{latex(naloga.AbrezC)}}$,
+         $ \mathcal{C} - \mathcal{B} ={{latex(naloga.CbrezB)}}$, $ \mathcal{A} \times  \mathcal{C} ={{latex(naloga.AkartezicnoC)}}$, $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )={{latex(naloga.AunijaCbrezApresekB)}}$'''
+
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $ \mathcal{A} \cup  \mathcal{C} ={{latex(naloga.AunijaC)}}$, $ \mathcal{A} \cap  \mathcal{B} ={{latex(naloga.ApresekB)}}$, $ \mathcal{A} - \mathcal{C} ={{latex(naloga.AbrezC)}}$,
+         $ \mathcal{C} - \mathcal{B} ={{latex(naloga.CbrezB)}}$, $ \mathcal{A} \times  \mathcal{C} ={{latex(naloga.AkartezicnoC)}}$, $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )={{latex(naloga.AunijaCbrezApresekB)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Dane so množice $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$ in $ \mathcal{C} ={{latex(naloga.C)}}$.
-        Zapiši množice $ \mathcal{A} \cup  \mathcal{C} $, $ \mathcal{A} \cap  \mathcal{B} $, $ \mathcal{A} - \mathcal{C} $, $ \mathcal{C} - \mathcal{B} $, $ \mathcal{A} \times  \mathcal{C} $ in $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )$.''')
-
-        self.besedilo_vecih = jinja2.Template(r''' Za dane množice $ \mathcal{A} $, $ \mathcal{B} $ in $ \mathcal{C} $ zapiši množice $ \mathcal{A} \cup  \mathcal{C} $, $ \mathcal{A} \cap  \mathcal{B} $, $ \mathcal{A} - \mathcal{C} $, $ \mathcal{C} - \mathcal{B} $, $ \mathcal{A} \times  \mathcal{C} $ in $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )$
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$, $ \mathcal{C} ={{latex(naloga.C)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-
-        self.resitev_posamezne = jinja2.Template(
-            r'''$ \mathcal{A} \cup  \mathcal{C} ={{latex(naloga.AunijaC)}}$, $ \mathcal{A} \cap  \mathcal{B} ={{latex(naloga.ApresekB)}}$, $ \mathcal{A} - \mathcal{C} ={{latex(naloga.AbrezC)}}$,
-             $ \mathcal{C} - \mathcal{B} ={{latex(naloga.CbrezB)}}$, $ \mathcal{A} \times  \mathcal{C} ={{latex(naloga.AkartezicnoC)}}$, $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )={{latex(naloga.AunijaCbrezApresekB)}}$''')
-
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $ \mathcal{A} \cup  \mathcal{C} ={{latex(naloga.AunijaC)}}$, $ \mathcal{A} \cap  \mathcal{B} ={{latex(naloga.ApresekB)}}$, $ \mathcal{A} - \mathcal{C} ={{latex(naloga.AbrezC)}}$,
-             $ \mathcal{C} - \mathcal{B} ={{latex(naloga.CbrezB)}}$, $ \mathcal{A} \times  \mathcal{C} ={{latex(naloga.AkartezicnoC)}}$, $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )={{latex(naloga.AunijaCbrezApresekB)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         A = izberiMnozico(4, 1, 6)
@@ -132,31 +133,32 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
 
 
 class IzpeljaneMnozice(Naloga):
+    besedilo_posamezne = r'''Dana je univerzalna množica $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikostUniverzalne}} }$ 
+    in njene pomnožice $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, 
+    $ \mathcal{C} ={{latex(naloga.C)}}$. Zapiši elemente množic $ \mathcal{A} $, $ \mathcal{B} $, $ \mathcal{A}  \cup  \mathcal{B} $, $ \mathcal{C} ^{\mathsf{c}}$ in $ \mathcal{B}  -  \mathcal{A} $.'''
+
+    besedilo_vecih = r''' Za dano univerzalno množico $ \mathcal{U} $ in njene podmnožice 
+    $ \mathcal{A} $, $ \mathcal{B} $ in $ \mathcal{C} $ zapiši elemente množic $ \mathcal{A} $, $ \mathcal{B} $, $ \mathcal{A}  \cup  \mathcal{B} $, $ \mathcal{C} ^{\mathsf{c}}$ in $ \mathcal{B}  -  \mathcal{A} $
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikostUniverzalne}} }$, $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, 
+    $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, $ \mathcal{C} ={{latex(naloga.C)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$, 
+    $ \mathcal{A}  \cup  \mathcal{B}  ={{latex(naloga.AunijaB)}}$, $ \mathcal{C} ^{\mathsf{c}}={{latex(naloga.Ckomplement)}}$,  $ \mathcal{B}  -  \mathcal{A}  ={{latex(naloga.BbrezA)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$, 
+    $ \mathcal{A}  \cup  \mathcal{B}  ={{latex(naloga.AunijaB)}}$, $ \mathcal{C} ^{\mathsf{c}}={{latex(naloga.Ckomplement)}}$,  $ \mathcal{B}  -  \mathcal{A}  ={{latex(naloga.BbrezA)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Dana je univerzalna množica $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikostUniverzalne}} }$ 
-        in njene pomnožice $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, 
-        $ \mathcal{C} ={{latex(naloga.C)}}$. Zapiši elemente množic $ \mathcal{A} $, $ \mathcal{B} $, $ \mathcal{A}  \cup  \mathcal{B} $, $ \mathcal{C} ^{\mathsf{c}}$ in $ \mathcal{B}  -  \mathcal{A} $.''')
-
-        self.besedilo_vecih = jinja2.Template(r''' Za dano univerzalno množico $ \mathcal{U} $ in njene podmnožice 
-        $ \mathcal{A} $, $ \mathcal{B} $ in $ \mathcal{C} $ zapiši elemente množic $ \mathcal{A} $, $ \mathcal{B} $, $ \mathcal{A}  \cup  \mathcal{B} $, $ \mathcal{C} ^{\mathsf{c}}$ in $ \mathcal{B}  -  \mathcal{A} $
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikostUniverzalne}} }$, $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, 
-        $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, $ \mathcal{C} ={{latex(naloga.C)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$, 
-        $ \mathcal{A}  \cup  \mathcal{B}  ={{latex(naloga.AunijaB)}}$, $ \mathcal{C} ^{\mathsf{c}}={{latex(naloga.Ckomplement)}}$,  $ \mathcal{B}  -  \mathcal{A}  ={{latex(naloga.BbrezA)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$, 
-        $ \mathcal{A}  \cup  \mathcal{B}  ={{latex(naloga.AunijaB)}}$, $ \mathcal{C} ^{\mathsf{c}}={{latex(naloga.Ckomplement)}}$,  $ \mathcal{B}  -  \mathcal{A}  ={{latex(naloga.BbrezA)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         k = sympy.symbols('k')

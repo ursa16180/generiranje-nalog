@@ -5,26 +5,28 @@ import jinja2
 
 
 class PotencaDvoclenika(Naloga):
+    besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
+    besedilo_vecih = r'''Potenciraj izraze:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.izraz)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''${{latex(naloga.potenciran)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{latex(naloga.potenciran)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
-        self.besedilo_posamezne = jinja2.Template(r'''Potenciraj izraz ${{latex(naloga.izraz)}}$''')
-        self.besedilo_vecih = jinja2.Template(r'''Potenciraj izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.potenciran)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.potenciran)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         # TODO ali želim opozarjati na TypeError lazja=Bool, potence=int
         # if lazja not in {True, False}:
         #     raise TypeError('Vrednost "lazja" mora biti True ali False.')
@@ -32,9 +34,6 @@ class PotencaDvoclenika(Naloga):
         self.lazja = lazja
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
-        print(min_potenca,max_potenca)
-
-
 
     def poskusi_sestaviti(self):
         potenca = random.randint(self.min_potenca, self.max_potenca)
@@ -60,33 +59,30 @@ class PotencaDvoclenika(Naloga):
         return {'izraz': izraz, 'potenciran': potenciran}
 
 
-
 class PotencaTroclenika(Naloga):
+    besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
+    besedilo_vecih = r'''Potenciraj izraze:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.izraz)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''${{latex(naloga.potenciran)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{latex(naloga.potenciran)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, min_potenca=2, max_potenca=2, **kwargs):
         super().__init__(self, **kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
-
-
-        self.besedilo_posamezne = jinja2.Template(r'''Potenciraj izraz ${{latex(naloga.izraz)}}$''')
-        self.besedilo_vecih = jinja2.Template(r'''Potenciraj izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.potenciran)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.potenciran)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
-
 
     def poskusi_sestaviti(self):
         potenca = random.randint(self.min_potenca, self.max_potenca)
@@ -102,27 +98,28 @@ class PotencaTroclenika(Naloga):
 
 
 class RazstaviVieta(Naloga):
+    besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.nerazstavljeno)}}$.'''
+    besedilo_vecih = r'''Razstavi naslednje izraze
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.nerazstavljeno)}}=$
+    {% endfor %}
+    \end{enumerate}'''
+
+    resitev_posamezne = r'''${{latex(naloga.razstavljeno)}}$'''
+    resitev_vecih = r'''\begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.razstavljeno)}}$
+    {% endfor %}
+    \end{enumerate}'''
+
     def __init__(self, minimalna_vrednost=-9, maksimalna_vrednost=9, lazja=True,
                  **kwargs):  # TODO ali so te min maks vrednosti smiselne?
         super().__init__(self, **kwargs)
-        if minimalna_vrednost>maksimalna_vrednost:
+        if minimalna_vrednost > maksimalna_vrednost:
             raise MinMaxNapaka
         self.minimalna_vrednost = minimalna_vrednost
         self.maksimalna_vrednost = maksimalna_vrednost
-        self.besedilo_posamezne = jinja2.Template('Razstavi izraz ${{latex(naloga.nerazstavljeno)}}$.')
-        self.besedilo_vecih = jinja2.Template('Razstavi naslednje izraze '
-                                              '\\begin{enumerate}'
-                                              '{% for naloga in naloge %}'
-                                              '\\item ${{latex(naloga.nerazstavljeno)}}=$'
-                                              '{% endfor %}'
-                                              '\\end{enumerate}'
-                                              )
-        self.resitev_posamezne = jinja2.Template('${{latex(naloga.razstavljeno)}}$')
-        self.resitev_vecih = jinja2.Template('\\begin{enumerate}'
-                                             '{% for naloga in naloge %}'
-                                             '\\item ${{latex(naloga.razstavljeno)}}$'
-                                             '{% endfor %}'
-                                             '\\end{enumerate}')
 
         self.lazja = lazja
 
@@ -140,28 +137,30 @@ class RazstaviVieta(Naloga):
 
 
 class RazstaviRazliko(Naloga):
+    besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.izraz)}}$.'''
+    besedilo_vecih = r'''Razstavi izraze:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item${{latex(naloga.izraz)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''${{latex(naloga.razstavljen)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{latex(naloga.razstavljen)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
-        self.besedilo_posamezne = jinja2.Template(r'''Razstavi izraz ${{latex(naloga.izraz)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Razstavi izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.razstavljen)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.razstavljen)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -194,6 +193,23 @@ class RazstaviRazliko(Naloga):
 
 
 class RazstaviPotenco(Naloga):
+    besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.izraz)}}$.'''
+    besedilo_vecih = r'''Razstavi izraze:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item${{latex(naloga.izraz)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''${{latex(naloga.razstavljen)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{latex(naloga.razstavljen)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, min_potenca=2, max_potenca=3, min_clenov=2, max_clenov=2, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
         if min_potenca > max_potenca:
@@ -204,24 +220,10 @@ class RazstaviPotenco(Naloga):
             raise MinMaxNapaka
         self.max_clenov = max_clenov
         self.max_clenov = max_clenov
-        if max_clenov not in {2,3} or min_clenov not in {2,3}:
+        if max_clenov not in {2, 3} or min_clenov not in {2, 3}:
             raise ValueError('Naloga razsatvi potenco ima za rešitev lahko samo dvočlenike ali tročlenike.')
-        self.besedilo_posamezne = jinja2.Template(r'''Razstavi izraz ${{latex(naloga.izraz)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Razstavi izraze:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item${{latex(naloga.izraz)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.razstavljen)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.razstavljen)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
+        # TODO zrihtej napako
         self.min_potenca = int(min(min_potenca, max_potenca))
         self.max_potenca = int(max(min_potenca, max_potenca))
         self.min_clenov = int(min(min_clenov, max_clenov))

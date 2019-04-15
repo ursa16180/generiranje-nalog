@@ -48,35 +48,36 @@ def izberiKoordinato(od=-10, do=10):
     koordinata = random.randint(od, do)
     return koordinata
 
-def razdaljaMedTockama(x1,y1,x2,y2):
-    razdalja =sympy.Point(x1,y1).distance(sympy.Point(x2,y2)) #Todo preveri da deluje razdalja
-    #razdalja =sympy.simplify(sympy.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)))
+
+def razdaljaMedTockama(x1, y1, x2, y2):
+    razdalja = sympy.Point(x1, y1).distance(sympy.Point(x2, y2))  # Todo preveri da deluje razdalja
+    # razdalja =sympy.simplify(sympy.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)))
     return razdalja
 
 
 # ~~~~~Posamezne naloge iz poglavja Linearna funkcija
-#TODO ideja: reši linearno (ne)enačbo (težja s kvadrati ki se odštejejo)
+# TODO ideja: reši linearno (ne)enačbo (težja s kvadrati ki se odštejejo)
 
 class PremicaSkoziTocki(Naloga):
+    besedilo_posamezne = r'''Zapiši enačbo premice skozi točki $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$ in $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$.'''
+    besedilo_vecih = r'''Zapiši enačbo premice skozi točki:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$y={{naloga.premica}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $y={{naloga.premica}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši enačbo premice skozi točki $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$ in $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši enačbo premice skozi točki:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$y={{naloga.premica}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $y={{naloga.premica}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x1 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
@@ -89,23 +90,23 @@ class PremicaSkoziTocki(Naloga):
 
 
 class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO preveri jinja latex
+    besedilo_posamezne = r'''Natančno izračunaj razdaljo med točkama $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$.'''
+    besedilo_vecih = r'''Natančno izračunaj razdaljo med točkama
+                                          \begin{enumerate}
+                                          {% for naloga in naloge %}
+                                          \item $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$
+                                          {% endfor %}
+                                          \end{enumerate}'''
+
+    resitev_posamezne = r'''$d(A,B)={{naloga.razdalja}}$'''
+    resitev_vecih = r'''\begin{enumerate}
+                                         {% for naloga in naloge %}
+                                         \item $d(A,B)={{naloga.razdalja}}$
+                                         {% endfor %}
+                                         \end{enumerate}'''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Natančno izračunaj razdaljo med točkama $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Natančno izračunaj razdaljo med točkama
-                                              \begin{enumerate}
-                                              {% for naloga in naloge %}
-                                              \item $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$
-                                              {% endfor %}
-                                              \end{enumerate}'''
-                                              )
-        self.resitev_posamezne = jinja2.Template(r'''$d(A,B)={{naloga.razdalja}}$''')
-        self.resitev_vecih = jinja2.Template(r'''\begin{enumerate}
-                                             {% for naloga in naloge %}
-                                             \item $d(A,B)={{naloga.razdalja}}$
-                                             {% endfor %}
-                                             \end{enumerate}''')
 
     def poskusi_sestaviti(self):
         x1 = izberiKoordinato()
@@ -113,29 +114,29 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
         x2 = izberiKoordinato()
         y2 = izberiKoordinato()
         preveri(x1 != x2 and y1 != y2)
-        razdalja = sympy.latex(razdaljaMedTockama(x1,y1,x2,y2))
+        razdalja = sympy.latex(razdaljaMedTockama(x1, y1, x2, y2))
         return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'razdalja': razdalja}
 
 
 class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
+    besedilo_posamezne = r'''Zapiši implicitno in odsekovno obliko premice podane z enačbo ${{naloga.implicitna}}$'''
+    besedilo_vecih = r''' Zapiši implicitno in odsekovno obliko premice podane z enačbo:
+                                        \begin{enumerate}
+                                          {% for naloga in naloge %}
+                                          \item ${{naloga.implicitna}}$
+                                          {% endfor %}
+                                          \end{enumerate}'''
+    resitev_posamezne = r'''${{naloga.eksplicitna}}$ in ${{naloga.odsekovna}}$'''
+    resitev_vecih = r'''
+                                        \begin{enumerate}
+                                          {% for naloga in naloge %}
+                                          \item ${{naloga.eksplicitna}}$ in ${{naloga.odsekovna}}$
+                                          {% endfor %}
+                                          \end{enumerate}
+                                          '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši implicitno in odsekovno obliko premice podane z enačbo ${{naloga.implicitna}}$''')
-        self.besedilo_vecih = jinja2.Template(r''' Zapiši implicitno in odsekovno obliko premice podane z enačbo:
-                                            \begin{enumerate}
-                                              {% for naloga in naloge %}
-                                              \item ${{naloga.implicitna}}$
-                                              {% endfor %}
-                                              \end{enumerate}''')
-        self.resitev_posamezne = jinja2.Template(r'''${{naloga.eksplicitna}}$ in ${{naloga.odsekovna}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-                                            \begin{enumerate}
-                                              {% for naloga in naloge %}
-                                              \item ${{naloga.eksplicitna}}$ in ${{naloga.odsekovna}}$
-                                              {% endfor %}
-                                              \end{enumerate}
-                                              ''')
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -153,25 +154,25 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
 
 
 class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
+    besedilo_posamezne = r''' Izračunaj ploščino trikotnika, ki ga premici ${{naloga.premica1}}$ in ${{naloga.premica2}}$ oklepata z abscisno osjo. '''
+    besedilo_vecih = r''' Izračunaj ploščino trikotnika, ki ga premici oklepata z abscisno osjo:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{naloga.premica1}}$ in ${{naloga.premica2}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$S={{naloga.ploscina}}$ '''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $S={{naloga.ploscina}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r''' Izračunaj ploščino trikotnika, ki ga premici ${{naloga.premica1}}$ in ${{naloga.premica2}}$ oklepata z abscisno osjo. ''')
-        self.besedilo_vecih = jinja2.Template(r''' Izračunaj ploščino trikotnika, ki ga premici oklepata z abscisno osjo:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{naloga.premica1}}$ in ${{naloga.premica2}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$S={{naloga.ploscina}}$ ''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $S={{naloga.ploscina}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x1 = izberiKoordinato(1, 5)
@@ -203,58 +204,58 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
 
 
 class NarisiLinearnoFukcijo(Naloga):
+    besedilo_posamezne = r'''Nariši graf funkcije linearne $f(x) = {{latex(naloga.linearna)}}$.'''
+    besedilo_vecih = r''' Nariši graf linearne funkcije:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $f(x) = {{latex(naloga.linearna)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+
+    resitev_posamezne = r'''$f(x)={{latex(naloga.linearna)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+    extra x ticks={ {{naloga.nicla}} },
+    extra y ticks={ {{naloga.n}} },
+    extra x tick labels={ ${{latex(naloga.nicla)}}$ },
+    extra y tick labels={ ${{latex(naloga.n)}}$},
+    extra x tick style={xticklabel style={above},},
+    extra y tick style={yticklabel style={right},},]
+    \addplot[domain =-5:5, color=black]{ {{naloga.linearna}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}'''
+
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f(x) = {{latex(naloga.linearna)}}$\par
+     \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+    extra x ticks={ {{naloga.nicla}} },
+    extra y ticks={ {{naloga.n}} },
+    extra x tick labels={ ${{latex(naloga.nicla)}}$ },
+    extra y tick labels={ ${{latex(naloga.n)}}$},
+    extra x tick style={xticklabel style={above},},
+    extra y tick style={yticklabel style={right},},]
+    \addplot[domain =-5:5, color=black]{ {{naloga.linearna}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Nariši graf funkcije linearne $f(x) = {{latex(naloga.linearna)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r''' Nariši graf linearne funkcije:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x) = {{latex(naloga.linearna)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-
-        self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.linearna)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
-        extra x ticks={ {{naloga.nicla}} },
-        extra y ticks={ {{naloga.n}} },
-        extra x tick labels={ ${{latex(naloga.nicla)}}$ },
-        extra y tick labels={ ${{latex(naloga.n)}}$},
-        extra x tick style={xticklabel style={above},},
-        extra y tick style={yticklabel style={right},},]
-        \addplot[domain =-5:5, color=black]{ {{naloga.linearna}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}''')
-
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f(x) = {{latex(naloga.linearna)}}$\par
-         \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
-        extra x ticks={ {{naloga.nicla}} },
-        extra y ticks={ {{naloga.n}} },
-        extra x tick labels={ ${{latex(naloga.nicla)}}$ },
-        extra y tick labels={ ${{latex(naloga.n)}}$},
-        extra x tick style={xticklabel style={above},},
-        extra y tick style={yticklabel style={right},},]
-        \addplot[domain =-5:5, color=black]{ {{naloga.linearna}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         [k, n, eksplicitna] = eksplicitnaPremica()
@@ -266,30 +267,29 @@ class NarisiLinearnoFukcijo(Naloga):
 
 
 class VrednostiLinearne(Naloga):
+    besedilo_posamezne = r'''Dana je funkcija s predpisom ${{naloga.linearna}}$. Izračunajte vrednost $f({{naloga.x1}})$ in za kateri $x$ je $f(x)={{naloga.y2}}$. Za katere vrednosti $x$ so vrednosti funkcije negativne? '''
+
+    besedilo_vecih = r''' Za podano funkcijo $f$ izračunaj $f(x_0)$ in za kateri $x$ je $f(x)=y_1$. Za katere vrednosti $x$ so vrednosti funkcije negativne?
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{naloga.linearna}}$, $x_0={{naloga.x1}}$, $y_1={{naloga.y2}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+
+    resitev_posamezne = r'''
+    $f({{naloga.x1}})={{naloga.y1}}$, $x={{naloga.x2}}$, $x \in {{naloga.negativno}}$'''
+
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f({{naloga.x1}})={{naloga.y1}}$, $x={{naloga.x2}}$, $x \in {{naloga.negativno}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Dana je funkcija s predpisom ${{naloga.linearna}}$. Izračunajte vrednost $f({{naloga.x1}})$ in za kateri $x$ je $f(x)={{naloga.y2}}$. Za katere vrednosti $x$ so vrednosti funkcije negativne? ''')
-
-        self.besedilo_vecih = jinja2.Template(r''' Za podano funkcijo $f$ izračunaj $f(x_0)$ in za kateri $x$ je $f(x)=y_1$. Za katere vrednosti $x$ so vrednosti funkcije negativne?
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{naloga.linearna}}$, $x_0={{naloga.x1}}$, $y_1={{naloga.y2}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-
-        self.resitev_posamezne = jinja2.Template(r'''
-        $f({{naloga.x1}})={{naloga.y1}}$, $x={{naloga.x2}}$, $x \in {{naloga.negativno}}$''')
-
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f({{naloga.x1}})={{naloga.y1}}$, $x={{naloga.x2}}$, $x \in {{naloga.negativno}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -310,26 +310,25 @@ class VrednostiLinearne(Naloga):
 
 
 class Neenacba(Naloga):
+    besedilo_posamezne = r'''Reši neenačbo ${{latex(naloga.neenacba)}}$.'''
+    besedilo_vecih = r'''Reši neenačbo:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.neenacba)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x \in {{latex(naloga.resitev)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x \in {{latex(naloga.resitev)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        # if min_potenca > max_potenca:
-        #     raise MinMaxNapaka
-        self.besedilo_posamezne = jinja2.Template(r'''Reši neenačbo ${{latex(naloga.neenacba)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Reši neenačbo:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.neenacba)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x \in {{latex(naloga.resitev)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x \in {{latex(naloga.resitev)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -356,26 +355,27 @@ class Neenacba(Naloga):
         resitev = sympy.solveset(sympy.expand(neenacba), x, domain=sympy.S.Reals)
         return {'neenacba': neenacba, 'resitev': resitev}
 
+
 class SistemDvehEnacb(Naloga):
+    besedilo_posamezne = r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$ in ${{latex(naloga.enacba2)}}$.'''
+    besedilo_vecih = r'''Reši sistem enačb:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$ in ${{latex(naloga.enacba2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Reši sistem enačb:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -404,26 +404,26 @@ class SistemDvehEnacb(Naloga):
 
 
 class SistemTrehEnacb(Naloga):
+    besedilo_posamezne = r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$ in ${{latex(naloga.enacba3)}}$.'''
+    besedilo_vecih = r'''Reši sistem enačb:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$, ${{latex(naloga.enacba3)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$, $z={{latex(naloga.z)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$, $z={{latex(naloga.z)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$ in ${{latex(naloga.enacba3)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Reši sistem enačb:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$, ${{latex(naloga.enacba3)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$, $z={{latex(naloga.z)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x={{latex(naloga.x)}}$, $y={{latex(naloga.y)}}$, $z={{latex(naloga.z)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):

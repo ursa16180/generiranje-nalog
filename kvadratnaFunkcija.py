@@ -68,25 +68,26 @@ def diskriminanta(a, b, c):
 
 class IzracunajNicle(Naloga):
     # Lažja različica ima realne ničle, težja pa kompleksne
+    besedilo_posamezne = r'''Izračunaj ničle kvadratne funkcije $f(x)={{latex(naloga.splosna)}}$.'''
+    besedilo_vecih = r'''Izračunaj ničle naslednjih kvadratnih funkcij:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $f(x)={{latex(naloga.splosna)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x_1={{latex(naloga.x1)}}$, $x_2={{latex(naloga.x2)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x_1={{latex(naloga.x1)}}$, $x_2={{latex(naloga.x2)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Izračunaj ničle kvadratne funkcije $f(x)={{latex(naloga.splosna)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj ničle naslednjih kvadratnih funkcij:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x)={{latex(naloga.splosna)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x_1={{latex(naloga.x1)}}$, $x_2={{latex(naloga.x2)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x_1={{latex(naloga.x1)}}$, $x_2={{latex(naloga.x2)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -100,57 +101,58 @@ class IzracunajNicle(Naloga):
 
 
 class NarisiGraf(Naloga):
+    besedilo_posamezne = r'''Nariši graf funkcije $f(x)={{latex(naloga.funkcija)}}$'''
+    besedilo_vecih = r'''Nariši grafe funkcij:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item  $f(x)={{latex(naloga.funkcija)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$f(x)={{latex(naloga.funkcija)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+    extra x ticks={ {{naloga.x1}},{{naloga.x2}},{{naloga.p}} },
+    extra y ticks={ {{naloga.q}},{{naloga.zacetna}} },
+    extra x tick labels={ ${{latex(naloga.x1)}}$,${{latex(naloga.x2)}}$,${{latex(naloga.p)}}$ },
+    extra y tick labels={ ${{latex(naloga.q)}}$,${{latex(naloga.zacetna)}}$ },
+    extra x tick style={xticklabel style={above},},
+    extra y tick style={yticklabel style={right},},]
+    \addplot[domain =-5:5, color=black, smooth]{ {{naloga.narisiFunkcijo}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+     '''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f(x)={{latex(naloga.funkcija)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+    extra x ticks={ {{naloga.x1}},{{naloga.x2}},{{naloga.p}} },
+    extra y ticks={ {{naloga.q}},{{naloga.zacetna}} },
+    extra x tick labels={ ${{latex(naloga.x1)}}$,${{latex(naloga.x2)}}$,${{latex(naloga.p)}}$ },
+    extra y tick labels={ ${{latex(naloga.q)}}$,${{latex(naloga.zacetna)}}$ },
+    extra x tick style={xticklabel style={above},},
+    extra y tick style={yticklabel style={right},},]
+    \addplot[domain =-5:5, color=black, smooth]{ {{naloga.narisiFunkcijo}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Nariši graf funkcije $f(x)={{latex(naloga.funkcija)}}$''')
-        self.besedilo_vecih = jinja2.Template(r'''Nariši grafe funkcij:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item  $f(x)={{latex(naloga.funkcija)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.funkcija)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
-        extra x ticks={ {{naloga.x1}},{{naloga.x2}},{{naloga.p}} },
-        extra y ticks={ {{naloga.q}},{{naloga.zacetna}} },
-        extra x tick labels={ ${{latex(naloga.x1)}}$,${{latex(naloga.x2)}}$,${{latex(naloga.p)}}$ },
-        extra y tick labels={ ${{latex(naloga.q)}}$,${{latex(naloga.zacetna)}}$ },
-        extra x tick style={xticklabel style={above},},
-        extra y tick style={yticklabel style={right},},]
-        \addplot[domain =-5:5, color=black, smooth]{ {{naloga.narisiFunkcijo}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-         ''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f(x)={{latex(naloga.funkcija)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
-        extra x ticks={ {{naloga.x1}},{{naloga.x2}},{{naloga.p}} },
-        extra y ticks={ {{naloga.q}},{{naloga.zacetna}} },
-        extra x tick labels={ ${{latex(naloga.x1)}}$,${{latex(naloga.x2)}}$,${{latex(naloga.p)}}$ },
-        extra y tick labels={ ${{latex(naloga.q)}}$,${{latex(naloga.zacetna)}}$ },
-        extra x tick style={xticklabel style={above},},
-        extra y tick style={yticklabel style={right},},]
-        \addplot[domain =-5:5, color=black, smooth]{ {{naloga.narisiFunkcijo}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -163,26 +165,25 @@ class NarisiGraf(Naloga):
 
 
 class TemenskaOblika(Naloga):
+    besedilo_posamezne = r'''Zapiši temensko obliko funkcije $f(x)={{latex(naloga.splosna)}}$.'''
+    besedilo_vecih = r'''Zapiši temensko obliko naslednjih kvadratnih funkcij:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $f(x)={{latex(naloga.splosna)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$f(x)={{latex(naloga.a)}}(x-{{latex(naloga.p)}})^2+{{latex(naloga.q)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f(x)={{latex(naloga.a)}}(x-{{latex(naloga.p)}})^2+{{latex(naloga.q)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši temensko obliko funkcije $f(x)={{latex(naloga.splosna)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši temensko obliko naslednjih kvadratnih funkcij:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x)={{latex(naloga.splosna)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$f(x)={{latex(naloga.a)}}(x-{{latex(naloga.p)}})^2+{{latex(naloga.q)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f(x)={{latex(naloga.a)}}(x-{{latex(naloga.p)}})^2+{{latex(naloga.q)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -194,26 +195,26 @@ class TemenskaOblika(Naloga):
 
 
 class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
+    besedilo_posamezne = r'''Izračunaj presečišče parabole $y={{latex(naloga.parabola)}}$ in premice $y={{latex(naloga.premica)}}$.'''
+    besedilo_vecih = r'''Izračunaj presečišče parabole in premice:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $y={{latex(naloga.parabola)}}$, $y={{latex(naloga.premica)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$T_1({{latex(naloga.x1)}},{{latex(naloga.y1)}})$,$T_2({{latex(naloga.x2)}},{{latex(naloga.y2)}})$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $T_1({{latex(naloga.x1)}},{{latex(naloga.y1)}})$,$T_2({{latex(naloga.x2)}},{{latex(naloga.y2)}})$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Izračunaj presečišče parabole $y={{latex(naloga.parabola)}}$ in premice $y={{latex(naloga.premica)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj presečišče parabole in premice:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $y={{latex(naloga.parabola)}}$, $y={{latex(naloga.premica)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$T_1({{latex(naloga.x1)}},{{latex(naloga.y1)}})$,$T_2({{latex(naloga.x2)}},{{latex(naloga.y2)}})$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $T_1({{latex(naloga.x1)}},{{latex(naloga.y1)}})$,$T_2({{latex(naloga.x2)}},{{latex(naloga.y2)}})$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -227,30 +228,33 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
         y2 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
         premica = linearnaFunkcija.skoziTocki(x1, y1, x2, y2)[-1]
         koeficienta = sympy.solve((a * x1 ** 2 + b * x1 + c - y1, a * x2 ** 2 + b * x2 + c - y2), b, c)
-        preveri(koeficienta[b] < 5 and koeficienta[c] < 5)
+        preveri(koeficienta !=[]) #Če ni rešitve vrne prazen seznam in ne praznega slovarja
+        preveri(abs(koeficienta[b]) < 5 and abs(koeficienta[c]) < 5) #Todo lepša rešitve (grozni ulomki)
         kvadratna = a * x ** 2 + koeficienta[b] * x + koeficienta[c]
         return {'parabola': kvadratna, 'premica': premica, 'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2}
 
 
 class Neenacba(Naloga):
+    besedilo_posamezne = r'''Reši kvadratno neenačbo ${{latex(naloga.neenakost)}}$.'''
+    besedilo_vecih = r'''Reši kvadratne neenačbe:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.neenakost)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x \in {{latex(naloga.resitev)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item$x \in {{latex(naloga.resitev)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Reši kvadratno neenačbo ${{latex(naloga.neenakost)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Reši kvadratne neenačbe:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.neenakost)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x \in {{latex(naloga.resitev)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item$x \in {{latex(naloga.resitev)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):  # TODO ali želimo lepše rešitve
@@ -275,28 +279,29 @@ class Neenacba(Naloga):
 
 
 class SkoziTocke(Naloga):
+    besedilo_posamezne = r'''Graf kvadratne funkcije $f$ poteka skozi točke $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
+        $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$ in $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$. Določi 
+        predpis funkcije $f.$'''
+    besedilo_vecih = r''' Določi predpis kvadratne funkcije $f$, katere graf poteka skozi točke:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
+        $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$, $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$f(x)={{latex(naloga.funkcija)}}$ '''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f(x)={{latex(naloga.funkcija)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Graf kvadratne funkcije $f$ poteka skozi točke $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
-            $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$ in $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$. Določi 
-            predpis funkcije $f.$''')
-        self.besedilo_vecih = jinja2.Template(r''' Določi predpis kvadratne funkcije $f$, katere graf poteka skozi točke:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
-            $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$, $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.funkcija)}}$ ''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f(x)={{latex(naloga.funkcija)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):

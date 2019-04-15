@@ -61,27 +61,27 @@ def vseFunkcije(polinom=True, racionalna=True, potencna=True, logaritem=True, ko
 
 # ~~~~~ Naloge iz sklopa odvodi
 class KotMedPremicama(Naloga):
+    besedilo_posamezne = r'''Izračunaj kot, ki ga oklepata $y={{latex(naloga.premica1)}}$ in {{naloga.premica2}}.'''
+    # TODO kako različna navodila za lažjo in težjo? Je potrebno ali pustim tako kot je?
+    besedilo_vecih = r'''Izračunaj kot, ki ga oklepata:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $y={{latex(naloga.premica1)}}$ in {{naloga.premica2}}
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $'''
+
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Izračunaj kot, ki ga oklepata $y={{latex(naloga.premica1)}}$ in {{naloga.premica2}}.''')
-        # TODO kako različna navodila za lažjo in težjo? Je potrebno ali pustim tako kot je?
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj kot, ki ga oklepata:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $y={{latex(naloga.premica1)}}$ in {{naloga.premica2}}
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $''')
-
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -98,31 +98,33 @@ class KotMedPremicama(Naloga):
 
         kot = sympy.N(sympy.deg(kotMedPremicama(k1, k2)))
         stop = kot // 1
-        min = round(kot % 1 * 60) #Todo če ni minut
+        min = round(kot % 1 * 60)  # Todo če ni minut
         return {'premica1': premica1, 'premica2': premica2, 'stopinje': stop, 'minute': min}
 
 
 class OdvodElementarne(Naloga):
+    besedilo_posamezne = r'''Določi odvod funkcije $f(x)={{latex(naloga.funkcija)}}$.'''
+    besedilo_vecih = r'''Določi odvod funkcije $f$:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $f(x)={{latex(naloga.funkcija)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$f'(x)={{latex(naloga.odvod)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f'(x)={{latex(naloga.odvod)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, polinom=True, racionalna=True, potencna=True, logaritem=True, kotna=True, krozna=False,
                  lazja=True,
                  **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Določi odvod funkcije $f(x)={{latex(naloga.funkcija)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Določi odvod funkcije $f$:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x)={{latex(naloga.funkcija)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$f'(x)={{latex(naloga.odvod)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f'(x)={{latex(naloga.odvod)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
             raise ValueError(
                 'Izbrana mora biti vsaj ena izmed funkcij: polinom, acionalna fukcija, kotna funkcija, krožna funkcija,'
@@ -152,26 +154,32 @@ class OdvodElementarne(Naloga):
         return {'funkcija': funkcija, 'odvod': odvod}
 
 
+class Funkcija(enum):
+    RACIONALNA = 1
+    POLINOM = 2
+
+
 class OdvodSestavljenih(Naloga):
-    def __init__(self, polinom=False, racionalna=False, potencna=True, logaritem=True, kotna=True, krozna=False,
-                 **kwargs):
+    besedilo_posamezne = r'''Določi odvod funkcije $f(x)={{latex(naloga.funkcija)}}$.'''
+    besedilo_vecih = r'''Določi odvod funkcije $f$:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $f(x)={{latex(naloga.funkcija)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$f'(x)={{latex(naloga.odvod)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f'(x)={{latex(naloga.odvod)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
+    def __init__(self, funkcije=Funkcija.all, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Določi odvod funkcije $f(x)={{latex(naloga.funkcija)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Določi odvod funkcije $f$:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x)={{latex(naloga.funkcija)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$f'(x)={{latex(naloga.odvod)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f'(x)={{latex(naloga.odvod)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
             raise ValueError(
                 'Izbrana mora biti vsaj ena izmed funkcij: polinom, acionalna fukcija, kotna funkcija, krožna funkcija,'
@@ -207,155 +215,159 @@ class OdvodSestavljenih(Naloga):
 
 
 class Tangenta(Naloga):
-    def __init__(self, polinom=True, racionalna=True, potencna=True, logaritem=True, kotna=True, krozna=False,
-                 **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši enačbo tangente na graf funkcije $f(x)={{latex(naloga.funkcija)}}$ v točki z absciso $x_0={{latex(naloga.abscisa)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši enačbo tangente na graf funkcije $f$ v točki z absciso $x_0$:
+    besedilo_posamezne = r'''Zapiši enačbo tangente na graf funkcije $f(x)={{latex(naloga.funkcija)}}$ v točki z absciso $x_0={{latex(naloga.abscisa)}}$.'''
+
+    besedilo_vecih = r'''Zapiši enačbo tangente na graf funkcije $f$ v točki z absciso $x_0$:
         \begin{enumerate}
         {% for naloga in naloge %}
         \item $f(x)={{latex(naloga.funkcija)}}$, $x_0={{latex(naloga.abscisa)}}$
         {% endfor %}
         \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$f'(x)={{latex(naloga.tangenta)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
+        '''
+    resitev_posamezne = r'''$f'(x)={{latex(naloga.tangenta)}}$'''
+    resitev_vecih = r'''
         \begin{enumerate}
          {% for naloga in naloge %}
          \item $f'(x)={{latex(naloga.tangenta)}}$
          {% endfor %}
          \end{enumerate}
-         ''')
-        if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
-            raise ValueError(
-                'Izbrana mora biti vsaj ena izmed funkcij: polinom, acionalna fukcija, kotna funkcija, krožna funkcija,'
-                ' potencna funkcija ali logaritemska funkcija. ')
-        self.polinom = polinom
-        self.racionalna = racionalna
-        self.potencna = potencna
-        self.logaritem = logaritem
-        self.kotna = kotna
-        self.krozna = krozna
+         '''
 
-    def poskusi_sestaviti(self):
-        x = sympy.symbols('x')
-        funkcije = ['polinom', 'racionalna', 'potencna', 'logaritem', 'kotna', 'krozna']
-        izbrane = [self.polinom, self.racionalna, self.potencna, self.logaritem, self.kotna, self.krozna]
-        izbor = []
-        for i in range(len(funkcije)):  # TODO elengantnejše da boole preslikaš v seznam
-            if izbrane[0]:
-                izbor.append(funkcije[i])
-        izbrana = random.choice(izbor)
+    def __init__(self, polinom=True, racionalna=True, potencna=True, logaritem=True, kotna=True, krozna=False,
+                 **kwargs):
+        super().__init__(self, **kwargs)
 
-        if izbor == 'polinom':
-            stopnja = random.randint(2, 3)
-            polinom = sympy.Poly([random.choice([-2, -1, 1, 2])] + [random.randint(-3, 3) for i in range(stopnja)],
-                                 x).as_expr()
-            funkcija = polinom
-            x0 = random.randint(-2, 2)
-        if izbor == 'racionalna':
-            stopnjaStevca = random.randint(2, 3)
-            stopnjaImenovalca = 3 - stopnjaStevca
-            stevec = sympy.Poly([random.choice([-1, 1])] + [random.randint(-3, 3) for i in range(stopnjaStevca)],
-                                x).as_expr()
-            imenovalec = sympy.Poly(
-                [random.choice([-1, 1])] + [random.randint(-3, 3) for i in range(stopnjaImenovalca)],
-                x).as_expr()
-            racionalna = sympy.simplify(stevec / imenovalec)
-            funkcija = racionalna
-            x0 = random.randint(-2, 2)
-        if izbor == 'potencna':
-            baza = random.choice([sympy.E, 2, 3, 5])
-            eksponentna = baza ** x
-            funkcija = eksponentna
-            x0 = random.choice([sympy.log(n, baza) for n in [1, 2, 3]])  # Todo lepši izpis logaritmov
-        if izbor == 'logaritem':
-            # baza = random.choice([2, 3, 4, 5, 10])
-            # logaritem = sympy.log(x, baza) #todo izpis log_baza v latexu
-            # funkcije.append(logaritem)
-            naravniLogaritem = sympy.ln(x)  # Todo latex izpis ln namesto log
-            funkcija = naravniLogaritem
-            x0 = sympy.E ** (random.randint(-1, 2))
-        if izbor == 'kotna':
-            kosinus = sympy.cos(x)
-            sinus = sympy.sin(x)
-            tangens = sympy.tan(x)
-            kotangens = sympy.cot(x)
-            funkcija = random.choice([kosinus, sinus, tangens, kotangens])
-            x0 = random.choice(
-                [sympy.pi / x for x in [6, 3, 4, 2]])  # TODO dodaj 0 in pi, vendar pazi da ni izbran tna/cot
-        if izbor == 'krozna':
-            arcusKosinus = sympy.acos(x)
-            arcusSinus = sympy.asin(x)
-            x0 = random.choice([0, 1 / 2, sympy.sqrt(2) / 2, sympy.sqrt(3) / 2, 1])
-            # arcusTangens = sympy.atan(x)#Todo dodaj
-            # arcusKotangens = sympy.acot(x)
-            # tocka = random.choice([ sympy.sqrt(3), 1, sympy.sqrt(3) / 3])#Todo dodaj 0 vendar pazi da tan/cot definirana
-            funkcija = random.choice([arcusKosinus, arcusSinus])  # , arcusTangens, arcusKotangens])
-        odvod = sympy.simplify(funkcija).diff(x)
-        y0 = funkcija.subs(x, x0)
-        k = odvod.subs(x, x0)
-        n = y0 - k * x0
-        tangenta = k * x + n
-        return {'funkcija': funkcija, 'abscisa': x0, 'tangenta': tangenta}
+    if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
+        raise ValueError(
+            'Izbrana mora biti vsaj ena izmed funkcij: polinom, acionalna fukcija, kotna funkcija, krožna funkcija,'
+            ' potencna funkcija ali logaritemska funkcija. ')
+    self.polinom = polinom
+    self.racionalna = racionalna
+    self.potencna = potencna
+    self.logaritem = logaritem
+    self.kotna = kotna
+    self.krozna = krozna
+
+
+def poskusi_sestaviti(self):
+    x = sympy.symbols('x')
+    funkcije = ['polinom', 'racionalna', 'potencna', 'logaritem', 'kotna', 'krozna']
+    izbrane = [self.polinom, self.racionalna, self.potencna, self.logaritem, self.kotna, self.krozna]
+    izbor = []
+    for i in range(len(funkcije)):  # TODO elengantnejše da boole preslikaš v seznam
+        if izbrane[0]:
+            izbor.append(funkcije[i])
+    izbrana = random.choice(izbor)
+
+    if izbor == 'polinom':
+        stopnja = random.randint(2, 3)
+        polinom = sympy.Poly([random.choice([-2, -1, 1, 2])] + [random.randint(-3, 3) for i in range(stopnja)],
+                             x).as_expr()
+        funkcija = polinom
+        x0 = random.randint(-2, 2)
+    if izbor == 'racionalna':
+        stopnjaStevca = random.randint(2, 3)
+        stopnjaImenovalca = 3 - stopnjaStevca
+        stevec = sympy.Poly([random.choice([-1, 1])] + [random.randint(-3, 3) for i in range(stopnjaStevca)],
+                            x).as_expr()
+        imenovalec = sympy.Poly(
+            [random.choice([-1, 1])] + [random.randint(-3, 3) for i in range(stopnjaImenovalca)],
+            x).as_expr()
+        racionalna = sympy.simplify(stevec / imenovalec)
+        funkcija = racionalna
+        x0 = random.randint(-2, 2)
+    if izbor == 'potencna':
+        baza = random.choice([sympy.E, 2, 3, 5])
+        eksponentna = baza ** x
+        funkcija = eksponentna
+        x0 = random.choice([sympy.log(n, baza) for n in [1, 2, 3]])  # Todo lepši izpis logaritmov
+    if izbor == 'logaritem':
+        # baza = random.choice([2, 3, 4, 5, 10])
+        # logaritem = sympy.log(x, baza) #todo izpis log_baza v latexu
+        # funkcije.append(logaritem)
+        naravniLogaritem = sympy.ln(x)  # Todo latex izpis ln namesto log
+        funkcija = naravniLogaritem
+        x0 = sympy.E ** (random.randint(-1, 2))
+    if izbor == 'kotna':
+        kosinus = sympy.cos(x)
+        sinus = sympy.sin(x)
+        tangens = sympy.tan(x)
+        kotangens = sympy.cot(x)
+        funkcija = random.choice([kosinus, sinus, tangens, kotangens])
+        x0 = random.choice(
+            [sympy.pi / x for x in [6, 3, 4, 2]])  # TODO dodaj 0 in pi, vendar pazi da ni izbran tna/cot
+    if izbor == 'krozna':
+        arcusKosinus = sympy.acos(x)
+        arcusSinus = sympy.asin(x)
+        x0 = random.choice([0, 1 / 2, sympy.sqrt(2) / 2, sympy.sqrt(3) / 2, 1])
+        # arcusTangens = sympy.atan(x)#Todo dodaj
+        # arcusKotangens = sympy.acot(x)
+        # tocka = random.choice([ sympy.sqrt(3), 1, sympy.sqrt(3) / 3])#Todo dodaj 0 vendar pazi da tan/cot definirana
+        funkcija = random.choice([arcusKosinus, arcusSinus])  # , arcusTangens, arcusKotangens])
+    odvod = sympy.simplify(funkcija).diff(x)
+    y0 = funkcija.subs(x, x0)
+    k = odvod.subs(x, x0)
+    n = y0 - k * x0
+    tangenta = k * x + n
+    return {'funkcija': funkcija, 'abscisa': x0, 'tangenta': tangenta}
 
 
 class KotMedGrafoma(Naloga):
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Na minuto natančno izračunaj kot med grafoma funkcij $f(x)={{latex(naloga.funkcija1)}}$ in $g(x)={{latex(naloga.funkcija2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Na minuto natančno izračunaj kot med grafoma funkcij $f$ in $g$
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x)={{latex(naloga.funkcija1)}}$, $g(x)={{latex(naloga.funkcija2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $
-         {% endfor %}
-         \end{enumerate}
-         ''')
+    besedilo_posamezne = r'''Na minuto natančno izračunaj kot med grafoma funkcij $f(x)={{latex(naloga.funkcija1)}}$ in $g(x)={{latex(naloga.funkcija2)}}$.'''
+    besedilo_vecih = r'''Na minuto natančno izračunaj kot med grafoma funkcij $f$ in $g$
+            \begin{enumerate}
+            {% for naloga in naloge %}
+            \item $f(x)={{latex(naloga.funkcija1)}}$, $g(x)={{latex(naloga.funkcija2)}}$
+            {% endfor %}
+            \end{enumerate}
+            '''
+    resitev_posamezne = r'''$\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $'''
+    resitev_vecih = r'''
+            \begin{enumerate}
+             {% for naloga in naloge %}
+             \item $\varphi ={{naloga.stopinje}}\degree{{naloga.minute}}' $
+             {% endfor %}
+             \end{enumerate}
+             '''
 
-    def poskusi_sestaviti(self):
-        x = sympy.symbols('x', real=True)
-        izbor = random.choice(['kvadratna', 'potencna', 'logaritem'])
-        if izbor == 'potencna':
-            baza = random.choice([sympy.E, 2, 3, 5])
-            eksponentna = baza ** x
-            a = random.randint(1,2)
-            funkcija1 = eksponentna.subs(x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr())
-            funkcija2 = eksponentna.subs(x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr())
-        if izbor == 'logaritem':
-            # baza = random.choice([2, 3, 4, 5, 10])
-            # logaritem = sympy.log(x, baza) #todo izpis log_baza v latexu
-            # funkcije.append(logaritem)
-            naravniLogaritem = sympy.ln(x)  # Todo latex izpis ln namesto log
-            a = random.randint(1, 2)
-            funkcija1 = naravniLogaritem.subs(x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr())
-            funkcija2 = naravniLogaritem.subs(x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr())
-        if izbor == 'kvadratna':
-            x0 = random.choice([-2, -1, 1, 2])
-            y0 = random.randint(-2, 2)
-            a = random.choice([1, 2])
-            c1 = random.randint(-4, -1)
-            c2 = random.randint(0, 4)
-            b1 = (y0 - a * x0 ** 2 - c1) / x0
-            b2 = (y0 - a * x0 ** 2 - c2) / x0
-            funkcija1 = sympy.Poly([int(a), int(b1), int(c1)], x).as_expr()
-            funkcija2 = sympy.Poly([int(a), int(b2), int(c2)], x).as_expr()
-        presek = sympy.solve((funkcija1 - funkcija2), x)
-        preveri(len(presek) == 1)
-        k1 = funkcija1.diff().subs(x, *presek)
-        k2 = funkcija2.diff().subs(x, *presek)
-        kot = sympy.N(sympy.deg(kotMedPremicama(k1, k2)))
-        stop = kot // 1
-        min = round(kot % 1 * 60)
 
-        return {'funkcija1': funkcija1, 'funkcija2': funkcija2, 'stopinje': stop, 'minute': min}
+def __init__(self, **kwargs):
+    super().__init__(self, **kwargs)
 
+
+def poskusi_sestaviti(self):
+    x = sympy.symbols('x', real=True)
+    izbor = random.choice(['kvadratna', 'potencna', 'logaritem'])
+    if izbor == 'potencna':
+        baza = random.choice([sympy.E, 2, 3, 5])
+        eksponentna = baza ** x
+        a = random.randint(1, 2)
+        funkcija1 = eksponentna.subs(x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr())
+        funkcija2 = eksponentna.subs(x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr())
+    if izbor == 'logaritem':
+        # baza = random.choice([2, 3, 4, 5, 10])
+        # logaritem = sympy.log(x, baza) #todo izpis log_baza v latexu
+        # funkcije.append(logaritem)
+        naravniLogaritem = sympy.ln(x)  # Todo latex izpis ln namesto log
+        a = random.randint(1, 2)
+        funkcija1 = naravniLogaritem.subs(x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr())
+        funkcija2 = naravniLogaritem.subs(x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr())
+    if izbor == 'kvadratna':
+        x0 = random.choice([-2, -1, 1, 2])
+        y0 = random.randint(-2, 2)
+        a = random.choice([1, 2])
+        c1 = random.randint(-4, -1)
+        c2 = random.randint(0, 4)
+        b1 = (y0 - a * x0 ** 2 - c1) / x0
+        b2 = (y0 - a * x0 ** 2 - c2) / x0
+        funkcija1 = sympy.Poly([int(a), int(b1), int(c1)], x).as_expr()
+        funkcija2 = sympy.Poly([int(a), int(b2), int(c2)], x).as_expr()
+    presek = sympy.solve((funkcija1 - funkcija2), x)
+    preveri(len(presek) == 1)
+    k1 = funkcija1.diff().subs(x, *presek)
+    k2 = funkcija2.diff().subs(x, *presek)
+    kot = sympy.N(sympy.deg(kotMedPremicama(k1, k2)))
+    stop = kot // 1
+    min = round(kot % 1 * 60)
+
+    return {'funkcija1': funkcija1, 'funkcija2': funkcija2, 'stopinje': stop, 'minute': min}

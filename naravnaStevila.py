@@ -5,30 +5,30 @@ import jinja2
 
 
 class DeliteljVeckratnik(Naloga):
+    besedilo_posamezne = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$.'''
+    besedilo_vecih = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecjiDelitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsiVeckratnik}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecjiDelitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsiVeckratnik}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, od=50, do=200, najvecjePrastevilo=17, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
         if od > do:
             raise MinMaxNapaka
         if od < 1:
             raise ValueError('Izbrana naj bodo naravna števila.')
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecjiDelitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsiVeckratnik}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecjiDelitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsiVeckratnik}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.od = od
         self.do = do
         self.lazja = lazja
@@ -52,23 +52,23 @@ class DeliteljVeckratnik(Naloga):
 # class DolociStevko(Naloga):  # TODO besedilo za 2 delitelja - ali lahko 2 različna besedila?
 #     def __init__(self, lazja=True, **kwargs):
 #         super().__init__(self, **kwargs)
-#         self.besedilo_posamezne = jinja2.Template(
-#             r'''Za katero števko $a$ število ${{naloga.delitelj1}}$ deli ${{naloga.stevilo}}$?''')
-#         self.besedilo_vecih = jinja2.Template(r'''Za katero števko $a$ je število $n$ deljivo s $k$:
+#         besedilo_posamezne =
+#             r'''Za katero števko $a$ število ${{naloga.delitelj1}}$ deli ${{naloga.stevilo}}$?'''
+#         besedilo_vecih =r'''Za katero števko $a$ je število $n$ deljivo s $k$:
 #         \begin{enumerate}
 #         {% for naloga in naloge %}
 #         \item $n={{naloga.stevilo}}$, $k={{naloga.delitelj1}}$
 #         {% endfor %}
 #         \end{enumerate}
-#         ''')
-#         self.resitev_posamezne = jinja2.Template(r'''$a \in {{latex(naloga.resitev)}}$''')
-#         self.resitev_vecih = jinja2.Template(r'''
+#         '''
+#         resitev_posamezne =r'''$a \in {{latex(naloga.resitev)}}$'''
+#         resitev_vecih =r'''
 #         \begin{enumerate}
 #          {% for naloga in naloge %}
 #          \item $a \in {{latex(naloga.resitev)}}$
 #          {% endfor %}
 #          \end{enumerate}
-#          ''')
+#          '''
 #         self.lazja = lazja
 #
 #     def poskusi_sestaviti(self):
@@ -119,31 +119,30 @@ class DeliteljVeckratnik(Naloga):
 
 
 class EvklidovAlgoritem(Naloga):
+    besedilo_posamezne = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$. '''
+    besedilo_vecih = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{naloga.stevilo1}}$, ${{naloga.stevilo2}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecjiDelitelj}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecjiDelitelj}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$. ''')
-        self.besedilo_vecih = jinja2.Template(r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{naloga.stevilo1}}$, ${{naloga.stevilo2}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecjiDelitelj}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecjiDelitelj}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
         steviloMalo = random.randint(50, 199)
         steviloVeliko = random.randint(200, 1000)
         preveri(steviloVeliko % steviloMalo != 0 and steviloMalo % (
-                    steviloVeliko % steviloMalo) != 0)  # Da se ne konča že v prvih dveh korakih
+                steviloVeliko % steviloMalo) != 0)  # Da se ne konča že v prvih dveh korakih
         najvecjiDelitelj = sympy.gcd(steviloMalo, steviloVeliko)
         return {'stevilo1': steviloMalo, 'stevilo2': steviloVeliko, 'najvecjiDelitelj': najvecjiDelitelj}

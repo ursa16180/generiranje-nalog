@@ -30,32 +30,30 @@ def narediPolinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risan
 
 # ~~~~~Naloge iz sklopa Polinomi in Racionalna funkcija
 class NiclePolinoma(Naloga):
+    besedilo_posamezne = r'''Poišči ničle polinoma $p(x)={{latex(naloga.polinom)}}$.'''
+
+    besedilo_vecih = r'''Poišči ničle sledečih polinomov:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item $p(x)={{latex(naloga.polinom)}}$
+        {% endfor %}
+        \end{enumerate}'''
+    resitev_posamezne = r'''{% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}
+        '''
+
+    resitev_vecih = r'''Ničle polinomov:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}
+        {% endfor %}
+        \end{enumerate}'''
+
     def __init__(self, min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''
-        Poišči ničle polinoma $p(x)={{latex(naloga.polinom)}}$.''')
 
-        self.besedilo_vecih = jinja2.Template(
-            r'''Poišči ničle sledečih polinomov:
-            \begin{enumerate}
-            {% for naloga in naloge %}
-            \item $p(x)={{latex(naloga.polinom)}}$
-            {% endfor %}
-            \end{enumerate}''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''{% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}
-            ''')
-
-        self.resitev_vecih = jinja2.Template(
-            r'''Ničle polinomov:
-            \begin{enumerate}
-            {% for naloga in naloge %}
-            \item {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}
-            {% endfor %}
-            \end{enumerate}''')
-        if min_stopnja<0:
+        if min_stopnja < 0:
             raise ValueError('Stopnja polinoma mora biti celo neničelno število.')
-        if min_stopnja>max_stopnja or min_nicla>max_nicla:
+        if min_stopnja > max_stopnja or min_nicla > max_nicla:
             raise MinMaxNapaka
         self.min_stopnja = min_stopnja
         self.max_stopnja = max_stopnja
@@ -75,25 +73,25 @@ class NiclePolinoma(Naloga):
 
 
 class DvojnaNicla(Naloga):
+    besedilo_posamezne = r'''Pokaži, da je število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$ in poišči še preostali ničli.'''
+    besedilo_vecih = r''' Pokaži, da je  $x_1$ dvojna ničla polinoma in poišči preostali ničli:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $x_1={{naloga.dvojna}}$, $p(x)={{latex(naloga.polinom)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x_3={{latex(naloga.x3)}}$, $x_4={{latex(naloga.x4)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x_3={{latex(naloga.x3)}}$, $x_4={{latex(naloga.x4)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Pokaži, da je število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$ in poišči še preostali ničli.''')
-        self.besedilo_vecih = jinja2.Template(r''' Pokaži, da je  $x_1$ dvojna ničla polinoma in poišči preostali ničli:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $x_1={{naloga.dvojna}}$, $p(x)={{latex(naloga.polinom)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x_3={{latex(naloga.x3)}}$, $x_4={{latex(naloga.x4)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x_3={{latex(naloga.x3)}}$, $x_4={{latex(naloga.x4)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -106,28 +104,27 @@ class DvojnaNicla(Naloga):
 
 
 class ParameteraDvojna(Naloga):
+    besedilo_posamezne = r''' Določi števili $a$ in $b$ tako, da bo število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$.
+    '''
+
+    besedilo_vecih = r'''Določi števili $a$ in $b$ tako, da bo število $x_{1,2}$ dvojna ničla polinoma:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item $p(x)={{latex(naloga.polinom)}}$, $x_{1,2}={{naloga.dvojna}}$
+        {% endfor %}
+        \end{enumerate}'''
+
+    resitev_posamezne = r'''$a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinomResitev)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinomResitev)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-5, max_nicla=5, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r''' Določi števili $a$ in $b$ tako, da bo število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$.
-        ''')
-
-        self.besedilo_vecih = jinja2.Template(
-            r'''Določi števili $a$ in $b$ tako, da bo število $x_{1,2}$ dvojna ničla polinoma:
-            \begin{enumerate}
-            {% for naloga in naloge %}
-            \item $p(x)={{latex(naloga.polinom)}}$, $x_{1,2}={{naloga.dvojna}}$
-            {% endfor %}
-            \end{enumerate}''')
-
-        self.resitev_posamezne = jinja2.Template(
-            r'''$a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinomResitev)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinomResitev)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
         if min_stopnja < 3:  # Preveri da ni vpisano kaj čudnega in določi da je vsaj polinom 3.stopnje
             self.min_stopnja = 3
@@ -163,56 +160,54 @@ class ParameteraDvojna(Naloga):
 
 
 class GrafPolinoma(Naloga):
-    def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-3, max_nicla=3, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''
-        Nariši graf polinoma $p(x)={{latex(naloga.polinom)}}$.''')
+    besedilo_posamezne = r'''Nariši graf polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
-        self.besedilo_vecih = jinja2.Template(
-            r'''Nariši grafe polinomov:
-            \begin{enumerate}
-            {% for naloga in naloge %}
-            \item $p(x)={{latex(naloga.polinom)}}$
-            {% endfor %}
-            \end{enumerate}''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$p(x)={{latex(naloga.polinom)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
-        extra y ticks={ {{naloga.zacetna}} },
-        extra y tick labels={ ${{latex(naloga.zacetna)}}$ },
-        extra y tick style={yticklabel style={right},},]
-        \addplot[domain =-5:5, color=black, smooth]{ {{naloga.nicelna}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-            ''')
-
-        self.resitev_vecih = jinja2.Template(r'''
+    besedilo_vecih = r'''Nariši grafe polinomov:
         \begin{enumerate}
         {% for naloga in naloge %}
-        \item $p(x)={{latex(naloga.polinom)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
-        extra y ticks={ {{naloga.zacetna}} },
-        extra y tick labels={ ${{latex(naloga.zacetna)}}$ },
-        extra y tick style={yticklabel style={right},},]
-        \addplot[domain =-5:5, color=black, smooth]{ {{naloga.nicelna}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
+        \item $p(x)={{latex(naloga.polinom)}}$
         {% endfor %}
-        \end{enumerate}
-        ''')
+        \end{enumerate}'''
+    resitev_posamezne = r'''$p(x)={{latex(naloga.polinom)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+    extra y ticks={ {{naloga.zacetna}} },
+    extra y tick labels={ ${{latex(naloga.zacetna)}}$ },
+    extra y tick style={yticklabel style={right},},]
+    \addplot[domain =-5:5, color=black, smooth]{ {{naloga.nicelna}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+        '''
 
+    resitev_vecih = r'''
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $p(x)={{latex(naloga.polinom)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,
+    extra y ticks={ {{naloga.zacetna}} },
+    extra y tick labels={ ${{latex(naloga.zacetna)}}$ },
+    extra y tick style={yticklabel style={right},},]
+    \addplot[domain =-5:5, color=black, smooth]{ {{naloga.nicelna}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+    {% endfor %}
+    \end{enumerate}
+    '''
+
+    def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-3, max_nicla=3, **kwargs):
+        super().__init__(self, **kwargs)
+        # TODO napiši za napako
         if min_stopnja < 0:  # Preveri da ni vpisano kaj čudnega
             self.min_stopnja = 0
         else:
@@ -240,36 +235,37 @@ class GrafPolinoma(Naloga):
 # TODO ideja: deljenje polinomov
 # ~~~~~~Naloge iz sklopa: Racionalna funkcija
 class DolociNiclePoleAsimptotoRacionalne(Naloga):
-    def __init__(self, min_stopnja_stevca=3, max_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3,
-                 min_nicla=-9, max_nicla=9, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi ničle, pole in asimptoto racionalne funkcije $r(x)={{naloga.racionalna}}$.''')
+    besedilo_posamezne = r'''Določi ničle, pole in asimptoto racionalne funkcije $r(x)={{naloga.racionalna}}$.'''
 
-        self.besedilo_vecih = jinja2.Template(r'''
+    besedilo_vecih = r'''
         Določi ničle, pole in asimptoto naslednjih racionalnih funkcij
         \begin{enumerate}
         {% for naloga in naloge%}
         \item $r(x)={{naloga.racionalna}}$
         {% endfor %}
-        \end{enumerate}''')
+        \end{enumerate}'''
 
-        self.resitev_posamezne = jinja2.Template(r'''
-        Ničle: {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}poli: {% for pol in naloga.poli %}$x_{ {{loop.index}} }={{pol}}$ {% endfor %}asimptota: $y={{naloga.asimptota}}$''')
+    resitev_posamezne = r'''
+        Ničle: {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}poli: {% for pol in naloga.poli %}$x_{ {{loop.index}} }={{pol}}$ {% endfor %}asimptota: $y={{naloga.asimptota}}$'''
 
-        self.resitev_vecih = jinja2.Template(r'''\begin{enumerate}
+    resitev_vecih = r'''\begin{enumerate}
         {% for naloga in naloge%}
         \item Ničle: {% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}poli: {% for pol in naloga.poli %}$x_{ {{loop.index}} }={{pol}}$ {% endfor %}asimptota: $y={{naloga.asimptota}}$
         {% endfor %}
-        \end{enumerate}''')
-        if min_stopnja_stevca<0 or min_stopnja_imenovalca<0:
+        \end{enumerate}'''
+
+    def __init__(self, min_stopnja_stevca=3, max_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3,
+                 min_nicla=-9, max_nicla=9, **kwargs):
+        super().__init__(self, **kwargs)
+
+        if min_stopnja_stevca < 0 or min_stopnja_imenovalca < 0:
             raise ValueError('Stopnja polinoma mora biti neničelno celo število.')
-        if min_stopnja_imenovalca>max_stopnja_imenovalca or min_stopnja_stevca>max_stopnja_stevca or min_nicla>max_nicla:
+        if min_stopnja_imenovalca > max_stopnja_imenovalca or min_stopnja_stevca > max_stopnja_stevca or min_nicla > max_nicla:
             raise MinMaxNapaka
         self.min_stopnja_stevca = min_stopnja_stevca
         self.max_stopnja_stevca = max_stopnja_stevca
         self.min_stopnja_imenovalca = min_stopnja_imenovalca
-        self.max_stopnja_imenovalca = int(max_stopnja_imenovalca)
+        self.max_stopnja_imenovalca = max_stopnja_imenovalca
         self.min_nicla = min_nicla
         self.max_nicla = max_nicla
 
@@ -300,6 +296,68 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
 
 class GrafRacionalne(
     Naloga):  # TODO stacionarne točke naj bodo manjše od 5, drugače ni vej na grafu (funkcija.diff je odvod)
+    besedilo_posamezne = r'''Nariši graf racionalne funkcije $r(x)= {{naloga.racionalna}}$.'''
+
+    besedilo_vecih = r'''
+    Nariši grafe racionalnih funkcij:
+    \begin{enumerate}
+    {% for naloga in naloge%}
+    \item $r(x)={{naloga.racionalna}}$
+    {% endfor %}
+    \end{enumerate}'''
+
+    resitev_posamezne = r'''$r(x)={{latex(naloga.racionalna)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+    xmin=-5.5, xmax=5.5, 
+    restrict y to domain=-5.5:5.5,]
+
+    {% for i in range( naloga.domenaPoli|count -1) %}
+    \addplot[domain ={{naloga.domenaPoli[i]}}+0.1 : {{naloga.domenaPoli[i+1]}}-0.1, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
+    {% endfor %}
+
+    {% for i in range(1, naloga.domenaPoli|count -1) %}
+    \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
+    {% endfor %}
+
+
+
+    \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+    '''
+
+    resitev_vecih = r'''
+    \begin{enumerate}
+    {% for naloga in naloge%}
+    \item $r(x)={{latex(naloga.racionalna)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+    xmin=-5.5, xmax=5.5,
+    restrict y to domain=-5.5:5.5,]
+
+    {% for i in range( naloga.domenaPoli|count -1) %}
+    \addplot[domain ={{naloga.domenaPoli[i]}}+0.3 : {{naloga.domenaPoli[i+1]}}-0.3, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
+    {% endfor %}
+
+    {% for i in range(1, naloga.domenaPoli|count -1) %}
+    \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
+    {% endfor %}
+
+    \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+    {% endfor %}
+    \end{enumerate}'''
+
     def __init__(self, min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=2, max_stopnja_imenovalca=4,
                  min_nicla=-5, max_nicla=5, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
@@ -308,69 +366,6 @@ class GrafRacionalne(
             raise MinMaxNapaka
         if min_stopnja_imenovalca < 0 or min_stopnja_stevca < 0:
             raise ValueError('Stopnja polinoma mora biti večja od nič.')
-
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Nariši graf racionalne funkcije $r(x)= {{naloga.racionalna}}$.''')
-
-        self.besedilo_vecih = jinja2.Template(r'''
-        Nariši grafe racionalnih funkcij:
-        \begin{enumerate}
-        {% for naloga in naloge%}
-        \item $r(x)={{naloga.racionalna}}$
-        {% endfor %}
-        \end{enumerate}''')
-
-        self.resitev_posamezne = jinja2.Template(r'''$r(x)={{latex(naloga.racionalna)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
-        xmin=-5.5, xmax=5.5, 
-        restrict y to domain=-5.5:5.5,]
-        
-        {% for i in range( naloga.domenaPoli|count -1) %}
-        \addplot[domain ={{naloga.domenaPoli[i]}}+0.1 : {{naloga.domenaPoli[i+1]}}-0.1, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
-        {% endfor %}
-        
-        {% for i in range(1, naloga.domenaPoli|count -1) %}
-        \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
-        {% endfor %}
-        
-        
-        
-        \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-        ''')
-
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-        {% for naloga in naloge%}
-        \item $r(x)={{latex(naloga.racionalna)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
-        xmin=-5.5, xmax=5.5,
-        restrict y to domain=-5.5:5.5,]
-
-        {% for i in range( naloga.domenaPoli|count -1) %}
-        \addplot[domain ={{naloga.domenaPoli[i]}}+0.3 : {{naloga.domenaPoli[i+1]}}-0.3, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
-        {% endfor %}
-        
-        {% for i in range(1, naloga.domenaPoli|count -1) %}
-        \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
-        {% endfor %}
-        
-        \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-        {% endfor %}
-        \end{enumerate}''')
 
         self.min_stopnja_stevca = min_stopnja_stevca
         self.max_stopnja_stevca = max_stopnja_stevca

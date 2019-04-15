@@ -17,50 +17,54 @@ def narediEksponentno(do=3, celaOsnova=False, premik=0):
 
 
 class GrafEksponentne(Naloga):
+    besedilo_posamezne = r'''V isti koordinatni sistem nariši grafa funkcij $f(x)={{latex(naloga.eksponentna1)}}$ in $g(x)={{latex(naloga.eksponentna2)}}$.'''
+
+    besedilo_vecih = r'''V isti koordinatni sistem nariši grafa funkcij:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+
+    # TODO izpisovanje imena funkcij na grafu
+    resitev_posamezne = r'''$f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
+    \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}'''
+
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
+    \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''V isti koordinatni sistem nariši grafa funkcij $f(x)={{latex(naloga.eksponentna1)}}$ in $g(x)={{latex(naloga.eksponentna2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''V isti koordinatni sistem nariši grafa funkcij:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        # TODO izpisovanje imena funkcij na grafu
-        self.resitev_posamezne = jinja2.Template(r'''$f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
-        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
-        \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $f(x)={{latex(naloga.eksponentna1)}}$, $g(x)={{latex(naloga.eksponentna2)}}$\par
-        \begin{minipage}{\linewidth}
-        \centering
-        \begin{tikzpicture}[baseline]
-        \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-        xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
-        xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
-        \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
-        \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
-        \end{axis}
-        \end{tikzpicture}
-        \end{minipage}
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -79,26 +83,25 @@ class GrafEksponentne(Naloga):
 
 
 class Enacba(Naloga):
+    besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
+    besedilo_vecih = r'''Reši enačbe:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.enacba)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x={{latex(naloga.resitev)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x={{latex(naloga.resitev)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        # if min_potenca > max_potenca:
-        #     raise MinMaxNapaka
-        self.besedilo_posamezne = jinja2.Template(r'''Reši enačbo ${{latex(naloga.enacba)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Reši enačbe:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.enacba)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x={{latex(naloga.resitev)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x={{latex(naloga.resitev)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -106,8 +109,8 @@ class Enacba(Naloga):
 
         if self.lazja:
             osnova = sympy.Pow(random.choice([2, 3, 4, 5, 7, 10]), random.choice([-2, -1, sympy.Rational(1, 2), 1, 2]))
-            a = random.choice([ -2, -1, 1, 2])
-            b = random.choice([ -2, -1, 1, 2])
+            a = random.choice([-2, -1, 1, 2])
+            b = random.choice([-2, -1, 1, 2])
             d = 0
             k = 0
         else:
@@ -124,24 +127,26 @@ class Enacba(Naloga):
 
 
 class Enacba2osnovi(Naloga):
+    besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
+    besedilo_vecih = r'''Reši enačbe:
+    \begin{enumerate} 
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.enacba)}}$.
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$x={{latex(naloga.resitev)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $x={{latex(naloga.resitev)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Reši enačbo ${{latex(naloga.enacba)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Reši enačbe:
-        \begin{enumerate} 
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.enacba)}}$.
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$x={{latex(naloga.resitev)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $x={{latex(naloga.resitev)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):

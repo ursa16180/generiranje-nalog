@@ -12,24 +12,25 @@ def izberiKompleksnoStevilo(od=-5, do=5):
 
 # ~~~~~Naloge iz sklopa kompleksnih števil
 class VsotaRazlika(Naloga):
+    besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
+    besedilo_vecih = r'''Izračunaj:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $z={{latex(naloga.racun)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$z={{latex(naloga.rezultat)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $z={{latex(naloga.rezultat)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Izračunaj $z={{latex(naloga.racun)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $z={{latex(naloga.racun)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$z={{latex(naloga.rezultat)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $z={{latex(naloga.rezultat)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         izbor = [-3, -2, -1, 1, 2, 3, 1, 1, 1, 1, 1,
@@ -53,24 +54,25 @@ class VsotaRazlika(Naloga):
 
 
 class Ulomek(Naloga):
+    besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
+    besedilo_vecih = r'''Izračunaj:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $z={{latex(naloga.racun)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$z={{latex(naloga.rezultat)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $z={{latex(naloga.rezultat)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Izračunaj $z={{latex(naloga.racun)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $z={{latex(naloga.racun)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$z={{latex(naloga.rezultat)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $z={{latex(naloga.rezultat)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -97,24 +99,25 @@ class Ulomek(Naloga):
 
 
 class Mnozenje(Naloga):
+    besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
+    besedilo_vecih = r'''Izračunaj:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $z={{latex(naloga.racun)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$z={{latex(naloga.rezultat)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $z={{latex(naloga.rezultat)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Izračunaj $z={{latex(naloga.racun)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $z={{latex(naloga.racun)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$z={{latex(naloga.rezultat)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $z={{latex(naloga.rezultat)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         z1 = izberiKompleksnoStevilo()
@@ -125,25 +128,26 @@ class Mnozenje(Naloga):
 
 
 class Racunanje(Naloga):
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Dano je kompleksno število $z={{latex(naloga.stevilo)}}$. Izračunaj število $w={{latex(naloga.racun)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r''' Za dano kompleksno število $z$ izračunaj število $w$:
+    besedilo_posamezne = r'''Dano je kompleksno število $z={{latex(naloga.stevilo)}}$. Izračunaj število $w={{latex(naloga.racun)}}$.'''
+
+    besedilo_vecih = r''' Za dano kompleksno število $z$ izračunaj število $w$:
         \begin{enumerate}
         {% for naloga in naloge %}
         \item $w={{latex(naloga.racun)}}$, $z={{latex(naloga.stevilo)}}$
         {% endfor %}
         \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$w={{latex(naloga.rezultat)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
+        '''
+    resitev_posamezne = r'''$w={{latex(naloga.rezultat)}}$'''
+    resitev_vecih = r'''
         \begin{enumerate}
          {% for naloga in naloge %}
          \item $w={{latex(naloga.rezultat)}}$
          {% endfor %}
          \end{enumerate}
-         ''')
+         '''
+
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
 
     def poskusi_sestaviti(self):
         z = sympy.symbols('z')
@@ -156,26 +160,26 @@ class Racunanje(Naloga):
 
 
 class Enacba(Naloga):
+    besedilo_posamezne = r'''Katero kompleksno število $z$ zadošča enačbi ${{latex(naloga.enacba)}}$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.'''
+    besedilo_vecih = r'''Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $z={{latex(naloga.enacba)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$z={{latex(naloga.resitev)}}$, $\operatorname{Re}(z)={{latex(naloga.realna)}}$, $\operatorname{Im}(z)={{latex(naloga.imaginarna)}}$, $\left|z\right|={{latex(naloga.absolutna)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $z={{latex(naloga.resitev)}}$, $\operatorname{Re}(z)={{latex(naloga.realna)}}$, $\operatorname{Im}(z)={{latex(naloga.imaginarna)}}$, $\left|z\right|={{latex(naloga.absolutna)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Katero kompleksno število $z$ zadošča enačbi ${{latex(naloga.enacba)}}$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $z={{latex(naloga.enacba)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''$z={{latex(naloga.resitev)}}$, $\operatorname{Re}(z)={{latex(naloga.realna)}}$, $\operatorname{Im}(z)={{latex(naloga.imaginarna)}}$, $\left|z\right|={{latex(naloga.absolutna)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $z={{latex(naloga.resitev)}}$, $\operatorname{Re}(z)={{latex(naloga.realna)}}$, $\operatorname{Im}(z)={{latex(naloga.imaginarna)}}$, $\left|z\right|={{latex(naloga.absolutna)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -198,18 +202,16 @@ class Enacba(Naloga):
 
 
 class NarisiTocke(Naloga):
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''V kompleksno ravnino nariši števila $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''V kompleksno ravnino nariši števila:
+    besedilo_posamezne = r'''V kompleksno ravnino nariši števila $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$.'''
+
+    besedilo_vecih = r'''V kompleksno ravnino nariši števila:
         \begin{enumerate}
         {% for naloga in naloge %}
         \item $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$
         {% endfor %}
         \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$, $z_4={{latex(naloga.z4)}}$\par
+        '''
+    resitev_posamezne = r'''$z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$, $z_4={{latex(naloga.z4)}}$\par
         \begin{minipage}{\linewidth}
         \centering
         \begin{tikzpicture}[baseline]
@@ -228,8 +230,8 @@ class NarisiTocke(Naloga):
         \end{axis}
         \end{tikzpicture}
         \end{minipage}
-        ''')
-        self.resitev_vecih = jinja2.Template(r'''
+        '''
+    resitev_vecih = r'''
         \begin{enumerate}
          {% for naloga in naloge %}
          \item $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$, $z_4={{latex(naloga.z4)}}$\par
@@ -253,7 +255,10 @@ class NarisiTocke(Naloga):
         \end{minipage}
          {% endfor %}
          \end{enumerate}
-         ''')
+         '''
+
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
 
     def poskusi_sestaviti(self):
         z1 = izberiKompleksnoStevilo(-5, 5)

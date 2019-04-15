@@ -10,14 +10,14 @@ def vsotaAritmeticnega(a1, d, n):
 
 
 def vsotaGeometrijskega(a1, q, n):
-    sn = sympy.Mul(a1,q ** n - 1,sympy.Pow(q - 1,-1))
-    #sn = sympy.Rational(a1 * (q ** n - 1), (q - 1))
+    sn = sympy.Mul(a1, q ** n - 1, sympy.Pow(q - 1, -1))
+    # sn = sympy.Rational(a1 * (q ** n - 1), (q - 1))
     return sn
 
 
 def vsotaGeometrijskeVrste(a1, q):
     if abs(q) < 1:
-        s=sympy.Mul(a1,sympy.Pow(1-q,-1))
+        s = sympy.Mul(a1, sympy.Pow(1 - q, -1))
         return s
     else:
         raise ValueError('Zaporedje ni konvergentno.')
@@ -37,25 +37,25 @@ def clenGeometrijskega(a1, q, n):
 # ~~~~~Naloge iz sklopa zaporedja
 
 class SplosniClenZaporedja(Naloga):
+    besedilo_posamezne = r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja {% for clen in naloga.cleni %}${{latex(clen)}}$, {% endfor %}...'''
+    besedilo_vecih = r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item {% for clen in naloga.cleni %}${{latex(clen)}}$, {% endfor %}...
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$a_n={{latex(naloga.splosni)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $a_n={{latex(naloga.splosni)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja {% for clen in naloga.cleni %}${{latex(clen)}}$, {% endfor %}...''')
-        self.besedilo_vecih = jinja2.Template(r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item {% for clen in naloga.cleni %}${{latex(clen)}}$, {% endfor %}...
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$a_n={{latex(naloga.splosni)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $a_n={{latex(naloga.splosni)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -79,27 +79,26 @@ class SplosniClenZaporedja(Naloga):
 
 # ~~~~~Naloge iz sklopa artimetično zaporedje
 class PrviCleniAritmeticnega(Naloga):
+    besedilo_posamezne = r'''Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
+         in diferenco $d={{latex(naloga.d)}}$.'''
+    besedilo_vecih = r'''Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1$ in diferenco $d$:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $a_1={{latex(naloga.a1)}}$, $d={{latex(naloga.d)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''{% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item {% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
-             in diferenco $d={{latex(naloga.d)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1$ in diferenco $d$:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $a_1={{latex(naloga.a1)}}$, $d={{latex(naloga.d)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''{% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item {% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -119,24 +118,23 @@ class PrviCleniAritmeticnega(Naloga):
 
 
 class SplosniClenAritmeticnegaZaporedja(Naloga):
+    besedilo_posamezne = r'''Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{latex(naloga.n1)}} }={{latex(naloga.an1)}}$ in $a_{ {{latex(naloga.n2)}} }={{latex(naloga.an2)}}$.'''
+    besedilo_vecih = r'''Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item $a_{ {{latex(naloga.n1)}} }={{latex(naloga.an1)}}$, $a_{ {{latex(naloga.n2)}} }={{latex(naloga.an2)}}$
+        {% endfor %}
+        \end{enumerate}'''
+    resitev_posamezne = r'''$a_n={{latex(naloga.a1)}}+{{latex(naloga.d)}}(n-1)$'''
+    resitev_vecih = r'''\begin{enumerate}
+        {% for naloga in naloge %}
+        \item $a_n={{latex(naloga.a1)}}+{{latex(naloga.d)}}(n-1)$
+        {% endfor %}
+        \end{enumerate}'''
+
     def __init__(self, od=-5, do=5, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{latex(naloga.n1)}} }={{latex(naloga.an1)}}$ in $a_{ {{latex(naloga.n2)}} }={{latex(naloga.an2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(
-            r'''Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena:
-            \begin{enumerate}
-            {% for naloga in naloge %}
-            \item $a_{ {{latex(naloga.n1)}} }={{latex(naloga.an1)}}$, $a_{ {{latex(naloga.n2)}} }={{latex(naloga.an2)}}$
-            {% endfor %}
-            \end{enumerate}''')
-        self.resitev_posamezne = jinja2.Template(r'''$a_n={{latex(naloga.a1)}}+{{latex(naloga.d)}}(n-1)$''')
-        self.resitev_vecih = jinja2.Template(
-            r'''\begin{enumerate}
-            {% for naloga in naloge %}
-            \item $a_n={{latex(naloga.a1)}}+{{latex(naloga.d)}}(n-1)$
-            {% endfor %}
-            \end{enumerate}''')
+
         if od > od:  # TODO ali od, do smiselna?
             raise MinMaxNapaka
         self.od = od
@@ -157,28 +155,28 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
 
 
 class SplosniClenAritmeticnegaEnacbi(Naloga):
+    besedilo_posamezne = r'''Določi prvi člen in diferenco artimetičnega zaporedja, pri katerem je 
+        $a_{ {{naloga.n1}} }+a_{ {{naloga.n2}} }={{latex(naloga.vrednost1)}}$ in 
+        $a_{ {{naloga.n3}} } {{latex(naloga.operator)}} a_{ {{naloga.n4}} }={{latex(naloga.vrednost2)}}$.'''
+    besedilo_vecih = r'''Določi prvi člen in diferenco artimetičnega zaporedja, pri katerem je
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $a_{ {{naloga.n1}} }+a_{ {{naloga.n2}} }={{latex(naloga.vrednost1)}}$, 
+        $a_{ {{naloga.n3}} } {{latex(naloga.operator)}} a_{ {{naloga.n4}} }={{latex(naloga.vrednost2)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$a_1={{naloga.a1}}$, $d={{naloga.d}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $a_1={{naloga.a1}}$, $d={{naloga.d}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi prvi člen in diferenco artimetičnega zaporedja, pri katerem je 
-            $a_{ {{naloga.n1}} }+a_{ {{naloga.n2}} }={{latex(naloga.vrednost1)}}$ in 
-            $a_{ {{naloga.n3}} } {{latex(naloga.operator)}} a_{ {{naloga.n4}} }={{latex(naloga.vrednost2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Določi prvi člen in diferenco artimetičnega zaporedja, pri katerem je
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $a_{ {{naloga.n1}} }+a_{ {{naloga.n2}} }={{latex(naloga.vrednost1)}}$, 
-            $a_{ {{naloga.n3}} } {{latex(naloga.operator)}} a_{ {{naloga.n4}} }={{latex(naloga.vrednost2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$a_1={{naloga.a1}}$, $d={{naloga.d}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $a_1={{naloga.a1}}$, $d={{naloga.d}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-8, 8) if x != 0] + [-sympy.Rational(1, 2), sympy.Rational(1, 2)])
@@ -195,25 +193,25 @@ class SplosniClenAritmeticnegaEnacbi(Naloga):
 
 
 class VsotaAritmeticnega(Naloga):
+    besedilo_posamezne = r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov aritmetičnega zaporedja, če je {{naloga.izraz}}.'''
+    besedilo_vecih = r'''Izračunaj vsoto prvih n členov aritmetičnega zaporedja, če je:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item {{naloga.izraz}}, $n={{naloga.n}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$s_{ {{naloga.n}} }={{naloga.vsota}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $s_{ {{naloga.n}} }={{naloga.vsota}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov aritmetičnega zaporedja, če je {{naloga.izraz}}.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj vsoto prvih n členov aritmetičnega zaporedja, če je:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item {{naloga.izraz}}, $n={{naloga.n}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$s_{ {{naloga.n}} }={{naloga.vsota}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $s_{ {{naloga.n}} }={{naloga.vsota}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -235,27 +233,26 @@ class VsotaAritmeticnega(Naloga):
 
 # ~~~~~Naloge iz sklopa geometrijsko zaporedje
 class PrviCleniGeometrijskega(Naloga):
+    besedilo_posamezne = r'''Zapiši prvih pet členov in splošni člen geometrijskega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
+         in količnikom $q={{latex(naloga.q)}}$.'''
+    besedilo_vecih = r'''Zapiši prvih pet členov in splošni člen geometrijskega zaporedja s prvim členom $a_1$ in količnikom $q$:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $a_1={{latex(naloga.a1)}}$, $d={{latex(naloga.q)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''{% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item {% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši prvih pet členov in splošni člen geometrijskega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
-             in količnikom $q={{latex(naloga.q)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši prvih pet členov in splošni člen geometrijskega zaporedja s prvim členom $a_1$ in količnikom $q$:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $a_1={{latex(naloga.a1)}}$, $d={{latex(naloga.q)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''{% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item {% for clen in naloga.cleni %}$a_{ {{loop.index}} }={{clen}}$, {% endfor %} $a_n={{latex(naloga.splosni)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -275,31 +272,29 @@ class PrviCleniGeometrijskega(Naloga):
 
 
 class SplosniClenGeometrijskega(Naloga):
+    besedilo_posamezne = r'''Določi splošni člen geometrijskega zaporedja, če je ${{naloga.podatek1}}$ in ${{latex(naloga.podatek2)}}$.'''
+    besedilo_vecih = r'''Določi splošne člene geometrijskih zaporedij, če je:
+        \begin{enumerate}
+        {% for naloga in naloge %}
+        \item ${{naloga.podatek1}}$ in ${{latex(naloga.podatek2)}}$
+        {% endfor %}
+        \end{enumerate}'''
+    resitev_posamezne = r'''$a_n={{latex(naloga.splosni)}}$'''
+    resitev_vecih = r'''\begin{enumerate}
+        {% for naloga in naloge %}
+        \item $a_n={{latex(naloga.splosni)}}$
+        {% endfor %}
+        \end{enumerate}'''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi splošni člen geometrijskega zaporedja, če je ${{naloga.podatek1}}$ in ${{latex(naloga.podatek2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(
-            r'''Določi splošne člene geometrijskih zaporedij, če je:
-            \begin{enumerate}
-            {% for naloga in naloge %}
-            \item ${{naloga.podatek1}}$ in ${{latex(naloga.podatek2)}}$
-            {% endfor %}
-            \end{enumerate}''')
-        self.resitev_posamezne = jinja2.Template(r'''$a_n={{latex(naloga.splosni)}}$''')
-        self.resitev_vecih = jinja2.Template(
-            r'''\begin{enumerate}
-            {% for naloga in naloge %}
-            \item $a_n={{latex(naloga.splosni)}}$
-            {% endfor %}
-            \end{enumerate}''')
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-10, 10) if x != 0])
         q = random.choice([-3, -2, 2, 3] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
-        n1 = random.choice(list(range(3,16,2))) #en lih in en sod da v enačbi ni +/- q
-        n2 = random.choice(list(range(2,16,2)))
-        #preveri(n1 != n2) #Nepotrebno ker je en lih in en sod
+        n1 = random.choice(list(range(3, 16, 2)))  # en lih in en sod da v enačbi ni +/- q
+        n2 = random.choice(list(range(2, 16, 2)))
+        # preveri(n1 != n2) #Nepotrebno ker je en lih in en sod
         an1 = clenGeometrijskega(a1, q, n1)
         an2 = clenGeometrijskega(a1, q, n2)
         [podatek1, podatek2] = random.sample(
@@ -312,28 +307,28 @@ class SplosniClenGeometrijskega(Naloga):
 
 
 class SplosniClenGeometrijskegaEnacbi(Naloga):
+    besedilo_posamezne = r'''Določi prvi člen in količnik geometrijskega zaporedja, pri katerem je 
+        $a_{ {{naloga.n1}} }={{latex(naloga.vrednost1)}}$ in 
+        $a_{ {{naloga.n2}} } {{latex(naloga.operator)}} a_{ {{naloga.n3}} }={{latex(naloga.vrednost2)}}$.'''
+    besedilo_vecih = r'''Določi prvi člen in količnik geometrijskega zaporedja, pri katerem je
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $a_{ {{naloga.n1}} }={{latex(naloga.vrednost1)}}$, 
+    $a_{ {{naloga.n2}} } {{latex(naloga.operator)}} a_{ {{naloga.n3}} }={{latex(naloga.vrednost2)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$a_1={{latex(naloga.a1)}}$, $q={{latex(naloga.q)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $a_1={{latex(naloga.a1)}}$, $q={{latex(naloga.q)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi prvi člen in količnik geometrijskega zaporedja, pri katerem je 
-            $a_{ {{naloga.n1}} }={{latex(naloga.vrednost1)}}$ in 
-            $a_{ {{naloga.n2}} } {{latex(naloga.operator)}} a_{ {{naloga.n3}} }={{latex(naloga.vrednost2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Določi prvi člen in količnik geometrijskega zaporedja, pri katerem je
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $a_{ {{naloga.n1}} }={{latex(naloga.vrednost1)}}$, 
-        $a_{ {{naloga.n2}} } {{latex(naloga.operator)}} a_{ {{naloga.n3}} }={{latex(naloga.vrednost2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$a_1={{latex(naloga.a1)}}$, $q={{latex(naloga.q)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $a_1={{latex(naloga.a1)}}$, $q={{latex(naloga.q)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-5, 5) if x != 0] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
@@ -358,25 +353,26 @@ class SplosniClenGeometrijskegaEnacbi(Naloga):
 
 
 class VsotaGeometrijskega(Naloga):
+    besedilo_posamezne = r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov geometrijskega zaporedja, če je {{naloga.izraz}}.'''
+    besedilo_vecih = r'''Izračunaj vsoto prvih n členov geometrijskega zaporedja, če je:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item {{naloga.izraz}}, $n={{naloga.n}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''$s_{ {{naloga.n}} }={{latex(naloga.vsota)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item $s_{ {{naloga.n}} }={{latex(naloga.vsota)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov geometrijskega zaporedja, če je {{naloga.izraz}}.''')
-        self.besedilo_vecih = jinja2.Template(r'''Izračunaj vsoto prvih n členov geometrijskega zaporedja, če je:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item {{naloga.izraz}}, $n={{naloga.n}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''$s_{ {{naloga.n}} }={{latex(naloga.vsota)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item $s_{ {{naloga.n}} }={{latex(naloga.vsota)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -396,27 +392,28 @@ class VsotaGeometrijskega(Naloga):
 
 
 class VsotaGeometrijskeVrste(Naloga):
+    besedilo_posamezne = r'''Zapiši geometrijsko vrsto, če je ${{latex(naloga.podatek1)}}={{latex(naloga.vrednost1)}}$ in
+         ${{latex(naloga.podatek2)}}={{latex(naloga.vrednost2)}}$.'''
+    besedilo_vecih = r'''Zapiši geometrijsko vrsto z danima podatkoma
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.podatek1)}}={{latex(naloga.vrednost1)}}$,
+         ${{latex(naloga.podatek2)}}={{latex(naloga.vrednost2)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''${{naloga.vrsta}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{naloga.vrsta}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši geometrijsko vrsto, če je ${{latex(naloga.podatek1)}}={{latex(naloga.vrednost1)}}$ in
-             ${{latex(naloga.podatek2)}}={{latex(naloga.vrednost2)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši geometrijsko vrsto z danima podatkoma
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.podatek1)}}={{latex(naloga.vrednost1)}}$,
-             ${{latex(naloga.podatek2)}}={{latex(naloga.vrednost2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{naloga.vrsta}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{naloga.vrsta}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -424,8 +421,10 @@ class VsotaGeometrijskeVrste(Naloga):
                            -sympy.Rational(2, 3), -sympy.Rational(1, 3), sympy.Rational(2, 3), sympy.Rational(1, 3),
                            -sympy.Rational(3, 4), -sympy.Rational(1, 4), sympy.Rational(3, 4), sympy.Rational(1, 4),
                            -sympy.Rational(2, 5), -sympy.Rational(1, 5), sympy.Rational(2, 5), sympy.Rational(1, 5),
-                           -sympy.Mul(sympy.sqrt(2), sympy.Pow(2,-1),evaluate=False), sympy.Mul(sympy.sqrt(2), sympy.Pow(2,-1),evaluate=False),
-                           -sympy.Mul(sympy.sqrt(2), sympy.Pow(3,-1),evaluate=False), sympy.Mul(sympy.sqrt(2), sympy.Pow(3,-1),evaluate=False)])
+                           -sympy.Mul(sympy.sqrt(2), sympy.Pow(2, -1), evaluate=False),
+                           sympy.Mul(sympy.sqrt(2), sympy.Pow(2, -1), evaluate=False),
+                           -sympy.Mul(sympy.sqrt(2), sympy.Pow(3, -1), evaluate=False),
+                           sympy.Mul(sympy.sqrt(2), sympy.Pow(3, -1), evaluate=False)])
         a1 = random.choice([x for x in range(-10, 11) if x != 0])
         s = vsotaGeometrijskeVrste(a1, q)
         izbor = [('a_1', a1), ('q', q), ('s', s)]
@@ -436,6 +435,6 @@ class VsotaGeometrijskeVrste(Naloga):
             sn = vsotaGeometrijskega(a1, q, n2)
             izbor += [('a_{}'.format(n1), an), ('s_{}'.format(n2), sn)]
         [izraz1, izraz2] = random.sample(izbor, 2)
-        vrsta = '+'.join('{}'.format(sympy.latex(clenGeometrijskega(a1,q,n))) for n in range(1, 5)) + '+...'
+        vrsta = '+'.join('{}'.format(sympy.latex(clenGeometrijskega(a1, q, n))) for n in range(1, 5)) + '+...'
         return {'podatek1': izraz1[0], 'vrednost1': izraz1[1], 'podatek2': izraz2[0], 'vrednost2': izraz2[1],
                 'vrsta': vrsta}

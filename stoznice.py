@@ -8,26 +8,25 @@ import jinja2
 # ~~~~~Naloge iz sklopa Stožnice
 # ~~~~~~Krožnica
 class PreseciscaKroznic(Naloga):
+    besedilo_posamezne = r'''Določi medsebojno lego krožnic $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$ in $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$ ter določi presešišča, če obstajajo.'''
+    besedilo_vecih = r'''Določi medsebojno lego krožnic $\mathcal{K}_1$ in $\mathcal{K}_2$ ter določi presešišča, če obstajajo:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$, $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''Sekata se v {% for tocka in naloga.presek %}$T_{ {{loop.index}} }={{latex(tocka)}}$ {% endfor %}.'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item Sekata se v {% for tocka in naloga.presek %}$T_{ {{loop.index}} }={{latex(tocka)}}$ {% endfor %}.
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Določi medsebojno lego krožnic $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$ in $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$ ter določi presešišča, če obstajajo.''')
-        self.besedilo_vecih = jinja2.Template(r'''Določi medsebojno lego krožnic $\mathcal{K}_1$ in $\mathcal{K}_2$ ter določi presešišča, če obstajajo:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$, $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(
-            r'''Sekata se v {% for tocka in naloga.presek %}$T_{ {{loop.index}} }={{latex(tocka)}}$ {% endfor %}.''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item Sekata se v {% for tocka in naloga.presek %}$T_{ {{loop.index}} }={{latex(tocka)}}$ {% endfor %}.
-         {% endfor %}
-         \end{enumerate}
-         ''')
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -52,25 +51,26 @@ class PreseciscaKroznic(Naloga):
 
 # ~~~~~ Elipsa
 class TemeGorisceEnacba(Naloga):
+    besedilo_posamezne = r'''Zapiši enačbo elipse s središčem $S{{latex(naloga.sredisce)}}$, temenom $T_1{{latex(naloga.teme)}}$ in goriščem $F_1{{latex(naloga.gorisce)}}$.'''
+    besedilo_vecih = r'''Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item $S({{latex(naloga.sredisce)}})$, $T_1{{latex(naloga.teme)}}$, $F_1{{latex(naloga.gorisce)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''${{latex(naloga.elipsa)}}$'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{latex(naloga.elipsa)}}$
+     {% endfor %}
+     \end{enumerate}
+     '''
+
     def __init__(self, premaknjena=True, lazja=True, **kwargs):
         super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(
-            r'''Zapiši enačbo elipse s središčem $S{{latex(naloga.sredisce)}}$, temenom $T_1{{latex(naloga.teme)}}$ in goriščem $F_1{{latex(naloga.gorisce)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item $S({{latex(naloga.sredisce)}})$, $T_1{{latex(naloga.teme)}}$, $F_1{{latex(naloga.gorisce)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''${{latex(naloga.elipsa)}}$''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.elipsa)}}$
-         {% endfor %}
-         \end{enumerate}
-         ''')
+
         self.premaknjena = premaknjena
         self.lazja = lazja
 
@@ -90,18 +90,31 @@ class TemeGorisceEnacba(Naloga):
 
 
 class NarisiKrivuljo(Naloga):
-    def __init__(self, kroznica=True, elipsa=True, premaknjena=True, **kwargs):
-        super().__init__(self, **kwargs)
-        self.besedilo_posamezne = jinja2.Template(r'''Nariši krivuljo ${{latex(naloga.razsirjena)}}$.''')
-        self.besedilo_vecih = jinja2.Template(r'''Nariši krivuljo:
-        \begin{enumerate}
-        {% for naloga in naloge %}
-        \item ${{latex(naloga.razsirjena)}}$
-        {% endfor %}
-        \end{enumerate}
-        ''')
-        self.resitev_posamezne = jinja2.Template(r'''
-        ${{latex(naloga.krivulja)}}$\par
+    besedilo_posamezne = r'''Nariši krivuljo ${{latex(naloga.razsirjena)}}$.'''
+    besedilo_vecih = r'''Nariši krivuljo:
+    \begin{enumerate}
+    {% for naloga in naloge %}
+    \item ${{latex(naloga.razsirjena)}}$
+    {% endfor %}
+    \end{enumerate}
+    '''
+    resitev_posamezne = r'''
+    ${{latex(naloga.krivulja)}}$\par
+    \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[baseline]
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    xtick={-6,-5,-4,...,5,6}, ytick={-6,-5,-4,...,5,6}, 
+    xmin=-6.5, xmax=6.5, ymin=-6.5, ymax=6.5,,axis equal image]
+    \addplot[black,mark = x, mark size=2pt] coordinates {({{naloga.p}},{{naloga.q}})};
+    \draw (axis cs:{{naloga.p}},{{naloga.q}}) ellipse [x radius={{naloga.a}}, y radius = {{naloga.b}}];
+    \end{axis}
+    \end{tikzpicture}
+    \end{minipage}'''
+    resitev_vecih = r'''
+    \begin{enumerate}
+     {% for naloga in naloge %}
+     \item ${{latex(naloga.krivulja)}}$\par
         \begin{minipage}{\linewidth}
         \centering
         \begin{tikzpicture}[baseline]
@@ -112,25 +125,14 @@ class NarisiKrivuljo(Naloga):
         \draw (axis cs:{{naloga.p}},{{naloga.q}}) ellipse [x radius={{naloga.a}}, y radius = {{naloga.b}}];
         \end{axis}
         \end{tikzpicture}
-        \end{minipage}''')
-        self.resitev_vecih = jinja2.Template(r'''
-        \begin{enumerate}
-         {% for naloga in naloge %}
-         \item ${{latex(naloga.krivulja)}}$\par
-            \begin{minipage}{\linewidth}
-            \centering
-            \begin{tikzpicture}[baseline]
-            \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-            xtick={-6,-5,-4,...,5,6}, ytick={-6,-5,-4,...,5,6}, 
-            xmin=-6.5, xmax=6.5, ymin=-6.5, ymax=6.5,,axis equal image]
-            \addplot[black,mark = x, mark size=2pt] coordinates {({{naloga.p}},{{naloga.q}})};
-            \draw (axis cs:{{naloga.p}},{{naloga.q}}) ellipse [x radius={{naloga.a}}, y radius = {{naloga.b}}];
-            \end{axis}
-            \end{tikzpicture}
-            \end{minipage}
-         {% endfor %}
-         \end{enumerate}
-         ''')
+        \end{minipage}
+     {% endfor %}
+     \end{enumerate}
+     '''
+
+    def __init__(self, kroznica=True, elipsa=True, premaknjena=True, **kwargs):
+        super().__init__(self, **kwargs)
+
         if kroznica == elipsa == False:
             raise ValueError('Izbrana mora biti vsaj ena od krivulj.')
         self.kroznica = kroznica
