@@ -37,7 +37,7 @@ class Naloga:
                         {% endfor %}
                         \\end{enumerate}
                 '''
-    def __init__(self, besedilo_posamezne=None, besedilo_vecih=None, resitev_posamezne=None, resitev_vecih=None,
+    def __init__(self, *args, besedilo_posamezne=None, besedilo_vecih=None, resitev_posamezne=None, resitev_vecih=None,
                  st_nalog=None, **kwargs):
         self.st_nalog = st_nalog
 
@@ -52,7 +52,9 @@ class Naloga:
 
         if resitev_vecih is not None:
             self.resitev_vecih = resitev_vecih
-
+        
+        assert not args
+        assert not kwargs
 
         # TODO: template se kliče samo enkrat - če kličeš na tem mestu besedilo_posamezne, je to objekt naloga in ne dejansko besedilo
         # besedilo_posamezne =besedilo_posamezne)
