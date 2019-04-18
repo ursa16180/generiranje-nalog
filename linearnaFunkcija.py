@@ -76,9 +76,6 @@ class PremicaSkoziTocki(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         x1 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
         y1 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
@@ -104,9 +101,6 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
                                          \item $d(A,B)={{naloga.razdalja}}$
                                          {% endfor %}
                                          \end{enumerate}'''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x1 = izberiKoordinato()
@@ -134,9 +128,6 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
                                           {% endfor %}
                                           \end{enumerate}
                                           '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -170,9 +161,6 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
      {% endfor %}
      \end{enumerate}
      '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x1 = izberiKoordinato(1, 5)
@@ -254,9 +242,6 @@ class NarisiLinearnoFukcijo(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         [k, n, eksplicitna] = eksplicitnaPremica()
         x = sympy.symbols('x')
@@ -287,9 +272,6 @@ class VrednostiLinearne(Naloga):
      {% endfor %}
      \end{enumerate}
      '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')

@@ -136,9 +136,6 @@ class EvklidovAlgoritem(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
         steviloMalo = random.randint(50, 199)
         steviloVeliko = random.randint(200, 1000)

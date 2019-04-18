@@ -175,9 +175,6 @@ class SplosniClenAritmeticnegaEnacbi(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-8, 8) if x != 0] + [-sympy.Rational(1, 2), sympy.Rational(1, 2)])
         d = random.choice([x for x in range(-3, 3) if x != 0] + [-sympy.Rational(1, 2), sympy.Rational(1, 2)])
@@ -286,9 +283,6 @@ class SplosniClenGeometrijskega(Naloga):
         {% endfor %}
         \end{enumerate}'''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-10, 10) if x != 0])
         q = random.choice([-3, -2, 2, 3] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
@@ -326,9 +320,6 @@ class SplosniClenGeometrijskegaEnacbi(Naloga):
      {% endfor %}
      \end{enumerate}
      '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-5, 5) if x != 0] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])

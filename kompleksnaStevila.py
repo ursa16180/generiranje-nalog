@@ -29,9 +29,6 @@ class VsotaRazlika(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         izbor = [-3, -2, -1, 1, 2, 3, 1, 1, 1, 1, 1,
                  -sympy.Rational(1, 2), sympy.Rational(1, 2),
@@ -116,9 +113,6 @@ class Mnozenje(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         z1 = izberiKompleksnoStevilo()
         z2 = izberiKompleksnoStevilo()
@@ -145,9 +139,6 @@ class Racunanje(Naloga):
          {% endfor %}
          \end{enumerate}
          '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         z = sympy.symbols('z')
@@ -256,9 +247,6 @@ class NarisiTocke(Naloga):
          {% endfor %}
          \end{enumerate}
          '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         z1 = izberiKompleksnoStevilo(-5, 5)

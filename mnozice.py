@@ -79,9 +79,6 @@ class PotencnaMnozica(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         velikost = random.randint(2, 3)
         mnozice = [['a', 'b', 'c'], [1, 2, 3], ['x', 'y', 'z'], ['alpha', 'beta', 'gamma'], ['Pi', 'Phi', 'Xi'],
@@ -114,9 +111,6 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
      {% endfor %}
      \end{enumerate}
      '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         A = izberiMnozico(4, 1, 6)
@@ -156,9 +150,6 @@ class IzpeljaneMnozice(Naloga):
      {% endfor %}
      \end{enumerate}
      '''
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         k = sympy.symbols('k')

@@ -25,9 +25,6 @@ class PreseciscaKroznic(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
         y = sympy.symbols('y')
