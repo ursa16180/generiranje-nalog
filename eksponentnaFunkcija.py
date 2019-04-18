@@ -63,7 +63,7 @@ class GrafEksponentne(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -101,7 +101,7 @@ class Enacba(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -145,7 +145,7 @@ class Enacba2osnovi(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 

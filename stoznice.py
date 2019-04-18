@@ -26,7 +26,7 @@ class PreseciscaKroznic(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -69,7 +69,7 @@ class TemeGorisceEnacba(Naloga):
      '''
 
     def __init__(self, premaknjena=True, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.premaknjena = premaknjena
         self.lazja = lazja
@@ -131,7 +131,7 @@ class NarisiKrivuljo(Naloga):
      '''
 
     def __init__(self, kroznica=True, elipsa=True, premaknjena=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if kroznica == elipsa == False:
             raise ValueError('Izbrana mora biti vsaj ena od krivulj.')

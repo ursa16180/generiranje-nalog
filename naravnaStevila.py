@@ -23,7 +23,7 @@ class DeliteljVeckratnik(Naloga):
      '''
 
     def __init__(self, od=50, do=200, najvecjePrastevilo=17, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         if od > do:
             raise MinMaxNapaka
         if od < 1:
@@ -51,7 +51,7 @@ class DeliteljVeckratnik(Naloga):
 
 # class DolociStevko(Naloga):  # TODO besedilo za 2 delitelja - ali lahko 2 različna besedila?
 #     def __init__(self, lazja=True, **kwargs):
-#         super().__init__(self, **kwargs)
+#         super().__init__(**kwargs)
 #         besedilo_posamezne =
 #             r'''Za katero števko $a$ število ${{naloga.delitelj1}}$ deli ${{naloga.stevilo}}$?'''
 #         besedilo_vecih =r'''Za katero števko $a$ je število $n$ deljivo s $k$:
@@ -137,7 +137,7 @@ class EvklidovAlgoritem(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
         steviloMalo = random.randint(50, 199)

@@ -81,7 +81,7 @@ class KotMedPremicama(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -123,7 +123,7 @@ class OdvodElementarne(Naloga):
     def __init__(self, polinom=True, racionalna=True, potencna=True, logaritem=True, kotna=True, krozna=False,
                  lazja=True,
                  **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
             raise ValueError(
@@ -178,7 +178,7 @@ class OdvodSestavljenih(Naloga):
      '''
 
     def __init__(self, funkcije=Funkcija.all, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
             raise ValueError(
@@ -235,7 +235,7 @@ class Tangenta(Naloga):
 
     def __init__(self, polinom=True, racionalna=True, potencna=True, logaritem=True, kotna=True, krozna=False,
                  **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     if polinom == racionalna == potencna == logaritem == kotna == krozna == False:
         raise ValueError(
@@ -332,7 +332,7 @@ class KotMedGrafoma(Naloga):
 
 
 def __init__(self, **kwargs):
-    super().__init__(self, **kwargs)
+    super().__init__(**kwargs)
 
 
 def poskusi_sestaviti(self):

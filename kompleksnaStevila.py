@@ -30,7 +30,7 @@ class VsotaRazlika(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         izbor = [-3, -2, -1, 1, 2, 3, 1, 1, 1, 1, 1,
@@ -72,7 +72,7 @@ class Ulomek(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -117,7 +117,7 @@ class Mnozenje(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         z1 = izberiKompleksnoStevilo()
@@ -147,7 +147,7 @@ class Racunanje(Naloga):
          '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         z = sympy.symbols('z')
@@ -178,7 +178,7 @@ class Enacba(Naloga):
      '''
 
     def __init__(self, lazja, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -258,7 +258,7 @@ class NarisiTocke(Naloga):
          '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         z1 = izberiKompleksnoStevilo(-5, 5)

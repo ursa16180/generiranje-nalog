@@ -49,7 +49,7 @@ class NiclePolinoma(Naloga):
         \end{enumerate}'''
 
     def __init__(self, min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if min_stopnja < 0:
             raise ValueError('Stopnja polinoma mora biti celo neničelno število.')
@@ -91,7 +91,7 @@ class DvojnaNicla(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -124,7 +124,7 @@ class ParameteraDvojna(Naloga):
      '''
 
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-5, max_nicla=5, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if min_stopnja < 3:  # Preveri da ni vpisano kaj čudnega in določi da je vsaj polinom 3.stopnje
             self.min_stopnja = 3
@@ -206,7 +206,7 @@ class GrafPolinoma(Naloga):
     '''
 
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-3, max_nicla=3, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         # TODO napiši za napako
         if min_stopnja < 0:  # Preveri da ni vpisano kaj čudnega
             self.min_stopnja = 0
@@ -256,7 +256,7 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
 
     def __init__(self, min_stopnja_stevca=3, max_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3,
                  min_nicla=-9, max_nicla=9, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if min_stopnja_stevca < 0 or min_stopnja_imenovalca < 0:
             raise ValueError('Stopnja polinoma mora biti neničelno celo število.')
@@ -360,7 +360,7 @@ class GrafRacionalne(
 
     def __init__(self, min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=2, max_stopnja_imenovalca=4,
                  min_nicla=-5, max_nicla=5, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if min_nicla > max_nicla or min_stopnja_stevca > max_stopnja_stevca or min_stopnja_imenovalca > max_stopnja_imenovalca:
             raise MinMaxNapaka

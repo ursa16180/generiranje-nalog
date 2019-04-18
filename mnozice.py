@@ -35,7 +35,7 @@ class ElementiMnozice(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -80,7 +80,7 @@ class PotencnaMnozica(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         velikost = random.randint(2, 3)
@@ -116,7 +116,7 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         A = izberiMnozico(4, 1, 6)
@@ -158,7 +158,7 @@ class IzpeljaneMnozice(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         k = sympy.symbols('k')

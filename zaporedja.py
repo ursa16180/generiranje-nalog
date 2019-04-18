@@ -55,7 +55,7 @@ class SplosniClenZaporedja(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -98,7 +98,7 @@ class PrviCleniAritmeticnega(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -133,7 +133,7 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
         \end{enumerate}'''
 
     def __init__(self, od=-5, do=5, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         if od > od:  # TODO ali od, do smiselna?
             raise MinMaxNapaka
@@ -176,7 +176,7 @@ class SplosniClenAritmeticnegaEnacbi(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-8, 8) if x != 0] + [-sympy.Rational(1, 2), sympy.Rational(1, 2)])
@@ -211,7 +211,7 @@ class VsotaAritmeticnega(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -252,7 +252,7 @@ class PrviCleniGeometrijskega(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -287,7 +287,7 @@ class SplosniClenGeometrijskega(Naloga):
         \end{enumerate}'''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-10, 10) if x != 0])
@@ -328,7 +328,7 @@ class SplosniClenGeometrijskegaEnacbi(Naloga):
      '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-5, 5) if x != 0] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
@@ -371,7 +371,7 @@ class VsotaGeometrijskega(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -412,7 +412,7 @@ class VsotaGeometrijskeVrste(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 

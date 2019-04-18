@@ -23,7 +23,7 @@ class PotencaDvoclenika(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
 
@@ -78,7 +78,7 @@ class PotencaTroclenika(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=2, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
         self.min_potenca = min_potenca
@@ -115,7 +115,7 @@ class RazstaviVieta(Naloga):
 
     def __init__(self, minimalna_vrednost=-9, maksimalna_vrednost=9, lazja=True,
                  **kwargs):  # TODO ali so te min maks vrednosti smiselne?
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         if minimalna_vrednost > maksimalna_vrednost:
             raise MinMaxNapaka
         self.minimalna_vrednost = minimalna_vrednost
@@ -155,7 +155,7 @@ class RazstaviRazliko(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
         self.min_potenca = min_potenca
@@ -211,7 +211,7 @@ class RazstaviPotenco(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=3, min_clenov=2, max_clenov=2, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
         self.min_potenca = min_potenca
