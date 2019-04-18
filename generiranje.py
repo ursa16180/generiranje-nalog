@@ -5,9 +5,7 @@ import sympy
 class NapacnaNaloga(Exception):
     pass
 
-class MinMaxNapaka(ValueError):
-    def __init__(self):
-        ValueError.__init__(self, "Minimalna vrednost mora biti manjša ali enaka maksimalni vrednosti.")
+MinMaxNapaka = ValueError("Minimalna vrednost mora biti manjša ali enaka maksimalni vrednosti.")
 
 def preveri(pogoj):
     if not pogoj:
