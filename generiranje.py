@@ -1,5 +1,7 @@
 import jinja2
 import sympy
+import importlib
+sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 
 
 class NapacnaNaloga(Exception):
@@ -10,6 +12,17 @@ MinMaxNapaka = ValueError("Minimalna vrednost mora biti manjša ali enaka maksim
 def preveri(pogoj):
     if not pogoj:
         raise NapacnaNaloga
+
+class MojLatexPrinter(sympy_printing_latex.LatexPrinter):
+    def _print_tuple(self, expr):
+        return r"\left( %s\right)" % r", ".join([self._print(i) for i in expr])
+
+def moj_latex(expr):
+    settings = {
+        # TODO: morda skopiraj še to?
+        'ln_notation': True
+    }
+    return MojLatexPrinter(settings).doprint(expr)
 
 
 class Naloga:
@@ -87,7 +100,7 @@ class Naloga:
         # self.resitev_posamezne.globals.extend(razsiritve)
         # self.resitev_vecih.globals.extend(razsiritve)
         razsiritve = {
-            'latex': sympy.latex, 'expand': sympy.expand
+            'latex': moj_latex, 'expand': sympy.expand
         }
 
         template_besedilo_posamezne = jinja2.Template(self.besedilo_posamezne)
