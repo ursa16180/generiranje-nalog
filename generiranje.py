@@ -41,16 +41,18 @@ class Naloga:
                  st_nalog=None, **kwargs):
         self.st_nalog = st_nalog
 
-        if besedilo_posamezne.besedilo_posamezne is not None: #TODO KAJ JE BESEDILO POSAMEZNE?!
-            self.besedilo_posamezne =jinja2.Template(besedilo_posamezne.besedilo_posamezne)
+        if besedilo_posamezne is not None:
+            self.besedilo_posamezne = besedilo_posamezne
 
-        if besedilo_posamezne.besedilo_vecih is not None:
-            self.besedilo_vecih =jinja2.Template(besedilo_posamezne.besedilo_vecih)
+        if besedilo_vecih is not None:
+            self.besedilo_vecih = besedilo_vecih
 
-        if besedilo_posamezne.resitev_posamezne is not None:
-            self.resitev_posamezne =jinja2.Template(besedilo_posamezne.resitev_posamezne)
-        if besedilo_posamezne.resitev_vecih is not None:
-            self.resitev_vecih =jinja2.Template(besedilo_posamezne.resitev_vecih)
+        if resitev_posamezne is not None:
+            self.resitev_posamezne = resitev_posamezne
+
+        if resitev_vecih is not None:
+            self.resitev_vecih = resitev_vecih
+
 
         # TODO: template se kliče samo enkrat - če kličeš na tem mestu besedilo_posamezne, je to objekt naloga in ne dejansko besedilo
         # besedilo_posamezne =besedilo_posamezne)
@@ -88,21 +90,26 @@ class Naloga:
             'latex': sympy.latex, 'expand': sympy.expand
         }
 
+        template_besedilo_posamezne = jinja2.Template(self.besedilo_posamezne)
+        template_besedilo_vecih = jinja2.Template(self.besedilo_vecih)
+        template_resitev_posamezne = jinja2.Template(self.resitev_posamezne)
+        template_resitev_vecih = jinja2.Template(self.resitev_vecih)
+
         for kljuc, vrednost in razsiritve.items():
-            self.besedilo_posamezne.globals[kljuc] = vrednost
-            self.besedilo_vecih.globals[kljuc] = vrednost
-            self.resitev_posamezne.globals[kljuc] = vrednost
-            self.resitev_vecih.globals[kljuc] = vrednost
+            template_besedilo_posamezne.globals[kljuc] = vrednost
+            template_besedilo_vecih.globals[kljuc] = vrednost
+            template_resitev_posamezne.globals[kljuc] = vrednost
+            template_resitev_vecih.globals[kljuc] = vrednost
 
         if self.st_nalog is None or self.st_nalog==1:
             naloga = self.sestavi()
-            return {'naloga': self.besedilo_posamezne.render(naloga=naloga),
-                    'resitev': self.resitev_posamezne.render(naloga=naloga)}
+            return {'naloga': template_besedilo_posamezne.render(naloga=naloga),
+                    'resitev': template_resitev_posamezne.render(naloga=naloga)}
 
         else:
             naloge = self.sestavi_vec(self.st_nalog)
-            return {'naloga': self.besedilo_vecih.render(naloge=naloge),
-                    'resitev': self.resitev_vecih.render(naloge=naloge)}
+            return {'naloga': template_besedilo_vecih.render(naloge=naloge),
+                    'resitev': template_resitev_vecih.render(naloge=naloge)}
 
 # operatorji= {
 #     '+': lambda a, b: a + b,
