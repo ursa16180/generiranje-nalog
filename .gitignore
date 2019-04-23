@@ -1,2 +1,4 @@
 .DS_Store
 vzorec/*
+__pycache__
+*.pdf

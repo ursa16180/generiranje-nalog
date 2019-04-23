@@ -100,7 +100,7 @@ class KotMedPremicama(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
@@ -142,7 +142,7 @@ class OdvodElementarne(Naloga):
     def __init__(self, funkcije=[Funkcija.POLINOM, Funkcija.RACIONALNA, Funkcija.POTENCNA, Funkcija.LOGARITEM,
                                  Funkcija.KOTNA], lazja=True,
                  **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.funkcije = funkcije
         if self.funkcije == []:
             raise ValueError(
@@ -211,8 +211,7 @@ class OdvodSestavljenih(Naloga):
 
     def __init__(self, funkcije=[Funkcija.POLINOM, Funkcija.RACIONALNA, Funkcija.POTENCNA, Funkcija.LOGARITEM,
                                  Funkcija.KOTNA], **kwargs):
-        super().__init__(self, **kwargs)
-
+        super().__init__(**kwargs)
         if funkcije == []:
             raise ValueError(
                 'Izbrana mora biti vsaj ena izmed funkcij: polinom, acionalna fukcija, kotna funkcija, krožna funkcija,'
@@ -282,11 +281,9 @@ class Tangenta(Naloga):
          \end{enumerate}
          '''
 
-    def __init__(self,
-                 funkcije=[Funkcija.POLINOM, Funkcija.RACIONALNA, Funkcija.POTENCNA, Funkcija.LOGARITEM,
-                           Funkcija.KOTNA],
-                 **kwargs):
-        super().__init__(self, **kwargs)
+    def __init__(self, funkcije=[Funkcija.POLINOM, Funkcija.RACIONALNA, Funkcija.POTENCNA, Funkcija.LOGARITEM,
+                                 Funkcija.KOTNA], **kwargs):
+        super().__init__(**kwargs)
         self.funkcije = funkcije
         if funkcije == []:
             raise ValueError(
@@ -358,7 +355,7 @@ class KotMedGrafoma(Naloga):
              '''
 
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x', real=True)
@@ -394,5 +391,4 @@ class KotMedGrafoma(Naloga):
         kot = sympy.N(sympy.deg(kotMedPremicama(k1, k2)))
         stop = kot // 1
         min = round(kot % 1 * 60)
-
         return {'funkcija1': funkcija1, 'funkcija2': funkcija2, 'stopinje': stop, 'minute': min}

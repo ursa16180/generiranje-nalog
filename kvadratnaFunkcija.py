@@ -86,7 +86,7 @@ class IzracunajNicle(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -151,9 +151,6 @@ class NarisiGraf(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
-
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
         [a, x1, x2, nicelna] = nicelnaOblika(-3, 3, risanje=True)
@@ -181,9 +178,6 @@ class TemenskaOblika(Naloga):
      {% endfor %}
      \end{enumerate}
      '''
-
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
@@ -213,7 +207,7 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -254,7 +248,7 @@ class Neenacba(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
@@ -301,7 +295,7 @@ class SkoziTocke(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
         self.lazja = lazja
 
