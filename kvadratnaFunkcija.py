@@ -228,6 +228,7 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
         y2 = random.choice(seznamPolovick(-5, 5) + seznamTretinj(-5, 5))
         premica = linearnaFunkcija.skoziTocki(x1, y1, x2, y2)[-1]
         koeficienta = sympy.solve((a * x1 ** 2 + b * x1 + c - y1, a * x2 ** 2 + b * x2 + c - y2), b, c)
+        print(koeficienta)
         preveri(koeficienta !=[]) #Če ni rešitve vrne prazen seznam in ne praznega slovarja
         preveri(abs(koeficienta[b]) < 5 and abs(koeficienta[c]) < 5) #Todo lepša rešitve (grozni ulomki)
         kvadratna = a * x ** 2 + koeficienta[b] * x + koeficienta[c]
