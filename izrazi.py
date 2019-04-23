@@ -216,18 +216,12 @@ class RazstaviPotenco(Naloga):
             raise MinMaxNapaka
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
-        if max_clenov > max_clenov:
+        if min_clenov > max_clenov:
             raise MinMaxNapaka
         self.max_clenov = max_clenov
         self.max_clenov = max_clenov
         if max_clenov not in {2, 3} or min_clenov not in {2, 3}:
             raise ValueError('Naloga razsatvi potenco ima za rešitev lahko samo dvočlenike ali tročlenike.')
-
-        # TODO zrihtej napako
-        self.min_potenca = int(min(min_potenca, max_potenca))
-        self.max_potenca = int(max(min_potenca, max_potenca))
-        self.min_clenov = int(min(min_clenov, max_clenov))
-        self.max_clenov = int(max(min_clenov, max_clenov))
         self.lazja = lazja
 
     def poskusi_sestaviti(self):

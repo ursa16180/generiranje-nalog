@@ -37,6 +37,7 @@ class PreseciscaKroznic(Naloga):
         q2 = random.randint(-5, 5)
         x0 = random.randint(-5, 5)
         y0 = random.randint(-5, 5)
+        preveri((p1,q1)!=(p2,q2))
         r1 = razdaljaMedTockama(x0, y0, p1, q1)
         r2 = razdaljaMedTockama(x0, y0, p2, q2)
         kroznica1 = sympy.Circle(sympy.Point(p1, q1), r1)

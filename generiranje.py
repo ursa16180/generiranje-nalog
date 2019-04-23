@@ -1,6 +1,11 @@
 import jinja2
 import sympy
 
+def mojLatex(izraz):
+    return sympy.latex(izraz).replace(r'\'','')
+    # def _print_tuple(self, expr):
+    #     return r"\left( %s\right)" % \
+    #         r", \  ".join([self._print(i) for i in expr])
 
 class NapacnaNaloga(Exception):
     pass
@@ -13,8 +18,8 @@ def preveri(pogoj):
     if not pogoj:
         raise NapacnaNaloga
 
-
 class Naloga:
+    """Razred Naloga ima atrubute za splošno besedilo posamezne, besedilo večih, rešitev posamezne in reštev večih."""
     besedilo_posamezne = '''
                         Reši nalogo: ${{ naloga }}$
                     '''
@@ -37,31 +42,23 @@ class Naloga:
                         {% endfor %}
                         \\end{enumerate}
                 '''
-    def __init__(self, besedilo_posamezne=None, besedilo_vecih=None, resitev_posamezne=None, resitev_vecih=None,
-                 st_nalog=None, **kwargs):
+    def __init__(self, besedilo_naloge=None, st_nalog=None, **kwargs): #TODO kdaj je lahko besedilo posamezne None?
         self.st_nalog = st_nalog
 
-        if besedilo_posamezne.besedilo_posamezne is not None: #TODO KAJ JE BESEDILO POSAMEZNE?!
-            self.besedilo_posamezne =jinja2.Template(besedilo_posamezne.besedilo_posamezne)
-
-        if besedilo_posamezne.besedilo_vecih is not None:
-            self.besedilo_vecih =jinja2.Template(besedilo_posamezne.besedilo_vecih)
-
-        if besedilo_posamezne.resitev_posamezne is not None:
-            self.resitev_posamezne =jinja2.Template(besedilo_posamezne.resitev_posamezne)
-        if besedilo_posamezne.resitev_vecih is not None:
-            self.resitev_vecih =jinja2.Template(besedilo_posamezne.resitev_vecih)
-
-        # TODO: template se kliče samo enkrat - če kličeš na tem mestu besedilo_posamezne, je to objekt naloga in ne dejansko besedilo
-        # besedilo_posamezne =besedilo_posamezne)
-        # besedilo_vecih =besedilo_vecih)
-        # resitev_posamezne =resitev_posamezne)
-        # resitev_vecih =resitev_vecih)
+        if besedilo_naloge.besedilo_posamezne is not None: #TODO besedilo posazmezne = besedilo naloge?
+            self.besedilo_posamezne =jinja2.Template(besedilo_naloge.besedilo_posamezne)
+        if besedilo_naloge.besedilo_vecih is not None:
+            self.besedilo_vecih =jinja2.Template(besedilo_naloge.besedilo_vecih)
+        if besedilo_naloge.resitev_posamezne is not None:
+            self.resitev_posamezne =jinja2.Template(besedilo_naloge.resitev_posamezne)
+        if besedilo_naloge.resitev_vecih is not None:
+            self.resitev_vecih =jinja2.Template(besedilo_naloge.resitev_vecih)
 
     def poskusi_sestaviti(self):
         pass
 
     def sestavi(self):
+        """Sestavi nalogo ali v primeru Napacne naloge, poskuša sestaviti novo."""
         while True:
             try:
                 return self.poskusi_sestaviti()
@@ -69,6 +66,9 @@ class Naloga:
                 pass
 
     def sestavi_vec(self, stevilo_nalog):
+        """Metoda sestavi_vec sestavi več nalog.
+        :type stevilo_nalog: int
+        :param stevilo_nalog: koliko nalog določenega razreda želimo"""
         naloge = []
         for _ in range(stevilo_nalog):
             naloge.append(self.sestavi())
@@ -103,10 +103,3 @@ class Naloga:
             naloge = self.sestavi_vec(self.st_nalog)
             return {'naloga': self.besedilo_vecih.render(naloge=naloge),
                     'resitev': self.resitev_vecih.render(naloge=naloge)}
-
-# operatorji= {
-#     '+': lambda a, b: a + b,
-#     '-': lambda a, b: a - b,
-#     '\cdot': lambda a, b: a * b,
-#     '/': lambda a, b: a / b,
-# }
