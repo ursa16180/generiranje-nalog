@@ -4,10 +4,22 @@ import random
 import jinja2
 
 
-def narediEksponentno(do=3, celaOsnova=False, premik=0):
+def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
+    """
+    Funkcija vrne eksponentno funkcijo, ki ustreza vpisanim pogojem.
+
+    :param do: osnovo izbere iz seznama od 2 do vrednosti "do"
+    :type do: int
+    :param cela_osnova: celoštevilka osnova ali ne
+    :type cela_osnova: Bool
+    :param premik: premik osnovne eksponentne funkcije za vrednost "premika"
+    :type premik: float
+    :return:
+    :rtype: TODO
+    """
     x = sympy.symbols('x')
     izbor = list(range(2, do + 1))
-    if not celaOsnova:
+    if not cela_osnova:
         izbor += [sympy.Rational(x, 2) for x in range(1, 2 * (do)) if x != 2] + [sympy.Rational(x, 3) for x in
                                                                                  range(1, 3 * (do)) if x != 3] + [
                      sympy.Rational(x, 4) for x in range(1, 4 * (do)) if x != 4] + [sympy.Rational(x, 5) for x in
@@ -17,6 +29,9 @@ def narediEksponentno(do=3, celaOsnova=False, premik=0):
 
 
 class GrafEksponentne(Naloga):
+    """
+    Naloga iz risanja grafov eksponentne funkcije.
+    """
     besedilo_posamezne = r'''V isti koordinatni sistem nariši grafa funkcij $f(x)={{latex(naloga.eksponentna1)}}$ in $g(x)={{latex(naloga.eksponentna2)}}$.'''
 
     besedilo_vecih = r'''V isti koordinatni sistem nariši grafa funkcij:
@@ -63,26 +78,36 @@ class GrafEksponentne(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
+        """
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
 
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """
+        Poskusi sestaviti nalogo GrafEksponentne.
+        """
         x = sympy.symbols('x')
         if self.lazja:
-            [osnova, premik, eksponentna1] = narediEksponentno(celaOsnova=True)
+            [osnova, premik, eksponentna1] = naredi_eksponentno(cela_osnova=True)
         else:
-            [osnova, premik, eksponentna1] = narediEksponentno(celaOsnova=False)
+            [osnova, premik, eksponentna1] = naredi_eksponentno(cela_osnova=False)
         predznak = random.choice([1, -1])
         premik2 = random.choice([x for x in range(-3, 4) if x != 0])
         eksponentna2 = sympy.Add(predznak * sympy.Pow(osnova, x, evaluate=False), premik2, evaluate=False)
-        narisiEksponentna1 = str(eksponentna1).replace('**', '^')
-        narisiEksponentna2 = str(eksponentna2).replace('**', '^')
-        return {'eksponentna1': eksponentna1, 'eksponentna2': eksponentna2, 'narisiEksponentna1': narisiEksponentna1,
-                'narisiEksponentna2': narisiEksponentna2, 'premik2': premik2}
+        narisi_eksponentna1 = str(eksponentna1).replace('**', '^')
+        narisi_eksponentna2 = str(eksponentna2).replace('**', '^')
+        return {'eksponentna1': eksponentna1, 'eksponentna2': eksponentna2, 'narisi_eksponentna1': narisi_eksponentna1,
+                'narisi_eksponentna2': narisi_eksponentna2, 'premik2': premik2}
 
 
 class Enacba(Naloga):
+    """
+    Naloga za reševanje ekponentne enačbe.
+    """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
     \begin{enumerate}
@@ -101,10 +126,15 @@ class Enacba(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
+        """
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """Poskusi setaviti nalogo Enacba."""
         x = sympy.symbols('x')
 
         if self.lazja:
@@ -127,6 +157,9 @@ class Enacba(Naloga):
 
 
 class Enacba2osnovi(Naloga):
+    """
+    Naloga enačbe, kjer imata potenci dve različni osnovi.
+    """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
     \begin{enumerate} 
@@ -145,11 +178,18 @@ class Enacba2osnovi(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
+        """
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
 
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """
+        Poskusi sestaviti nalogo Enacba2osnovi
+        """
         [osnova1, osnova2] = random.sample([2, 3, 5, 7, 10], 2)
         x = sympy.symbols('x')
         a = random.randint(-5, 5)
