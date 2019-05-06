@@ -2,3 +2,4 @@
 vzorec/*
 __pycache__
 *.pdf
+Sphinx/build
