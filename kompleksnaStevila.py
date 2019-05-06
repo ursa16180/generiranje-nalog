@@ -4,7 +4,17 @@ import sympy
 import jinja2
 
 
-def izberiKompleksnoStevilo(od=-5, do=5):
+def izberi_kompleksno_stevilo(od=-5, do=5):
+    """
+    Vrne naključno kompleksno število, ki ima realno in imagirano komponento neničelno.
+
+    :param od: najmanjša možna vrednost za posamezno komponento
+    :type od: int
+    :param do: največja možna vrednost za posamezno komponento
+    :type do: int
+    :return: vrne kompleksno število
+    :rtype: sympy.Add
+    """
     a = random.choice([x for x in range(od, do + 1) if x != 0])
     b = random.choice([x for x in range(od, do + 1) if x != 0])
     return a + b * sympy.I
@@ -12,6 +22,9 @@ def izberiKompleksnoStevilo(od=-5, do=5):
 
 # ~~~~~Naloge iz sklopa kompleksnih števil
 class VsotaRazlika(Naloga):
+    """
+    Naloga za seštevanje in odštevanje treh kompleksnih števil.
+    """
     besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
     besedilo_vecih = r'''Izračunaj:
     \begin{enumerate}
@@ -30,6 +43,9 @@ class VsotaRazlika(Naloga):
      '''
 
     def poskusi_sestaviti(self):
+        """
+        Poskusi sestaviti nalogo VsotaRazlika
+        """
         izbor = [-3, -2, -1, 1, 2, 3, 1, 1, 1, 1, 1,
                  -sympy.Rational(1, 2), sympy.Rational(1, 2),
                  -sympy.Rational(1, 3), sympy.Rational(1, 3),
@@ -40,9 +56,9 @@ class VsotaRazlika(Naloga):
         a = random.choice(izbor)
         b = random.choice(izbor)
         c = random.choice(izbor)
-        z1 = izberiKompleksnoStevilo()
-        z2 = izberiKompleksnoStevilo()
-        z3 = izberiKompleksnoStevilo()
+        z1 = izberi_kompleksno_stevilo()
+        z2 = izberi_kompleksno_stevilo()
+        z3 = izberi_kompleksno_stevilo()
         preveri(z1 != z2 and z1 != z3 and z2 != z3)
         racun = sympy.Add(sympy.Mul(a, z1, evaluate=False), sympy.Mul(b, z2, evaluate=False),
                           sympy.Mul(c, z3, evaluate=False), evaluate=False)
@@ -51,6 +67,9 @@ class VsotaRazlika(Naloga):
 
 
 class Ulomek(Naloga):
+    """
+    Naloga za seštevanje dveh kompleksnih ulomkov in racionalizacije ulomkov.
+    """
     besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
     besedilo_vecih = r'''Izračunaj:
     \begin{enumerate}
@@ -69,21 +88,26 @@ class Ulomek(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
+        """
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo Ulomek"""
         izbor = list(range(1, 6)) + [x * sympy.I for x in range(-5, 6) if
                                      x != 0]  # TODO dodaj odštevanje ulomkov- če izbere celo negativno število, se račun poenostavi
         if self.lazja:
             a = random.choice(izbor)
             b = random.choice(izbor)
         else:
-            a = izberiKompleksnoStevilo(-3, 3)
-            b = izberiKompleksnoStevilo(-3, 3)
+            a = izberi_kompleksno_stevilo(-3, 3)
+            b = izberi_kompleksno_stevilo(-3, 3)
 
-        z1 = izberiKompleksnoStevilo(-3, 3)
-        z2 = izberiKompleksnoStevilo(-3, 3)
+        z1 = izberi_kompleksno_stevilo(-3, 3)
+        z2 = izberi_kompleksno_stevilo(-3, 3)
         preveri(a != z1 and b != z2 and z1 != z2)
         racun = sympy.Add(sympy.Mul(a, sympy.Pow(z1, -1, evaluate=False), evaluate=False),
                           sympy.Mul(b, sympy.Pow(z2, -1, evaluate=False), evaluate=False),
@@ -96,6 +120,9 @@ class Ulomek(Naloga):
 
 
 class Mnozenje(Naloga):
+    """
+    Naloga za množenje dveh kompleksnih števil.
+    """
     besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
     besedilo_vecih = r'''Izračunaj:
     \begin{enumerate}
@@ -114,8 +141,11 @@ class Mnozenje(Naloga):
      '''
 
     def poskusi_sestaviti(self):
-        z1 = izberiKompleksnoStevilo()
-        z2 = izberiKompleksnoStevilo()
+        """
+        Poskusi sestaviti nalogo Mnozenje. 
+        """
+        z1 = izberi_kompleksno_stevilo()
+        z2 = izberi_kompleksno_stevilo()
         racun = sympy.Mul(z1, z2, evaluate=False)
         rezultat = sympy.simplify(z1 * z2)
         return {'racun': racun, 'rezultat': rezultat}
@@ -142,7 +172,7 @@ class Racunanje(Naloga):
 
     def poskusi_sestaviti(self):
         z = sympy.symbols('z')
-        z0 = izberiKompleksnoStevilo()
+        z0 = izberi_kompleksno_stevilo()
         racun = sympy.Pow(z, random.randint(2, 3)) + sympy.Mul(
             sympy.Pow(sympy.I, random.randint(1991, 2018), evaluate=False), sympy.conjugate(z), evaluate=False) + abs(
             z) ** 2
@@ -151,6 +181,7 @@ class Racunanje(Naloga):
 
 
 class Enacba(Naloga):
+    """Naloga iz množenja, konjugiranja, absolutne vrednosti in komponent kompleksnih števil."""
     besedilo_posamezne = r'''Katero kompleksno število $z$ zadošča enačbi ${{latex(naloga.enacba)}}$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.'''
     besedilo_vecih = r'''Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
     \begin{enumerate}
@@ -169,19 +200,22 @@ class Enacba(Naloga):
      '''
 
     def __init__(self, lazja, **kwargs):
+        """
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
-
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
         z = sympy.symbols('z')
-        z1 = izberiKompleksnoStevilo()
-        resitev = izberiKompleksnoStevilo()
+        z1 = izberi_kompleksno_stevilo()
+        resitev = izberi_kompleksno_stevilo()
         if self.lazja:
             enacba = z1 * z
 
         else:
-            z2 = izberiKompleksnoStevilo()
+            z2 = izberi_kompleksno_stevilo()
             enacba = z1 * z + z2 * sympy.conjugate(z)
         z3 = sympy.simplify(enacba.subs(z, resitev))
         im = sympy.im(resitev)
@@ -193,6 +227,7 @@ class Enacba(Naloga):
 
 
 class NarisiTocke(Naloga):
+    """Naloga za risanje kompleksnih števil v kompleksno ravnino."""
     besedilo_posamezne = r'''V kompleksno ravnino nariši števila $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$.'''
 
     besedilo_vecih = r'''V kompleksno ravnino nariši števila:
@@ -249,10 +284,11 @@ class NarisiTocke(Naloga):
          '''
 
     def poskusi_sestaviti(self):
-        z1 = izberiKompleksnoStevilo(-5, 5)
-        z2 = izberiKompleksnoStevilo(-5, 5)
-        z3 = izberiKompleksnoStevilo(-5, 5)
-        z4 = izberiKompleksnoStevilo(-5, 5)
+        """Poskusi sestaviti nalogo NarisiTocke."""
+        z1 = izberi_kompleksno_stevilo(-5, 5)
+        z2 = izberi_kompleksno_stevilo(-5, 5)
+        z3 = izberi_kompleksno_stevilo(-5, 5)
+        z4 = izberi_kompleksno_stevilo(-5, 5)
         preveri(len({z1, z2, z3, z4}) == 4)
         koordinatiz1 = (sympy.re(z1), sympy.im(z1))
         koordinatiz2 = (sympy.re(z2), sympy.im(z2))

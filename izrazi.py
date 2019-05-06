@@ -5,6 +5,9 @@ import jinja2
 
 
 class PotencaDvoclenika(Naloga):
+    """
+    Naloga iz potenciranja dvočlenika.
+    """
     besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
     besedilo_vecih = r'''Potenciraj izraze:
     \begin{enumerate}
@@ -23,19 +26,24 @@ class PotencaDvoclenika(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
+        """
+        :param min_potenca: najmajši možen eksponent dvočlenika
+        :type min_potenca: int
+        :param max_potenca: največji možen eksponent dvočlenika
+        :type max_potenca: int
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
-
-        # TODO ali želim opozarjati na TypeError lazja=Bool, potence=int
-        # if lazja not in {True, False}:
-        #     raise TypeError('Vrednost "lazja" mora biti True ali False.')
 
         self.lazja = lazja
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo PotencaDvoclenika"""
         potenca = random.randint(self.min_potenca, self.max_potenca)
         simboli = ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']
         izbranSimbol = random.choice(simboli)
@@ -60,6 +68,7 @@ class PotencaDvoclenika(Naloga):
 
 
 class PotencaTroclenika(Naloga):
+    """Naloga iz potenciranja tročlenika"""
     besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
     besedilo_vecih = r'''Potenciraj izraze:
     \begin{enumerate}
@@ -78,6 +87,12 @@ class PotencaTroclenika(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=2, **kwargs):
+        """
+        :param min_potenca: najmajši možen eksponent tročlenika
+        :type min_potenca: int
+        :param max_potenca: največji možen eksponent tročlenika
+        :type max_potenca: int
+        """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
@@ -85,6 +100,7 @@ class PotencaTroclenika(Naloga):
         self.max_potenca = max_potenca
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo PotencaTroclenika"""
         potenca = random.randint(self.min_potenca, self.max_potenca)
         simboli = [sympy.symbols(x) for x in ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']]
         (x, y, z) = random.sample(simboli, 3)
@@ -98,6 +114,7 @@ class PotencaTroclenika(Naloga):
 
 
 class RazstaviVieta(Naloga):
+    """Naloga za razstavljanje s pomočjo Vietovega pravila."""
     besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.nerazstavljeno)}}$.'''
     besedilo_vecih = r'''Razstavi naslednje izraze
     \begin{enumerate}
@@ -115,6 +132,14 @@ class RazstaviVieta(Naloga):
 
     def __init__(self, minimalna_vrednost=-9, maksimalna_vrednost=9, lazja=True,
                  **kwargs):  # TODO ali so te min maks vrednosti smiselne?
+        """
+        :param minimalna_vrednost: najmanjša možna vrednost razstavljenega člena
+        :type minimalna_vrednost: int
+        :param maksimalna_vrednost: največja možna vrednost razstavljenega člena
+        :type maksimalna_vrednost: int
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         if minimalna_vrednost > maksimalna_vrednost:
             raise MinMaxNapaka
@@ -124,6 +149,7 @@ class RazstaviVieta(Naloga):
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo RazstaviVieta."""
         x1 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
         x2 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
         if not self.lazja:
@@ -137,6 +163,9 @@ class RazstaviVieta(Naloga):
 
 
 class RazstaviRazliko(Naloga):
+    """
+    Naloga za razstavljanje razlike kvadratov, kubov in višjih potenc.
+    """
     besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.izraz)}}$.'''
     besedilo_vecih = r'''Razstavi izraze:
     \begin{enumerate}
@@ -155,6 +184,14 @@ class RazstaviRazliko(Naloga):
      '''
 
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
+        """
+        :param min_potenca: najmanjša možna potenca za razstavljanje
+        :type min_potenca: int
+        :param max_potenca: največja možna potenca za razstavljanje
+        :type max_potenca: int
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
@@ -164,6 +201,7 @@ class RazstaviRazliko(Naloga):
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo RazstaviRazliko"""
         potenca = random.randint(self.min_potenca, self.max_potenca)
         if potenca == 2:
             do = 10
@@ -192,25 +230,40 @@ class RazstaviRazliko(Naloga):
         return {'izraz': izraz, 'razstavljen': razstavljen}
 
 
-class RazstaviPotenco(Naloga):
-    besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.izraz)}}$.'''
-    besedilo_vecih = r'''Razstavi izraze:
+class PotencirajVecclenik(Naloga):
+    """
+    Naloga za potenciranje dvočlenikov in tročlenikov
+    """
+    besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$.'''
+    besedilo_vecih = r'''Potenciraj izraze:
     \begin{enumerate}
     {% for naloga in naloge %}
     \item${{latex(naloga.izraz)}}$
     {% endfor %}
     \end{enumerate}
     '''
-    resitev_posamezne = r'''${{latex(naloga.razstavljen)}}$'''
+    resitev_posamezne = r'''${{latex(expand(naloga.izraz))}}$'''
     resitev_vecih = r'''
     \begin{enumerate}
      {% for naloga in naloge %}
-     \item ${{latex(naloga.razstavljen)}}$
+     \item ${{latex(expand(naloga.izraz))}}$
      {% endfor %}
      \end{enumerate}
      '''
 
     def __init__(self, min_potenca=2, max_potenca=3, min_clenov=2, max_clenov=2, lazja=True, **kwargs):
+        """
+        :param min_potenca: najmanjša možna potenca
+        :type min_potenca: int
+        :param max_potenca: največja možna potenca
+        :type max_potenca: int
+        :param min_clenov: najmanjše možno število členov
+        :type min_clenov: int
+        :param max_clenov: največje možno število členov
+        :type max_clenov: int
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
             raise MinMaxNapaka
@@ -218,7 +271,7 @@ class RazstaviPotenco(Naloga):
         self.max_potenca = max_potenca
         if min_clenov > max_clenov:
             raise MinMaxNapaka
-        self.max_clenov = max_clenov
+        self.min_clenov = min_clenov
         self.max_clenov = max_clenov
         if max_clenov not in {2, 3} or min_clenov not in {2, 3}:
             raise ValueError('Naloga razsatvi potenco ima za rešitev lahko samo dvočlenike ali tročlenike.')
@@ -253,7 +306,6 @@ class RazstaviPotenco(Naloga):
             m = random.randint(1, 3)
             o = random.randint(1, 3)
 
-        razstavljen = sympy.Pow((a * x ** n) + (b * y ** m) + (c * z ** o), potenca, evaluate=False)
-        izraz = sympy.expand(razstavljen)
+        izraz = sympy.Pow((a * x ** n) + (b * y ** m) + (c * z ** o), potenca, evaluate=False)
 
-        return {'izraz': izraz, 'razstavljen': razstavljen}
+        return {'izraz': izraz}

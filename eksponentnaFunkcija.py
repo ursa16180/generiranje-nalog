@@ -8,11 +8,11 @@ def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
     """
     Funkcija vrne eksponentno funkcijo, ki ustreza vpisanim pogojem.
 
-    :param do: osnovo izbere iz seznama od 2 do vrednosti "do"
+    :param do: osnovo izbere iz seznama od 2 do vrednosti do
     :type do: int
     :param cela_osnova: celoštevilka osnova ali ne
     :type cela_osnova: Bool
-    :param premik: premik osnovne eksponentne funkcije za vrednost "premika"
+    :param premik: premik osnovne eksponentne funkcije za vrednost premika
     :type premik: float
     :return:
     :rtype: TODO
@@ -134,7 +134,7 @@ class Enacba(Naloga):
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
-        """Poskusi setaviti nalogo Enacba."""
+        """Poskusi sestaviti nalogo Enacba."""
         x = sympy.symbols('x')
 
         if self.lazja:
