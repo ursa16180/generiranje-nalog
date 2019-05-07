@@ -1,10 +1,37 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-import kvadratnaFunkcija #Todo samo seznam polovick, tretinj
+#import kvadratnaFunkcija #Todo samo seznam polovick, tretinj
 
 
 # ~~~~~Pomožne funkcije
+def seznam_polovick(od=-10, do=10):
+    """
+    Funkcija sestavi seznam vseh celih iz polovic med vrednostima od in do.
+
+    :param od: TODO
+    :type od:
+    :param do:
+    :type do:
+    :return: seznam celih števil in polovic
+    :rtype: list
+    """
+    return [sympy.Rational(x, 2) for x in range(2 * od, 2 * (do + 1)) if x != 0]
+
+
+def seznam_tretinj(od=-10, do=10):
+    """
+    Funkcija sestavi seznam vseh celih iz tretinj med vrednostima od in do.
+
+    :param od: TODO
+    :type od:
+    :param do:
+    :type do:
+    :return: seznam celih števil in tretinj
+    :rtype: list
+    """
+    return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
+
 def eksplicitna_premica():
     """
     Vrne naključno eksplicitno obliko premice, ki jo moramo izenačiti z y.
@@ -13,8 +40,8 @@ def eksplicitna_premica():
     :rtype: list
     """
     # Funkcija vrne naključno eksplicitno podano premico
-    k = random.choice(kvadratnaFunkcija.seznam_polovick(-3, 3) + kvadratnaFunkcija.seznam_tretinj(-3, 3))
-    n = random.choice(kvadratnaFunkcija.seznam_polovick(-4, 4) + kvadratnaFunkcija.seznam_tretinj(-4, 4))
+    k = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
+    n = random.choice(seznam_polovick(-4, 4) + seznam_tretinj(-4, 4))
     x = sympy.symbols('x')
     eksplicitna = k * x + n
     return [k, n, eksplicitna]
@@ -41,7 +68,7 @@ def implicina_premica():
 
 def skozi_tocki(x1, y1, x2, y2):
     """
-    Izračuna predpis premice skozi 2 točki.
+    Izračuna predpis premice skozi dve točki.
 
     :param x1: x koordinata prve točke
     :type x1: float #TODO float
@@ -122,8 +149,8 @@ class PremicaSkoziTocki(Naloga):
 
     def poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PremicaSkoziTocki."""
-        x1 = random.choice(kvadratnaFunkcija.seznam_polovick(-5, 5) + kvadratnaFunkcija.seznam_tretinj(-5, 5))
-        y1 = random.choice(kvadratnaFunkcija.seznam_polovick(-5, 5) + kvadratnaFunkcija.seznam_tretinj(-5, 5))
+        x1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
+        y1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         x2 = random.randint(-10, 10)
         y2 = random.randint(-10, 10)
         preveri(x1 != x2 and y1 != y2)  # Preveri, da sta 2 vzporedni točki in nista vzporedni osem
@@ -341,8 +368,8 @@ class VrednostiLinearne(Naloga):
 
         [k, n, funkcija] = eksplicitna_premica()
 
-        x1 = random.choice(kvadratnaFunkcija.seznam_polovick(-3, 3) + kvadratnaFunkcija.seznam_tretinj(-3, 3))
-        x2 = random.choice(kvadratnaFunkcija.seznam_polovick(-3, 3) + kvadratnaFunkcija.seznam_tretinj(-3, 3))
+        x1 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
+        x2 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
         preveri(x1 != x2)
         y1 = k * x1 + n
         y2 = k * x2 + n

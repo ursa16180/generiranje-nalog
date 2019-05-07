@@ -1,35 +1,7 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-from linearnaFunkcija import skozi_tocki
-
-
-def seznam_polovick(od=-10, do=10):
-    """
-    Funkcija sestavi seznam vseh celih iz polovic med vrednostima od in do.
-    
-    :param od: TODO
-    :type od:
-    :param do:
-    :type do:
-    :return: seznam celih števil in polovic
-    :rtype: list
-    """
-    return [sympy.Rational(x, 2) for x in range(2 * od, 2 * (do + 1)) if x != 0]
-
-
-def seznam_tretinj(od=-10, do=10):
-    """
-    Funkcija sestavi seznam vseh celih iz tretinj med vrednostima od in do.
-
-    :param od: TODO
-    :type od:
-    :param do:
-    :type do:
-    :return: seznam celih števil in tretinj
-    :rtype: list
-    """
-    return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
+from linearnaFunkcija import skozi_tocki, seznam_polovick, seznam_tretinj
 
 
 def nicelna_oblika(od=-5, do=5, risanje=False):
