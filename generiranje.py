@@ -1,7 +1,9 @@
 import jinja2
 import sympy
 import importlib
+
 sympy_printing_latex = importlib.import_module('sympy.printing.latex')
+
 
 # def mojLatex(izraz):
 #     """
@@ -21,7 +23,9 @@ class NapacnaNaloga(Exception):
     """
     pass
 
+
 MinMaxNapaka = ValueError("Minimalna vrednost mora biti manjša ali enaka maksimalni vrednosti.")
+
 
 def preveri(pogoj):
     """
@@ -38,8 +42,10 @@ class MojLatexPrinter(sympy_printing_latex.LatexPrinter):
     """
     Razred MojLatexPrinter je popravljena različica razreda LatexPrinter iz paketa sympy. Popravljeno izpisovanje tuple-ov brez presledka.
     """
+
     def _print_tuple(self, expr):
         return r"\left( %s\right)" % r", ".join([self._print(i) for i in expr])
+
 
 def moj_latex(expr):
     """
@@ -52,6 +58,7 @@ def moj_latex(expr):
         'ln_notation': True
     }
     return MojLatexPrinter(settings).doprint(expr)
+
 
 class Naloga:
     """ Razred Naloga je splošni razred za posamezne naloge in vsebuje splošna besedila in rešitve nalog.
@@ -113,12 +120,11 @@ class Naloga:
 
         if resitev_vecih is not None:
             self.resitev_vecih = resitev_vecih
-        
+
         if args:
             raise ValueError('Pojavijo se neznani args.')
         if kwargs:
             raise ValueError('Pojavijo se neznani kwargs.')
-
 
     def poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo."""
@@ -164,7 +170,7 @@ class Naloga:
             template_resitev_posamezne.globals[kljuc] = vrednost
             template_resitev_vecih.globals[kljuc] = vrednost
 
-        if self.st_nalog is None or self.st_nalog==1:
+        if self.st_nalog is None or self.st_nalog == 1:
             naloga = self.sestavi()
             return {'naloga': template_besedilo_posamezne.render(naloga=naloga),
                     'resitev': template_resitev_posamezne.render(naloga=naloga)}

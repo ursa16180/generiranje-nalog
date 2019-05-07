@@ -1,7 +1,6 @@
 from generiranje import Naloga, preveri, MinMaxNapaka
 import sympy
 import random
-import jinja2
 
 
 def vsota_aritmeticnega(a1, d, n):

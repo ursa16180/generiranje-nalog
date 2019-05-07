@@ -1,7 +1,6 @@
 from generiranje import Naloga, preveri
 import sympy
 import random
-import jinja2
 
 
 def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
@@ -50,8 +49,8 @@ class GrafEksponentne(Naloga):
     \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
     xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
     xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} };
     \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
     \end{axis}
     \end{tikzpicture}
@@ -67,8 +66,8 @@ class GrafEksponentne(Naloga):
     \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
     xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
     xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna1}} };
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisiEksponentna2}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} };
     \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
     \end{axis}
     \end{tikzpicture}

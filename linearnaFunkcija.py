@@ -1,7 +1,6 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-#import kvadratnaFunkcija #Todo samo seznam polovick, tretinj
 
 
 # ~~~~~Pomožne funkcije
@@ -31,6 +30,7 @@ def seznam_tretinj(od=-10, do=10):
     :rtype: list
     """
     return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
+
 
 def eksplicitna_premica():
     """

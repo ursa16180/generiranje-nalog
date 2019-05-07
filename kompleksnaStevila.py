@@ -1,7 +1,6 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-import jinja2
 
 
 def izberi_kompleksno_stevilo(od=-5, do=5):

@@ -214,8 +214,8 @@ sestavi_vse_teste([
     # linearnaFunkcija.SistemDvehEnacb(lazja=False),linearnaFunkcija.SistemDvehEnacb(st_nalog=3),
     # linearnaFunkcija.SistemTrehEnacb(lazja=False),linearnaFunkcija.SistemTrehEnacb(st_nalog=3),
     # linearnaFunkcija.Neenacba(lazja=False), linearnaFunkcija.Neenacba(st_nalog=3),
-    #izrazi.PotencaDvoclenika(lazja=False),#izrazi.PotencaDvoclenika(st_nalog=3),
-    #izrazi.PotencaTroclenika(),izrazi.PotencaTroclenika(st_nalog=3),
+    # izrazi.PotencaDvoclenika(lazja=False),#izrazi.PotencaDvoclenika(st_nalog=3),
+    # izrazi.PotencaTroclenika(),izrazi.PotencaTroclenika(st_nalog=3),
     # izrazi.RazstaviRazliko(lazja=False), izrazi.RazstaviRazliko(st_nalog=3),
     # naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
     # #naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
@@ -233,13 +233,13 @@ sestavi_vse_teste([
     # zaporedja.SplosniClenGeometrijskegaEnacbi(), zaporedja.SplosniClenGeometrijskegaEnacbi(st_nalog=3),
     # zaporedja.VsotaGeometrijskega(), zaporedja.VsotaGeometrijskega(st_nalog=3),
     # zaporedja.VsotaGeometrijskeVrste(lazja=False), zaporedja.VsotaGeometrijskeVrste(st_nalog=3),
-    odvodi.KotMedPremicama(lazja=False),odvodi.KotMedPremicama(st_nalog=3),
+    odvodi.KotMedPremicama(lazja=False), odvodi.KotMedPremicama(st_nalog=3),
     odvodi.OdvodElementarne(lazja=False), odvodi.OdvodElementarne(st_nalog=3),
-    odvodi.OdvodSestavljenih(),odvodi.OdvodSestavljenih(st_nalog=3),
-    #odvodi.KotMedGrafoma(),odvodi.KotMedGrafoma(st_nalog=3),
+    odvodi.OdvodSestavljene(), odvodi.OdvodSestavljene(st_nalog=3),
+    # odvodi.KotMedGrafoma(),odvodi.KotMedGrafoma(st_nalog=3),
     # stoznice.NarisiKrivuljo(),stoznice.NarisiKrivuljo(st_nalog=3),
     # stoznice.PreseciscaKroznic(),stoznice.PreseciscaKroznic(st_nalog=3),
     # stoznice.TemeGorisceEnacba()
 
 ],
-    "Tester", "dijaki.txt")#,zdruzene_resitve=False)
+    "Tester", "dijaki.txt")  # ,zdruzene_resitve=False)
