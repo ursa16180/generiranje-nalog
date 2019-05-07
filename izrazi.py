@@ -1,7 +1,6 @@
 from generiranje import Naloga, preveri, MinMaxNapaka
 import sympy
 import random
-import jinja2
 
 
 class PotencaDvoclenika(Naloga):

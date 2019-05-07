@@ -1,12 +1,11 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-from kvadratnaFunkcija import seznam_polovick, seznam_tretinj
-import jinja2
+import kvadratnaFunkcija #Todo samo seznam polovick, tretinj
 
 
 # ~~~~~Pomožne funkcije
-def eksplicitnaPremica():
+def eksplicitna_premica():
     """
     Vrne naključno eksplicitno obliko premice, ki jo moramo izenačiti z y.
 
@@ -14,14 +13,14 @@ def eksplicitnaPremica():
     :rtype: list
     """
     # Funkcija vrne naključno eksplicitno podano premico
-    k = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
-    n = random.choice(seznam_polovick(-4, 4) + seznam_tretinj(-4, 4))
+    k = random.choice(kvadratnaFunkcija.seznam_polovick(-3, 3) + kvadratnaFunkcija.seznam_tretinj(-3, 3))
+    n = random.choice(kvadratnaFunkcija.seznam_polovick(-4, 4) + kvadratnaFunkcija.seznam_tretinj(-4, 4))
     x = sympy.symbols('x')
     eksplicitna = k * x + n
     return [k, n, eksplicitna]
 
 
-def implicinaPremica():
+def implicina_premica():
     """
     Vrne implicitno podano obliko premice, ki jo moramo izenačiti z 0. Premice niso vzporedne z osema.
 
@@ -40,7 +39,7 @@ def implicinaPremica():
     return [a, b, c, implicitna]
 
 
-def skoziTocki(x1, y1, x2, y2):
+def skozi_tocki(x1, y1, x2, y2):
     """
     Izračuna predpis premice skozi 2 točki.
 
@@ -61,7 +60,7 @@ def skoziTocki(x1, y1, x2, y2):
     return [k, n, k * x + n]
 
 
-def izberiKoordinato(od=-10, do=10):
+def izberi_koordinato(od=-10, do=10):
     """
     Izbere poljubno celoštevilsko koordinato med vrednostima od in do.
 
@@ -76,7 +75,7 @@ def izberiKoordinato(od=-10, do=10):
     return koordinata
 
 
-def razdaljaMedTockama(x1, y1, x2, y2):
+def razdalja_med_tockama(x1, y1, x2, y2):
     """
     Izračuna razdaljo med dvema točkama.
 
@@ -123,12 +122,12 @@ class PremicaSkoziTocki(Naloga):
 
     def poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PremicaSkoziTocki."""
-        x1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
-        y1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
+        x1 = random.choice(kvadratnaFunkcija.seznam_polovick(-5, 5) + kvadratnaFunkcija.seznam_tretinj(-5, 5))
+        y1 = random.choice(kvadratnaFunkcija.seznam_polovick(-5, 5) + kvadratnaFunkcija.seznam_tretinj(-5, 5))
         x2 = random.randint(-10, 10)
         y2 = random.randint(-10, 10)
         preveri(x1 != x2 and y1 != y2)  # Preveri, da sta 2 vzporedni točki in nista vzporedni osem
-        premica = sympy.latex(skoziTocki(x1, y1, x2, y2)[-1])
+        premica = sympy.latex(skozi_tocki(x1, y1, x2, y2)[-1])
         return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'premica': premica}
 
 
@@ -151,12 +150,12 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
 
     def poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo RazdaljaMedTockama."""
-        x1 = izberiKoordinato()
-        y1 = izberiKoordinato()
-        x2 = izberiKoordinato()
-        y2 = izberiKoordinato()
+        x1 = izberi_koordinato()
+        y1 = izberi_koordinato()
+        x2 = izberi_koordinato()
+        y2 = izberi_koordinato()
         preveri(x1 != x2 and y1 != y2)
-        razdalja = sympy.latex(razdaljaMedTockama(x1, y1, x2, y2))
+        razdalja = sympy.latex(razdalja_med_tockama(x1, y1, x2, y2))
         return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'razdalja': razdalja}
 
 
@@ -184,7 +183,7 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
         """Poskusi sestaviti nalogo OblikeEnacbPremice."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
-        [a, b, c, implicitnaOblika] = implicinaPremica()
+        [a, b, c, implicitnaOblika] = implicina_premica()
         implicitna = sympy.latex(sympy.Eq(implicitnaOblika, 0))
         eksplicitna = sympy.latex(sympy.Eq(y,
                                            sympy.Rational(-a, b) * x + sympy.Rational(-c, b)))
@@ -217,11 +216,11 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
 
     def poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PremiceTrikotnik."""
-        x1 = izberiKoordinato(1, 5)
+        x1 = izberi_koordinato(1, 5)
         y1 = 0
         x2 = random.choice([x for x in range(-5, 6) if x != 0])
         y2 = random.choice([x for x in range(-5, 6) if x != 0])
-        x3 = izberiKoordinato(-5, 0)
+        x3 = izberi_koordinato(-5, 0)
         y3 = 0
         x = sympy.symbols('x')
         y = sympy.symbols('y')
@@ -301,7 +300,7 @@ class NarisiLinearnoFukcijo(Naloga):
 
     def poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo NarisiLinearnoFukcijo."""
-        [k, n, eksplicitna] = eksplicitnaPremica()
+        [k, n, eksplicitna] = eksplicitna_premica()
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         f = sympy.symbols('f(x)')
@@ -340,10 +339,10 @@ class VrednostiLinearne(Naloga):
         y = sympy.symbols('y')
         f = sympy.symbols('f(x)')
 
-        [k, n, funkcija] = eksplicitnaPremica()
+        [k, n, funkcija] = eksplicitna_premica()
 
-        x1 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
-        x2 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
+        x1 = random.choice(kvadratnaFunkcija.seznam_polovick(-3, 3) + kvadratnaFunkcija.seznam_tretinj(-3, 3))
+        x2 = random.choice(kvadratnaFunkcija.seznam_polovick(-3, 3) + kvadratnaFunkcija.seznam_tretinj(-3, 3))
         preveri(x1 != x2)
         y1 = k * x1 + n
         y2 = k * x2 + n

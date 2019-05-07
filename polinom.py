@@ -1,8 +1,7 @@
 from generiranje import Naloga, preveri, MinMaxNapaka
 import random
 import sympy
-import jinja2
-import kvadratnaFunkcija
+from kvadratnaFunkcija import splosna_oblika, nicle
 
 
 def narediPolinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risanje=False):
@@ -93,8 +92,8 @@ class DvojnaNicla(Naloga):
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')
         dvojna = random.choice([-5, -4, -3, -2, -1, 2, 3, 4, 5])  # Nočem da je dvojna nišla 0 ali 1 ker prelahko
-        [a, b, c, splosna] = kvadratnaFunkcija.splosnaOblika()
-        [x3, x4] = kvadratnaFunkcija.nicle(a, b, c)
+        [a, b, c, splosna] = splosna_oblika()
+        [x3, x4] = nicle(a, b, c)
         preveri(x3 != dvojna and x4 != dvojna)
         polinom = sympy.expand(sympy.Mul((x - dvojna) ** 2, splosna))
         return {'polinom': polinom, 'dvojna': dvojna, 'x3': x3, 'x4': x4}

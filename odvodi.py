@@ -2,8 +2,6 @@ from generiranje import Naloga, preveri
 import sympy
 import random
 import enum
-import linearnaFunkcija
-import jinja2
 
 
 class Funkcija(enum.Enum):
@@ -159,7 +157,7 @@ class OdvodElementarne(Naloga):
             funkcija2 = sympy.Poly([random.choice([-2, -1, 1, 2, 3]), random.randint(-3, 3)], x).as_expr()
         else:
             izbrana1 = random.choice(self.funkcije)
-            izbrana2 = random.choice([x for x in self.funkcije if x!=Funkcija.RACIONALNA])
+            izbrana2 = random.choice([x for x in self.funkcije if x != Funkcija.RACIONALNA])
             if izbrana2.value == 'polinom':
                 funkcija2 = DolociPolinom()
             if izbrana2.value == 'potencna':
@@ -183,8 +181,6 @@ class OdvodElementarne(Naloga):
             funkcija1 = random.choice(DolociKotna())
         if izbrana1.value == 'krozna':
             funkcija1 = random.choice(DolociKrozna())
-
-
 
         funkcija = funkcija1.subs(x, funkcija2)
         odvod = funkcija.diff(x)
@@ -216,7 +212,7 @@ class OdvodSestavljenih(Naloga):
             raise ValueError(
                 'Izbrana mora biti vsaj ena izmed funkcij: polinom, acionalna fukcija, kotna funkcija, krožna funkcija,'
                 ' potencna funkcija ali logaritemska funkcija. ')
-        self.funkcije =funkcije
+        self.funkcije = funkcije
 
     def poskusi_sestaviti(self):
         x = sympy.symbols('x')

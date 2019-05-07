@@ -1,8 +1,7 @@
 from generiranje import Naloga, preveri
-from linearnaFunkcija import razdaljaMedTockama
+from linearnaFunkcija import razdalja_med_tockama
 import sympy
 import random
-import jinja2
 
 
 # ~~~~~Naloge iz sklopa Stožnice
@@ -35,8 +34,8 @@ class PreseciscaKroznic(Naloga):
         x0 = random.randint(-5, 5)
         y0 = random.randint(-5, 5)
         preveri((p1,q1)!=(p2,q2))
-        r1 = razdaljaMedTockama(x0, y0, p1, q1)
-        r2 = razdaljaMedTockama(x0, y0, p2, q2)
+        r1 = razdalja_med_tockama(x0, y0, p1, q1)
+        r2 = razdalja_med_tockama(x0, y0, p2, q2)
         kroznica1 = sympy.Circle(sympy.Point(p1, q1), r1)
         kroznica2 = sympy.Circle(sympy.Point(p2, q2), r2)
         presek = kroznica1.intersection(kroznica2)

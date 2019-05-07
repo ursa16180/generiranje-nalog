@@ -1,8 +1,7 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-import jinja2
-import linearnaFunkcija
+from linearnaFunkcija import skozi_tocki
 
 
 def seznam_polovick(od=-10, do=10):
@@ -313,7 +312,7 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
         x2 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         y1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         y2 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
-        premica = linearnaFunkcija.skoziTocki(x1, y1, x2, y2)[-1]
+        premica = skozi_tocki(x1, y1, x2, y2)[-1]
         koeficienta = sympy.solve((a * x1 ** 2 + b * x1 + c - y1, a * x2 ** 2 + b * x2 + c - y2), b, c)
         print(koeficienta)
         preveri(koeficienta != [])  # Če ni rešitve vrne prazen seznam in ne praznega slovarja
