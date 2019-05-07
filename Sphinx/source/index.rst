@@ -10,6 +10,9 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+Generiranje
+-------------
+
 .. automodule:: generiranje
     :members:
 ..    :undoc-members:
@@ -19,36 +22,58 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
 .. .. automodule:: izpisi_naloge #TODO odkomentiraj ko izbrišeš zaganjanje funkcije v izpisi naloge
     :members:
 
+Eksponentna funkcija
+----------------------
 .. automodule:: eksponentnaFunkcija
     :members:
 
+Izrazi
+-------------
 .. automodule:: izrazi
     :members:
 
+Kompleksna števila
+----------------------
 .. automodule:: kompleksnaStevila
     :members:
 
+Kvadratna fukcija
+---------------------
 .. automodule:: kvadratnaFunkcija
     :members:
 
+Linearna funkcija
+----------------------
 .. automodule:: linearnaFunkcija
     :members:
 
+Mnozice
+-------------
 .. automodule:: mnozice
     :members:
 
+Naravna števila
+----------------------
 .. automodule:: naravnaStevila
     :members:
 
+Odvodi
+-------------
 .. automodule:: odvodi
     :members:
 
+Polinomi in racionalne funkcije
+---------------------------------------
 .. automodule:: polinom
     :members:
 
+Stoznice
+-------------
 .. automodule:: stoznice
     :members:
 
+Zaporedja
+-------------
 .. automodule:: zaporedja
     :members:
 
