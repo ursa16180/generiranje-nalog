@@ -7,6 +7,9 @@ import random
 # ~~~~~Naloge iz sklopa Stožnice
 # ~~~~~~Krožnica
 class PreseciscaKroznic(Naloga):
+    """
+    Naloga za iskanje presečišč dveh krožnic.
+    """
     besedilo_posamezne = r'''Določi medsebojno lego krožnic $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$ in $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$ ter določi presešišča, če obstajajo.'''
     besedilo_vecih = r'''Določi medsebojno lego krožnic $\mathcal{K}_1$ in $\mathcal{K}_2$ ter določi presešišča, če obstajajo:
     \begin{enumerate}
@@ -25,6 +28,7 @@ class PreseciscaKroznic(Naloga):
      '''
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo PreseciscaKroznic."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         p1 = random.randint(-5, 5)
@@ -33,7 +37,7 @@ class PreseciscaKroznic(Naloga):
         q2 = random.randint(-5, 5)
         x0 = random.randint(-5, 5)
         y0 = random.randint(-5, 5)
-        preveri((p1,q1)!=(p2,q2))
+        preveri((p1, q1) != (p2, q2))
         r1 = razdalja_med_tockama(x0, y0, p1, q1)
         r2 = razdalja_med_tockama(x0, y0, p2, q2)
         kroznica1 = sympy.Circle(sympy.Point(p1, q1), r1)
@@ -41,13 +45,16 @@ class PreseciscaKroznic(Naloga):
         presek = kroznica1.intersection(kroznica2)
         tocke = [(A.x, A.y) for A in presek]
         preveri((x0, y0) in tocke)  # Todo lepša 2. rešitev
-        izpisKroznica1 = sympy.Eq(kroznica1.equation() + r1 ** 2, r1 ** 2)
-        izpisKroznica2 = sympy.Eq(kroznica2.equation() + r2 ** 2, r2 ** 2)
-        return {'kroznica1': izpisKroznica1, 'kroznica2': izpisKroznica2, 'presek': tocke}
+        izpis_kroznica1 = sympy.Eq(kroznica1.equation() + r1 ** 2, r1 ** 2)
+        izpis_kroznica2 = sympy.Eq(kroznica2.equation() + r2 ** 2, r2 ** 2)
+        return {'kroznica1': izpis_kroznica1, 'kroznica2': izpis_kroznica2, 'presek': tocke}
 
 
 # ~~~~~ Elipsa
 class TemeGorisceEnacba(Naloga):
+    """
+    Naloga za zapis predpisa elipse, če poznamo središče, teme in gorišče.
+    """
     besedilo_posamezne = r'''Zapiši enačbo elipse s središčem $S{{latex(naloga.sredisce)}}$, temenom $T_1{{latex(naloga.teme)}}$ in goriščem $F_1{{latex(naloga.gorisce)}}$.'''
     besedilo_vecih = r'''Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:
     \begin{enumerate}
@@ -65,13 +72,16 @@ class TemeGorisceEnacba(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, premaknjena=True, lazja=True, **kwargs):
+    def __init__(self, premaknjena=True, **kwargs):
+        """
+        :param premaknjena: elipsa v premaknjeni ali središčni legi
+        :type premaknjena: Bool
+        """
         super().__init__(**kwargs)
-
         self.premaknjena = premaknjena
-        self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo """
         if self.premaknjena:
             S = sympy.Point(random.randint(-5, 5), random.randint(-5, 5))
         else:
@@ -87,6 +97,9 @@ class TemeGorisceEnacba(Naloga):
 
 
 class NarisiKrivuljo(Naloga):
+    """
+    Naloga za dopolnjevanja do popolnih kvadratov ter risanje krožnice ali elipse.
+    """
     besedilo_posamezne = r'''Nariši krivuljo ${{latex(naloga.razsirjena)}}$.'''
     besedilo_vecih = r'''Nariši krivuljo:
     \begin{enumerate}
@@ -127,7 +140,7 @@ class NarisiKrivuljo(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, kroznica=True, elipsa=True, premaknjena=True, **kwargs):
+    def __init__(self, kroznica=True, elipsa=True, premaknjena=True, **kwargs):  # TODO ENUM za krivulje
         super().__init__(**kwargs)
 
         if kroznica == elipsa == False:
@@ -137,6 +150,7 @@ class NarisiKrivuljo(Naloga):
         self.premaknjena = premaknjena
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo NarisiKrivuljo."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         if self.premaknjena:

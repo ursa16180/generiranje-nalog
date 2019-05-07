@@ -1,10 +1,12 @@
 from generiranje import Naloga, preveri, MinMaxNapaka
 import sympy
 import random
-import jinja2
 
 
 class DeliteljVeckratnik(Naloga):
+    """
+    Naloga za izračun največjega skupnega delitelja in najmanjšega skupnega večkratnika dveh števil.
+    """
     besedilo_posamezne = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$.'''
     besedilo_vecih = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
     \begin{enumerate}
@@ -13,16 +15,26 @@ class DeliteljVeckratnik(Naloga):
     {% endfor %}
     \end{enumerate}
     '''
-    resitev_posamezne = r'''$D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecjiDelitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsiVeckratnik}}$'''
+    resitev_posamezne = r'''$D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecji_delitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsi_veckratnik}}$'''
     resitev_vecih = r'''
     \begin{enumerate}
      {% for naloga in naloge %}
-     \item $D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecjiDelitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsiVeckratnik}}$
+     \item $D( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najvecji_delitelj}}$, $v( {{naloga.stevilo1}},{{naloga.stevilo2}} )={{naloga.najmanjsi_veckratnik}}$
      {% endfor %}
      \end{enumerate}
      '''
 
-    def __init__(self, od=50, do=200, najvecjePrastevilo=17, lazja=True, **kwargs):
+    def __init__(self, od=50, do=200, najvecje_prastevilo=17, lazja=True, **kwargs):
+        """
+        :param od: najmanjše možno število
+        :type od: int
+        :param do: največje možno število
+        :type do: int
+        :param najvecje_prastevilo: največje možno praštevilo v praštevilskem razcepu
+        :type najvecje_prastevilo: int
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
         if od > do:
             raise MinMaxNapaka
@@ -32,25 +44,34 @@ class DeliteljVeckratnik(Naloga):
         self.od = od
         self.do = do
         self.lazja = lazja
-        self.najvecjePrastevilo = najvecjePrastevilo
+        self.najvecje_prastevilo = najvecje_prastevilo
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo DeliteljVeckratnik."""
         # TODO težja = 3 števila, izrazi
         # TODO ali bilo boljše da izbere praštevila in jih množi?
         # #TODO ali bolje da ločimo nalogo za gcd in lcm? ker lcm lahko zelo velik
         stevilo1 = random.randint(self.od, self.do)
         stevilo2 = random.randint(self.od, self.do)
-        preveri(max(sympy.factorint(stevilo1).keys()) <= self.najvecjePrastevilo and max(
-            sympy.factorint(stevilo2).keys()) <= self.najvecjePrastevilo and stevilo1 != stevilo2)
-        najvecjiDelitelj = sympy.gcd(stevilo1, stevilo2)
-        najmanjsiVeckratnik = sympy.lcm(stevilo1, stevilo2)
+        preveri(max(sympy.factorint(stevilo1).keys()) <= self.najvecje_prastevilo and max(
+            sympy.factorint(stevilo2).keys()) <= self.najvecje_prastevilo and stevilo1 != stevilo2)
+        najvecji_delitelj = sympy.gcd(stevilo1, stevilo2)
+        najmanjsi_veckratnik = sympy.lcm(stevilo1, stevilo2)
 
-        return {'stevilo1': stevilo1, 'stevilo2': stevilo2, 'najvecjiDelitelj': najvecjiDelitelj,
-                'najmanjsiVeckratnik': najmanjsiVeckratnik}
+        return {'stevilo1': stevilo1, 'stevilo2': stevilo2, 'najvecji_delitelj': najvecji_delitelj,
+                'najmanjsi_veckratnik': najmanjsi_veckratnik}
+
+    # class DolociStevko(Naloga):
+    """
+    
+    """  # TODO besedilo za 2 delitelja - ali lahko 2 različna besedila?
 
 
-# class DolociStevko(Naloga):  # TODO besedilo za 2 delitelja - ali lahko 2 različna besedila?
 #     def __init__(self, lazja=True, **kwargs):
+#         """
+#         :param lazja: lažja ali težja oblika naloge
+#         :type lazja: Bool
+#         """
 #         super().__init__(**kwargs)
 #         besedilo_posamezne =
 #             r'''Za katero števko $a$ število ${{naloga.delitelj1}}$ deli ${{naloga.stevilo}}$?'''
@@ -72,6 +93,7 @@ class DeliteljVeckratnik(Naloga):
 #         self.lazja = lazja
 #
 #     def poskusi_sestaviti(self):
+#         """Poskusi sestaviti nalogo """
 #         dolzina = random.randint(5, 8)
 #         if self.lazja:
 #             zamenjaj1 = random.randint(2, min(3,dolzina - 3))
@@ -119,6 +141,9 @@ class DeliteljVeckratnik(Naloga):
 
 
 class EvklidovAlgoritem(Naloga):
+    """
+    Naloga za izračun največjega skupnega delitelja dveh števil z Evklidovim algoritmom.
+    """
     besedilo_posamezne = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$. '''
     besedilo_vecih = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil:
     \begin{enumerate}
@@ -127,19 +152,20 @@ class EvklidovAlgoritem(Naloga):
     {% endfor %}
     \end{enumerate}
     '''
-    resitev_posamezne = r'''$D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecjiDelitelj}}$'''
+    resitev_posamezne = r'''$D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecji_delitelj}}$'''
     resitev_vecih = r'''
     \begin{enumerate}
      {% for naloga in naloge %}
-     \item $D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecjiDelitelj}}$
+     \item $D({{naloga.stevilo1}},{{naloga.stevilo2}})={{naloga.najvecji_delitelj}}$
      {% endfor %}
      \end{enumerate}
      '''
 
     def poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
-        steviloMalo = random.randint(50, 199)
-        steviloVeliko = random.randint(200, 1000)
-        preveri(steviloVeliko % steviloMalo != 0 and steviloMalo % (
-                steviloVeliko % steviloMalo) != 0)  # Da se ne konča že v prvih dveh korakih
-        najvecjiDelitelj = sympy.gcd(steviloMalo, steviloVeliko)
-        return {'stevilo1': steviloMalo, 'stevilo2': steviloVeliko, 'najvecjiDelitelj': najvecjiDelitelj}
+        """Poskusi sestaviti nalogo EvklidovAlgoritem."""
+        stevilo_malo = random.randint(50, 199)
+        stevilo_veliko = random.randint(200, 1000)
+        preveri(stevilo_veliko % stevilo_malo != 0 and stevilo_malo % (
+                stevilo_veliko % stevilo_malo) != 0)  # Da se ne konča že v prvih dveh korakih
+        najvecji_delitelj = sympy.gcd(stevilo_malo, stevilo_veliko)
+        return {'stevilo1': stevilo_malo, 'stevilo2': stevilo_veliko, 'najvecji_delitelj': najvecji_delitelj}

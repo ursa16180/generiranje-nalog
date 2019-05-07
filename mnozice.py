@@ -1,11 +1,21 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-import jinja2
-import itertools  # potrebujemo za kartezični produkt
 
 
-def izberiMnozico(velikost=4, od=1, do=10):
+def izberi_mnozico(velikost=4, od=1, do=10):
+    """
+    Naredi množico poljubne velikosti.
+
+    :param velikost: velikost množice
+    :type velikost: int
+    :param od: najmanjša možna vrednost elementa
+    :type od: int
+    :param do: največja možna vrednost elementa
+    :type do: int
+    :return: množica celih števil
+    :rtype: sympy.FiniteSet
+    """
     izbor = [x for x in range(od, do + 1)]
     mnozica = sympy.FiniteSet(*random.sample(izbor, velikost))
     return mnozica
@@ -14,6 +24,9 @@ def izberiMnozico(velikost=4, od=1, do=10):
 # TODO ali smiselno delat besedilne naloge? Sklanjanje?
 
 class ElementiMnozice(Naloga):
+    """
+    Naloga za izpis posameznih elementov množice iz podanega predpisa. Lažja zazličica ima predpis samo za n, težja pa za a*n +b.
+    """
     besedilo_posamezne = r'''Zapiši elemente množice $ \mathcal{A} =\{ {{latex(naloga.n)}}; 
     (n \in \mathbb{N}) \land (n{{latex(naloga.pogoj)}} {{latex(naloga.stevilo)}} ) \} $.'''
 
@@ -35,11 +48,15 @@ class ElementiMnozice(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
+        """
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
-
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo ElementiMnozice."""
         pogoj = random.choice(['|', '<', '<='])
         n = sympy.symbols('n')
         if self.lazja:
@@ -62,6 +79,9 @@ class ElementiMnozice(Naloga):
 
 
 class PotencnaMnozica(Naloga):
+    """
+    Naloga za zapis potenčne množice.
+    """
     besedilo_posamezne = r'''Zapiši potenčno množico množice $ \mathcal{A} ={{latex(naloga.mnozica)}}$'''
     besedilo_vecih = r'''Zapiši potenčno množico množice $ \mathcal{A} $:
     \begin{enumerate}
@@ -80,6 +100,7 @@ class PotencnaMnozica(Naloga):
      '''
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo PotencnaMnozica."""
         velikost = random.randint(2, 3)
         mnozice = [['a', 'b', 'c'], [1, 2, 3], ['x', 'y', 'z'], ['alpha', 'beta', 'gamma'], ['Pi', 'Phi', 'Xi'],
                    [3, 6, 9], [3, 7, 42]]
@@ -89,6 +110,9 @@ class PotencnaMnozica(Naloga):
 
 
 class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo presek razliko dovolj 2 #Todo ime naloge?
+    """
+    Naloga za zapis unije, presek, razlike in kartezičnega produkta množic.
+    """
     besedilo_posamezne = r'''Dane so množice $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$ in $ \mathcal{C} ={{latex(naloga.C)}}$.
     Zapiši množice $ \mathcal{A} \cup  \mathcal{C} $, $ \mathcal{A} \cap  \mathcal{B} $, $ \mathcal{A} - \mathcal{C} $, $ \mathcal{C} - \mathcal{B} $, $ \mathcal{A} \times  \mathcal{C} $ in $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )$.'''
 
@@ -113,9 +137,10 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
      '''
 
     def poskusi_sestaviti(self):
-        A = izberiMnozico(4, 1, 6)
-        B = izberiMnozico(3, 1, 6)
-        C = izberiMnozico(2, 1, 6)
+        """Poskusi sestaviti nalogo UnijaPresekRazlika"""
+        A = izberi_mnozico(4, 1, 6)
+        B = izberi_mnozico(3, 1, 6)
+        C = izberi_mnozico(2, 1, 6)
         AunijaC = A.union(C)
         ApresekB = A.intersection(B)
         AbrezC = sympy.Complement(A, C)
@@ -127,7 +152,10 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
 
 
 class IzpeljaneMnozice(Naloga):
-    besedilo_posamezne = r'''Dana je univerzalna množica $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikostUniverzalne}} }$ 
+    """
+    Naloga za izračun komplementa, unije in razlike množic ter izpis elementov izpeljane množice pri podani univerzalni.
+    """
+    besedilo_posamezne = r'''Dana je univerzalna množica $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikost_univerzalne}} }$ 
     in njene pomnožice $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, 
     $ \mathcal{C} ={{latex(naloga.C)}}$. Zapiši elemente množic $ \mathcal{A} $, $ \mathcal{B} $, $ \mathcal{A}  \cup  \mathcal{B} $, $ \mathcal{C} ^{\mathsf{c}}$ in $ \mathcal{B}  -  \mathcal{A} $.'''
 
@@ -135,7 +163,7 @@ class IzpeljaneMnozice(Naloga):
     $ \mathcal{A} $, $ \mathcal{B} $ in $ \mathcal{C} $ zapiši elemente množic $ \mathcal{A} $, $ \mathcal{B} $, $ \mathcal{A}  \cup  \mathcal{B} $, $ \mathcal{C} ^{\mathsf{c}}$ in $ \mathcal{B}  -  \mathcal{A} $
     \begin{enumerate}
     {% for naloga in naloge %}
-    \item $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikostUniverzalne}} }$, $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, 
+    \item $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikost_univerzalne}} }$, $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, 
     $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, $ \mathcal{C} ={{latex(naloga.C)}}$
     {% endfor %}
     \end{enumerate}
@@ -152,20 +180,21 @@ class IzpeljaneMnozice(Naloga):
      '''
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo IzpeljaneMnozice."""
         k = sympy.symbols('k')
         a = random.randint(2, 5)
         b = random.choice([-4, -3, -2, -1, 0, 1, 2, 3, 4])
         c = random.randint(2, 5)
         d = random.choice([-4, -3, -2, -1, 0, 1, 2, 3, 4])
         preveri(abs(b) != a and abs(d) != c)
-        velikostUniverzalne = random.randint(12, 20)
-        univerzalna = sympy.FiniteSet(*range(1, velikostUniverzalne + 1))
+        velikost_univerzalne = random.randint(12, 20)
+        univerzalna = sympy.FiniteSet(*range(1, velikost_univerzalne + 1))
         navodiloA = a * k + b
         navodiloB = c * k + d
         A = sympy.FiniteSet(
-            *[a * x + b for x in range(1, velikostUniverzalne + 1) if 0 < a * x + b <= velikostUniverzalne])
+            *[a * x + b for x in range(1, velikost_univerzalne + 1) if 0 < a * x + b <= velikost_univerzalne])
         B = sympy.FiniteSet(
-            *[c * x + d for x in range(1, velikostUniverzalne + 1) if 0 < a * x + b <= velikostUniverzalne])
+            *[c * x + d for x in range(1, velikost_univerzalne + 1) if 0 < a * x + b <= velikost_univerzalne])
         C = sympy.FiniteSet(*random.sample(set(univerzalna), 8))
         AunijaB = A.union(B)
         Ckomplement = sympy.Complement(univerzalna, C)
@@ -173,4 +202,5 @@ class IzpeljaneMnozice(Naloga):
 
         return {'navodiloA': navodiloA, 'navodiloB': navodiloB, 'A': A, 'B': B, 'C': C,
                 'AunijaB': AunijaB, 'Ckomplement': Ckomplement, 'BbrezA': BbrezA,
-                'velikostUniverzalne': velikostUniverzalne}
+                'velikost_univerzalne': velikost_univerzalne}
+

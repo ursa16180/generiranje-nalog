@@ -4,10 +4,26 @@ import sympy
 from kvadratnaFunkcija import splosna_oblika, nicle
 
 
-def narediPolinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risanje=False):
+def naredi_polinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risanje=False):
+    """
+    Vrne naključen polinom.
+
+    :param min_stopnja: najmanjša možna stopnja polinoma
+    :type min_stopnja: int
+    :param max_stopnja: največja možna stopnja polinoma
+    :type max_stopnja: int
+    :param min_nicla: najmanjša možna ničla polinoma
+    :type min_nicla: int
+    :param max_nicla: največja možna ničla polinoma
+    :type max_nicla: int
+    :param risanje: v primeru risanja je manjši vodilni koeficient
+    :type risanje: Bool
+    :return: polinom
+    :rtype: sympy.Poly
+    """
     x = sympy.symbols('x')
-    min_ni = min(min_nicla, max_nicla)
-    max_ni = max(min_nicla, max_nicla)
+    if min_stopnja > max_stopnja or min_nicla > max_nicla:
+        raise MinMaxNapaka
 
     if risanje:
         vodilni_koeficient = random.choice(
@@ -19,7 +35,7 @@ def narediPolinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risan
     stopnja = random.randint(min(min_stopnja, max_stopnja), max(min_stopnja, max_stopnja))
 
     for _ in range(stopnja):
-        nicla = random.randint(min_ni, max_ni)  # TODO ničla 1/2
+        nicla = random.randint(min_nicla, max_nicla)  # TODO ničla 1/2
         nicle.append(nicla)
     polinom = '{0}*('.format(vodilni_koeficient) + '*'.join(
         '(x-{0})'.format(nicla) for nicla in nicle) + ')'
@@ -29,6 +45,9 @@ def narediPolinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risan
 
 # ~~~~~Naloge iz sklopa Polinomi in Racionalna funkcija
 class NiclePolinoma(Naloga):
+    """
+    Naloga za izračun ničel polinoma.
+    """
     besedilo_posamezne = r'''Poišči ničle polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
     besedilo_vecih = r'''Poišči ničle sledečih polinomov:
@@ -37,8 +56,7 @@ class NiclePolinoma(Naloga):
         \item $p(x)={{latex(naloga.polinom)}}$
         {% endfor %}
         \end{enumerate}'''
-    resitev_posamezne = r'''{% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}
-        '''
+    resitev_posamezne = r'''{% for nicla in naloga.nicle %}$x_{ {{loop.index}} }={{nicla}}$ {% endfor %}'''
 
     resitev_vecih = r'''Ničle polinomov:
         \begin{enumerate}
@@ -48,8 +66,17 @@ class NiclePolinoma(Naloga):
         \end{enumerate}'''
 
     def __init__(self, min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, **kwargs):
+        """
+        :param min_stopnja: najmanjša možna stopnja polinoma
+        :type min_stopnja: intint
+        :param max_stopnja: najvenajvečja možna stopnja polinomačja možna stopnja polinoma
+        :type max_stopnja: intint
+        :param min_nicla: najmanjša možna ničla polinoma
+        :type min_nicla: int
+        :param max_nicla: največja možna ničla polinoma
+        :type max_nicla: int
+        """
         super().__init__(**kwargs)
-
         if min_stopnja < 0:
             raise ValueError('Stopnja polinoma mora biti celo neničelno število.')
         if min_stopnja > max_stopnja or min_nicla > max_nicla:
@@ -60,9 +87,10 @@ class NiclePolinoma(Naloga):
         self.max_nicla = max_nicla
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo NiclePolinoma."""
 
-        [vodilni_koeficient, nicle, stopnja, polinom] = narediPolinom(self.min_stopnja, self.max_stopnja,
-                                                                      self.min_nicla, self.max_nicla)
+        [vodilni_koeficient, nicle, stopnja, polinom] = naredi_polinom(self.min_stopnja, self.max_stopnja,
+                                                                       self.min_nicla, self.max_nicla)
         preveri(min(self.min_stopnja, self.max_stopnja) <= len(nicle) <= max(self.min_stopnja, self.max_stopnja))
         x = sympy.symbols('x')
         # {'x{0}'.format(i + 1): nicle[i] for i in range(len(nicle))}
@@ -72,6 +100,9 @@ class NiclePolinoma(Naloga):
 
 
 class DvojnaNicla(Naloga):
+    """
+    Naloga za izračun ničel polinoma, če že poznaš dvojno ničlo.
+    """
     besedilo_posamezne = r'''Pokaži, da je število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$ in poišči še preostali ničli.'''
     besedilo_vecih = r''' Pokaži, da je  $x_1$ dvojna ničla polinoma in poišči preostali ničli:
     \begin{enumerate}
@@ -90,6 +121,7 @@ class DvojnaNicla(Naloga):
      '''
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo DvojnaNicla."""
         x = sympy.symbols('x')
         dvojna = random.choice([-5, -4, -3, -2, -1, 2, 3, 4, 5])  # Nočem da je dvojna nišla 0 ali 1 ker prelahko
         [a, b, c, splosna] = splosna_oblika()
@@ -100,8 +132,10 @@ class DvojnaNicla(Naloga):
 
 
 class ParameteraDvojna(Naloga):
-    besedilo_posamezne = r''' Določi števili $a$ in $b$ tako, da bo število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$.
-    '''
+    """
+    Naloga za izračun dveh koeficientov, če poznaš dvojno ničlo polinoma.
+    """
+    besedilo_posamezne = r''' Določi števili $a$ in $b$ tako, da bo število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
     besedilo_vecih = r'''Določi števili $a$ in $b$ tako, da bo število $x_{1,2}$ dvojna ničla polinoma:
         \begin{enumerate}
@@ -110,52 +144,63 @@ class ParameteraDvojna(Naloga):
         {% endfor %}
         \end{enumerate}'''
 
-    resitev_posamezne = r'''$a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinomResitev)}}$'''
+    resitev_posamezne = r'''$a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinom_resitev)}}$'''
+
     resitev_vecih = r'''
     \begin{enumerate}
      {% for naloga in naloge %}
-     \item $a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinomResitev)}}$
+     \item $a={{naloga.a}}$, $b={{naloga.b}}$, $p(x)={{latex(naloga.polinom_resitev)}}$
      {% endfor %}
      \end{enumerate}
      '''
 
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-5, max_nicla=5, **kwargs):
+        """
+        :param min_stopnja: najmanjša možna stopnja polinoma
+        :type min_stopnja: int
+        :param max_stopnja: največja možna stopnja polinoma
+        :type max_stopnja: int
+        :param min_nicla: najmanjša možna ničla polinoma
+        :type min_nicla: int
+        :param max_nicla: največja možna ničla polinoma
+        :type max_nicla: int
+        """
         super().__init__(**kwargs)
-
-        if min_stopnja < 3:  # Preveri da ni vpisano kaj čudnega in določi da je vsaj polinom 3.stopnje
-            self.min_stopnja = 3
-        else:
-            self.min_stopnja = int(min_stopnja)
-        if max_stopnja < 3:
-            self.max_stopnja = 3
-        else:
-            self.max_stopnja = int(max_stopnja)
-
-        self.min_nicla = int(min_nicla)
-        self.max_nicla = int(max_nicla)
+        if min_nicla > max_nicla or min_stopnja > max_stopnja:
+            raise MinMaxNapaka
+        if min_stopnja < 3:  # Preveri da polinom ni premajhne stopnje za smiselno nalogo
+            raise ValueError("Polinom mora biti vsaj 3. stopnje.")
+        self.min_stopnja = min_stopnja
+        self.max_stopnja = max_stopnja
+        self.min_nicla = min_nicla
+        self.max_nicla = max_nicla
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo ParameteraDvojna."""
         x = sympy.symbols('x')
         dvojna = random.choice([-3, -2, -1, 2, 3])
 
-        [vodilni_koeficient, nicle, stopnja, polinomBrezDvojne] = narediPolinom(self.min_stopnja - 2,
-                                                                                self.max_stopnja - 2,
-                                                                                self.min_nicla, self.max_nicla)
+        [vodilni_koeficient, nicle, stopnja, polinomBrezDvojne] = naredi_polinom(self.min_stopnja - 2,
+                                                                                 self.max_stopnja - 2,
+                                                                                 self.min_nicla, self.max_nicla)
         preveri(min(self.min_stopnja - 2, self.max_stopnja - 2) <= len(nicle) <= max(self.min_stopnja - 2,
                                                                                      self.max_stopnja - 2))  # TODO len(nicle)==stopnja?
         x = sympy.symbols('x')
-        polinomResitev = sympy.expand(polinomBrezDvojne + '*(x-{0})*(x-{0})'.format(dvojna))
-        koeficienti = sympy.Poly(polinomResitev, x).all_coeffs()
+        polinom_resitev = sympy.expand(polinomBrezDvojne + '*(x-{0})*(x-{0})'.format(dvojna))
+        koeficienti = sympy.Poly(polinom_resitev, x).all_coeffs()
         a = koeficienti[-3]
         b = koeficienti[-2]
         koeficienti[-3] = 'a'
         koeficienti[-2] = 'b'
         polinom = sympy.Poly(koeficienti,
                              x).as_expr()  # TODO Ne glede na to ali niz ali poly vedno uredi a na začetku polinoma: če je pa na roke napisan niz pa ne poračuna -- potence  ipd
-        return {'polinom': polinom, 'polinomResitev': polinomResitev, 'dvojna': dvojna, 'a': a, 'b': b}
+        return {'polinom': polinom, 'polinom_resitev': polinom_resitev, 'dvojna': dvojna, 'a': a, 'b': b}
 
 
 class GrafPolinoma(Naloga):
+    """
+    Naloga za risanje grafa polinoma.
+    """
     besedilo_posamezne = r'''Nariši graf polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
     besedilo_vecih = r'''Nariši grafe polinomov:
@@ -202,35 +247,45 @@ class GrafPolinoma(Naloga):
     '''
 
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-3, max_nicla=3, **kwargs):
+        """
+        :param min_stopnja: najmanjša možna stopnja polinoma
+        :type min_stopnja: int
+        :param max_stopnja: največja možna stopnja polinoma
+        :type max_stopnja: int
+        :param min_nicla: najmanjša možna ničla polinoma
+        :type min_nicla: int
+        :param max_nicla: največja možna ničla polinoma
+        :type max_nicla: int
+        """
         super().__init__(**kwargs)
-        # TODO napiši za napako
+        if min_nicla > max_nicla or min_stopnja > max_stopnja:
+            raise MinMaxNapaka
         if min_stopnja < 0:  # Preveri da ni vpisano kaj čudnega
-            self.min_stopnja = 0
-        else:
-            self.min_stopnja = int(min_stopnja)
-        if max_stopnja < 0:
-            self.max_stopnja = 0
-        else:
-            self.max_stopnja = int(max_stopnja)
-
-        self.min_nicla = int(min_nicla)
-        self.max_nicla = int(max_nicla)
+            raise ValueError('Stopnja mora biti naravno število.')
+        self.min_stopnja = min_stopnja
+        self.max_stopnja = max_stopnja
+        self.min_nicla = min_nicla
+        self.max_nicla = max_nicla
 
     def poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo GrafPolinoma."""
         x = sympy.symbols('x')
-        [vodilni_koeficient, nicle, stopnja, nicelnaOblika] = narediPolinom(self.min_stopnja, self.max_stopnja,
-                                                                            self.min_nicla, self.max_nicla,
-                                                                            risanje=True)
+        [vodilni_koeficient, nicle, stopnja, nicelna_oblika] = naredi_polinom(self.min_stopnja, self.max_stopnja,
+                                                                              self.min_nicla, self.max_nicla,
+                                                                              risanje=True)
         preveri(min(self.min_stopnja, self.max_stopnja) <= len(nicle) <= max(self.min_stopnja, self.max_stopnja))
-        polinom = sympy.expand(nicelnaOblika)
+        polinom = sympy.expand(nicelna_oblika)
         zacetna = polinom.subs(x, 0)
 
-        return {'polinom': polinom, 'nicelna': nicelnaOblika, 'nicle': nicle, 'zacetna': zacetna}
+        return {'polinom': polinom, 'nicelna': nicelna_oblika, 'nicle': nicle, 'zacetna': zacetna}
 
 
 # TODO ideja: deljenje polinomov
 # ~~~~~~Naloge iz sklopa: Racionalna funkcija
 class DolociNiclePoleAsimptotoRacionalne(Naloga):
+    """
+    Naloga za izračun ničel, polov in asimptote racionalne funkcije.
+    """
     besedilo_posamezne = r'''Določi ničle, pole in asimptoto racionalne funkcije $r(x)={{naloga.racionalna}}$.'''
 
     besedilo_vecih = r'''
@@ -252,8 +307,21 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
 
     def __init__(self, min_stopnja_stevca=3, max_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3,
                  min_nicla=-9, max_nicla=9, **kwargs):
+        """
+        :param min_stopnja_stevca: najmanjša možna stopnja polinoma v števcu
+        :type min_stopnja_stevca: int
+        :param max_stopnja_stevca: največja možna stopnja polinoma v števcu
+        :type max_stopnja_stevca: int
+        :param min_stopnja_imenovalca: najmanjša možna stopnja polinoma v imenovalcu
+        :type min_stopnja_imenovalca: int
+        :param max_stopnja_imenovalca: največja možna stopnja polinoma v imenovalcu
+        :type max_stopnja_imenovalca: int
+        :param min_nicla: najmanjša možna ničla polinomov v števcu in imenovalcu
+        :type min_nicla: int
+        :param max_nicla: največja možna ničla polinomov v števcu in imenovalcu
+        :type max_nicla: int
+        """
         super().__init__(**kwargs)
-
         if min_stopnja_stevca < 0 or min_stopnja_imenovalca < 0:
             raise ValueError('Stopnja polinoma mora biti neničelno celo število.')
         if min_stopnja_imenovalca > max_stopnja_imenovalca or min_stopnja_stevca > max_stopnja_stevca or min_nicla > max_nicla:
@@ -266,12 +334,13 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         self.max_nicla = max_nicla
 
     def poskusi_sestaviti(self):
-        [vodilni_stevca, nicle, stopnja_stevca, stevec] = narediPolinom(self.min_stopnja_stevca,
-                                                                        self.max_stopnja_stevca, self.min_nicla,
-                                                                        self.max_nicla)
-        [vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec] = narediPolinom(self.min_stopnja_imenovalca,
-                                                                                   self.max_stopnja_imenovalca,
-                                                                                   self.min_nicla, self.max_nicla)
+        """Poskusi sestaviti nalogo DolociNiclePoleAsimptotoRacionalne."""
+        [vodilni_stevca, nicle, stopnja_stevca, stevec] = naredi_polinom(self.min_stopnja_stevca,
+                                                                         self.max_stopnja_stevca, self.min_nicla,
+                                                                         self.max_nicla)
+        [vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec] = naredi_polinom(self.min_stopnja_imenovalca,
+                                                                                    self.max_stopnja_imenovalca,
+                                                                                    self.min_nicla, self.max_nicla)
         preveri(set(nicle) & set(poli) == set())
         x = sympy.symbols('x')
 
@@ -292,6 +361,9 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
 
 class GrafRacionalne(
     Naloga):  # TODO stacionarne točke naj bodo manjše od 5, drugače ni vej na grafu (funkcija.diff je odvod)
+    """
+    Naloga za risanje grafa racionalne funkcije. Lažja različica ima vodoravno asimptoto, težja pa ima za asimptoto poševno premico ali pa parabola.
+    """
     besedilo_posamezne = r'''Nariši graf racionalne funkcije $r(x)= {{naloga.racionalna}}$.'''
 
     besedilo_vecih = r'''
@@ -311,12 +383,12 @@ class GrafRacionalne(
     xmin=-5.5, xmax=5.5, 
     restrict y to domain=-5.5:5.5,]
 
-    {% for i in range( naloga.domenaPoli|count -1) %}
-    \addplot[domain ={{naloga.domenaPoli[i]}}+0.1 : {{naloga.domenaPoli[i+1]}}-0.1, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
+    {% for i in range( naloga.domena_poli|count -1) %}
+    \addplot[domain ={{naloga.domena_poli[i]}}+0.1 : {{naloga.domena_poli[i+1]}}-0.1, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
     {% endfor %}
 
-    {% for i in range(1, naloga.domenaPoli|count -1) %}
-    \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
+    {% for i in range(1, naloga.domena_poli|count -1) %}
+    \addplot[dashed] coordinates{ ({{naloga.domena_poli[i]}},-5.5) ({{naloga.domena_poli[i]}},5.5) };
     {% endfor %}
 
 
@@ -339,12 +411,12 @@ class GrafRacionalne(
     xmin=-5.5, xmax=5.5,
     restrict y to domain=-5.5:5.5,]
 
-    {% for i in range( naloga.domenaPoli|count -1) %}
-    \addplot[domain ={{naloga.domenaPoli[i]}}+0.3 : {{naloga.domenaPoli[i+1]}}-0.3, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
+    {% for i in range( naloga.domena_poli|count -1) %}
+    \addplot[domain ={{naloga.domena_poli[i]}}+0.3 : {{naloga.domena_poli[i+1]}}-0.3, color=black, smooth, samples=100]{ {{naloga.nicelna}} };
     {% endfor %}
 
-    {% for i in range(1, naloga.domenaPoli|count -1) %}
-    \addplot[dashed] coordinates{ ({{naloga.domenaPoli[i]}},-5.5) ({{naloga.domenaPoli[i]}},5.5) };
+    {% for i in range(1, naloga.domena_poli|count -1) %}
+    \addplot[dashed] coordinates{ ({{naloga.domena_poli[i]}},-5.5) ({{naloga.domena_poli[i]}},5.5) };
     {% endfor %}
 
     \addplot[domain =-5:5, color=black, dashed, smooth]{ {{naloga.asimptota}} };
@@ -356,8 +428,23 @@ class GrafRacionalne(
 
     def __init__(self, min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=2, max_stopnja_imenovalca=4,
                  min_nicla=-5, max_nicla=5, lazja=True, **kwargs):
+        """
+        :param min_stopnja_stevca: najmanjša možna stopnja polinoma v števcu
+        :type min_stopnja_stevca: int
+        :param max_stopnja_stevca: največja možna stopnja polinoma v števcu
+        :type max_stopnja_stevca: int
+        :param min_stopnja_imenovalca: najmanjša možna stopnja polinoma v imenovalcu
+        :type min_stopnja_imenovalca: int
+        :param max_stopnja_imenovalca: največja možna stopnja polinoma v imenovalcu
+        :type max_stopnja_imenovalca: int
+        :param min_nicla: najmanjša možna ničla polinomov v števcu in imenovalcu
+        :type min_nicla: int
+        :param max_nicla: največja možna ničla polinomov v števcu in imenovalcu
+        :type max_nicla: int
+        :param lazja: lažja ali težja oblika naloge
+        :type lazja: Bool
+        """
         super().__init__(**kwargs)
-
         if min_nicla > max_nicla or min_stopnja_stevca > max_stopnja_stevca or min_stopnja_imenovalca > max_stopnja_imenovalca:
             raise MinMaxNapaka
         if min_stopnja_imenovalca < 0 or min_stopnja_stevca < 0:
@@ -372,16 +459,17 @@ class GrafRacionalne(
         self.lazja = lazja
 
     def poskusi_sestaviti(self):
-        [vodilni_stevca, nicle, stopnja_stevca, stevec] = narediPolinom(self.min_stopnja_stevca,
-                                                                        self.max_stopnja_stevca, self.min_nicla,
-                                                                        self.max_nicla, risanje=True)
-        [vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec] = narediPolinom(self.min_stopnja_imenovalca,
-                                                                                   self.max_stopnja_imenovalca,
-                                                                                   self.min_nicla, self.max_nicla,
-                                                                                   risanje=True)
+        """Poskusi sestaviti nalogo GrafRacionalne."""
+        [vodilni_stevca, nicle, stopnja_stevca, stevec] = naredi_polinom(self.min_stopnja_stevca,
+                                                                         self.max_stopnja_stevca, self.min_nicla,
+                                                                         self.max_nicla, risanje=True)
+        [vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec] = naredi_polinom(self.min_stopnja_imenovalca,
+                                                                                    self.max_stopnja_imenovalca,
+                                                                                    self.min_nicla, self.max_nicla,
+                                                                                    risanje=True)
         razlika_stopenj = stopnja_stevca - stopnja_imenovalca
         preveri(set(nicle) & set(poli) == set() and
-                razlika_stopenj < 3)  # Ker ne znajo narisati asimptot3 3.stopnje
+                razlika_stopenj < 3)  # Ker ne znajo narisati asimptote 3.stopnje
         if self.lazja:
             preveri(razlika_stopenj < 1)
         else:
@@ -404,7 +492,7 @@ class GrafRacionalne(
         # print(nicelna)
         racionalna = sympy.latex(sympy.expand(stevec) / sympy.expand(imenovalec))
         print(racionalna)
-        domenaPoli = [-5.8] + list(set(poli)) + [5.8]
+        domena_poli = [-5.8] + list(set(poli)) + [5.8]
 
         return {'racionalna': racionalna, 'nicelna': nicelna, 'nicle': nicle, 'poli': poli, 'asimptota': asimptota,
-                'domenaPoli': domenaPoli}
+                'domena_poli': domena_poli}
