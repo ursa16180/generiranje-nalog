@@ -8,13 +8,9 @@ def vsota_aritmeticnega(a1, d, n):
     Izračuna vsoto prvih n členov aritmetičnega zaporedja.
 
     :param a1: prvi člen aritmetičnega zaporedja
-    :type a1: float
     :param d: diferenca aritmetičnega zaporedja
-    :type d: float
     :param n: število členov
-    :type n: int
     :return: vsoto prvih n členov
-    :rtype: sympy.Rational
     """
     sn = sympy.Rational(n * (2 * a1 + (n - 1) * d), 2)
     return sn
@@ -25,13 +21,9 @@ def vsota_geometrijskega(a1, q, n):
     Izračuna vsoto prvih n členov geometrijskega zaporedja.
 
     :param a1: prvi člen geometrijskega zaporedja
-    :type a1: float
     :param q: kvocient geometrijskega zaporedja
-    :type q: float
     :param n: število členov
-    :type n: int
     :return: vsoto prvih n členov
-    :rtype: sympy.Mul
     """
     sn = sympy.Mul(a1, q ** n - 1, sympy.Pow(q - 1, -1))
     # sn = sympy.Rational(a1 * (q ** n - 1), (q - 1))
@@ -43,11 +35,8 @@ def vsota_geometrijske_vrste(a1, q):
     Izračuna vsoto geometrijske vrste.
 
     :param a1: prvi člen geometrijskega zaporedja
-    :type a1: float
     :param q: kvocient geometrijskega zaporedja
-    :type q: float
     :return: vsoto geometrijske vrste
-    :rtype: sympy.Mul
     """
     if abs(q) < 1:
         s = sympy.Mul(a1, sympy.Pow(1 - q, -1))
@@ -61,13 +50,9 @@ def clen_aritmeticnega(a1, d, n):
     Izračuna n-ti člen aritmetičnega zaporedja.
 
     :param a1: prvi člen aritmetičnega zaporedja
-    :type a1: float
     :param d: diferenca aritmetičnega zaporedja
-    :type d: float
     :param n: zaporedni člen #TODO Ni člen ampak index člena?
-    :type n: int
     :return: n-ti člen aritmetičnega zaporedja
-    :rtype: float
     """
     an = a1 + (n - 1) * d
     return an
@@ -78,13 +63,9 @@ def clen_geometrijskega(a1, q, n):
     Izračuna n-ti člen geometrijskega zaporedja.
 
     :param a1: prvi člen geometrijskega zaporedja
-    :type a1: float
     :param q: kvocient geometrijskega zaporedja
-    :type q: float
     :param n: zaporedni člen#TODO Ni člen ampak index člena?
-    :type n: int
     :return: n-ti člen geometrijskega zaporedja
-    :rtype: float
     """
     # an = sympy.Mul(a1,sympy.Pow(q,(n-1)))
     an = a1 * q ** (n - 1)
@@ -118,7 +99,6 @@ class SplosniClenZaporedja(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -169,7 +149,6 @@ class PrviCleniAritmeticnega(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -212,9 +191,7 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
     def __init__(self, od=-5, do=5, **kwargs):
         """
         :param od: najmanjša možna vrednost za prvi člen in diferenco
-        :type od: int
         :param do: največja možna vrednost za prvi člen in diferenco
-        :type do: int
         """
         super().__init__(**kwargs)
 
@@ -301,7 +278,6 @@ class VsotaAritmeticnega(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -350,7 +326,6 @@ class PrviCleniGeometrijskega(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -479,7 +454,6 @@ class VsotaGeometrijskega(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -527,7 +501,6 @@ class VsotaGeometrijskeVrste(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja

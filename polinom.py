@@ -9,17 +9,11 @@ def naredi_polinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risa
     Vrne naključen polinom.
 
     :param min_stopnja: najmanjša možna stopnja polinoma
-    :type min_stopnja: int
     :param max_stopnja: največja možna stopnja polinoma
-    :type max_stopnja: int
     :param min_nicla: najmanjša možna ničla polinoma
-    :type min_nicla: int
     :param max_nicla: največja možna ničla polinoma
-    :type max_nicla: int
     :param risanje: v primeru risanja je manjši vodilni koeficient
-    :type risanje: Bool
     :return: polinom
-    :rtype: sympy.Poly
     """
     x = sympy.symbols('x')
     if min_stopnja > max_stopnja or min_nicla > max_nicla:
@@ -68,13 +62,9 @@ class NiclePolinoma(Naloga):
     def __init__(self, min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, **kwargs):
         """
         :param min_stopnja: najmanjša možna stopnja polinoma
-        :type min_stopnja: intint
         :param max_stopnja: najvenajvečja možna stopnja polinomačja možna stopnja polinoma
-        :type max_stopnja: intint
         :param min_nicla: najmanjša možna ničla polinoma
-        :type min_nicla: int
         :param max_nicla: največja možna ničla polinoma
-        :type max_nicla: int
         """
         super().__init__(**kwargs)
         if min_stopnja < 0:
@@ -157,13 +147,9 @@ class ParameteraDvojna(Naloga):
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-5, max_nicla=5, **kwargs):
         """
         :param min_stopnja: najmanjša možna stopnja polinoma
-        :type min_stopnja: int
         :param max_stopnja: največja možna stopnja polinoma
-        :type max_stopnja: int
         :param min_nicla: najmanjša možna ničla polinoma
-        :type min_nicla: int
         :param max_nicla: največja možna ničla polinoma
-        :type max_nicla: int
         """
         super().__init__(**kwargs)
         if min_nicla > max_nicla or min_stopnja > max_stopnja:
@@ -249,13 +235,9 @@ class GrafPolinoma(Naloga):
     def __init__(self, min_stopnja=3, max_stopnja=4, min_nicla=-3, max_nicla=3, **kwargs):
         """
         :param min_stopnja: najmanjša možna stopnja polinoma
-        :type min_stopnja: int
         :param max_stopnja: največja možna stopnja polinoma
-        :type max_stopnja: int
         :param min_nicla: najmanjša možna ničla polinoma
-        :type min_nicla: int
         :param max_nicla: največja možna ničla polinoma
-        :type max_nicla: int
         """
         super().__init__(**kwargs)
         if min_nicla > max_nicla or min_stopnja > max_stopnja:
@@ -309,17 +291,11 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
                  min_nicla=-9, max_nicla=9, **kwargs):
         """
         :param min_stopnja_stevca: najmanjša možna stopnja polinoma v števcu
-        :type min_stopnja_stevca: int
         :param max_stopnja_stevca: največja možna stopnja polinoma v števcu
-        :type max_stopnja_stevca: int
         :param min_stopnja_imenovalca: najmanjša možna stopnja polinoma v imenovalcu
-        :type min_stopnja_imenovalca: int
         :param max_stopnja_imenovalca: največja možna stopnja polinoma v imenovalcu
-        :type max_stopnja_imenovalca: int
         :param min_nicla: najmanjša možna ničla polinomov v števcu in imenovalcu
-        :type min_nicla: int
         :param max_nicla: največja možna ničla polinomov v števcu in imenovalcu
-        :type max_nicla: int
         """
         super().__init__(**kwargs)
         if min_stopnja_stevca < 0 or min_stopnja_imenovalca < 0:
@@ -430,19 +406,12 @@ class GrafRacionalne(
                  min_nicla=-5, max_nicla=5, lazja=True, **kwargs):
         """
         :param min_stopnja_stevca: najmanjša možna stopnja polinoma v števcu
-        :type min_stopnja_stevca: int
         :param max_stopnja_stevca: največja možna stopnja polinoma v števcu
-        :type max_stopnja_stevca: int
         :param min_stopnja_imenovalca: najmanjša možna stopnja polinoma v imenovalcu
-        :type min_stopnja_imenovalca: int
         :param max_stopnja_imenovalca: največja možna stopnja polinoma v imenovalcu
-        :type max_stopnja_imenovalca: int
         :param min_nicla: najmanjša možna ničla polinomov v števcu in imenovalcu
-        :type min_nicla: int
         :param max_nicla: največja možna ničla polinomov v števcu in imenovalcu
-        :type max_nicla: int
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         if min_nicla > max_nicla or min_stopnja_stevca > max_stopnja_stevca or min_stopnja_imenovalca > max_stopnja_imenovalca:

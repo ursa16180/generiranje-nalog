@@ -8,11 +8,8 @@ def izberi_kompleksno_stevilo(od=-5, do=5):
     Vrne naključno kompleksno število, ki ima realno in imagirano komponento neničelno.
 
     :param od: najmanjša možna vrednost za posamezno komponento
-    :type od: int
     :param do: največja možna vrednost za posamezno komponento
-    :type do: int
     :return: vrne kompleksno število
-    :rtype: sympy.Add
     """
     a = random.choice([x for x in range(od, do + 1) if x != 0])
     b = random.choice([x for x in range(od, do + 1) if x != 0])
@@ -89,7 +86,6 @@ class Ulomek(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -201,7 +197,6 @@ class Enacba(Naloga):
     def __init__(self, lazja, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja

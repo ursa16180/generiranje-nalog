@@ -8,13 +8,9 @@ def izberi_mnozico(velikost=4, od=1, do=10):
     Naredi množico poljubne velikosti.
 
     :param velikost: velikost množice
-    :type velikost: int
     :param od: najmanjša možna vrednost elementa
-    :type od: int
     :param do: največja možna vrednost elementa
-    :type do: int
     :return: množica celih števil
-    :rtype: sympy.FiniteSet
     """
     izbor = [x for x in range(od, do + 1)]
     mnozica = sympy.FiniteSet(*random.sample(izbor, velikost))
@@ -50,7 +46,6 @@ class ElementiMnozice(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja

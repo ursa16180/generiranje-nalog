@@ -8,13 +8,9 @@ def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
     Funkcija vrne eksponentno funkcijo, ki ustreza vpisanim pogojem.
 
     :param do: osnovo izbere iz seznama od 2 do vrednosti do
-    :type do: int
     :param cela_osnova: celoštevilka osnova ali ne
-    :type cela_osnova: Bool
     :param premik: premik osnovne eksponentne funkcije za vrednost premika
-    :type premik: float
     :return:
-    :rtype: TODO
     """
     x = sympy.symbols('x')
     izbor = list(range(2, do + 1))
@@ -24,7 +20,7 @@ def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
                      sympy.Rational(x, 4) for x in range(1, 4 * (do)) if x != 4] + [sympy.Rational(x, 5) for x in
                                                                                     range(1, 5 * (do)) if x != 5]
     osnova = random.choice(izbor)
-    return [osnova, premik, sympy.Add(sympy.Pow(osnova, x), premik, evaluate=False)]
+    return (osnova, premik, sympy.Add(sympy.Pow(osnova, x), premik, evaluate=False))
 
 
 class GrafEksponentne(Naloga):
@@ -79,7 +75,6 @@ class GrafEksponentne(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
 
@@ -91,9 +86,9 @@ class GrafEksponentne(Naloga):
         """
         x = sympy.symbols('x')
         if self.lazja:
-            [osnova, premik, eksponentna1] = naredi_eksponentno(cela_osnova=True)
+            (osnova, premik, eksponentna1) = naredi_eksponentno(cela_osnova=True)
         else:
-            [osnova, premik, eksponentna1] = naredi_eksponentno(cela_osnova=False)
+            (osnova, premik, eksponentna1) = naredi_eksponentno(cela_osnova=False)
         predznak = random.choice([1, -1])
         premik2 = random.choice([x for x in range(-3, 4) if x != 0])
         eksponentna2 = sympy.Add(predznak * sympy.Pow(osnova, x, evaluate=False), premik2, evaluate=False)
@@ -105,7 +100,9 @@ class GrafEksponentne(Naloga):
 
 class Enacba(Naloga):
     """
-    Naloga za reševanje ekponentne enačbe.
+    Naloga za reševanje ekponentne enačbe.:math:
+
+    :param lazja: lažja ali težja oblika naloge
     """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
@@ -125,10 +122,6 @@ class Enacba(Naloga):
      '''
 
     def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
-        """
         super().__init__(**kwargs)
         self.lazja = lazja
 
@@ -179,7 +172,6 @@ class Enacba2osnovi(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
 

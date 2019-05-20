@@ -22,11 +22,8 @@ def kot_med_premicama(k1, k2):
     Izračuna kot med premicama v radianih.
 
     :param k1: smerni koeficient prve premice
-    :type k1: float
     :param k2: smerni koeficient prve premice
-    :type k2: float
     :return: kot med premicama v radianih
-    :rtype: float #TODO radiani float?
     """
     if k1 * k2 == -1:
         kot = sympy.pi / 2
@@ -40,11 +37,8 @@ def doloci_polinom(min_stopnja=2, max_stopnja=3):
     Vrne naključen polinom.
 
     :param min_stopnja: najmanjša možna stopnja polinoma
-    :type min_stopnja: int
     :param max_stopnja: največja možna stopnja polinoma
-    :type max_stopnja: int
     :return: polinom
-    :rtype: sympy.Poly
     """
     x = sympy.symbols('x')
     stopnja = random.randint(min_stopnja, max_stopnja)
@@ -58,15 +52,10 @@ def doloci_racionalno(min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_im
     Vrne naključno racionalno funkcijo.
 
     :param min_stopnja_stevca: najmanjša možna stopnja polinoma v števcu
-    :type min_stopnja_stevca: int
     :param max_stopnja_stevca: največja možna stopnja polinoma v števcu
-    :type max_stopnja_stevca: int
     :param min_stopnja_imenovalca: najmanjša možna stopnja polinoma v imenovalcu
-    :type min_stopnja_imenovalca: int
     :param max_stopnja_imenovalca: največja možna stopnja polinoma v imenovalcu
-    :type max_stopnja_imenovalca: int
     :return: racionalno fukcijo (kvocient dveh polinomov)
-    :rtype: sympy.Mul
     """
     x = sympy.symbols('x')
     stopnja_stevca = random.randint(min_stopnja_stevca, max_stopnja_stevca)
@@ -85,9 +74,7 @@ def doloci_eksponentno(osnove=[sympy.E, 2, 3, 5]):
     Vrne naključno eksponentno funkcijo z eno izmed podanih osnov.
 
     :param osnove: seznam izbora osnov
-    :type osnove: list
     :return: eksponentna fukcija
-    :rtype: sympy.Pow
     """
     x = sympy.symbols('x')
     osnova = random.choice(osnove)
@@ -100,9 +87,7 @@ def doloci_logaritem(osnove=[sympy.E, 2, 3, 4, 5, 10]):
     Vrne naključno logaritemsko funkcijo z eno izmed podanih osnov.
 
     :param osnove: seznam izbora osnov
-    :type osnove: list
     :return: logaritemska fukcija
-    :rtype: sympy.log
     """
     x = sympy.symbols('x')
     osnova = random.choice(osnove)
@@ -116,7 +101,6 @@ def doloci_kotna():
     Vrne kosinus, sinus, tangens ali kotanges.
 
     :return: kotna funkcija
-    :rtype: #TODO
     """
     x = sympy.symbols('x')
     kosinus = sympy.cos(x)
@@ -131,7 +115,6 @@ def doloci_krozna():
     Vrne arkus kosinus, arkus sinus, arkus tangens ali arkus kotangens.
 
     :return: krožna funkcija
-    :rtype: #TODO
     """
     x = sympy.symbols('x')
     arcus_kosinus = sympy.acos(x)
@@ -168,7 +151,6 @@ class KotMedPremicama(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -218,9 +200,7 @@ class OdvodElementarne(Naloga):
                  **kwargs):
         """
         :param funkcije: seznam izbora elementarnih funkcij
-        :type funkcije: list
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         self.funkcije = funkcije
@@ -295,7 +275,6 @@ class OdvodSestavljene(Naloga):
                                  Funkcija.KOTNA], **kwargs):
         """
         :param funkcije: seznam izbora elementarnih funkcij
-        :type funkcije: list
         """
         super().__init__(**kwargs)
         if funkcije == []:
@@ -375,7 +354,6 @@ class Tangenta(Naloga):
                                  Funkcija.KOTNA], **kwargs):
         """
         :param funkcije: seznam izbora elementarnih funkcij
-        :type funkcije: list
         """
         super().__init__(**kwargs)
         self.funkcije = funkcije

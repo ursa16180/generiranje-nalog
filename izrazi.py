@@ -27,11 +27,8 @@ class PotencaDvoclenika(Naloga):
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
         """
         :param min_potenca: najmajši možen eksponent dvočlenika
-        :type min_potenca: int
         :param max_potenca: največji možen eksponent dvočlenika
-        :type max_potenca: int
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
@@ -88,9 +85,7 @@ class PotencaTroclenika(Naloga):
     def __init__(self, min_potenca=2, max_potenca=2, **kwargs):
         """
         :param min_potenca: najmajši možen eksponent tročlenika
-        :type min_potenca: int
         :param max_potenca: največji možen eksponent tročlenika
-        :type max_potenca: int
         """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
@@ -133,11 +128,8 @@ class RazstaviVieta(Naloga):
                  **kwargs):  # TODO ali so te min maks vrednosti smiselne?
         """
         :param minimalna_vrednost: najmanjša možna vrednost razstavljenega člena
-        :type minimalna_vrednost: int
         :param maksimalna_vrednost: največja možna vrednost razstavljenega člena
-        :type maksimalna_vrednost: int
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         if minimalna_vrednost > maksimalna_vrednost:
@@ -185,11 +177,8 @@ class RazstaviRazliko(Naloga):
     def __init__(self, min_potenca=2, max_potenca=3, lazja=True, **kwargs):
         """
         :param min_potenca: najmanjša možna potenca za razstavljanje
-        :type min_potenca: int
         :param max_potenca: največja možna potenca za razstavljanje
-        :type max_potenca: int
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:
@@ -253,15 +242,10 @@ class PotencirajVecclenik(Naloga):
     def __init__(self, min_potenca=2, max_potenca=3, min_clenov=2, max_clenov=2, lazja=True, **kwargs):
         """
         :param min_potenca: najmanjša možna potenca
-        :type min_potenca: int
         :param max_potenca: največja možna potenca
-        :type max_potenca: int
         :param min_clenov: najmanjše možno število členov
-        :type min_clenov: int
         :param max_clenov: največje možno število členov
-        :type max_clenov: int
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         if min_potenca > max_potenca:

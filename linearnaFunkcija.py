@@ -9,11 +9,8 @@ def seznam_polovick(od=-10, do=10):
     Funkcija sestavi seznam vseh celih iz polovic med vrednostima od in do.
 
     :param od: TODO
-    :type od:
     :param do:
-    :type do:
     :return: seznam celih števil in polovic
-    :rtype: list
     """
     return [sympy.Rational(x, 2) for x in range(2 * od, 2 * (do + 1)) if x != 0]
 
@@ -23,11 +20,8 @@ def seznam_tretinj(od=-10, do=10):
     Funkcija sestavi seznam vseh celih iz tretinj med vrednostima od in do.
 
     :param od: TODO
-    :type od:
     :param do:
-    :type do:
     :return: seznam celih števil in tretinj
-    :rtype: list
     """
     return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
 
@@ -37,7 +31,6 @@ def eksplicitna_premica():
     Vrne naključno eksplicitno obliko premice, ki jo moramo izenačiti z y.
 
     :return: smerni koeficient, začetno vrednost in eksplicitno podano premico
-    :rtype: list
     """
     # Funkcija vrne naključno eksplicitno podano premico
     k = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
@@ -52,7 +45,6 @@ def implicina_premica():
     Vrne implicitno podano obliko premice, ki jo moramo izenačiti z 0. Premice niso vzporedne z osema.
 
     :return: koeficiente in implicitno podano premico
-    :rtype: list
     """
     # Vrne implicitno podano obliko premice, ki jo moramo izenačiti z 0
     # Premice niso vzporedne z osema
@@ -71,15 +63,10 @@ def skozi_tocki(x1, y1, x2, y2):
     Izračuna predpis premice skozi dve točki.
 
     :param x1: x koordinata prve točke
-    :type x1: float #TODO float
     :param y1: y koordinata prve točke
-    :type y1: float
     :param x2: x koordinata druge točke
-    :type x2: float
     :param y2: y koordinata druge točke
-    :type y2: float
     :return: smerni koeficient, začetno vrednost in eksplicitno podano premico
-    :rtype: list
     """
     x = sympy.symbols('x')
     k = (y2 - y1) / (x2 - x1)
@@ -92,11 +79,8 @@ def izberi_koordinato(od=-10, do=10):
     Izbere poljubno celoštevilsko koordinato med vrednostima od in do.
 
     :param od: #TODO
-    :type od: int
     :param do:
-    :type do: int
     :return: celoštevilsko koordinato
-    :rtype: int
     """
     koordinata = random.randint(od, do)
     return koordinata
@@ -107,15 +91,10 @@ def razdalja_med_tockama(x1, y1, x2, y2):
     Izračuna razdaljo med dvema točkama.
 
     :param x1: x koordinata prve točke
-    :type x1: float #TODO float
     :param y1: y koordinata prve točke
-    :type y1: float
     :param x2: x koordinata druge točke
-    :type x2: float
     :param y2: y koordinata druge točke
-    :type y2: float
     :return: razdaljo med točkama
-    :rtype: float
     """
 
     razdalja = sympy.Point(x1, y1).distance(sympy.Point(x2, y2))  # Todo preveri da deluje razdalja
@@ -403,7 +382,6 @@ class Neenacba(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool 
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -456,7 +434,6 @@ class SistemDvehEnacb(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool 
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -509,7 +486,6 @@ class SistemTrehEnacb(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool  
         """
         super().__init__(**kwargs)
         self.lazja = lazja

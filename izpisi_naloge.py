@@ -95,13 +95,9 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
                       zdruzene_resitve=True):
     """Ustvari mapi za teste in rešitve. Sestavi teste za vse dijake s podanega seznama.
 
-    :type naloge: list
     :param naloge: seznam željenih nalog
-    :type ime_testa: str
     :param ime_testa: ime testa
-    :type datoteka_seznam_dijakov: file
     :param datoteka_seznam_dijakov: besedilna datoteka, ki vsebuje seznam dijakov
-    :type zdruzene_resitve: Bool
     :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega dijaka v svoji datoteki
     """
     if not datoteka_seznam_dijakov:
@@ -142,13 +138,9 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge):
     Ustvari test za posameznega dijaka.
 
     :param ime_testa: ime testa
-    :type ime_testa: str
     :param seznam_nalog: seznam besedil posameznih nalog
-    :type seznam_nalog: list
     :param ucenec: ime dijaka
-    :type ucenec: str
     :param pot_naloge: mapa, kjer se shranjujejo naloge
-    :type pot_naloge: str
     """
     datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
     datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec))
@@ -160,13 +152,9 @@ def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve):
     Ustvari datoteko z rešitvami za posameznega dijaka.
 
     :param ime_testa: ime testa
-    :type ime_testa: str
     :param seznam_resitvev: seznam rešitev posameznih nalog
-    :type seznam_resitvev: list
     :param ucenec: ime dijaka
-    :type ucenec: str
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
-    :type pot_resitve: str
     """
     datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
     datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
@@ -178,11 +166,8 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve):  # Napi�
     Ustvari datoteko z rešitvami vseh dijakov.
 
     :param ime_testa: ime testa
-    :type ime_testa: str
     :param seznam_vseh_resitev: seznam seznamov rešitev za posameznega dijaka
-    :type seznam_vseh_resitev: list
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
-    :type pot_resitve: str
     """
     datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))

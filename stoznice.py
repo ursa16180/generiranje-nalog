@@ -75,7 +75,6 @@ class TemeGorisceEnacba(Naloga):
     def __init__(self, premaknjena=True, **kwargs):
         """
         :param premaknjena: elipsa v premaknjeni ali središčni legi
-        :type premaknjena: Bool
         """
         super().__init__(**kwargs)
         self.premaknjena = premaknjena

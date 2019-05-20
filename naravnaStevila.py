@@ -27,13 +27,9 @@ class DeliteljVeckratnik(Naloga):
     def __init__(self, od=50, do=200, najvecje_prastevilo=17, lazja=True, **kwargs):
         """
         :param od: najmanjše možno število
-        :type od: int
         :param do: največje možno število
-        :type do: int
         :param najvecje_prastevilo: največje možno praštevilo v praštevilskem razcepu
-        :type najvecje_prastevilo: int
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool
         """
         super().__init__(**kwargs)
         if od > do:
@@ -70,7 +66,6 @@ class DeliteljVeckratnik(Naloga):
 #     def __init__(self, lazja=True, **kwargs):
 #         """
 #         :param lazja: lažja ali težja oblika naloge
-#         :type lazja: Bool
 #         """
 #         super().__init__(**kwargs)
 #         besedilo_posamezne =

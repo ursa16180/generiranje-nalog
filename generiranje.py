@@ -9,7 +9,6 @@ sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 #     """
 #     Popravi izp
 #
-#     :type : int
 #     :param :
 #     """
 #     return sympy.latex(izraz).replace(r'\'','')
@@ -31,7 +30,6 @@ def preveri(pogoj):
     """
     Funkcija preveri, če sestavljena naloga ustreza pogojem, sicer javi napako NapacnaNaloga.
 
-    :type pogoj: Bool
     :param pogoj: True, če naloga ustreza pogojem in False, kadar naloga ne ustreza pogojem
     """
     if not pogoj:
@@ -51,7 +49,6 @@ def moj_latex(expr):
     """
     Funkcija kliče razred MojLatexPrinter in nastavi izpis naravnega logaritma kot *ln*
 
-    :type expr: str
     :param expr: niz #TODO
     """
     settings = {
@@ -64,13 +61,9 @@ class Naloga:
     """ Razred Naloga je splošni razred za posamezne naloge in vsebuje splošna besedila in rešitve nalog.
 
     :param besedilo_posamezne: Splošno besedilo naloge
-    :type besedilo_posamezne: str
     :param besedilo_vecih: Splošno besedilo za nalogo z več primeri
-    :type besedilo_vecih: str
     :param resitev_posamezne: Splošno besedilo za rešitev naloge
-    :type resitev_posamezne: str
     :param resitev_vecih: Splošno besedilo za rešitev naloge z več primeri
-    :type resitev_vecih: str
 
     """
     besedilo_posamezne = r'''Reši nalogo: ${{ naloga }}$'''
@@ -96,15 +89,10 @@ class Naloga:
         """TODO
 
         :param st_nalog: stevilo primerov posamezne naloge
-        :type st_nalog: int
         :param besedilo_posamezne: besedilo naloge
-        :type besedilo_posamezne: str
         :param besedilo_vecih: besedilo za nalogo z več primeri
-        :type besedilo_vecih: str
         :param resitev_posamezne: besedilo za rešitev naloge
-        :type resitev_posamezne: str
         :param resitev_vecih: besedilo za rešitev naloge z več primeri
-        :type resitev_vecih: str
 
         """
         self.st_nalog = st_nalog
@@ -142,7 +130,6 @@ class Naloga:
         """
         Sestavi nalogo z več primeri
 
-        :type stevilo_nalog: int
         :param stevilo_nalog: stevilo primerov posamezne naloge
 
         """
