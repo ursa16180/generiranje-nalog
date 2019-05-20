@@ -9,13 +9,9 @@ def nicelna_oblika(od=-5, do=5, risanje=False):
     Vrne naključno kvadratno funkcijo v ničelni obliki.
 
     :param od: najmanjša možna vrednost za ničlo funkcije
-    :type od: int
     :param do: največja možna vrednost za ničlo funkcije
-    :type do: int
     :param risanje: če fukcijo potrebujejmo za risanje, izbere lepši vodilni koeficient
-    :type risanje: Bool
     :return: vodilni koeficient, ničli in kvadratno funkcijo v ničelni obliki
-    :rtype: list
     """
     if risanje:
         a = random.choice([-2, -1, sympy.Rational(-1, 2), sympy.Rational(1, 2), 1, 2])
@@ -34,9 +30,7 @@ def splosna_oblika(risanje=False):
     Vrne naključno kvadratno funkcijo v splošni obliki.
 
     :param risanje: če fukcijo potrebujejmo za risanje, izbere lepši vodilni koeficient
-    :type risanje: Bool
     :return: vrne seznam koeficientov in kvadratno funkcijo v splošni obliki
-    :rtype: list
     """
     if risanje:
         a = random.choice([-2, -1, sympy.Rational(-1, 2), sympy.Rational(1, 2), 1, 2])
@@ -55,13 +49,9 @@ def nicle(a, b, c):
     Iz podanih koeficientov kvadratne funkcije izračuna ničli funkcije.
 
     :param a: vodilni koeficient
-    :type a: float
     :param b: linearni koeficient
-    :type b: float
     :param c: prosti člen
-    :type c: float #TODO Rational=float?
     :return: tuple ničel kvadratne funkcije
-    :rtype: tuple
     """
     D = diskriminanta(a, b, c)
     if D >= 0:
@@ -78,13 +68,9 @@ def izracunaj_teme(a, b, c):
     Iz podanih koeficientov kvadratne funkcije koordinati temena.
 
     :param a: vodilni koeficient
-    :type a: float
     :param b: linearni koeficient
-    :type b: float
     :param c: prosti člen
-    :type c: float #TODO Rational=float?
     :return: tuple koordinat temena kvadratne funkcije
-    :rtype: tuple
     """
     p = -b / (2 * a)
     q = -(diskriminanta(a, b, c)) / (4 * a)
@@ -96,13 +82,9 @@ def diskriminanta(a, b, c):
     Iz podanih koeficientov kvadratne funkcije izračuna diskriminanto.
     
     :param a: vodilni koeficient
-    :type a: float
     :param b: linearni koeficient
-    :type b: float
     :param c: prosti člen
-    :type c: float #TODO Rational=float?
     :return: vrednost diskriminante kvadratne funkcije
-    :rtype: float
     """
     return b ** 2 - 4 * a * c
 
@@ -133,7 +115,6 @@ class IzracunajNicle(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool 
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -269,7 +250,6 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool 
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -317,7 +297,6 @@ class Neenacba(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool 
         """
         super().__init__(**kwargs)
         self.lazja = lazja
@@ -371,7 +350,6 @@ class SkoziTocke(Naloga):
     def __init__(self, lazja=True, **kwargs):
         """
         :param lazja: lažja ali težja oblika naloge
-        :type lazja: Bool 
         """
         super().__init__(**kwargs)
         self.lazja = lazja
