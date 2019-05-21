@@ -10,7 +10,15 @@ def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
     :param do: osnovo izbere iz seznama od 2 do vrednosti do
     :param cela_osnova: celoštevilka osnova ali ne
     :param premik: premik osnovne eksponentne funkcije za vrednost premika
-    :return:
+    :return: tuple, ki vsebuje osnovo, premik in eksponentno funkcijo
+
+
+    >>> naredi_eksponentno(do=5)
+    (19/5, 0, (19/5)**x)
+
+    >>> naredi_eksponentno(cela_osnova=True, premik=2)
+    (2, 2, 2**x + 2)
+
     """
     x = sympy.symbols('x')
     izbor = list(range(2, do + 1))
@@ -25,7 +33,16 @@ def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
 
 class GrafEksponentne(Naloga):
     """
-    Naloga iz risanja grafov eksponentne funkcije.
+    Naloga iz risanja dveh grafov eksponentne funkcije.
+
+    :param cela_osnova: določi, če ima funkcija lahko samo celoštevilsko osnovo ali tudi racionalno
+
+
+    >>> GrafEksponentne().sestavi()
+    {'eksponentna1': 2**x, 'eksponentna2': -2**x - 1, 'narisi_eksponentna1': '2^x', 'narisi_eksponentna2': '-2^x - 1', 'premik2': -1}
+
+    >>> GrafEksponentne(cela_osnova=False).sestavi()
+    {'eksponentna1': (4/3)**x, 'eksponentna2': (4/3)**x + 3, 'narisi_eksponentna1': '(4/3)^x', 'narisi_eksponentna2': '(4/3)^x + 3', 'premik2': 3}
     """
     besedilo_posamezne = r'''V isti koordinatni sistem nariši grafa funkcij $f(x)={{latex(naloga.eksponentna1)}}$ in $g(x)={{latex(naloga.eksponentna2)}}$.'''
 
@@ -72,23 +89,13 @@ class GrafEksponentne(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, cela_osnova=True, **kwargs):
         super().__init__(**kwargs)
+        self.cela_osnova = cela_osnova
 
-        self.lazja = lazja
-
-    def poskusi_sestaviti(self):
-        """
-        Poskusi sestaviti nalogo GrafEksponentne.
-        """
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
-        if self.lazja:
-            (osnova, premik, eksponentna1) = naredi_eksponentno(cela_osnova=True)
-        else:
-            (osnova, premik, eksponentna1) = naredi_eksponentno(cela_osnova=False)
+        (osnova, premik, eksponentna1) = naredi_eksponentno(cela_osnova=self.cela_osnova)
         predznak = random.choice([1, -1])
         premik2 = random.choice([x for x in range(-3, 4) if x != 0])
         eksponentna2 = sympy.Add(predznak * sympy.Pow(osnova, x, evaluate=False), premik2, evaluate=False)
@@ -100,9 +107,16 @@ class GrafEksponentne(Naloga):
 
 class Enacba(Naloga):
     """
-    Naloga za reševanje ekponentne enačbe.:math:
+    Naloga za reševanje eksponentne enačbe.
 
-    :param lazja: lažja ali težja oblika naloge
+    :param vsota: enačba z enim členom ali vsota dveh členov
+
+
+    >>> Enacba().sestavi()
+    {'enacba': Eq((1/49)**(-x - 1), 1), 'resitev': -1}
+
+    >>> Enacba(vsota = False).sestavi()
+    {'enacba': Eq(5**(x/2 + 1/2), sqrt(5)/5), 'resitev': -2}
     """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
@@ -121,15 +135,14 @@ class Enacba(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
+    def __init__(self, vsota=False, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.vsota = vsota
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo Enacba."""
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
 
-        if self.lazja:
+        if not self.vsota:
             osnova = sympy.Pow(random.choice([2, 3, 4, 5, 7, 10]), random.choice([-2, -1, sympy.Rational(1, 2), 1, 2]))
             a = random.choice([-2, -1, 1, 2])
             b = random.choice([-2, -1, 1, 2])
@@ -151,6 +164,15 @@ class Enacba(Naloga):
 class Enacba2osnovi(Naloga):
     """
     Naloga enačbe, kjer imata potenci dve različni osnovi.
+
+    :param deli_z_osnovo: ali je v zadnjem koraku potrebno vrednosti deliti z nasprotno osnovo
+
+
+    >>> Enacba2osnovi().sestavi()
+    {'enacba': Eq(2**x/4 - 5*7**x/2401, 7*2**x/32 - 34*7**x/16807), 'resitev': 5}
+
+    >>> Enacba2osnovi(deli_z_osnovo=True).sestavi()
+    {'enacba': Eq(2**(x + 2) - 3**(x - 1), 13*2**x/4 - 3**x/9), 'resitev': 3
     """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
@@ -169,22 +191,15 @@ class Enacba2osnovi(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, deli_z_osnovo=False, **kwargs):
         super().__init__(**kwargs)
+        self.deli_z_osnovo = deli_z_osnovo
 
-        self.lazja = lazja
-
-    def poskusi_sestaviti(self):
-        """
-        Poskusi sestaviti nalogo Enacba2osnovi
-        """
+    def _poskusi_sestaviti(self):
         [osnova1, osnova2] = random.sample([2, 3, 5, 7, 10], 2)
         x = sympy.symbols('x')
         a = random.randint(-5, 5)
-        if self.lazja:
+        if not self.deli_z_osnovo:
             u = 0
             v = 0
         else:
@@ -200,5 +215,5 @@ class Enacba2osnovi(Naloga):
         resitev = -(a - v)
         enacba = sympy.Eq(sympy.simplify(c * osnova1 ** (x + a + b) - g * osnova2 ** (x + e + f)),
                           sympy.simplify(-d * osnova1 ** (x + a) + h * osnova2 ** (x + e)))
-        preveri(max([abs(d), abs(h)]) < 201)  # Zagotovi, da v enačbi ne nastopajo prevelike vrednosti.
+        preveri(max([abs(d), abs(h)]) < 50)  # Zagotovi, da v enačbi ne nastopajo prevelike vrednosti.
         return {'enacba': enacba, 'resitev': resitev}

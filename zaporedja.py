@@ -11,6 +11,12 @@ def vsota_aritmeticnega(a1, d, n):
     :param d: diferenca aritmetičnega zaporedja
     :param n: število členov
     :return: vsoto prvih n členov
+
+    >>> vsota_aritmeticnega(3, 1/3, 15)
+    80
+
+    >>> vsota_aritmeticnega(15, -3, 20)
+    -270
     """
     sn = sympy.Rational(n * (2 * a1 + (n - 1) * d), 2)
     return sn
@@ -24,6 +30,13 @@ def vsota_geometrijskega(a1, q, n):
     :param q: kvocient geometrijskega zaporedja
     :param n: število členov
     :return: vsoto prvih n členov
+
+
+    >>> vsota_geometrijskega(-16, 1/2, 10)
+    -31.9687500000000
+
+    >>> vsota_geometrijskega(2, 3, 18)
+    387420488
     """
     sn = sympy.Mul(a1, q ** n - 1, sympy.Pow(q - 1, -1))
     # sn = sympy.Rational(a1 * (q ** n - 1), (q - 1))
@@ -32,11 +45,18 @@ def vsota_geometrijskega(a1, q, n):
 
 def vsota_geometrijske_vrste(a1, q):
     """
-    Izračuna vsoto geometrijske vrste.
+    Izračuna vsoto geometrijske vrste ali opozori če zaporedje ni konvergentno.
 
     :param a1: prvi člen geometrijskega zaporedja
     :param q: kvocient geometrijskega zaporedja
     :return: vsoto geometrijske vrste
+
+
+    >>> vsota_geometrijske_vrste(8, -1/2)
+    5.33333333333333
+
+    >>> vsota_geometrijske_vrste(1, 1/5)
+    1.25000000000000
     """
     if abs(q) < 1:
         s = sympy.Mul(a1, sympy.Pow(1 - q, -1))
@@ -53,6 +73,13 @@ def clen_aritmeticnega(a1, d, n):
     :param d: diferenca aritmetičnega zaporedja
     :param n: zaporedni člen #TODO Ni člen ampak index člena?
     :return: n-ti člen aritmetičnega zaporedja
+
+
+    >>> clen_aritmeticnega(1/2, 5, 17)
+    80.5
+
+    >>> clen_aritmeticnega(-10, 2, 50)
+    88
     """
     an = a1 + (n - 1) * d
     return an
@@ -66,6 +93,12 @@ def clen_geometrijskega(a1, q, n):
     :param q: kvocient geometrijskega zaporedja
     :param n: zaporedni člen#TODO Ni člen ampak index člena?
     :return: n-ti člen geometrijskega zaporedja
+
+    >>> clen_geometrijskega(3, 2, 5)
+    48
+
+    >>> clen_geometrijskega(-4, 1/2, 3)
+    -1.0
     """
     # an = sympy.Mul(a1,sympy.Pow(q,(n-1)))
     an = a1 * q ** (n - 1)
@@ -77,8 +110,17 @@ def clen_geometrijskega(a1, q, n):
 class SplosniClenZaporedja(Naloga):
     """
     Naloga za iskanje splošnega člena poljubnega zaporedja.
+
+    :param zamik_alternirajoce: določa, če so v izbor predpisa vljučena zamaknjena zaporedja iz kvadratov in  kubov ter alternirajoča zaporedja
+
+
+    >>> SplosniClenZaporedja().sestavi()
+    {'cleni': [1, 3, 5, 7, 9], 'splosni': 2*n - 1}
+
+    >>> SplosniClenZaporedja(zamik_alternirajoce=True).sestavi()
+    {'cleni': [0, 7, 26, 63, 124], 'splosni': n**3 - 1}
+
     """
-    # Todo lažja težja opis
     besedilo_posamezne = r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja {% for clen in naloga.cleni %}${{latex(clen)}}$, {% endfor %}...'''
     besedilo_vecih = r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja:
     \begin{enumerate}
@@ -96,15 +138,11 @@ class SplosniClenZaporedja(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, zamik_alternirajoce=False, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.zamik_alternirajoce = zamik_alternirajoce
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo SplosniClenZaporedja."""
+    def _poskusi_sestaviti(self):
         n = sympy.symbols('n')
         a = random.choice([x for x in range(-5, 5) if x != 0])
         b = random.choice([x for x in range(-3, 3) if x != 0])
@@ -113,7 +151,7 @@ class SplosniClenZaporedja(Naloga):
         predpisi = [a + (n - 1) * b, a * b ** (n - 1),
                     sympy.Mul((a + b * (n - 1)), sympy.Pow(c + d * (n - 1), -1, evaluate=False), evaluate=False),
                     n ** 2, n ** 3]
-        if not self.lazja:
+        if self.zamik_alternirajoce:
             predpisi += [n ** 2 - a, n ** 3 - a,
                          (-1) ** n * a * b ** (n - 1)]  # , a+sum(range(2,n+1)) #TODO kako podati predpis za rekurzivne
         predpis = random.choice(predpisi)
@@ -126,7 +164,16 @@ class SplosniClenZaporedja(Naloga):
 # ~~~~~Naloge iz sklopa artimetično zaporedje
 class PrviCleniAritmeticnega(Naloga):
     """
-    Naloga za zapis splošnega člena aritmetičnega zaporedja in računanje prvih petih členov, če poznaš prvi člen in diferenco. Lažja različica ima celoštevilski prvi člen in diferenco, težja pa racioanlno.
+    Naloga za zapis splošnega člena aritmetičnega zaporedja in računanje prvih petih členov, če poznaš prvi člen in diferenco.
+
+    :param racionalne_vrednosti: prvi člen in diferenca zaporedja sta lahko racionalni vrednosti
+
+
+    >>> PrviCleniAritmeticnega().sestavi()
+    {'cleni': [-9, -5, -1, 3, 7], 'a1': -9, 'd': 4, 'splosni': 4*(n - 1) - 9}
+
+    >>> PrviCleniAritmeticnega(racionalne_vrednosti=True).sestavi()
+    {'cleni': [1/4, -1/12, -5/12, -3/4, -13/12], 'a1': 1/4, 'd': -1/3, 'splosni': 1/4 - (n - 1)/3}
     """
     besedilo_posamezne = r'''Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
          in diferenco $d={{latex(naloga.d)}}$.'''
@@ -146,26 +193,24 @@ class PrviCleniAritmeticnega(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, racionalne_vrednosti=False, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.racionalne_vrednosti = racionalne_vrednosti
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo PrviCleniAritmeticnega."""
-        if self.lazja:
+    def _poskusi_sestaviti(self):
+        if not self.racionalne_vrednosti:
             a1 = random.choice([x for x in range(-12, 12) if x != 0])
             d = random.choice([x for x in range(-5, 5) if x != 0])
         else:
-            a1 = [sympy.Rational(1, x) for x in range(-6, 6) if x != 0] + [sympy.Rational(2, x) for x in range(-6, 6) if
-                                                                           x != 0]
-            d = [sympy.Rational(1, x) for x in range(-6, 6) if x != 0]
+            a1 = random.choice(
+                [sympy.Rational(1, x) for x in range(-6, 6) if x != 0] + [sympy.Rational(2, x) for x in range(-6, 6) if
+                                                                          x != 0])
+            d = random.choice([sympy.Rational(1, x) for x in range(-6, 6) if x != 0])
         cleni = [a1]
         for N in range(2, 6):
             cleni.append(clen_aritmeticnega(a1, d, N))
         n = sympy.symbols('n')
+
         splosni = sympy.Add(a1, sympy.Mul(d, (n - 1), evaluate=False), evaluate=False)
         return {'cleni': cleni, 'a1': a1, 'd': d, 'splosni': splosni}
 
@@ -173,6 +218,16 @@ class PrviCleniAritmeticnega(Naloga):
 class SplosniClenAritmeticnegaZaporedja(Naloga):
     """
     Naloga za zapis splošnega člena aritmetičnega zaporedja, če poznaš dva člena zaporedja.
+
+    :param od: najmanjša možna vrednost za prvi člen in diferenco
+    :param do: največja možna vrednost za prvi člen in diferenco
+
+
+    >>> SplosniClenAritmeticnegaZaporedja().sestavi()
+    {'n1': 5, 'an1': 23/2, 'n2': 9, 'an2': 47/2, 'a1': -1/2, 'd': 3}
+
+    >>> SplosniClenAritmeticnegaZaporedja(od=1).sestavi()
+    {'n1': 5, 'an1': 19, 'n2': 14, 'an2': 119/2, 'a1': 1, 'd': 9/2}
     """
     besedilo_posamezne = r'''Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{latex(naloga.n1)}} }={{latex(naloga.an1)}}$ in $a_{ {{latex(naloga.n2)}} }={{latex(naloga.an2)}}$.'''
     besedilo_vecih = r'''Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena:
@@ -189,19 +244,13 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
         \end{enumerate}'''
 
     def __init__(self, od=-5, do=5, **kwargs):
-        """
-        :param od: najmanjša možna vrednost za prvi člen in diferenco
-        :param do: največja možna vrednost za prvi člen in diferenco
-        """
         super().__init__(**kwargs)
-
         if od > od:  # TODO ali od, do smiselna?
             raise MinMaxNapaka
         self.od = od
         self.do = do
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo """
+    def _poskusi_sestaviti(self):
         seznam_polovick = [sympy.Rational(x, 2) for x in range(2 * self.od, 2 * self.do + 1) if x != 0]
         a1 = random.choice(seznam_polovick)
         d = random.choice(seznam_polovick)
@@ -218,6 +267,12 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
 class SplosniClenAritmeticnegaEnacbi(Naloga):
     """
     Naloga za zapis splošnega člena aritmetičnega zaporedja, če imaš podani dve enačbi z različnimi členi zaporedja.
+
+    >>> SplosniClenAritmeticnegaEnacbi().sestavi()
+    {'n1': 3, 'n2': 14, 'n3': 12, 'n4': 6, 'operator': '-', 'vrednost1': -49, 'vrednost2': -18, 'a1': -2, 'd': -3}
+
+    >>> SplosniClenAritmeticnegaEnacbi().sestavi()
+    {'n1': 18, 'n2': 3, 'n3': 2, 'n4': 16, 'operator': '\\cdot', 'vrednost1': -43/2, 'vrednost2': 351/4, 'a1': -6, 'd': -1/2
     """
     besedilo_posamezne = r'''Določi prvi člen in diferenco artimetičnega zaporedja, pri katerem je 
         $a_{ {{naloga.n1}} }+a_{ {{naloga.n2}} }={{latex(naloga.vrednost1)}}$ in 
@@ -239,8 +294,7 @@ class SplosniClenAritmeticnegaEnacbi(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo SplosniClenAritmeticnegaEnacbi."""
+    def _poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-8, 8) if x != 0] + [-sympy.Rational(1, 2), sympy.Rational(1, 2)])
         d = random.choice([x for x in range(-3, 3) if x != 0] + [-sympy.Rational(1, 2), sympy.Rational(1, 2)])
         [n1, n2, n3, n4] = random.sample(list(range(2, 20)), 4)
@@ -256,7 +310,16 @@ class SplosniClenAritmeticnegaEnacbi(Naloga):
 
 class VsotaAritmeticnega(Naloga):
     """
-    Naloga za izračun vsote prvih n členov aritmetičnega zapordja. Lažja različica ima podan splošni člen, težja pa dva člena zaporedja.
+    Naloga za izračun vsote prvih n členov aritmetičnega zaporedja.
+
+    :param podan_splosni_clen: podan splošni člen zaporedja ali dva člena zaporedja
+
+
+    >>> VsotaAritmeticnega().sestavi()
+    {'izraz': '$a_n=3 \\left(n - 1\\right) + 1$', 'n': 28, 'vsota': 1162}
+
+    >>> VsotaAritmeticnega(podan_splosni_clen=False).sestavi()
+    {'izraz': '$s_{2}=-15$ in $s_{5}=-45$', 'n': 28, 'vsota': -574}
     """
     besedilo_posamezne = r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov aritmetičnega zaporedja, če je {{naloga.izraz}}.'''
     besedilo_vecih = r'''Izračunaj vsoto prvih n členov aritmetičnega zaporedja, če je:
@@ -275,20 +338,16 @@ class VsotaAritmeticnega(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, podan_splosni_clen=True, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.podan_splosni_clen = podan_splosni_clen
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo VsotaAritmeticnega."""
+    def _poskusi_sestaviti(self):
         N = random.randint(10, 30)
         n = sympy.symbols('n')
         a1 = random.choice([x for x in range(-8, 8) if x != 0])
         d = random.choice([x for x in range(-5, 5) if x != 0 and x != 1])
-        if self.lazja:
+        if self.podan_splosni_clen:
             izraz = '$a_n=' + sympy.latex(sympy.Add(a1, sympy.Mul(d, (n - 1), evaluate=False), evaluate=False)) + '$'
         else:
             [n1, n2] = sorted(random.sample(list(range(1, 21)), 2))
@@ -303,7 +362,16 @@ class VsotaAritmeticnega(Naloga):
 # ~~~~~Naloge iz sklopa geometrijsko zaporedje
 class PrviCleniGeometrijskega(Naloga):
     """
-    Naloga za zapis splošnega člena geometrijskega zaporedja in računanje prvih petih členov, če poznaš prvi člen in količnik. Lažja različica ima celoštevilski prvi člen in količnik, težja pa racioanlno.
+    Naloga za zapis splošnega člena geometrijskega zaporedja in računanje prvih petih členov, če poznaš prvi člen in količnik.
+
+    :param racionalne_vrednosti: prvi člen in kvocient zaporedja sta lahko racionalni vrednosti
+
+
+    >>> PrviCleniGeometrijskega().sestavi()
+    {'cleni': [4, -12, 36, -108, 324], 'a1': 4, 'q': -3, 'splosni': 4*(-3)**(n - 1)}
+
+    >>> PrviCleniGeometrijskega(racionalne_vrednosti=True).sestavi()
+    {'cleni': [1/2, 1/6, 1/18, 1/54, 1/162], 'a1': 1/2, 'q': 1/3, 'splosni': (1/3)**(n - 1)/2}
     """
     besedilo_posamezne = r'''Zapiši prvih pet členov in splošni člen geometrijskega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
          in količnikom $q={{latex(naloga.q)}}$.'''
@@ -323,22 +391,18 @@ class PrviCleniGeometrijskega(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, racionalne_vrednosti=False, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.racionalne_vrednosti = racionalne_vrednosti
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo PrviCleniGeometrijskega."""
-        if self.lazja:
+    def _poskusi_sestaviti(self):
+        if not self.racionalne_vrednosti:
             a1 = random.choice([x for x in range(-10, 10) if x != 0])
             q = random.choice([-3, -2, 2, 3])
         else:
-            a1 = [sympy.Rational(1, x) for x in range(-6, 6) if x != 0] + [sympy.Rational(2, x) for x in range(-6, 6) if
-                                                                           x != 0]
-            q = [sympy.Rational(1, x) for x in [-3, -2, 2, 3]]
+            a1 = random.choice([sympy.Rational(1, x) for x in range(-6, 6) if x != 0] + [sympy.Rational(2, x) for x in range(-6, 6) if
+                                                                           x != 0])
+            q = random.choice([sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
         cleni = [a1]
         for N in range(2, 6):
             cleni.append(clen_geometrijskega(a1, q, N))
@@ -350,6 +414,13 @@ class PrviCleniGeometrijskega(Naloga):
 class SplosniClenGeometrijskega(Naloga):
     """
     Naloga za zapis splošnega člena aritmetičnega zaporedja, če poznaš dva člena zaporedja ali en člen in količnik zaporedja.
+
+
+    >>> SplosniClenGeometrijskega().sestavi()
+    {'podatek1': 'q=-1/3', 'podatek2': 'a_{12}=-7/177147', 'splosni': 7*(-1/3)**(n - 1)}
+
+    >>> SplosniClenGeometrijskega().sestavi()
+    {'podatek1': 'a_{12}=10240', 'podatek2': 'q=2', 'splosni': 5*2**(n - 1)}
     """
     besedilo_posamezne = r'''Določi splošni člen geometrijskega zaporedja, če je ${{naloga.podatek1}}$ in ${{latex(naloga.podatek2)}}$.'''
     besedilo_vecih = r'''Določi splošne člene geometrijskih zaporedij, če je:
@@ -365,8 +436,7 @@ class SplosniClenGeometrijskega(Naloga):
         {% endfor %}
         \end{enumerate}'''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo SplosniClenGeometrijskega."""
+    def _poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-10, 10) if x != 0])
         q = random.choice([-3, -2, 2, 3] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
         n1 = random.choice(list(range(3, 16, 2)))  # en lih in en sod da v enačbi ni +/- q
@@ -386,6 +456,13 @@ class SplosniClenGeometrijskega(Naloga):
 class SplosniClenGeometrijskegaEnacbi(Naloga):
     """
     Naloga za zapis splošnega člena geometrijskega zaporedja, če imaš podani dve enačbi z različnimi členi zaporedja.
+
+
+    >>> SplosniClenGeometrijskegaEnacbi().sestavi()
+    {'n1': 5, 'n2': 6, 'n3': 3, 'operator': '\\cdot', 'vrednost1': 64, 'vrednost2': 2048, 'a1': 4, 'q': 2}
+
+    >>> SplosniClenGeometrijskegaEnacbi().sestavi()
+    {'n1': 5, 'n2': 7, 'n3': 6, 'operator': '\\cdot', 'vrednost1': -324, 'vrednost2': -2834352, 'a1': -4, 'q': -3}
     """
     besedilo_posamezne = r'''Določi prvi člen in količnik geometrijskega zaporedja, pri katerem je 
         $a_{ {{naloga.n1}} }={{latex(naloga.vrednost1)}}$ in 
@@ -407,8 +484,7 @@ class SplosniClenGeometrijskegaEnacbi(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo SplosniClenGeometrijskegaEnacbi."""
+    def _poskusi_sestaviti(self):
         a1 = random.choice([x for x in range(-5, 5) if x != 0] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
         q = random.choice([x for x in [-3, -2, 2, 3]] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
 
@@ -432,7 +508,16 @@ class SplosniClenGeometrijskegaEnacbi(Naloga):
 
 class VsotaGeometrijskega(Naloga):
     """
-    Naloga za izračun vsote prvih n členov geometrijskega zapordja. Lažja različica ima podan splošni člen, težja pa dva člena zaporedja.
+    Naloga za izračun vsote prvih :math:`n` členov geometrijskega zaporedja.
+
+    :param podan_splosni_clen: podan splošni člen zaporedja ali dva člena zaporedja
+
+
+    >>> VsotaGeometrijskega().sestavi()
+    {'izraz': '$a_n=3 \\left(-3\\right)^{n - 1}$', 'n': 5, 'vsota': 183}
+
+    >>> VsotaGeometrijskega(podan_splosni_clen=False).sestavi()
+    {'izraz': '$a_{3}=-1/8$ in $a_{7}=-1/128$', 'n': 6, 'vsota': -63/64}
     """
     besedilo_posamezne = r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov geometrijskega zaporedja, če je {{naloga.izraz}}.'''
     besedilo_vecih = r'''Izračunaj vsoto prvih n členov geometrijskega zaporedja, če je:
@@ -451,20 +536,16 @@ class VsotaGeometrijskega(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, podan_splosni_clen=True, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.podan_splosni_clen = podan_splosni_clen
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo VsotaGeometrijskega."""
+    def _poskusi_sestaviti(self):
         N = random.randint(4, 10)
         n = sympy.symbols('n')
         a1 = random.choice([x for x in range(-5, 5) if x != 0] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
         q = random.choice([x for x in [-3, -2, 2, 3]] + [sympy.Rational(1, x) for x in [-3, -2, 2, 3]])
-        if self.lazja:
+        if self.podan_splosni_clen:
             izraz = '$a_n=' + sympy.latex(sympy.Mul(a1, sympy.Pow(q, (n - 1), evaluate=False), evaluate=False)) + '$'
         else:
             [n1, n2] = sorted(random.sample(list(range(2, 8)), 2))
@@ -477,7 +558,16 @@ class VsotaGeometrijskega(Naloga):
 
 class VsotaGeometrijskeVrste(Naloga):
     """
-    Naloga za zapis geometrijske vrste, če poznaš dva podatka. Lažja različica lahko poda prvi člen, količnik in vsoto vrste, težja pa tudi poljuben člen.
+    Naloga za zapis geometrijske vrste, če poznaš dva podatka.
+
+    :param lazji_podatki: na začetku podana dva lažja podatka (prvi člen, kvocient ali vsota vrste) ali lahko tudi težja (poljuben člen ali delna vsota)
+
+
+    >>> VsotaGeometrijskeVrste().sestavi()
+    {'podatek1': 'q', 'vrednost1': sqrt(2)/3, 'podatek2': 's', 'vrednost2': -6/(1 - sqrt(2)/3), 'vrsta': '-6+- 2 \\sqrt{2}+- \\frac{4}{3}+- \\frac{4 \\sqrt{2}}{9}+...'}
+
+    >>> VsotaGeometrijskeVrste(lazji_podatki=False).sestavi()
+    {'podatek1': 'a_1', 'vrednost1': 1, 'podatek2': 'a_4', 'vrednost2': -1/64, 'vrsta': '1+- \\frac{1}{4}+\\frac{1}{16}+- \\frac{1}{64}+...'}
     """
     besedilo_posamezne = r'''Zapiši geometrijsko vrsto, če je ${{latex(naloga.podatek1)}}={{latex(naloga.vrednost1)}}$ in
          ${{latex(naloga.podatek2)}}={{latex(naloga.vrednost2)}}$.'''
@@ -498,15 +588,13 @@ class VsotaGeometrijskeVrste(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
+    def __init__(self, lazji_podatki=True, **kwargs):
         """
-        :param lazja: lažja ali težja oblika naloge
         """
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.lazji_podatki = lazji_podatki
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo VsotaGeometrijskeVrste."""
+    def _poskusi_sestaviti(self):
         q = random.choice([-sympy.Rational(1, 2), sympy.Rational(1, 2),
                            -sympy.Rational(2, 3), -sympy.Rational(1, 3), sympy.Rational(2, 3), sympy.Rational(1, 3),
                            -sympy.Rational(3, 4), -sympy.Rational(1, 4), sympy.Rational(3, 4), sympy.Rational(1, 4),
@@ -518,7 +606,7 @@ class VsotaGeometrijskeVrste(Naloga):
         a1 = random.choice([x for x in range(-10, 11) if x != 0])
         s = vsota_geometrijske_vrste(a1, q)
         izbor = [('a_1', a1), ('q', q), ('s', s)]
-        if not self.lazja:
+        if not self.lazji_podatki:
             n1 = random.randint(3, 5)
             an = clen_geometrijskega(a1, q, n1)
             n2 = random.randint(3, 5)

@@ -6,22 +6,36 @@ import sympy
 # ~~~~~Pomožne funkcije
 def seznam_polovick(od=-10, do=10):
     """
-    Funkcija sestavi seznam vseh celih iz polovic med vrednostima od in do.
+    Funkcija sestavi seznam vseh celih iz polovic med vrednostima od in do (brez 0).
 
-    :param od: TODO
-    :param do:
+    :param od: najmanjša vrednost
+    :param do: največja vrednost
     :return: seznam celih števil in polovic
+
+
+    >>> seznam_polovick()
+    [-10, -19/2, -9, -17/2, -8, -15/2, -7, -13/2, -6, -11/2, -5, -9/2, -4, -7/2, -3, -5/2, -2, -3/2, -1, -1/2, 1/2, 1, 3/2, 2, 5/2, 3, 7/2, 4, 9/2, 5, 11/2, 6, 13/2, 7, 15/2, 8, 17/2, 9, 19/2, 10, 21/2]
+
+    >>> seznam_polovick(od=0, do=3)
+    [1/2, 1, 3/2, 2, 5/2, 3, 7/2]
     """
     return [sympy.Rational(x, 2) for x in range(2 * od, 2 * (do + 1)) if x != 0]
 
 
 def seznam_tretinj(od=-10, do=10):
     """
-    Funkcija sestavi seznam vseh celih iz tretinj med vrednostima od in do.
+    Funkcija sestavi seznam vseh celih iz tretinj med vrednostima od in do (brez 0).
 
-    :param od: TODO
-    :param do:
+    :param od: najmanjša vrednost
+    :param do: največja vrednost
     :return: seznam celih števil in tretinj
+
+
+    >>> seznam_tretinj()
+    [-10, -29/3, -28/3, -9, -26/3, -25/3, -8, -23/3, -22/3, -7, -20/3, -19/3, -6, -17/3, -16/3, -5, -14/3, -13/3, -4, -11/3, -10/3, -3, -8/3, -7/3, -2, -5/3, -4/3, -1, -2/3, -1/3, 1/3, 2/3, 1, 4/3, 5/3, 2, 7/3, 8/3, 3, 10/3, 11/3, 4, 13/3, 14/3, 5, 16/3, 17/3, 6, 19/3, 20/3, 7, 22/3, 23/3, 8, 25/3, 26/3, 9, 28/3, 29/3, 10, 31/3, 32/3]
+
+    >>> seznam_tretinj(od=0, do=3)
+    [1/3, 2/3, 1, 4/3, 5/3, 2, 7/3, 8/3, 3, 10/3, 11/3]
     """
     return [sympy.Rational(x, 3) for x in range(3 * od, 3 * (do + 1)) if x != 0]
 
@@ -31,23 +45,36 @@ def eksplicitna_premica():
     Vrne naključno eksplicitno obliko premice, ki jo moramo izenačiti z y.
 
     :return: smerni koeficient, začetno vrednost in eksplicitno podano premico
+
+
+    >>> eksplicitna_premica()
+    (-4/3, 2, 2 - 4*x/3)
+
+    >>> eksplicitna_premica()
+    (3, -11/3, 3*x - 11/3)
     """
     # Funkcija vrne naključno eksplicitno podano premico
     k = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
     n = random.choice(seznam_polovick(-4, 4) + seznam_tretinj(-4, 4))
     x = sympy.symbols('x')
     eksplicitna = k * x + n
-    return [k, n, eksplicitna]
+    return (k, n, eksplicitna)
 
 
-def implicina_premica():
+def implicitna_premica():
     """
     Vrne implicitno podano obliko premice, ki jo moramo izenačiti z 0. Premice niso vzporedne z osema.
 
     :return: koeficiente in implicitno podano premico
+
+
+    >>> implicitna_premica()
+    (-7, 2, 3, -7*x + 2*y + 3)
+
+    >>> implicitna_premica()
+    (-2, 7, -6, -2*x + 7*y - 6)
+
     """
-    # Vrne implicitno podano obliko premice, ki jo moramo izenačiti z 0
-    # Premice niso vzporedne z osema
     seznamStevil = [x for x in range(-10, 10) if x != 0]
     a = random.choice(seznamStevil)
     b = random.choice(seznamStevil)
@@ -55,7 +82,7 @@ def implicina_premica():
     x = sympy.symbols('x')
     y = sympy.symbols('y')
     implicitna = sympy.simplify(a * x + b * y + c)
-    return [a, b, c, implicitna]
+    return (a, b, c, implicitna)
 
 
 def skozi_tocki(x1, y1, x2, y2):
@@ -67,20 +94,34 @@ def skozi_tocki(x1, y1, x2, y2):
     :param x2: x koordinata druge točke
     :param y2: y koordinata druge točke
     :return: smerni koeficient, začetno vrednost in eksplicitno podano premico
+
+
+    >>> skozi_tocki(1,1,2,4)
+    (3.0, -2.0, 3.0*x - 2.0)
+
+    >>> skozi_tocki(-3,5,2,6)
+    (0.2, 5.6, 0.2*x + 5.6)
     """
     x = sympy.symbols('x')
     k = (y2 - y1) / (x2 - x1)
     n = y1 - k * x1
-    return [k, n, k * x + n]
+    return (k, n, k * x + n)
 
 
 def izberi_koordinato(od=-10, do=10):
     """
     Izbere poljubno celoštevilsko koordinato med vrednostima od in do.
 
-    :param od: #TODO
-    :param do:
+    :param od: najmanjša vrednost
+    :param do: največja vrednost
     :return: celoštevilsko koordinato
+
+
+    >>> izberi_koordinato()
+    2
+
+    >>> izberi_koordinato(do=0)
+    -4
     """
     koordinata = random.randint(od, do)
     return koordinata
@@ -90,11 +131,18 @@ def razdalja_med_tockama(x1, y1, x2, y2):
     """
     Izračuna razdaljo med dvema točkama.
 
-    :param x1: x koordinata prve točke
-    :param y1: y koordinata prve točke
-    :param x2: x koordinata druge točke
-    :param y2: y koordinata druge točke
+    :param x1: abscisa prve točke
+    :param y1: ordinata prve točke
+    :param x2: abscisa druge točke
+    :param y2: ordinata druge točke
     :return: razdaljo med točkama
+
+
+    >>> razdalja_med_tockama(-14,6,-17,8)
+    sqrt(13)
+
+    >>> razdalja_med_tockama(2,-8,5,-12)
+    5
     """
 
     razdalja = sympy.Point(x1, y1).distance(sympy.Point(x2, y2))  # Todo preveri da deluje razdalja
@@ -108,6 +156,13 @@ def razdalja_med_tockama(x1, y1, x2, y2):
 class PremicaSkoziTocki(Naloga):
     """
     Naloga za določanje enačbe premice skozi 2 točki.
+
+
+    >>> PremicaSkoziTocki().sestavi()
+    {'x1': 7/2, 'y1': -14/3, 'x2': 2, 'y2': -5, 'premica': '\\frac{2 x}{9} - \\frac{49}{9}'}
+
+    >>> PremicaSkoziTocki().sestavi()
+    {'x1': 11/3, 'y1': 4, 'x2': -10, 'y2': 10, 'premica': '\\frac{230}{41} - \\frac{18 x}{41}'}
     """
     besedilo_posamezne = r'''Zapiši enačbo premice skozi točki $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$ in $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$.'''
     besedilo_vecih = r'''Zapiši enačbo premice skozi točki:
@@ -126,8 +181,7 @@ class PremicaSkoziTocki(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo PremicaSkoziTocki."""
+    def _poskusi_sestaviti(self):  # TODO lepše rešitve
         x1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         y1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         x2 = random.randint(-10, 10)
@@ -138,7 +192,16 @@ class PremicaSkoziTocki(Naloga):
 
 
 class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO preveri jinja latex
-    """Naloga za računanje razdalje med dvema točkama v koordinatenm sistemu."""
+    """
+    Naloga za računanje razdalje med dvema točkama v koordinatenm sistemu.
+
+
+    >>> RazdaljaMedTockama().sestavi()
+    {'x1': -10, 'y1': 5, 'x2': 9, 'y2': -2, 'razdalja': '\\sqrt{410}'}
+
+    >>> RazdaljaMedTockama().sestavi()
+    {'x1': -6, 'y1': 0, 'x2': 8, 'y2': -7, 'razdalja': '7 \\sqrt{5}'}
+    """
     besedilo_posamezne = r'''Natančno izračunaj razdaljo med točkama $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$.'''
     besedilo_vecih = r'''Natančno izračunaj razdaljo med točkama
                                           \begin{enumerate}
@@ -154,8 +217,7 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
                                          {% endfor %}
                                          \end{enumerate}'''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo RazdaljaMedTockama."""
+    def _poskusi_sestaviti(self):
         x1 = izberi_koordinato()
         y1 = izberi_koordinato()
         x2 = izberi_koordinato()
@@ -168,6 +230,13 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
 class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
     """
     Naloga za pretvarjanje med različnimi oblikami enačbe premice.
+
+
+    >>> OblikeEnacbPremice().sestavi()
+    {'implicitna': '5 x + 9 y - 8 = 0', 'eksplicitna': 'y = \\frac{8}{9} - \\frac{5 x}{9}', 'odsekovna': '\\frac{x}{\\frac{8}{5}} + \\frac{y}{\\frac{8}{9}} = 1'}
+
+    >>> OblikeEnacbPremice().sestavi()
+    {'implicitna': '- 7 x - 8 y + 7 = 0', 'eksplicitna': 'y = \\frac{7}{8} - \\frac{7 x}{8}', 'odsekovna': '\\frac{x}{1} + \\frac{y}{\\frac{7}{8}} = 1'}
     """
     besedilo_posamezne = r'''Zapiši implicitno in odsekovno obliko premice podane z enačbo ${{naloga.implicitna}}$'''
     besedilo_vecih = r''' Zapiši implicitno in odsekovno obliko premice podane z enačbo:
@@ -185,11 +254,10 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
                                           \end{enumerate}
                                           '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo OblikeEnacbPremice."""
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
         y = sympy.symbols('y')
-        [a, b, c, implicitnaOblika] = implicina_premica()
+        (a, b, c, implicitnaOblika) = implicitna_premica()
         implicitna = sympy.latex(sympy.Eq(implicitnaOblika, 0))
         eksplicitna = sympy.latex(sympy.Eq(y,
                                            sympy.Rational(-a, b) * x + sympy.Rational(-c, b)))
@@ -202,7 +270,16 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
 
 
 class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
-    """Naloga za računanje ploščine trikotnika, ki ga dve premici oklepata z abscisno osjo."""
+    """
+    Naloga za računanje ploščine trikotnika, ki ga dve premici oklepata z abscisno osjo.
+
+
+    >>> PremiceTrikotnik().sestavi()
+    {'premica1': 'y = \\frac{3 x}{4} - \\frac{3}{4}', 'premica2': 'y = x', 'ploscina': '1.5'}
+
+    >>> PremiceTrikotnik().sestavi()
+    {'premica1': 'y = 4 - 4 x', 'premica2': 'y = - \\frac{4 x}{3} - \\frac{4}{3}', 'ploscina': '4'}
+    """
     besedilo_posamezne = r''' Izračunaj ploščino trikotnika, ki ga premici ${{naloga.premica1}}$ in ${{naloga.premica2}}$ oklepata z abscisno osjo. '''
     besedilo_vecih = r''' Izračunaj ploščino trikotnika, ki ga premici oklepata z abscisno osjo:
     \begin{enumerate}
@@ -220,8 +297,7 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo PremiceTrikotnik."""
+    def _poskusi_sestaviti(self):
         x1 = izberi_koordinato(1, 5)
         y1 = 0
         x2 = random.choice([x for x in range(-5, 6) if x != 0])
@@ -250,9 +326,16 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
         return {'premica1': sympy.latex(premica1), 'premica2': sympy.latex(premica2), 'ploscina': ploscina_trikotnika}
 
 
-class NarisiLinearnoFukcijo(Naloga):
+class NarisiLinearnoFunkcijo(Naloga):
     """
     Naloga za risanje grafa linearne premice.
+
+
+    >>> NarisiLinearnoFunkcijo().sestavi()
+    {'linearna': 3*x + 2/3, 'n': 2/3, 'nicla': -2/9}
+
+    >>> NarisiLinearnoFunkcijo().sestavi()
+    {'linearna': 1/3 - 4*x/3, 'n': 1/3, 'nicla': 1/4}
     """
     besedilo_posamezne = r'''Nariši graf funkcije linearne $f(x) = {{latex(naloga.linearna)}}$.'''
     besedilo_vecih = r''' Nariši graf linearne funkcije:
@@ -304,9 +387,8 @@ class NarisiLinearnoFukcijo(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo NarisiLinearnoFukcijo."""
-        [k, n, eksplicitna] = eksplicitna_premica()
+    def _poskusi_sestaviti(self):
+        (k, n, eksplicitna) = eksplicitna_premica()
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         f = sympy.symbols('f(x)')
@@ -317,6 +399,13 @@ class NarisiLinearnoFukcijo(Naloga):
 class VrednostiLinearne(Naloga):
     """
     Naloga za računanje vrednosti x oziroma f(x) linearne funkcije. Potrebno določiti tudi kdaj je funkcija negativna.
+
+
+    >>> VrednostiLinearne().sestavi()
+    {'linearna': 'f(x) = x + \\frac{5}{3}', 'x1': '\\frac{11}{3}', 'x2': '- \\frac{5}{2}', 'y1': '\\frac{16}{3}', 'y2': '- \\frac{5}{6}', 'negativno': '\\left(-\\infty, - \\frac{5}{3}\\right)'}
+
+    >>> VrednostiLinearne().sestavi()
+    {'linearna': 'f(x) = \\frac{x}{3} + \\frac{14}{3}', 'x1': '- \\frac{5}{2}', 'x2': '2', 'y1': '\\frac{23}{6}', 'y2': '\\frac{16}{3}', 'negativno': '\\left(-\\infty, -14\\right)'}
     """
     besedilo_posamezne = r'''Dana je funkcija s predpisom ${{naloga.linearna}}$. Izračunajte vrednost $f({{naloga.x1}})$ in za kateri $x$ je $f(x)={{naloga.y2}}$. Za katere vrednosti $x$ so vrednosti funkcije negativne? '''
 
@@ -339,13 +428,12 @@ class VrednostiLinearne(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo VrednostiLinearne."""
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         f = sympy.symbols('f(x)')
 
-        [k, n, funkcija] = eksplicitna_premica()
+        (k, n, funkcija) = eksplicitna_premica()
 
         x1 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
         x2 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
@@ -360,7 +448,16 @@ class VrednostiLinearne(Naloga):
 
 class Neenacba(Naloga):
     """
-    Naloga za reševanje linearne neenačbe. V lažji različici nastopajo samo linearni členi, v težji pa tudi kvadratna, ki se odštejeta.
+    Naloga za reševanje linearne neenačbe.
+
+    :param kvadratna: v računu nastopa kvadratni člen, ki se odšteje
+
+
+    >>> Neenacba().sestavi()
+    {'neenacba': x - 2 > 1 - 2*x, 'resitev': Interval.open(1, oo)}
+
+    >>> Neenacba(kvadratna=True).sestavi()
+    {'neenacba': -2*(x - 4)*(x + 5) < (4 - 2*x)*(x + 2), 'resitev': Interval.open(16, oo)}
     """
     besedilo_posamezne = r'''Reši neenačbo ${{latex(naloga.neenacba)}}$.'''
     besedilo_vecih = r'''Reši neenačbo:
@@ -379,18 +476,14 @@ class Neenacba(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, kvadratna=False, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.kvadratna = kvadratna
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo Neenacba."""
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
         izbor = [x for x in range(-5, 5) if x != 0]
-        if self.lazja:
+        if not self.kvadratna:
             a = random.choice(izbor)
             b = random.choice(izbor)
             c = random.choice(izbor)
@@ -413,7 +506,18 @@ class Neenacba(Naloga):
 
 
 class SistemDvehEnacb(Naloga):
-    """Naloga za reševanje sistema dveh enačb z dvema nezankama. Lažja različica ima celoštevilske rešitve, težja pa tudi racionalne."""
+    """
+    Naloga za reševanje sistema dveh enačb z dvema nezankama.
+
+    :param racionalne_resitve: naloga ima racionalne ali celoštevilske rešitve
+
+
+    >>> SistemDvehEnacb().sestavi()
+    {'enacba1': Eq(-x - 3*y, -9), 'enacba2': Eq(4*x - 3*y, -9), 'x': 0, 'y': 3}
+
+    >>> SistemDvehEnacb(racionalne_resitve=True).sestavi()
+    {'enacba1': Eq(3*x - 5*y, -43/4), 'enacba2': Eq(3*x - 3*y, -27/4), 'x': -1/4, 'y': 2}
+    """
     besedilo_posamezne = r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$ in ${{latex(naloga.enacba2)}}$.'''
     besedilo_vecih = r'''Reši sistem enačb:
     \begin{enumerate}
@@ -431,22 +535,18 @@ class SistemDvehEnacb(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, racionalne_resitve=False, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.racionalne_resitve = racionalne_resitve
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo SistemDvehEnacb."""
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         izborCela = [x for x in range(-5, 6) if x != 0]
         izborUlomki = [sympy.Rational(x, 2) for x in [-3, -1, 1, 3]] + [sympy.Rational(x, 3) for x in
                                                                         [-2, -1, 1, 2]] + [sympy.Rational(x, 4) for x in
                                                                                            [-3, -1, 1, 3]]
-        if self.lazja:
+        if not self.racionalne_resitve:
             x1 = random.choice(izborCela + [0])
             y1 = random.choice(izborCela + [0])
         else:
@@ -465,7 +565,17 @@ class SistemDvehEnacb(Naloga):
 
 
 class SistemTrehEnacb(Naloga):
-    """Naloga za reševanje sistema treh enačb s tremi neznankami. Lažja različica ima po absolutni vrednosti manjše koeficiente in rešitve kot težja.."""
+    """Naloga za reševanje sistema treh enačb s tremi neznankami.
+
+    :param manjsi_koeficienti: koeficienti (in rešitve) so med -2 in 2, drugače pa med -5 in 5
+
+
+    >>> SistemTrehEnacb().sestavi()
+    {'enacba1': Eq(2*x + y - z, -1), 'enacba2': Eq(-x - y + z, 2), 'enacba3': Eq(2*x + 2*y + 2*z, 0), 'x': 1, 'y': -2, 'z': 1}
+
+    >>> SistemTrehEnacb(manjsi_koeficienti=False).sestavi()
+    {'enacba1': Eq(3*x + 4*y + 5*z, 47), 'enacba2': Eq(2*x + 3*y - z, 20), 'enacba3': Eq(4*x - 3*y + 4*z, 13), 'x': 4, 'y': 5, 'z': 3}
+    """
     besedilo_posamezne = r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$ in ${{latex(naloga.enacba3)}}$.'''
     besedilo_vecih = r'''Reši sistem enačb:
     \begin{enumerate}
@@ -483,19 +593,15 @@ class SistemTrehEnacb(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, lazja=True, **kwargs):
-        """
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, manjsi_koeficienti=True, **kwargs):
         super().__init__(**kwargs)
-        self.lazja = lazja
+        self.manjsi_koeficienti = manjsi_koeficienti
 
-    def poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo SistemTrehEnacb."""
+    def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         z = sympy.symbols('z')
-        if self.lazja:
+        if self.manjsi_koeficienti:
             izborCela = [-2, -1, 0, 1, 2]
         else:
             izborCela = list(range(-5, 6))
