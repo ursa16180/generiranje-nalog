@@ -6,6 +6,17 @@ import random
 class DeliteljVeckratnik(Naloga):
     """
     Naloga za izračun največjega skupnega delitelja in najmanjšega skupnega večkratnika dveh števil.
+
+    :param od: najmanjše možno število
+    :param do: največje možno število
+    :param najvecje_prastevilo: največje možno praštevilo v praštevilskem razcepu
+
+
+    >>> DeliteljVeckratnik().sestavi()
+    {'stevilo1': 192, 'stevilo2': 100, 'najvecji_delitelj': 4, 'najmanjsi_veckratnik': 4800}
+
+    >>> DeliteljVeckratnik(do=100, najvecje_prastevilo=11).sestavi()
+    {'stevilo1': 56, 'stevilo2': 75, 'najvecji_delitelj': 1, 'najmanjsi_veckratnik': 4200}
     """
     besedilo_posamezne = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$.'''
     besedilo_vecih = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
@@ -24,13 +35,7 @@ class DeliteljVeckratnik(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, od=50, do=200, najvecje_prastevilo=17, lazja=True, **kwargs):
-        """
-        :param od: najmanjše možno število
-        :param do: največje možno število
-        :param najvecje_prastevilo: največje možno praštevilo v praštevilskem razcepu
-        :param lazja: lažja ali težja oblika naloge
-        """
+    def __init__(self, od=50, do=200, najvecje_prastevilo=17, **kwargs):
         super().__init__(**kwargs)
         if od > do:
             raise MinMaxNapaka
@@ -39,11 +44,9 @@ class DeliteljVeckratnik(Naloga):
 
         self.od = od
         self.do = do
-        self.lazja = lazja
         self.najvecje_prastevilo = najvecje_prastevilo
 
     def _poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo DeliteljVeckratnik."""
         # TODO težja = 3 števila, izrazi
         # TODO ali bilo boljše da izbere praštevila in jih množi?
         # #TODO ali bolje da ločimo nalogo za gcd in lcm? ker lcm lahko zelo velik
@@ -138,6 +141,13 @@ class DeliteljVeckratnik(Naloga):
 class EvklidovAlgoritem(Naloga):
     """
     Naloga za izračun največjega skupnega delitelja dveh števil z Evklidovim algoritmom.
+
+
+    >>> EvklidovAlgoritem().sestavi()
+    {'stevilo1': 142, 'stevilo2': 519, 'najvecji_delitelj': 1}
+
+    >>> EvklidovAlgoritem().sestavi()
+    {'stevilo1': 90, 'stevilo2': 336, 'najvecji_delitelj': 6}
     """
     besedilo_posamezne = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$. '''
     besedilo_vecih = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil:
@@ -157,7 +167,6 @@ class EvklidovAlgoritem(Naloga):
      '''
 
     def _poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
-        """Poskusi sestaviti nalogo EvklidovAlgoritem."""
         stevilo_malo = random.randint(50, 199)
         stevilo_veliko = random.randint(200, 1000)
         preveri(stevilo_veliko % stevilo_malo != 0 and stevilo_malo % (

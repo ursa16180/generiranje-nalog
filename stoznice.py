@@ -9,6 +9,13 @@ import random
 class PreseciscaKroznic(Naloga):
     """
     Naloga za iskanje presečišč dveh krožnic.
+
+
+    >>> PreseciscaKroznic().sestavi()
+    {'kroznica1': Eq((x + 5)**2 + (y + 4)**2, 4), 'kroznica2': Eq(x**2 + (y - 4)**2, 61), 'presek': [(-5, -2), (-285/89, -278/89)]}
+
+    >>> PreseciscaKroznic().sestavi()
+    {'kroznica1': Eq(x**2 + y**2, 41), 'kroznica2': Eq(y**2 + (x - 2)**2, 25), 'presek': [(5, -4), (5, 4)]}
     """
     besedilo_posamezne = r'''Določi medsebojno lego krožnic $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$ in $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$ ter določi presešišča, če obstajajo.'''
     besedilo_vecih = r'''Določi medsebojno lego krožnic $\mathcal{K}_1$ in $\mathcal{K}_2$ ter določi presešišča, če obstajajo:
@@ -28,7 +35,6 @@ class PreseciscaKroznic(Naloga):
      '''
 
     def _poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo PreseciscaKroznic."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         p1 = random.randint(-5, 5)
@@ -54,6 +60,15 @@ class PreseciscaKroznic(Naloga):
 class TemeGorisceEnacba(Naloga):
     """
     Naloga za zapis predpisa elipse, če poznamo središče, teme in gorišče.
+
+    :param premaknjena: elipsa v premaknjeni ali središčni legi
+
+
+    >>> TemeGorisceEnacba().sestavi()
+    {'teme': (-1, 5), 'gorisce': (-1, -sqrt(21)), 'sredisce': (-1, 0), 'elipsa': Eq(y**2/25 + (x/2 + 1/2)**2, 1)}
+
+    >>> TemeGorisceEnacba(premaknjena=True).sestavi()
+    {'teme': (-5, -4), 'gorisce': (-4, -4 + 2*sqrt(6)), 'sredisce': (-4, -4), 'elipsa': Eq((x + 4)**2 + (y/5 + 4/5)**2, 1)}
     """
     besedilo_posamezne = r'''Zapiši enačbo elipse s središčem $S{{latex(naloga.sredisce)}}$, temenom $T_1{{latex(naloga.teme)}}$ in goriščem $F_1{{latex(naloga.gorisce)}}$.'''
     besedilo_vecih = r'''Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:
@@ -72,15 +87,11 @@ class TemeGorisceEnacba(Naloga):
      \end{enumerate}
      '''
 
-    def __init__(self, premaknjena=True, **kwargs):
-        """
-        :param premaknjena: elipsa v premaknjeni ali središčni legi
-        """
+    def __init__(self, premaknjena=False, **kwargs):
         super().__init__(**kwargs)
         self.premaknjena = premaknjena
 
     def _poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo """
         if self.premaknjena:
             S = sympy.Point(random.randint(-5, 5), random.randint(-5, 5))
         else:
@@ -95,9 +106,9 @@ class TemeGorisceEnacba(Naloga):
                 'elipsa': sympy.Eq(elipsa.equation() + 1, 1)}  # Todo lepši izpis #todo ali smiselne vgrajene krivulje
 
 
-class NarisiKrivuljo(Naloga):
+class NarisiKrivuljo(Naloga):  # todo dokumentacija
     """
-    Naloga za dopolnjevanja do popolnih kvadratov ter risanje krožnice ali elipse.
+    Naloga za dopolnjevanja do popolnih kvadratov ter risanje krožnice ali elipse. TODO ENUM
     """
     besedilo_posamezne = r'''Nariši krivuljo ${{latex(naloga.razsirjena)}}$.'''
     besedilo_vecih = r'''Nariši krivuljo:
@@ -149,7 +160,6 @@ class NarisiKrivuljo(Naloga):
         self.premaknjena = premaknjena
 
     def _poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo NarisiKrivuljo."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
         if self.premaknjena:
