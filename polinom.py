@@ -76,7 +76,7 @@ class NiclePolinoma(Naloga):
         self.min_nicla = min_nicla
         self.max_nicla = max_nicla
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo NiclePolinoma."""
 
         [vodilni_koeficient, nicle, stopnja, polinom] = naredi_polinom(self.min_stopnja, self.max_stopnja,
@@ -110,7 +110,7 @@ class DvojnaNicla(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo DvojnaNicla."""
         x = sympy.symbols('x')
         dvojna = random.choice([-5, -4, -3, -2, -1, 2, 3, 4, 5])  # Nočem da je dvojna nišla 0 ali 1 ker prelahko
@@ -161,7 +161,7 @@ class ParameteraDvojna(Naloga):
         self.min_nicla = min_nicla
         self.max_nicla = max_nicla
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo ParameteraDvojna."""
         x = sympy.symbols('x')
         dvojna = random.choice([-3, -2, -1, 2, 3])
@@ -249,7 +249,7 @@ class GrafPolinoma(Naloga):
         self.min_nicla = min_nicla
         self.max_nicla = max_nicla
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo GrafPolinoma."""
         x = sympy.symbols('x')
         [vodilni_koeficient, nicle, stopnja, nicelna_oblika] = naredi_polinom(self.min_stopnja, self.max_stopnja,
@@ -309,7 +309,7 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         self.min_nicla = min_nicla
         self.max_nicla = max_nicla
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo DolociNiclePoleAsimptotoRacionalne."""
         [vodilni_stevca, nicle, stopnja_stevca, stevec] = naredi_polinom(self.min_stopnja_stevca,
                                                                          self.max_stopnja_stevca, self.min_nicla,
@@ -427,7 +427,7 @@ class GrafRacionalne(
         self.max_nicla = max_nicla
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo GrafRacionalne."""
         [vodilni_stevca, nicle, stopnja_stevca, stevec] = naredi_polinom(self.min_stopnja_stevca,
                                                                          self.max_stopnja_stevca, self.min_nicla,

@@ -38,7 +38,7 @@ class VsotaRazlika(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """
         Poskusi sestaviti nalogo VsotaRazlika
         """
@@ -90,7 +90,7 @@ class Ulomek(Naloga):
         super().__init__(**kwargs)
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo Ulomek"""
         izbor = list(range(1, 6)) + [x * sympy.I for x in range(-5, 6) if
                                      x != 0]  # TODO dodaj odštevanje ulomkov- če izbere celo negativno število, se račun poenostavi
@@ -135,7 +135,7 @@ class Mnozenje(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """
         Poskusi sestaviti nalogo Mnozenje. 
         """
@@ -165,7 +165,7 @@ class Racunanje(Naloga):
          \end{enumerate}
          '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         z = sympy.symbols('z')
         z0 = izberi_kompleksno_stevilo()
         racun = sympy.Pow(z, random.randint(2, 3)) + sympy.Mul(
@@ -201,7 +201,7 @@ class Enacba(Naloga):
         super().__init__(**kwargs)
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         z = sympy.symbols('z')
         z1 = izberi_kompleksno_stevilo()
         resitev = izberi_kompleksno_stevilo()
@@ -277,7 +277,7 @@ class NarisiTocke(Naloga):
          \end{enumerate}
          '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo NarisiTocke."""
         z1 = izberi_kompleksno_stevilo(-5, 5)
         z2 = izberi_kompleksno_stevilo(-5, 5)

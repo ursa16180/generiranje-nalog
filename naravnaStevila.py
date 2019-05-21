@@ -42,7 +42,7 @@ class DeliteljVeckratnik(Naloga):
         self.lazja = lazja
         self.najvecje_prastevilo = najvecje_prastevilo
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo DeliteljVeckratnik."""
         # TODO težja = 3 števila, izrazi
         # TODO ali bilo boljše da izbere praštevila in jih množi?
@@ -87,7 +87,7 @@ class DeliteljVeckratnik(Naloga):
 #          '''
 #         self.lazja = lazja
 #
-#     def poskusi_sestaviti(self):
+#     def _poskusi_sestaviti(self):
 #         """Poskusi sestaviti nalogo """
 #         dolzina = random.randint(5, 8)
 #         if self.lazja:
@@ -156,7 +156,7 @@ class EvklidovAlgoritem(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
+    def _poskusi_sestaviti(self):  # TODO ali želimo izločiti tuja števila?
         """Poskusi sestaviti nalogo EvklidovAlgoritem."""
         stevilo_malo = random.randint(50, 199)
         stevilo_veliko = random.randint(200, 1000)

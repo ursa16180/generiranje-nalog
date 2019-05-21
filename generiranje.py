@@ -114,7 +114,7 @@ class Naloga:
         if kwargs:
             raise ValueError('Pojavijo se neznani kwargs.')
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo."""
         pass
 
@@ -122,7 +122,7 @@ class Naloga:
         """Sestavi nalogo, ki ustreza pogojem."""
         while True:
             try:
-                return self.poskusi_sestaviti()
+                return self._poskusi_sestaviti()
             except NapacnaNaloga:
                 pass
 

@@ -38,7 +38,7 @@ class PotencaDvoclenika(Naloga):
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PotencaDvoclenika"""
         potenca = random.randint(self.min_potenca, self.max_potenca)
         simboli = ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']
@@ -93,7 +93,7 @@ class PotencaTroclenika(Naloga):
         self.min_potenca = min_potenca
         self.max_potenca = max_potenca
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PotencaTroclenika"""
         potenca = random.randint(self.min_potenca, self.max_potenca)
         simboli = [sympy.symbols(x) for x in ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']]
@@ -139,7 +139,7 @@ class RazstaviVieta(Naloga):
 
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo RazstaviVieta."""
         x1 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
         x2 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
@@ -188,7 +188,7 @@ class RazstaviRazliko(Naloga):
 
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo RazstaviRazliko"""
         potenca = random.randint(self.min_potenca, self.max_potenca)
         if potenca == 2:
@@ -260,7 +260,7 @@ class PotencirajVecclenik(Naloga):
             raise ValueError('Naloga razsatvi potenco ima za rešitev lahko samo dvočlenike ali tročlenike.')
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         potenca = random.randint(self.min_potenca, self.max_potenca)
         cleni = random.randint(self.min_clenov, self.max_clenov)
         simboli = [sympy.symbols(x) for x in ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']]

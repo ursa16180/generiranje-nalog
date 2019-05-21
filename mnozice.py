@@ -50,7 +50,7 @@ class ElementiMnozice(Naloga):
         super().__init__(**kwargs)
         self.lazja = lazja
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo ElementiMnozice."""
         pogoj = random.choice(['|', '<', '<='])
         n = sympy.symbols('n')
@@ -94,7 +94,7 @@ class PotencnaMnozica(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PotencnaMnozica."""
         velikost = random.randint(2, 3)
         mnozice = [['a', 'b', 'c'], [1, 2, 3], ['x', 'y', 'z'], ['alpha', 'beta', 'gamma'], ['Pi', 'Phi', 'Xi'],
@@ -131,7 +131,7 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo UnijaPresekRazlika"""
         A = izberi_mnozico(4, 1, 6)
         B = izberi_mnozico(3, 1, 6)
@@ -174,7 +174,7 @@ class IzpeljaneMnozice(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo IzpeljaneMnozice."""
         k = sympy.symbols('k')
         a = random.randint(2, 5)

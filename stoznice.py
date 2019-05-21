@@ -27,7 +27,7 @@ class PreseciscaKroznic(Naloga):
      \end{enumerate}
      '''
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo PreseciscaKroznic."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
@@ -79,7 +79,7 @@ class TemeGorisceEnacba(Naloga):
         super().__init__(**kwargs)
         self.premaknjena = premaknjena
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo """
         if self.premaknjena:
             S = sympy.Point(random.randint(-5, 5), random.randint(-5, 5))
@@ -148,7 +148,7 @@ class NarisiKrivuljo(Naloga):
         self.elipsa = elipsa
         self.premaknjena = premaknjena
 
-    def poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):
         """Poskusi sestaviti nalogo NarisiKrivuljo."""
         x = sympy.symbols('x')
         y = sympy.symbols('y')
