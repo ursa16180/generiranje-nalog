@@ -5,17 +5,6 @@ import importlib
 sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 
 
-# def mojLatex(izraz):
-#     """
-#     Popravi izp
-#
-#     :param :
-#     """
-#     return sympy.latex(izraz).replace(r'\'','')
-#     # def _print_tuple(self, expr):
-#     #     return r"\left( %s\right)" % \
-#     #         r", \  ".join([self._print(i) for i in expr])
-
 class NapacnaNaloga(Exception):
     """
     Izjema, kadar sestavljena naloga ne ustreza pogojem.
@@ -38,7 +27,7 @@ def preveri(pogoj):
 
 class MojLatexPrinter(sympy_printing_latex.LatexPrinter):
     """
-    Razred MojLatexPrinter je popravljena različica razreda LatexPrinter iz paketa sympy. Popravljeno izpisovanje tuple-ov brez presledka.
+    Razred MojLatexPrinter je popravljena različica razreda LatexPrinter iz paketa sympy. Popravljeno je izpisovanje tuple-ov brez presledka.
     """
 
     def _print_tuple(self, expr):
@@ -47,9 +36,9 @@ class MojLatexPrinter(sympy_printing_latex.LatexPrinter):
 
 def moj_latex(expr):
     """
-    Funkcija kliče razred MojLatexPrinter in nastavi izpis naravnega logaritma kot *ln*
+    Funkcija kliče razred MojLatexPrinter in nastavi izpis naravnega logaritma kot :math:`ln`.
 
-    :param expr: niz #TODO
+    :param expr: niz
     """
     settings = {
         'ln_notation': True
@@ -58,12 +47,17 @@ def moj_latex(expr):
 
 
 class Naloga:
-    """ Razred Naloga je splošni razred za posamezne naloge in vsebuje splošna besedila in rešitve nalog.
+    """ Razred Naloga je splošni razred za posamezne naloge. Privzete ima splošna besedila nalog in rešitev, ki jih posamezne naloge lahko prepišejo.
+    Ima tudi argumenta *args* in *kwargs*, ki morata biti prazna in nas opozorita, če smo se zatipkali.
 
-    :param besedilo_posamezne: Splošno besedilo naloge
-    :param besedilo_vecih: Splošno besedilo za nalogo z več primeri
-    :param resitev_posamezne: Splošno besedilo za rešitev naloge
-    :param resitev_vecih: Splošno besedilo za rešitev naloge z več primeri
+    :param args: načeloma prazen parameter, vendar polovi zatipkane parametre
+    :param st_nalog: stevilo primerov posamezne naloge
+    :param besedilo_posamezne: besedilo naloge
+    :param besedilo_vecih: besedilo za nalogo z več primeri
+    :param resitev_posamezne: besedilo za rešitev naloge
+    :param resitev_vecih: besedilo za rešitev naloge z več primeri
+    :param st_nalog: željeno število primerov posamezne naloge
+    :param kwargs: načeloma prazen parameter, vendar polovi zatipkane parametre
 
     """
     besedilo_posamezne = r'''Reši nalogo: ${{ naloga }}$'''
@@ -86,15 +80,6 @@ class Naloga:
 
     def __init__(self, *args, besedilo_posamezne=None, besedilo_vecih=None, resitev_posamezne=None, resitev_vecih=None,
                  st_nalog=None, **kwargs):
-        """TODO
-
-        :param st_nalog: stevilo primerov posamezne naloge
-        :param besedilo_posamezne: besedilo naloge
-        :param besedilo_vecih: besedilo za nalogo z več primeri
-        :param resitev_posamezne: besedilo za rešitev naloge
-        :param resitev_vecih: besedilo za rešitev naloge z več primeri
-
-        """
         self.st_nalog = st_nalog
 
         if besedilo_posamezne is not None:
@@ -110,16 +95,17 @@ class Naloga:
             self.resitev_vecih = resitev_vecih
 
         if args:
-            raise ValueError('Pojavijo se neznani args.')
+            raise ValueError('Pojavijo se neznani args. Preveri, da so imena parametrov pravilno poimenovana.')
         if kwargs:
-            raise ValueError('Pojavijo se neznani kwargs.')
+            raise ValueError('Pojavijo se neznani kwargs. Preveri, da so imena parametrov pravilno poimenovana.')
 
     def _poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo."""
         pass
 
     def sestavi(self):
-        """Sestavi nalogo, ki ustreza pogojem."""
+        """
+        Sestavi nalogo, ki ustreza pogojem.
+        """
         while True:
             try:
                 return self._poskusi_sestaviti()
@@ -130,8 +116,7 @@ class Naloga:
         """
         Sestavi nalogo z več primeri
 
-        :param stevilo_nalog: stevilo primerov posamezne naloge
-
+        :param stevilo_nalog: željeno število primerov posamezne naloge
         """
         naloge = []
         for _ in range(stevilo_nalog):
