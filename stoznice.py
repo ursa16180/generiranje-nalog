@@ -1,5 +1,5 @@
 from generiranje import Naloga, preveri
-from linearnaFunkcija import razdalja_med_tockama
+from linearna_funkcija import razdalja_med_tockama
 import sympy
 import random
 
