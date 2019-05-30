@@ -1,9 +1,9 @@
 Izpis nalog
 ============
 
-************************************
+*****************************************
 Uporaba programa ``izpisi_naloge.py``
-************************************
+*****************************************
 Program ``izpisi_naloge.py`` vsebuje predloge  za teste in rešitve ter več pomožnih fukcij, ki so potrebne za izpis testov.
 
 .. code-block:: python
