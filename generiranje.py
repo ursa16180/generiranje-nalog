@@ -48,16 +48,12 @@ def moj_latex(expr):
 
 class Naloga:
     """ Razred Naloga je splošni razred za posamezne naloge. Privzete ima splošna besedila nalog in rešitev, ki jih posamezne naloge lahko prepišejo.
-    Ima tudi argumenta *args* in *kwargs*, ki morata biti prazna in nas opozorita, če smo se zatipkali.
 
-    :param args: načeloma prazen parameter, vendar polovi zatipkane parametre
     :param st_nalog: stevilo primerov posamezne naloge
     :param besedilo_posamezne: besedilo naloge
     :param besedilo_vecih: besedilo za nalogo z več primeri
     :param resitev_posamezne: besedilo za rešitev naloge
     :param resitev_vecih: besedilo za rešitev naloge z več primeri
-    :param st_nalog: željeno število primerov posamezne naloge
-    :param kwargs: načeloma prazen parameter, vendar polovi zatipkane parametre
 
     """
     besedilo_posamezne = r'''Reši nalogo: ${{ naloga }}$'''
@@ -78,8 +74,8 @@ class Naloga:
         \end{enumerate}
         '''
 
-    def __init__(self, *args, besedilo_posamezne=None, besedilo_vecih=None, resitev_posamezne=None, resitev_vecih=None,
-                 st_nalog=None, **kwargs):
+    def __init__(self, besedilo_posamezne=None, besedilo_vecih=None, resitev_posamezne=None, resitev_vecih=None,
+                 st_nalog=None):
         self.st_nalog = st_nalog
 
         if besedilo_posamezne is not None:
@@ -94,18 +90,12 @@ class Naloga:
         if resitev_vecih is not None:
             self.resitev_vecih = resitev_vecih
 
-        if args:
-            raise ValueError('Pojavijo se neznani args. Preveri, da so imena parametrov pravilno poimenovana.')
-        if kwargs:
-            raise ValueError('Pojavijo se neznani kwargs. Preveri, da so imena parametrov pravilno poimenovana.')
-
     def _poskusi_sestaviti(self):
+        """Poskusi sestaviti nalogo."""
         pass
 
     def sestavi(self):
-        """
-        Sestavi nalogo, ki ustreza pogojem.
-        """
+        """Sestavi nalogo, ki ustreza pogojem."""
         while True:
             try:
                 return self._poskusi_sestaviti()
@@ -116,7 +106,8 @@ class Naloga:
         """
         Sestavi nalogo z več primeri
 
-        :param stevilo_nalog: željeno število primerov posamezne naloge
+        :param stevilo_nalog: stevilo primerov posamezne naloge
+
         """
         naloge = []
         for _ in range(stevilo_nalog):

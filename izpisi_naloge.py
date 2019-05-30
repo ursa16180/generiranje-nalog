@@ -3,14 +3,14 @@ import os
 import random
 import shutil
 import jinja2
-import naravnaStevila
+import naravna_stevila
 import mnozice
 import izrazi
-import linearnaFunkcija
-import kompleksnaStevila
-import kvadratnaFunkcija
-import eksponentnaFunkcija
-import polinom
+import linearna_funkcija
+import kompleksna_stevila
+import kvadratna_funkcija
+import eksponentna_funkcija
+import polinomska_racionalna_funkcija
 import stoznice
 import zaporedja
 import odvodi
@@ -173,68 +173,67 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve):  # Napi≈
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
     datoteka_test.close()
 
-
-sestavi_vse_teste([
-    mnozice.IzpeljaneMnozice(),mnozice.IzpeljaneMnozice(st_nalog=3),
-    mnozice.UnijaPresekRazlika(),mnozice.UnijaPresekRazlika(st_nalog=3),
-    mnozice.PotencnaMnozica(),mnozice.PotencnaMnozica(st_nalog=5),
-    mnozice.ElementiMnozice(linearna_kombinacija=False),mnozice.ElementiMnozice(st_nalog=5),
-    kompleksnaStevila.NarisiTocke(),kompleksnaStevila.NarisiTocke(st_nalog=3),
-    kompleksnaStevila.Racunanje(),kompleksnaStevila.Racunanje(st_nalog=3),
-    kompleksnaStevila.Ulomek(nicelna_komponenta_stevca=True),kompleksnaStevila.Ulomek(st_nalog=3),
-    kompleksnaStevila.VsotaRazlika(),kompleksnaStevila.VsotaRazlika(st_nalog=3),
-    kompleksnaStevila.Mnozenje(),kompleksnaStevila.Mnozenje(st_nalog=3),
-    kompleksnaStevila.Enacba(konjugirana_vrednost=True), kompleksnaStevila.Enacba(st_nalog=4),
-    polinom.DolociNiclePoleAsimptotoRacionalne(), polinom.DolociNiclePoleAsimptotoRacionalne(st_nalog=3),
-    polinom.NiclePolinoma(),polinom.NiclePolinoma(st_nalog=3),
-    polinom.GrafPolinoma(),polinom.GrafPolinoma(st_nalog=3),
-    polinom.DvojnaNicla(),polinom.DvojnaNicla(st_nalog=3),
-    polinom.ParametraDvojna(),polinom.ParametraDvojna(st_nalog=3),
-    polinom.GrafRacionalne(),#polinom.GrafRacionalne(st_nalog=2),
-    kvadratnaFunkcija.TemenskaOblika(), kvadratnaFunkcija.TemenskaOblika(st_nalog=3),
-    kvadratnaFunkcija.Neenacba(primerjava_stevilo=False), kvadratnaFunkcija.Neenacba(st_nalog=3),
-    kvadratnaFunkcija.Presecisce(),kvadratnaFunkcija.Presecisce(st_nalog=5),
-    kvadratnaFunkcija.IzracunajNicle(kompleksni_nicli=True), kvadratnaFunkcija.IzracunajNicle(st_nalog=3),
-    kvadratnaFunkcija.NarisiGraf(),kvadratnaFunkcija.NarisiGraf(st_nalog=5),
-    kvadratnaFunkcija.SkoziTocke(nakljucne_tocke=True),kvadratnaFunkcija.SkoziTocke(st_nalog=3),
-    linearnaFunkcija.PremicaSkoziTocki(),linearnaFunkcija.PremicaSkoziTocki(st_nalog=2),
-    linearnaFunkcija.RazdaljaMedTockama(),linearnaFunkcija.RazdaljaMedTockama(st_nalog=2),
-    linearnaFunkcija.OblikeEnacbPremice(),linearnaFunkcija.OblikeEnacbPremice(st_nalog=3),
-    linearnaFunkcija.PremiceTrikotnik(),linearnaFunkcija.PremiceTrikotnik(st_nalog=2),
-    linearnaFunkcija.NarisiLinearnoFunkcijo(), #linearnaFunkcija.NarisiLinearnoFunkcijo(st_nalog=5),
-    linearnaFunkcija.VrednostiLinearne(),linearnaFunkcija.VrednostiLinearne(st_nalog=3),
-    linearnaFunkcija.SistemDvehEnacb(racionalne_resitve=True),linearnaFunkcija.SistemDvehEnacb(st_nalog=3),
-    linearnaFunkcija.SistemTrehEnacb(manjsi_koeficienti=False),linearnaFunkcija.SistemTrehEnacb(st_nalog=3),
-    linearnaFunkcija.Neenacba(kvadratna=True), linearnaFunkcija.Neenacba(st_nalog=3),
-    izrazi.PotencaDvoclenika(linearna_kombinacija=False),izrazi.PotencaDvoclenika(st_nalog=3),
-    izrazi.PotencaTroclenika(linearna_kombinacija=False),izrazi.PotencaTroclenika(st_nalog=3),
-    izrazi.RazstaviVieta(vodilni_koeficient=True),izrazi.RazstaviVieta(st_nalog=2),
-    izrazi.RazstaviRazliko(linearna_kombinacija=True), izrazi.RazstaviRazliko(st_nalog=3),
-    izrazi.PotencirajVecclenik(linearna_kombinacija=True),izrazi.PotencirajVecclenik(st_nalog=2),
-    naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
-    #naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
-    naravnaStevila.DeliteljVeckratnik(), naravnaStevila.DeliteljVeckratnik(st_nalog=3),
-    eksponentnaFunkcija.GrafEksponentne(cela_osnova=False),
-    eksponentnaFunkcija.Enacba(vsota=True), eksponentnaFunkcija.Enacba(st_nalog=3),
-    eksponentnaFunkcija.Enacba2osnovi(deli_z_osnovo=True), eksponentnaFunkcija.Enacba2osnovi(st_nalog=3),
-    zaporedja.SplosniClenZaporedja(),zaporedja.SplosniClenZaporedja(zamik_alternirajoce=True, st_nalog=5),
-    zaporedja.SplosniClenAritmeticnegaZaporedja(),zaporedja.SplosniClenAritmeticnegaZaporedja(st_nalog=3),
-    zaporedja.SplosniClenAritmeticnegaEnacbi(),zaporedja.SplosniClenAritmeticnegaEnacbi(st_nalog=3),
-    zaporedja.VsotaAritmeticnega(st_nalog=3), zaporedja.VsotaAritmeticnega(podan_splosni_clen=False),
-    zaporedja.PrviCleniAritmeticnega(), zaporedja.PrviCleniAritmeticnega(st_nalog=3),
-    zaporedja.PrviCleniGeometrijskega(), zaporedja.PrviCleniGeometrijskega(st_nalog=3),
-    zaporedja.SplosniClenGeometrijskega(), zaporedja.SplosniClenGeometrijskega(st_nalog=3),
-    zaporedja.SplosniClenGeometrijskegaEnacbi(), zaporedja.SplosniClenGeometrijskegaEnacbi(st_nalog=3),
-    zaporedja.VsotaGeometrijskega(podan_splosni_clen=False), zaporedja.VsotaGeometrijskega(st_nalog=3),
-    zaporedja.VsotaGeometrijskeVrste(lazji_podatki=False), zaporedja.VsotaGeometrijskeVrste(st_nalog=3),
-    odvodi.KotMedPremicama(abscisna_os=False), odvodi.KotMedPremicama(st_nalog=3),
-    odvodi.OdvodElementarne(kompozitum=False), odvodi.OdvodElementarne(st_nalog=3),
-    odvodi.OdvodSestavljene(), odvodi.OdvodSestavljene(st_nalog=3),
-    odvodi.KotMedGrafoma(),odvodi.KotMedGrafoma(st_nalog=3),
-    odvodi.Tangenta(),odvodi.Tangenta(st_nalog=2),
-    stoznice.NarisiKrivuljo(),stoznice.NarisiKrivuljo(st_nalog=3),
-    stoznice.PreseciscaKroznic(),stoznice.PreseciscaKroznic(st_nalog=3),
-    stoznice.TemeGorisceEnacba()
-
-],
-    "Tester")#, "dijaki.txt", zdruzene_resitve=False)
+# sestavi_vse_teste([
+#     mnozice.IzpeljaneMnozice(),mnozice.IzpeljaneMnozice(st_nalog=3),
+#     mnozice.UnijaPresekRazlika(),mnozice.UnijaPresekRazlika(st_nalog=3),
+#     mnozice.PotencnaMnozica(),mnozice.PotencnaMnozica(st_nalog=5),
+#     mnozice.ElementiMnozice(linearna_kombinacija=False),mnozice.ElementiMnozice(st_nalog=5),
+#     kompleksna_stevila.NarisiTocke(),kompleksna_stevila.NarisiTocke(st_nalog=3),
+#     kompleksna_stevila.Racunanje(),kompleksna_stevila.Racunanje(st_nalog=3),
+#     kompleksna_stevila.Ulomek(nicelna_komponenta_stevca=True),kompleksna_stevila.Ulomek(st_nalog=3),
+#     kompleksna_stevila.VsotaRazlika(),kompleksna_stevila.VsotaRazlika(st_nalog=3),
+#     kompleksna_stevila.Mnozenje(),kompleksna_stevila.Mnozenje(st_nalog=3),
+#     kompleksna_stevila.Enacba(konjugirana_vrednost=True), kompleksna_stevila.Enacba(st_nalog=4),
+#     polinom.DolociNiclePoleAsimptotoRacionalne(), polinom.DolociNiclePoleAsimptotoRacionalne(st_nalog=3),
+#     polinom.NiclePolinoma(),polinom.NiclePolinoma(st_nalog=3),
+#     polinom.GrafPolinoma(),polinom.GrafPolinoma(st_nalog=3),
+#     polinom.DvojnaNicla(),polinom.DvojnaNicla(st_nalog=3),
+#     polinom.ParametraDvojna(),polinom.ParametraDvojna(st_nalog=3),
+#     polinom.GrafRacionalne(),#polinom.GrafRacionalne(st_nalog=2),
+#     kvadratnaFunkcija.TemenskaOblika(), kvadratnaFunkcija.TemenskaOblika(st_nalog=3),
+#     kvadratnaFunkcija.Neenacba(primerjava_stevilo=False), kvadratnaFunkcija.Neenacba(st_nalog=3),
+#     kvadratnaFunkcija.Presecisce(),kvadratnaFunkcija.Presecisce(st_nalog=5),
+#     kvadratnaFunkcija.IzracunajNicle(kompleksni_nicli=True), kvadratnaFunkcija.IzracunajNicle(st_nalog=3),
+#     kvadratnaFunkcija.NarisiGraf(),kvadratnaFunkcija.NarisiGraf(st_nalog=5),
+#     kvadratnaFunkcija.SkoziTocke(nakljucne_tocke=True),kvadratnaFunkcija.SkoziTocke(st_nalog=3),
+#     linearnaFunkcija.PremicaSkoziTocki(),linearnaFunkcija.PremicaSkoziTocki(st_nalog=2),
+#     linearnaFunkcija.RazdaljaMedTockama(),linearnaFunkcija.RazdaljaMedTockama(st_nalog=2),
+#     linearnaFunkcija.OblikeEnacbPremice(),linearnaFunkcija.OblikeEnacbPremice(st_nalog=3),
+#     linearnaFunkcija.PremiceTrikotnik(),linearnaFunkcija.PremiceTrikotnik(st_nalog=2),
+#     linearnaFunkcija.NarisiLinearnoFunkcijo(), #linearnaFunkcija.NarisiLinearnoFunkcijo(st_nalog=5),
+#     linearnaFunkcija.VrednostiLinearne(),linearnaFunkcija.VrednostiLinearne(st_nalog=3),
+#     linearnaFunkcija.SistemDvehEnacb(racionalne_resitve=True),linearnaFunkcija.SistemDvehEnacb(st_nalog=3),
+#     linearnaFunkcija.SistemTrehEnacb(manjsi_koeficienti=False),linearnaFunkcija.SistemTrehEnacb(st_nalog=3),
+#     linearnaFunkcija.Neenacba(kvadratna=True), linearnaFunkcija.Neenacba(st_nalog=3),
+#     izrazi.PotencaDvoclenika(linearna_kombinacija=False),izrazi.PotencaDvoclenika(st_nalog=3),
+#     izrazi.PotencaTroclenika(linearna_kombinacija=False),izrazi.PotencaTroclenika(st_nalog=3),
+#     izrazi.RazstaviVieta(vodilni_koeficient=True),izrazi.RazstaviVieta(st_nalog=2),
+#     izrazi.RazstaviRazliko(linearna_kombinacija=True), izrazi.RazstaviRazliko(st_nalog=3),
+#     izrazi.PotencirajVecclenik(linearna_kombinacija=True),izrazi.PotencirajVecclenik(st_nalog=2),
+#     naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
+#     #naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
+#     naravnaStevila.DeliteljVeckratnik(), naravnaStevila.DeliteljVeckratnik(st_nalog=3),
+#     eksponentnaFunkcija.GrafEksponentne(cela_osnova=False),
+#     eksponentnaFunkcija.Enacba(vsota=True), eksponentnaFunkcija.Enacba(st_nalog=3),
+#     eksponentnaFunkcija.Enacba2osnovi(deli_z_osnovo=True), eksponentnaFunkcija.Enacba2osnovi(st_nalog=3),
+#     zaporedja.SplosniClenZaporedja(),zaporedja.SplosniClenZaporedja(zamik_alternirajoce=True, st_nalog=5),
+#     zaporedja.SplosniClenAritmeticnegaZaporedja(),zaporedja.SplosniClenAritmeticnegaZaporedja(st_nalog=3),
+#     zaporedja.SplosniClenAritmeticnegaEnacbi(),zaporedja.SplosniClenAritmeticnegaEnacbi(st_nalog=3),
+#     zaporedja.VsotaAritmeticnega(st_nalog=3), zaporedja.VsotaAritmeticnega(podan_splosni_clen=False),
+#     zaporedja.PrviCleniAritmeticnega(), zaporedja.PrviCleniAritmeticnega(st_nalog=3),
+#     zaporedja.PrviCleniGeometrijskega(), zaporedja.PrviCleniGeometrijskega(st_nalog=3),
+#     zaporedja.SplosniClenGeometrijskega(), zaporedja.SplosniClenGeometrijskega(st_nalog=3),
+#     zaporedja.SplosniClenGeometrijskegaEnacbi(), zaporedja.SplosniClenGeometrijskegaEnacbi(st_nalog=3),
+#     zaporedja.VsotaGeometrijskega(podan_splosni_clen=False), zaporedja.VsotaGeometrijskega(st_nalog=3),
+#     zaporedja.VsotaGeometrijskeVrste(lazji_podatki=False), zaporedja.VsotaGeometrijskeVrste(st_nalog=3),
+#     odvodi.KotMedPremicama(abscisna_os=False), odvodi.KotMedPremicama(st_nalog=3),
+#     odvodi.OdvodElementarne(kompozitum=False), odvodi.OdvodElementarne(st_nalog=3),
+#     odvodi.OdvodSestavljene(), odvodi.OdvodSestavljene(st_nalog=3),
+#     odvodi.KotMedGrafoma(),odvodi.KotMedGrafoma(st_nalog=3),
+#     odvodi.Tangenta(),odvodi.Tangenta(st_nalog=2),
+#     stoznice.NarisiKrivuljo(),stoznice.NarisiKrivuljo(st_nalog=3),
+#     stoznice.PreseciscaKroznic(),stoznice.PreseciscaKroznic(st_nalog=3),
+#     stoznice.TemeGorisceEnacba()
+#
+# ],
+#     "Tester")#, "dijaki.txt", zdruzene_resitve=False)

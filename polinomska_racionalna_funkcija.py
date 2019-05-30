@@ -1,7 +1,7 @@
 from generiranje import Naloga, preveri, MinMaxNapaka
 import random
 import sympy
-from kvadratnaFunkcija import splosna_oblika, nicle
+from kvadratna_funkcija import splosna_oblika, nicle
 
 
 def naredi_polinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risanje=False):

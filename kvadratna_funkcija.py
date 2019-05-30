@@ -1,7 +1,7 @@
 from generiranje import Naloga, preveri
 import random
 import sympy
-from linearnaFunkcija import skozi_tocki, seznam_polovick, seznam_tretinj
+from linearna_funkcija import skozi_tocki, seznam_polovick, seznam_tretinj
 
 
 def nicelna_oblika(od=-5, do=5, risanje=False):
