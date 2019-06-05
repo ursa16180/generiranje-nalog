@@ -91,7 +91,7 @@ vzorec_skupnih_resitev = jinja2.Template(r"""
 \end{document}""")
 
 
-def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_dijakov=None,
+def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_dijakov=None,
                       zdruzene_resitve=True):
     """Ustvari mapi za teste in rešitve. Sestavi teste za vse dijake s podanega seznama.
 
@@ -101,7 +101,7 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
     :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega dijaka v svoji datoteki
     """
     if not datoteka_seznam_dijakov:
-        seznam_ljudi = ["Gimnazija Kranj"]
+        seznam_ljudi = ["Matematika"]
     else:
         seznam_ljudi = sorted(open(datoteka_seznam_dijakov, encoding="utf8").readlines())
 
@@ -237,3 +237,9 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve):  # Napi�
 #
 # ],
 #     "Tester")#, "dijaki.txt", zdruzene_resitve=False)
+
+# sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
+#                           izrazi.RazstaviRazliko(min_potenca=3), naravna_stevila.DeliteljVeckratnik()],
+#                   ime_testa='Izrazi in deljivost', datoteka_seznam_dijakov='dijaki.txt', zdruzene_resitve=False)
+
+# sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje(st_nalog=5)])
