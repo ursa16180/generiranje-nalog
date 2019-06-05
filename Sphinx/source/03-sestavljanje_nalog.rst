@@ -1,4 +1,4 @@
-Knjižnica za samodejno generiranje matematičnih nalog
+Sestavljanje nalog
 ======================================================
 
 Knjižnica je sestavljena iz datoteke ``generiranje.py``, ki vsebuje splošni razred ``Naloga`` in pripadajoče metode, ter datotek, ki vsebujejo posamezne naloge ločene po poglavjih srednješolske snov.

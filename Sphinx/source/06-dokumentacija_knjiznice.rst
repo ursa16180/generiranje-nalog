@@ -11,8 +11,6 @@ Generiranje
 ..    :inherited-members:
 ..    :show-inheritance:
 
-.. .. automodule:: izpisi_naloge #TODO odkomentiraj ko izbrišeš zaganjanje funkcije v izpisi naloge
-:members:
 
 **********************
 Eksponentna funkcija

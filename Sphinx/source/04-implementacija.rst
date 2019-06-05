@@ -1,0 +1,4 @@
+Implementacija
+=================
+
+bo tuki razložena

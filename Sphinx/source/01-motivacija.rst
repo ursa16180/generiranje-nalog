@@ -1,5 +1,8 @@
+Motivacija
+============
+
 ****************
-Namen knjižnice
+Motivacija
 ****************
 #TODO test/preverjanje/naloge
 Pomembno vlogo pri učenju matematike v srednji šoli predstavljajo vaje in utrjevanje naučene snov. Učitelji morajo zato sestaviti veliko podobnih vaj z lepimi rešitvami, kar je lahko vzame veliko časa. Take naloge se da sprogramirati in celo prilagoditi zahtevnost posameznim dijakom. V mojem magistrskem delu sem v Python-u pripravila knjižnico nalog iz srednješolske snovi, ki je lahko v pomoč vsem učiteljem z zelo osnovnim razumevanjem programskega jezika.

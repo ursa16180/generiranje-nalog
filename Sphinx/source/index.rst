@@ -9,10 +9,13 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
 .. toctree::
    :maxdepth: 1
 
-   Namen in kratka predstavitev <predstavitev.rst>
-   Izpis nalog <izpis_nalog.rst>
-   Knjižnica <knjiznica.rst>
-   Dokumentacija knjižnice <dokumentacija_knjiznice.rst>
+   Motivacija <01-motivacija.rst>
+   Uporaba <02-uporaba.rst>
+   Sestavljanje nalog <03-sestavljanje_nalog.rst>
+   Implementacija <04-implementacija.rst>
+   Zaključek <05-zakljucek.rst>
+   Dokumentacija knjižnice <06-dokumentacija_knjiznice.rst>
+   Koda <07-koda.rst>
 
 
 
