@@ -13,22 +13,22 @@ class VzorecNaloge(Naloga):
     Primer naloge.
     """
 
-    besedilo_posamezne = r''' '''
+    besedilo_posamezne = r'''${{naloga.sestavljena_naloga}}$'''
 
     besedilo_vecih = r'''
     \begin{enumerate}
     {% for naloga in naloge %}
-    \item
+    \item ${{naloga.sestavljena_naloga}}$
     {% endfor %}
     \end{enumerate}
     '''
 
-    resitev_posamezne = r''' '''
+    resitev_posamezne = r'''${{naloga.sestavljena_resitev}}$'''
 
     resitev_vecih = r'''
     \begin{enumerate}
      {% for naloga in naloge %}
-     \item
+     \item ${{naloga.sestavljena_resitev}}$
      {% endfor %}
      \end{enumerate}
      '''
@@ -37,6 +37,6 @@ class VzorecNaloge(Naloga):
         super().__init__(**kwargs)
 
     def _poskusi_sestaviti(self):
-        sestavljena_naloga = 1
-        sestavljena_resitev = 2
+        sestavljena_naloga = 'Tukaj sestavimo nalogo'
+        sestavljena_resitev = 'Tukaj sestavimo rešitev'
         return {'naloga': sestavljena_naloga, 'resitev': sestavljena_resitev}
