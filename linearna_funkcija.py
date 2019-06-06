@@ -186,7 +186,7 @@ class PremicaSkoziTocki(Naloga):
         y1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         x2 = random.randint(-10, 10)
         y2 = random.randint(-10, 10)
-        preveri(x1 != x2 and y1 != y2)  # Preveri, da sta 2 vzporedni točki in nista vzporedni osem
+        preveri(x1 != x2 and y1 != y2)  # Preveri, da sta 2 različni točki in nista vzporedni osem
         premica = sympy.latex(skozi_tocki(x1, y1, x2, y2)[-1])
         return {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2, 'premica': premica}
 

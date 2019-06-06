@@ -46,10 +46,10 @@ class DeliteljVeckratnik(Naloga):
         self.do = do
         self.najvecje_prastevilo = najvecje_prastevilo
 
-    def _poskusi_sestaviti(self):
         # TODO težja = 3 števila, izrazi
         # TODO ali bilo boljše da izbere praštevila in jih množi?
         # #TODO ali bolje da ločimo nalogo za gcd in lcm? ker lcm lahko zelo velik
+    def _poskusi_sestaviti(self):
         stevilo1 = random.randint(self.od, self.do)
         stevilo2 = random.randint(self.od, self.do)
         preveri(max(sympy.factorint(stevilo1).keys()) <= self.najvecje_prastevilo and max(
