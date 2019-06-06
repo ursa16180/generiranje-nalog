@@ -14,9 +14,9 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
    Sestavljanje nalog <03-sestavljanje_nalog.rst>
    Implementacija <04-implementacija.rst>
    Zaključek <05-zakljucek.rst>
-   Dokumentacija knjižnice <06-dokumentacija_knjiznice.rst>
-   Koda <07-koda.rst>
-
+   Dokumentacija knjižnice <A-dokumentacija_knjiznice.rst>
+   Izvorna koda <B-koda.rst>
+   Predloga za novo nalogo <C-vzorcna_datoteka.rst>
 
 
 Indices and tables

@@ -49,6 +49,133 @@ language = 'sl'
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# Latex nastavitve
+latex_elements = {'figure_align': 'H', }
+# latex_elements={'papersize':'a4paper',
+#     'pointsize':'12pt',
+#
+#
+#     'preamble': r'''
+# % !TeX spellcheck = sl_SI
+# % vim: set spell spelllang=sl:
+# % za preverjanje črkovanja, če se uporablja Texstudio ali vim
+#
+# \usepackage[utf8]{inputenc}  % pravilno razpoznavanje unicode znakov
+#
+# % NASLEDNJE UKAZE USTREZNO POPRAVI
+# \newcommand{\program}{Matematika} % ime studijskega programa
+# \newcommand{\imeavtorja}{Marija Novak} % ime avtorja
+# \newcommand{\imementorja}{prof.~dr.~Janez Novak} % akademski naziv in ime mentorja, uporabi poln naziv, prof.~dr.~, doc.~dr., ali izr.~prof.~dr.
+# \newcommand{\imesomentorja}{} % akademski naziv in ime somentorja, če ga imate
+# \newcommand{\naslovdela}{Naslov vašega dela}
+# \newcommand{\letnica}{2017} % letnica magistriranja
+# \newcommand{\opis}{Delo obravnava integracijo po ω-kompleksih, njene lastnosti in posplošitve
+# na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati matematičnih simbolov v $ $.
+# \newcommand{\kljucnebesede}{integracija\sep kompleks} % ključne besede, ločene z \sep, da se PDF metapodatki prav procesirajo
+# \newcommand{\keywords}{integration\sep complex} % ključne besede v angleščini
+# \newcommand{\organization}{Univerza v Ljubljani, Fakulteta za matematiko in fiziko} % fakulteta
+# \newcommand{\literatura}{literatura}  % pot do datoteke z literaturo (brez .bib končnice)
+# \newcommand{\sep}{, }  % separator med ključnimi besedami v besedilu
+# % KONEC PODATKOV
+#
+# \usepackage{bibentry}         % za navajanje literature v programu dela s celim imenom
+# \nobibliography{\literatura}
+# \newcommand{\plancite}[1]{\item[\cite{#1}] \bibentry{#1}} % citiranje v programu dela
+#
+# \usepackage{filecontents}  % za pisanje datoteke s PDF metapodatki
+# \usepackage{silence} \WarningFilter{latex}{Overwriting file}  % odstrani annoying warning o obstoju datoteke
+# % datoteka s PDF metapodatki, zgenerira se kot magisterij.xmpdata
+# \begin{filecontents*}{\jobname.xmpdata}
+#   \Title{\naslovdela}
+#   \Author{\imeavtorja}
+#   \Keywords{\kljucnebesede}
+#   \Subject{matematika}
+#   \Org{\organization}
+# \end{filecontents*}
+#
+# \usepackage[a-1b]{pdfx}  % zgenerira PDF v tem PDF/A-1b formatu, kot zahteva knjižnica
+# \hypersetup{bookmarksopen, bookmarksdepth=3, colorlinks=true,
+#   linkcolor=black, anchorcolor=black, citecolor=black, filecolor=black,
+#   menucolor=black, runcolor=black, urlcolor=black, pdfencoding=auto,
+#   breaklinks=true, psdextra}
+#
+# \usepackage[slovene]{babel}  % slovenščina
+# \usepackage[T1]{fontenc}     % naprednejše kodiranje fonta
+# \usepackage{amsmath,amssymb,amsfonts,amsthm} % matematični paketi
+# \usepackage[dvipsnames,usenames]{color} % barve
+# \usepackage{graphicx}     % za slike
+# \usepackage{emptypage}    % prazne strani so neoštevilčene, ampak so štete
+# \usepackage{units}        % fizikalne enote kot \unit[12]{kg} s polovico nedeljivega presledka, glej primer v kodi
+# \usepackage{makeidx}      % za stvarno kazalo, lahko zakomentiraš, če ne rabiš
+# \makeindex                % za stvarno kazalo, lahko zakomentiraš, če ne rabiš
+# % oblika strani
+# \usepackage[
+#   top=3cm,
+#   bottom=3cm,
+#   inner=3.5cm,      % margini za dvostransko tiskanje
+#   outer=2.5cm,
+#   footskip=40pt     % pozicija številke strani
+# ]{geometry}
+#
+# % VEČ ZANIMIVIH PAKETOV
+# % \usepackage{array}      % več možnosti za tabele
+# % \usepackage[list=true,listformat=simple]{subcaption}  % več kot ena slika na figure, omogoči slika 1a, slika 1b
+# % \usepackage[all]{xy}    % diagrami
+# % \usepackage{doi}        % za clickable DOI entrye v bibliografiji
+# % \usepackage{enumerate}     % več možnosti za sezname
+#
+# % Za barvanje source kode
+# % \usepackage{minted}
+# % \renewcommand\listingscaption{Program}
+#
+# % Za pisanje psevdokode
+# % \usepackage{algpseudocode}  % za psevdokodo
+# % \usepackage{algorithm}
+# % \floatname{algorithm}{Algoritem}
+# % \renewcommand{\listalgorithmname}{Kazalo algoritmov}
+#
+# % DRUGI TVOJI PAKETI:
+# % tukaj
+#
+# \setlength{\overfullrule}{50pt} % označi predlogo vrstico
+# \pagestyle{plain}               % samo številka strani na dnu, nobene glave / noge
+#
+# % ukazi za matematična okolja
+# \theoremstyle{definition} % tekst napisan pokončno
+# \newtheorem{definicija}{Definicija}[section]
+# \newtheorem{primer}[definicija]{Primer}
+# \newtheorem{opomba}[definicija]{Opomba}
+# \newtheorem{aksiom}{Aksiom}
+#
+# \theoremstyle{plain} % tekst napisan poševno
+# \newtheorem{lema}[definicija]{Lema}
+# \newtheorem{izrek}[definicija]{Izrek}
+# \newtheorem{trditev}[definicija]{Trditev}
+# \newtheorem{posledica}[definicija]{Posledica}
+#
+# \numberwithin{equation}{section}  % števec za enačbe zgleda kot (2.7) in se resetira v vsakem poglavju
+#
+# % Matematični ukazi
+# \newcommand{\R}{\mathbb R}
+# \newcommand{\N}{\mathbb N}
+# \newcommand{\Z}{\mathbb Z}
+# \renewcommand{\C}{\mathbb C}
+# \newcommand{\Q}{\mathbb Q}
+#
+# % \DeclareMathOperator{\tr}{tr}  % morda potrebuješ operator za sled ali kaj drugega?
+#
+# % bold matematika znotraj \textbf{ }, tudi v naslovih, kot \omega spodaj
+# \makeatletter \g@addto@macro\bfseries{\boldmath} \makeatother
+#
+# % Poimenuj kazalo slik kot ``Kazalo slik'' in ne ``Slike''
+# \addto\captionsslovene{
+#   \renewcommand{\listfigurename}{Kazalo slik}%
+# }
+#
+# % če želiš, da se poglavja začnejo na lihih straneh zgoraj
+# % \let\oldsection\section
+# % \def\section{\cleardoublepage\oldsection}
+# '''}
 
 # -- Options for HTML output -------------------------------------------------
 
