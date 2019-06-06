@@ -110,6 +110,10 @@ def sestavi_vse_teste(naloge, ime_testa=date.today().strftime("%d-%B-%Y"), datot
     pot_naloge = podmapa + "/Naloge"
 
     if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
+        print('Mapa z imenom {} že obstaja.'.format(podmapa))
+        if input('Ali jo povozim z novo vsebino? [da/NE]') != 'da':
+            print('Test ni sestavljen.')
+            return
         shutil.rmtree(podmapa)
     os.makedirs(podmapa)
     os.makedirs(pot_naloge)
