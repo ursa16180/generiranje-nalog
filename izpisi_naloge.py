@@ -1,8 +1,4 @@
-from datetime import date
-import os
-import random
-import shutil
-import jinja2
+import generiranje
 import naravna_stevila
 import mnozice
 import izrazi
@@ -15,165 +11,7 @@ import stoznice
 import zaporedja
 import odvodi
 
-vzorec_testa = jinja2.Template(r"""
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{gensymb}
-
-\pgfplotsset{compat=1.7}
-
-\begin{document}
-
-\title{ {{ime_testa}} }
-\author{ {{ucenec}} }
-\maketitle
-\begin{enumerate}
-{% for naloga in naloge %}
-\item {{naloga.naloga}}
-{% endfor%}
-
-\end{enumerate}
-\end{document}""")
-
-vzorec_posameznih_resitev = jinja2.Template(r"""
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{gensymb}
-
-\pgfplotsset{compat=1.7}
-
-\begin{document}
-
-\title{Rešitve testa {{ime_testa}} }
-\author{ {{ucenec}} }
-\maketitle
-\begin{enumerate}
-{% for resitev in resitve %}
-\item {{resitev}}
-{% endfor%}
-
-\end{enumerate}
-\end{document}""")
-
-vzorec_skupnih_resitev = jinja2.Template(r"""
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{gensymb}
-
-\pgfplotsset{compat=1.7}
-
-\begin{document}
-
-\title{Skupne rešitve testa {{ime_testa}} }
-\maketitle
-{% for posameznik in seznam %}
-\section*{ {{posameznik.ucenec}} }
-\begin{enumerate}
-{% for resitev in posameznik.resitve %}
-\item {{resitev}}
-{% endfor%}
-\end{enumerate}
-\newpage
-{% endfor%}
-
-\end{document}""")
-
-
-def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_dijakov=None,
-                      zdruzene_resitve=True):
-    """Ustvari mapi za teste in rešitve. Sestavi teste za vse dijake s podanega seznama.
-
-    :param naloge: seznam željenih nalog
-    :param ime_testa: ime testa
-    :param datoteka_seznam_dijakov: besedilna datoteka, ki vsebuje seznam dijakov
-    :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega dijaka v svoji datoteki
-    """
-    if not datoteka_seznam_dijakov:
-        seznam_ljudi = ["Matematika"]
-    else:
-        seznam_ljudi = sorted(open(datoteka_seznam_dijakov, encoding="utf8").readlines())
-
-    podmapa = ime_testa
-    pot_resitve = podmapa + "/Rešitve"
-    pot_naloge = podmapa + "/Naloge"
-
-    if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
-        shutil.rmtree(podmapa)
-    os.makedirs(podmapa)
-    os.makedirs(pot_naloge)
-    os.makedirs(pot_resitve)
-
-    seznam_vseh_resitev = []
-    for ucenec in seznam_ljudi:
-        ucenec = ucenec.strip()
-        random.seed(ucenec)
-        seznam_nalog = [naloga.besedilo() for naloga in
-                        naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
-        napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge)
-
-        seznam_resitev = [naloga['resitev'] for naloga in seznam_nalog]
-        if zdruzene_resitve:
-            seznam_vseh_resitev.append({'ucenec': ucenec, 'resitve': seznam_resitev})
-        else:
-            napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve)
-    if zdruzene_resitve:  # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
-        napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve)
-    print('Test {} je sestavljen.'.format(ime_testa))
-
-
-def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge):
-    """
-    Ustvari test za posameznega dijaka.
-
-    :param ime_testa: ime testa
-    :param seznam_nalog: seznam besedil posameznih nalog
-    :param ucenec: ime dijaka
-    :param pot_naloge: mapa, kjer se shranjujejo naloge
-    """
-    datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
-    datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec))
-    datoteka_test.close()
-
-
-def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve):
-    """
-    Ustvari datoteko z rešitvami za posameznega dijaka.
-
-    :param ime_testa: ime testa
-    :param seznam_resitvev: seznam rešitev posameznih nalog
-    :param ucenec: ime dijaka
-    :param pot_resitve: mapa, kjer se shranjujejo rešitve
-    """
-    datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
-    datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
-    datoteka_test.close()
-
-
-def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve):  # Napiše vse rešitve v 1 dokument
-    """
-    Ustvari datoteko z rešitvami vseh dijakov.
-
-    :param ime_testa: ime testa
-    :param seznam_vseh_resitev: seznam seznamov rešitev za posameznega dijaka
-    :param pot_resitve: mapa, kjer se shranjujejo rešitve
-    """
-    datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
-    datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
-    datoteka_test.close()
-
-# sestavi_vse_teste([
+# generiranje.sestavi_vse_teste([
 #     mnozice.IzpeljaneMnozice(),mnozice.IzpeljaneMnozice(st_nalog=3),
 #     mnozice.UnijaPresekRazlika(),mnozice.UnijaPresekRazlika(st_nalog=3),
 #     mnozice.PotencnaMnozica(),mnozice.PotencnaMnozica(st_nalog=5),
@@ -184,38 +22,38 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve):  # Napi�
 #     kompleksna_stevila.VsotaRazlika(),kompleksna_stevila.VsotaRazlika(st_nalog=3),
 #     kompleksna_stevila.Mnozenje(),kompleksna_stevila.Mnozenje(st_nalog=3),
 #     kompleksna_stevila.Enacba(konjugirana_vrednost=True), kompleksna_stevila.Enacba(st_nalog=4),
-#     polinom.DolociNiclePoleAsimptotoRacionalne(), polinom.DolociNiclePoleAsimptotoRacionalne(st_nalog=3),
-#     polinom.NiclePolinoma(),polinom.NiclePolinoma(st_nalog=3),
-#     polinom.GrafPolinoma(),polinom.GrafPolinoma(st_nalog=3),
-#     polinom.DvojnaNicla(),polinom.DvojnaNicla(st_nalog=3),
-#     polinom.ParametraDvojna(),polinom.ParametraDvojna(st_nalog=3),
-#     polinom.GrafRacionalne(),#polinom.GrafRacionalne(st_nalog=2),
-#     kvadratnaFunkcija.TemenskaOblika(), kvadratnaFunkcija.TemenskaOblika(st_nalog=3),
-#     kvadratnaFunkcija.Neenacba(primerjava_stevilo=False), kvadratnaFunkcija.Neenacba(st_nalog=3),
-#     kvadratnaFunkcija.Presecisce(),kvadratnaFunkcija.Presecisce(st_nalog=5),
-#     kvadratnaFunkcija.IzracunajNicle(kompleksni_nicli=True), kvadratnaFunkcija.IzracunajNicle(st_nalog=3),
-#     kvadratnaFunkcija.NarisiGraf(),kvadratnaFunkcija.NarisiGraf(st_nalog=5),
-#     kvadratnaFunkcija.SkoziTocke(nakljucne_tocke=True),kvadratnaFunkcija.SkoziTocke(st_nalog=3),
-#     linearnaFunkcija.PremicaSkoziTocki(),linearnaFunkcija.PremicaSkoziTocki(st_nalog=2),
-#     linearnaFunkcija.RazdaljaMedTockama(),linearnaFunkcija.RazdaljaMedTockama(st_nalog=2),
-#     linearnaFunkcija.OblikeEnacbPremice(),linearnaFunkcija.OblikeEnacbPremice(st_nalog=3),
-#     linearnaFunkcija.PremiceTrikotnik(),linearnaFunkcija.PremiceTrikotnik(st_nalog=2),
-#     linearnaFunkcija.NarisiLinearnoFunkcijo(), #linearnaFunkcija.NarisiLinearnoFunkcijo(st_nalog=5),
-#     linearnaFunkcija.VrednostiLinearne(),linearnaFunkcija.VrednostiLinearne(st_nalog=3),
-#     linearnaFunkcija.SistemDvehEnacb(racionalne_resitve=True),linearnaFunkcija.SistemDvehEnacb(st_nalog=3),
-#     linearnaFunkcija.SistemTrehEnacb(manjsi_koeficienti=False),linearnaFunkcija.SistemTrehEnacb(st_nalog=3),
-#     linearnaFunkcija.Neenacba(kvadratna=True), linearnaFunkcija.Neenacba(st_nalog=3),
+#     polinomska_racionalna_funkcija.DolociNiclePoleAsimptotoRacionalne(), polinomska_racionalna_funkcija.DolociNiclePoleAsimptotoRacionalne(st_nalog=3),
+#     polinomska_racionalna_funkcija.NiclePolinoma(),polinomska_racionalna_funkcija.NiclePolinoma(st_nalog=3),
+#     polinomska_racionalna_funkcija.GrafPolinoma(),polinomska_racionalna_funkcija.GrafPolinoma(st_nalog=3),
+#     polinomska_racionalna_funkcija.DvojnaNicla(),polinomska_racionalna_funkcija.DvojnaNicla(st_nalog=3),
+#     polinomska_racionalna_funkcija.ParametraDvojna(),polinomska_racionalna_funkcija.ParametraDvojna(st_nalog=3),
+#     polinomska_racionalna_funkcija.GrafRacionalne(),#polinomska_racionalna_funkcija.GrafRacionalne(st_nalog=2),
+#     kvadratna_funkcija.TemenskaOblika(), kvadratna_funkcija.TemenskaOblika(st_nalog=3),
+#     kvadratna_funkcija.Neenacba(primerjava_stevilo=False), kvadratna_funkcija.Neenacba(st_nalog=3),
+#     kvadratna_funkcija.Presecisce(),kvadratna_funkcija.Presecisce(st_nalog=5),
+#     kvadratna_funkcija.IzracunajNicle(kompleksni_nicli=True), kvadratna_funkcija.IzracunajNicle(st_nalog=3),
+#     kvadratna_funkcija.NarisiGraf(),kvadratna_funkcija.NarisiGraf(st_nalog=5),
+#     kvadratna_funkcija.SkoziTocke(nakljucne_tocke=True),kvadratna_funkcija.SkoziTocke(st_nalog=3),
+#     linearna_funkcija.PremicaSkoziTocki(),linearna_funkcija.PremicaSkoziTocki(st_nalog=2),
+#     linearna_funkcija.RazdaljaMedTockama(),linearna_funkcija.RazdaljaMedTockama(st_nalog=2),
+#     linearna_funkcija.OblikeEnacbPremice(),linearna_funkcija.OblikeEnacbPremice(st_nalog=3),
+#     linearna_funkcija.PremiceTrikotnik(),linearna_funkcija.PremiceTrikotnik(st_nalog=2),
+#     linearna_funkcija.NarisiLinearnoFunkcijo(), #linearna_funkcija.NarisiLinearnoFunkcijo(st_nalog=5),
+#     linearna_funkcija.VrednostiLinearne(),linearna_funkcija.VrednostiLinearne(st_nalog=3),
+#     linearna_funkcija.SistemDvehEnacb(racionalne_resitve=True),linearna_funkcija.SistemDvehEnacb(st_nalog=3),
+#     linearna_funkcija.SistemTrehEnacb(manjsi_koeficienti=False),linearna_funkcija.SistemTrehEnacb(st_nalog=3),
+#     linearna_funkcija.Neenacba(kvadratna=True), linearna_funkcija.Neenacba(st_nalog=3),
 #     izrazi.PotencaDvoclenika(linearna_kombinacija=False),izrazi.PotencaDvoclenika(st_nalog=3),
 #     izrazi.PotencaTroclenika(linearna_kombinacija=False),izrazi.PotencaTroclenika(st_nalog=3),
 #     izrazi.RazstaviVieta(vodilni_koeficient=True),izrazi.RazstaviVieta(st_nalog=2),
 #     izrazi.RazstaviRazliko(linearna_kombinacija=True), izrazi.RazstaviRazliko(st_nalog=3),
 #     izrazi.PotencirajVecclenik(linearna_kombinacija=True),izrazi.PotencirajVecclenik(st_nalog=2),
-#     naravnaStevila.EvklidovAlgoritem(), naravnaStevila.EvklidovAlgoritem(st_nalog=3),
-#     #naravnaStevila.DolociStevko(),naravnaStevila.DolociStevko(st_nalog=3),
-#     naravnaStevila.DeliteljVeckratnik(), naravnaStevila.DeliteljVeckratnik(st_nalog=3),
-#     eksponentnaFunkcija.GrafEksponentne(cela_osnova=False),
-#     eksponentnaFunkcija.Enacba(vsota=True), eksponentnaFunkcija.Enacba(st_nalog=3),
-#     eksponentnaFunkcija.Enacba2osnovi(deli_z_osnovo=True), eksponentnaFunkcija.Enacba2osnovi(st_nalog=3),
+#     naravna_stevila.EvklidovAlgoritem(), naravna_stevila.EvklidovAlgoritem(st_nalog=3),
+#     #naravna_stevila.DolociStevko(),naravna_stevila.DolociStevko(st_nalog=3),
+#     naravna_stevila.DeliteljVeckratnik(), naravna_stevila.DeliteljVeckratnik(st_nalog=3),
+#     eksponentna_funkcija.GrafEksponentne(cela_osnova=False),
+#     eksponentna_funkcija.Enacba(vsota=True), eksponentna_funkcija.Enacba(st_nalog=3),
+#     eksponentna_funkcija.Enacba2osnovi(deli_z_osnovo=True), eksponentna_funkcija.Enacba2osnovi(st_nalog=3),
 #     zaporedja.SplosniClenZaporedja(),zaporedja.SplosniClenZaporedja(zamik_alternirajoce=True, st_nalog=5),
 #     zaporedja.SplosniClenAritmeticnegaZaporedja(),zaporedja.SplosniClenAritmeticnegaZaporedja(st_nalog=3),
 #     zaporedja.SplosniClenAritmeticnegaEnacbi(),zaporedja.SplosniClenAritmeticnegaEnacbi(st_nalog=3),
@@ -237,9 +75,9 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve):  # Napi�
 #
 # ],
 #     "Tester")#, "dijaki.txt", zdruzene_resitve=False)
-
-# sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
+#
+# generiranje.sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
 #                           izrazi.RazstaviRazliko(min_potenca=3), naravna_stevila.DeliteljVeckratnik()],
-#                   ime_testa='Izrazi in deljivost', datoteka_seznam_dijakov='dijaki.txt', zdruzene_resitve=False)
+#                   ime_testa='Izrazi in deljivost2', datoteka_seznam_dijakov='dijaki.txt', zdruzene_resitve=False)
 
-# sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje(st_nalog=5)])
+# generiranje.sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje(st_nalog=5)],  zdruzene_resitve=True, pdf=False)

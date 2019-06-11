@@ -1,9 +1,16 @@
+from datetime import date
+import os
+import subprocess
+import random
+import shutil
 import jinja2
 import sympy
 import importlib
 
 sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 
+
+# ~~~~~~~~~SESTAVLJANJE NALOG
 
 class NapacnaNaloga(Exception):
     """
@@ -143,3 +150,111 @@ class Naloga:
 
             return {'naloga': template_besedilo_vecih.render(naloge=naloge),
                     'resitev': template_resitev_vecih.render(naloge=naloge)}
+
+
+# ~~~~~~~SESTAVLJANJE TESTOV
+
+def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_dijakov=None,
+                      zdruzene_resitve=True, pdf=True):
+    """Ustvari mapi za teste in rešitve. Sestavi teste za vse dijake s podanega seznama.
+
+    :param naloge: seznam željenih nalog
+    :param ime_testa: ime testa
+    :param datoteka_seznam_dijakov: besedilna datoteka, ki vsebuje seznam dijakov
+    :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega dijaka v svoji datoteki
+    :param pdf: program ustvari tudi pdf datoteke
+    """
+    if not datoteka_seznam_dijakov:
+        seznam_ljudi = ["Matematika"]
+    else:
+        seznam_ljudi = sorted(open(datoteka_seznam_dijakov, encoding="utf8").readlines())
+
+    podmapa = ime_testa
+    pot_resitve = podmapa + "/Rešitve"
+    pot_naloge = podmapa + "/Naloge"
+
+    if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
+        shutil.rmtree(podmapa)
+    os.makedirs(podmapa)
+    os.makedirs(pot_naloge)
+    os.makedirs(pot_resitve)
+
+    seznam_vseh_resitev = []
+    for ucenec in seznam_ljudi:
+        ucenec = ucenec.strip()
+        random.seed(ucenec)
+        seznam_nalog = [naloga.besedilo() for naloga in
+                        naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
+        napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf)
+
+        seznam_resitev = [naloga['resitev'] for naloga in seznam_nalog]
+        if zdruzene_resitve:
+            seznam_vseh_resitev.append({'ucenec': ucenec, 'resitve': seznam_resitev})
+        else:
+            napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve, pdf)
+    if zdruzene_resitve:  # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
+        napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf)
+    print('Test {} je sestavljen.'.format(ime_testa))
+
+
+def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
+    """
+    Ustvari test za posameznega dijaka.
+
+    :param ime_testa: ime testa
+    :param seznam_nalog: seznam besedil posameznih nalog
+    :param ucenec: ime dijaka
+    :param pot_naloge: mapa, kjer se shranjujejo naloge
+    """
+    datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
+    vzorec_testa = jinja2.Template(
+        open("vzorec_testa.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+    datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec))
+    datoteka_test.close()
+    if pdf:
+        subprocess.call(["pdflatex", '-output-directory', pot_naloge, "{0}/{1}.tex".format(pot_naloge, ucenec)],
+                        encoding="utf8")
+        os.unlink("{0}/{1}.aux".format(pot_naloge, ucenec))
+        os.unlink("{0}/{1}.log".format(pot_naloge, ucenec))
+
+
+def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pdf):
+    """
+    Ustvari datoteko z rešitvami za posameznega dijaka.
+
+    :param ime_testa: ime testa
+    :param seznam_resitvev: seznam rešitev posameznih nalog
+    :param ucenec: ime dijaka
+    :param pot_resitve: mapa, kjer se shranjujejo rešitve
+    """
+    datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
+    vzorec_posameznih_resitev = jinja2.Template(
+        open("vzorec_posameznih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+    datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
+    datoteka_test.close()
+    if pdf:
+        subprocess.call(
+            ["pdflatex", '-output-directory', pot_resitve, "{0}/{1}-rešitve.tex".format(pot_resitve, ucenec)],
+            encoding="utf8")
+        os.unlink("{0}/{1}-rešitve.log".format(pot_resitve, ucenec))
+        os.unlink("{0}/{1}-rešitve.aux".format(pot_resitve, ucenec))
+
+
+def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # Napiše vse rešitve v 1 dokument
+    """
+    Ustvari datoteko z rešitvami vseh dijakov.
+
+    :param ime_testa: ime testa
+    :param seznam_vseh_resitev: seznam seznamov rešitev za posameznega dijaka
+    :param pot_resitve: mapa, kjer se shranjujejo rešitve
+    """
+    datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
+    vzorec_skupnih_resitev = jinja2.Template(
+        open("vzorec_skupnih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+    datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
+    datoteka_test.close()
+    if pdf:
+        subprocess.call(["pdflatex", '-output-directory', pot_resitve, "{0}/Resitve.tex".format(pot_resitve)],
+                        encoding="utf8")
+        os.unlink("{0}/Resitve.aux".format(pot_resitve))
+        os.unlink("{0}/Resitve.log".format(pot_resitve))
