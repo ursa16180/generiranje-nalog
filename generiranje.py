@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import os
 import subprocess
 import random
@@ -170,11 +170,16 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
         seznam_ljudi = sorted(open(datoteka_seznam_dijakov, encoding="utf8").readlines())
 
     podmapa = ime_testa
-    pot_resitve = podmapa + "/Rešitve"
-    pot_naloge = podmapa + "/Naloge"
+
 
     if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
-        shutil.rmtree(podmapa)
+        print('Mapa z imenom {} že obstaja.'.format(podmapa))
+        if input('Ali jo povozim z novo vsebino? [da/NE]') != 'da':
+           podmapa = ime_testa + datetime.now().strftime('-%H-%M-%S')
+        else:
+            shutil.rmtree(podmapa)
+    pot_resitve = podmapa + "/Rešitve"
+    pot_naloge = podmapa + "/Naloge"
     os.makedirs(podmapa)
     os.makedirs(pot_naloge)
     os.makedirs(pot_resitve)
@@ -194,7 +199,7 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
             napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve, pdf)
     if zdruzene_resitve:  # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
         napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf)
-    print('Test {} je sestavljen.'.format(ime_testa))
+    print('Test {} je sestavljen.'.format(podmapa))
 
 
 def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
@@ -205,6 +210,7 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
     :param seznam_nalog: seznam besedil posameznih nalog
     :param ucenec: ime dijaka
     :param pot_naloge: mapa, kjer se shranjujejo naloge
+    :param pdf: program ustvari tudi pdf testa
     """
     datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
     vzorec_testa = jinja2.Template(
@@ -226,6 +232,7 @@ def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pd
     :param seznam_resitvev: seznam rešitev posameznih nalog
     :param ucenec: ime dijaka
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
+    :param pdf: program ustvari tudi pdf rešitve
     """
     datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
     vzorec_posameznih_resitev = jinja2.Template(
@@ -247,6 +254,7 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # 
     :param ime_testa: ime testa
     :param seznam_vseh_resitev: seznam seznamov rešitev za posameznega dijaka
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
+    :param pdf: program ustvari tudi pdf rešitve
     """
     datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
     vzorec_skupnih_resitev = jinja2.Template(
