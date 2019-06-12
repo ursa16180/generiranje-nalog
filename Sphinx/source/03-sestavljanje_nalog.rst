@@ -39,15 +39,15 @@ Potrebno je sestaviti 4 nize:
 * ``rešitev_večih``.
 
 
-Posamezen niz se bo kasneje pretvoril v ``Jinja2.Template`` in nato v `LaTeX`-ov dokument. Zato je verjetno najlažje, da so nizi 'surovi',
+Posamezen niz se bo kasneje pretvoril v ``Jinja2.Template`` in nato v `LaTeX`-ov dokument. Zato je verjetno najlažje, da so nizi surovi (and. raw string),
 saj se tako izognemo težavam pri zapisu posameznih posebnih simbolov, kot je recimo poševnica nazaj.
 
 .. TODO Kaj je raw niz
 
 Niz ``besedilo_posamezne`` je navodilo za reševanje naloge, ki ustreza vsem primerom sestavljene naloge. Namesto
-konkretnih primerov pa napišemo ``Jinja2`` spremenljivke. `Jinja2` za označevanje spremenljivk uporablja
+konkretnih primerov pa napišemo ``Jinja2`` spremenljivke. ``Jinja2`` za označevanje spremenljivk uporablja
 dvojne zavite oklepaje. Spremenljivke, ki bodo v `LaTeX`-u zapisane v matematičnem načinu moramo obdati z znakom '$'.
-Na mesto spremenljivke se bo kasneje dodala vrednost, ki jo bo sestavila metoda `_`poskusi_sestaviti``.
+Na mesto spremenljivke se bo kasneje dodala vrednost, ki jo bo sestavila metoda ``_poskusi_sestaviti``.
 Na enak način zapišemo tudi preostale nize. Niz ``resitev_posamezne`` je niz za izpis rešitev.
 
 .. code-block:: python
@@ -116,24 +116,66 @@ Funkcija `preveri` zagotovi smiseln rezultat.
    :pyobject: PremicaSkoziTocki._poskusi_sestaviti
    :emphasize-lines: 6
 
-Raznolikost primerov zagotovimo tako, da v sestavljanje naloge vključimo naključnost. Najpogosteje sem uporabila funkcije:
+Raznolikost primerov zagotovimo tako, da v sestavljanje naloge vključimo naključnost. To nam omogoča Python knjižnica
+``Random``, ki generira psevdo-naključne vrednosti. Knjižnica vsebuje funkcije, ki lahko psevdo-naključno premešajo
+vrstni red, izberejo vzorec s seznam, izberejo število in še mnogo več. Če želimo, da so rezultati ponovljivi lahko
+določimo seme generatorja s funkcijo ``random.seed``. Več si lahko o knjižnici preberete v uradni dokumentaciji na spletu.
+
+..TODO vir random https://docs.python.org/3/library/random.html
+
+Najpogosteje sem uporabila funkcije:
 
 * ``random.randint``, ki vrne naključno celo število
 * ``random.choice``, ki izbere element s seznama
 * ``random.sample``, ki iz seznama izbere določeno število različnih elementov.
 
-.. todo sklic na random dokumentacijo
 
 .. literalinclude:: ..\..\naravna_stevila.py
    :pyobject: DeliteljVeckratnik._poskusi_sestaviti
    :emphasize-lines: 2-3
 
+Pri sestavljanju nalog iz srednješolske matematike, je za različne naloge potrebno izbrati enak objekte. V knjižnici
+nalog lahko najdemo nekaj pomožnih funkcij, ki vračajo željene naključne objekte.
 
+V poglavjih, ki obravnavajo posamezne funkcije ali odvode, najdemo generatorje željenih funkcij.
 
+.. literalinclude:: ..\..\kvadratna_funkcija.py
+   :pyobject: splosna_oblika
 
+Lahko tudi v različnih oblikah.
 
+.. literalinclude:: ..\..\kvadratna_funkcija.py
+   :pyobject: nicelna_oblika
 
+Funkcije lahko genreriajo tudi drugačne željene objekte.
 
+.. literalinclude:: ..\..\mnozice.py
+   :pyobject: izberi_mnozico
 
+Za računanje z neznankami, mora program podpirati simbolno računanje. V ta namen je uporabljena knjižnica ``sympy``, ki
+omogoča da določimo nek niz kot simbol in ga lahko uporabimo v matematičnih operacijah. Knjižnica ima tudi veliko
+različnih objektov kot so polinomi (``Poly``), stožnice (``Circle``, ``Ellipse``), racionalna števila (``Rational``),…
+Na znanih objektih je možno uporabiti veliko funkcij in tako izračunati vrednosti izrazov, poenostaviti ali celo
+pretvoriti v niz v `LaTeX` obliki.
 
+.. literalinclude:: ..\..\stoznice.py
+    :pyobject: PreseciscaKroznic._poskusi_sestaviti
+    :emphasize-lines: 2, 3, 13, 14, 15, 18, 19
+
+Funkciji ``sympy.latex`` in ``sympy.expand`` sem dodala med funkcije, ki jih `Jinja2` prepozna in jih zato lahko
+kličemo šele v predlogah. Več informacij o knižnici lahko najdemo na spletu.
+.. TODo vir sympy https://www.sympy.org/en/index.html
+
+.. literalinclude:: ..\..\stoznice.py
+    :pyobject: TemeGorisceEnacba.besedilo_posamezne
+..    :lines: 13 TODO besedilo_posamezne
+
+Pri nalogah iz poglavja izrazov, pogosto rešitev predstavlja razširjena oblika izraza. Ker predloge prepznajo funkcijo
+``expand`` tako potrebujemo samo eno vrednost za nalogo in rešitev.
+
+.. literalinclude:: ..\..\izrazi.py
+    :pyobject: PotencaDvoclenika
+..    :lines: 15 TODO resitev_posamezne
+
+..TODO ali želimo opis kako dodajati funkcije da jih jinja prepozna
 
