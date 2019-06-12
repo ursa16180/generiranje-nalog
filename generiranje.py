@@ -151,6 +151,16 @@ class Naloga:
             return {'naloga': template_besedilo_vecih.render(naloge=naloge),
                     'resitev': template_resitev_vecih.render(naloge=naloge)}
 
+    def primer(self):
+        besedilo = self.besedilo_posamezne
+        slovar = self.sestavi()
+        # template = jinja2.Template(besedilo)
+        # koncno_besedilo = template.render(naloga=slovar)
+        # če želimo končno verzijo mormo v template uvozit latex in expand
+        print(besedilo)
+        print(slovar)
+        # print(koncno_besedilo)
+
 
 # ~~~~~~~SESTAVLJANJE TESTOV
 

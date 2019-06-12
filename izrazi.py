@@ -11,6 +11,13 @@ class PotencaDvoclenika(Naloga):
     :param max_potenca: največji možen eksponent dvočlenika
     :param linearna_kombinacija: potenciranje linearne kombinacije 2 neznank, drugače enostaven dvočlenik
 
+    .. runblock:: pycon
+
+        >>> import sys # ignore
+        >>> sys.path.append('../') # ignore
+        >>> from izrazi import * # ignore
+        >>> PotencaDvoclenika().primer()
+
 
     >>> PotencaDvoclenika().sestavi()
     {'izraz': (5*t**4 - 5*y**5)**2, 'potenciran': 25*t**8 - 50*t**4*y**5 + 25*y**10}

@@ -5,7 +5,7 @@ import sympy
 
 def izberi_mnozico(velikost=4, od=1, do=10):
     """
-    Naredi množico poljubne velikosti.
+    Naredi naključno množico poljubne velikosti.
 
     :param velikost: velikost množice
     :param od: najmanjša možna vrednost elementa

@@ -5,7 +5,7 @@ import random
 
 def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
     """
-    Funkcija vrne eksponentno funkcijo, ki ustreza vpisanim pogojem.
+    Funkcija vrne naključno eksponentno funkcijo, ki ustreza vpisanim pogojem.
 
     :param do: osnovo izbere iz seznama od 2 do vrednosti do
     :param cela_osnova: celoštevilka osnova ali ne
@@ -36,7 +36,6 @@ class GrafEksponentne(Naloga):
     Naloga iz risanja dveh grafov eksponentne funkcije.
 
     :param cela_osnova: določi, če ima funkcija lahko samo celoštevilsko osnovo ali tudi racionalno
-
 
     >>> GrafEksponentne().sestavi()
     {'eksponentna1': 2**x, 'eksponentna2': -2**x - 1, 'narisi_eksponentna1': '2^x', 'narisi_eksponentna2': '-2^x - 1', 'premik2': -1}
@@ -141,7 +140,6 @@ class Enacba(Naloga):
 
     def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
-
         if not self.vsota:
             osnova = sympy.Pow(random.choice([2, 3, 4, 5, 7, 10]), random.choice([-2, -1, sympy.Rational(1, 2), 1, 2]))
             a = random.choice([-2, -1, 1, 2])
