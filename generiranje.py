@@ -174,7 +174,7 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
 
     if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
         print('Mapa z imenom {} že obstaja.'.format(podmapa))
-        if input('Ali jo povozim z novo vsebino? [da/NE]') != 'da':
+        if input('Ali jo želite prepisati z novo vsebino? [da/NE]') != 'da':
            podmapa = ime_testa + datetime.now().strftime('-%H-%M-%S')
         else:
             shutil.rmtree(podmapa)
