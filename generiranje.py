@@ -214,7 +214,7 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
     """
     datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
     vzorec_testa = jinja2.Template(
-        open("vzorec_testa.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+        open("vzorci/vzorec_testa.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
     datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec))
     datoteka_test.close()
     if pdf:
@@ -236,7 +236,7 @@ def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pd
     """
     datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
     vzorec_posameznih_resitev = jinja2.Template(
-        open("vzorec_posameznih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+        open("vzorci/vzorec_posameznih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
     datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
     datoteka_test.close()
     if pdf:
@@ -258,7 +258,7 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # 
     """
     datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
     vzorec_skupnih_resitev = jinja2.Template(
-        open("vzorec_skupnih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+        open("vzorci/vzorec_skupnih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
     datoteka_test.close()
     if pdf:
