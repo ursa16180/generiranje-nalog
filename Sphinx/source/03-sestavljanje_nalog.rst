@@ -66,7 +66,9 @@ Za lažjo uporabo, sem ``sympy`` funkciji  ``latex``  in ``expand`` dodala med f
 
 Niza ``besedilo_vecih`` in ``resitev_vecih`` sta za izpis besedila oziroma rešitev naloge z več primeri.
 Običajno je navodilo samo eno, nato pa sledi (oštevilčeni) seznam primerov. Testi se izpisujejo v obliki ``LaTeX`` dokumentov,
-zato je najpogosteje smiselno, da v nizu pripravimo izpis ``LaTeX`` seznama. To naredimo tako, da uporabimo okolje ``itemize`` za neoštevilčeni seznam ali okolje ``enumerate`` za oštevilčeni seznam. Pred posamezno točko seznama kličemo element `\item`.
+zato je najpogosteje smiselno, da v nizu pripravimo izpis ``LaTeX`` seznama. To naredimo tako, da uporabimo okolje
+``itemize`` za neoštevilčeni seznam ali okolje ``enumerate`` za oštevilčeni seznam. Pred posamezno točko seznama kličemo
+element `\item`.
 ..TODO vir za latex sezname
 Program nam več primerov izpiše z pomočjo `for` zanke. Primer `Jinja` zanke spremenljivke:
 
@@ -88,10 +90,13 @@ Metoda ``_poskusi_sestaviti``
 *********************************************
 Metoda ``_poskusi_sestaviti`` sestavi posamezen primer za nalogo in vrne slovar vrednosti, ki jih metoda ``generiranje.besedilo``
 vstavi na mesta spremenljivk v predlogah besedil in rešitev. Metoda ``_poskusi_sestaviti`` vedno vrne samo en primer.
-Če želimo nalogo z več primeri, program večkrat pokliče metodo ``generiranje.besedilo`` in tako vstavi vrednosti posameznih primerov znotraj naloge.
+Če želimo nalogo z več primeri, program večkrat pokliče metodo ``generiranje.besedilo`` in tako vstavi vrednosti
+posameznih primerov znotraj naloge.
 
 .. TODO ali ta del paše sem ali bolje v opis impelementacije knjižnice
 
+Lepe rešitve in funkcija preveri
+###################################
 Lepe rešitve najlažje zagotovimo tako, da rešitve naloge izberemo vnaprej in nato okoli tega sestavimo nalogo ali pa da jih
 preverimo s metodo ``preveri``. Funkcija ``preveri`` zagotovi, da program zavrne naloge, ki ne ustrezajo pogoju. Na ta način
 lahko zagotovimo lepši rezultat ali pa preprečimo nesmiselne naloge.
@@ -115,6 +120,9 @@ Funkcija `preveri` zagotovi smiseln rezultat.
 .. literalinclude:: ..\..\linearna_funkcija.py
    :pyobject: PremicaSkoziTocki._poskusi_sestaviti
    :emphasize-lines: 6
+
+Naključnost
+#############
 
 Raznolikost primerov zagotovimo tako, da v sestavljanje naloge vključimo naključnost. To nam omogoča Python knjižnica
 ``Random``, ki generira psevdo-naključne vrednosti. Knjižnica vsebuje funkcije, ki lahko psevdo-naključno premešajo
@@ -147,11 +155,24 @@ Lahko tudi v različnih oblikah.
 .. literalinclude:: ..\..\kvadratna_funkcija.py
    :pyobject: nicelna_oblika
 
-Funkcije lahko genreriajo tudi drugačne željene objekte.
+Funkcije lahko generirajo tudi drugačne željene objekte.
 
 .. literalinclude:: ..\..\mnozice.py
    :pyobject: izberi_mnozico
 
+Naključno izbrani operatoji
+****************************
+
+Včasih lahko raznolikost nalog dosežemo tudi tako, da namesto samo naključno generiranih vrednosti, tudi operacije med
+vrednostmi izberemo naključno.
+
+.. literalinclude:: ..\..\odvodi.py
+    :pyobject: OdvodSestavljene._poskusi_sestaviti
+    :emphasize-lines: 34-40
+
+
+Simbolno računanje
+###################
 Za računanje z neznankami, mora program podpirati simbolno računanje. V ta namen je uporabljena knjižnica ``sympy``, ki
 omogoča da določimo nek niz kot simbol in ga lahko uporabimo v matematičnih operacijah. Knjižnica ima tudi veliko
 različnih objektov kot so polinomi (``Poly``), stožnice (``Circle``, ``Ellipse``), racionalna števila (``Rational``),…
@@ -162,20 +183,31 @@ pretvoriti v niz v `LaTeX` obliki.
     :pyobject: PreseciscaKroznic._poskusi_sestaviti
     :emphasize-lines: 2, 3, 13, 14, 15, 18, 19
 
-Funkciji ``sympy.latex`` in ``sympy.expand`` sem dodala med funkcije, ki jih `Jinja2` prepozna in jih zato lahko
-kličemo šele v predlogah. Več informacij o knižnici lahko najdemo na spletu.
-.. TODo vir sympy https://www.sympy.org/en/index.html
 
-.. literalinclude:: ..\..\stoznice.py
-    :pyobject: TemeGorisceEnacba.besedilo_posamezne
-..    :lines: 13 TODO besedilo_posamezne
+Grafi
+######
+V naloge oziroma njihove rešitve lahko vključujemo tudi grafe. To nam omogoča `LaTeX` paket `pgfplots`, ki avtomatično
+generira slike grafov. Pomembno je, da grafe podamo v obliki, ki jo `pgfplots` zna razbrati. Funkcije, ki jih želimo
+narisati, moramo najprej s funkcijo `sympy.latex` spremeniti v nize, ki jih `LaTeX` generator zna prevesti. Vendar
+moramo biti pozorni na oznako za potence. V matematičnem načinu zapišemo potence z oznako `**`, za risanje grafov pa
+jih moramo zapisati z znakom `^`.
 
-Pri nalogah iz poglavja izrazov, pogosto rešitev predstavlja razširjena oblika izraza. Ker predloge prepznajo funkcijo
-``expand`` tako potrebujemo samo eno vrednost za nalogo in rešitev.
+.. literalinclude:: ..\..\eksponentna_funkcija.py
+    :pyobject: GrafEksponentne._poskusi_sestaviti
+    :emphasize-lines: 7-8
 
-.. literalinclude:: ..\..\izrazi.py
-    :pyobject: PotencaDvoclenika
-..    :lines: 15 TODO resitev_posamezne
+Včasih je zato lažje, da funkcijo za risanje podamo kot produkt faktorjev (na primer v ničelni obliki).
 
-..TODO ali želimo opis kako dodajati funkcije da jih jinja prepozna
+.. literalinclude:: ..\..\kvadratna_funkcija.py
+    :pyobject: NarisiGraf._poskusi_sestaviti
+
+Zahtevnost naloge
+###################
+
+
+.. TODO  zanimivi primeri
+
+
+
+
 

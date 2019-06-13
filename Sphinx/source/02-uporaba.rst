@@ -649,7 +649,9 @@ Privzeta vrednost je en primer. Če želimo več primerov pa moramo podati narav
 Naslednja koda, bi ustvarila test, z dvema enakima nalogama. Prva naloga ima samo 1 primer računa, druga naloga pa 5 primerov (glej sliko).
 
 
->>>sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje(st_nalog=5)])
+.. code-block:: python
+
+    >>>sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje(st_nalog=5)])
 
 .. figure:: slike/st_nalog.png
     :align: center
