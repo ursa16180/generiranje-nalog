@@ -231,7 +231,7 @@ class NarisiGraf(Naloga):
      \end{enumerate}
      '''
 
-    def _poskusi_sestaviti(self):
+    def _poskusi_sestaviti(self):  # TODO expand v jinji? potem spremeni kot primer v 03-grafi
         x = sympy.symbols('x')
         (a, x1, x2, nicelna) = nicelna_oblika(-3, 3, risanje=True)
         funkcija = sympy.expand(nicelna)
