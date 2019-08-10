@@ -1,7 +1,7 @@
 Sestavljanje nalog
 ======================================================
 
-Vsaka naloga v knjižnici je svoj razred, vse pa dedujejo lastnosti iz razreda ``Naloga``, ki je podrobneje predstavljen v poglaju 4.
+Vsaka naloga v knjižnici je svoj razred, vse pa dedujejo lastnosti iz razreda ``Naloga``, ki je podrobneje predstavljen v poglavju 4.
 .. Todo (glej točko 4)
 
 
@@ -12,8 +12,7 @@ Za naključno generirane vrednosti moramo uvoziti še paket ``random``. Paket ``
 .. literalinclude:: ..\..\eksponentna_funkcija.py
    :lines: 1-3
 
-Da bomo naloge lahko dodajali v teste, moramo na koncu našo novo ustvarjeno poglavje uvoziti še v program ``izpisi_naloge.py``.
-
+Da bomo naloge lahko dodajali v teste, moramo na koncu našo novo ustvarjeno poglavje uvoziti še v program ``generiranje.py``.
 
 .. code-block:: python
 
@@ -39,22 +38,24 @@ Potrebno je sestaviti 4 nize:
 * ``rešitev_večih``.
 
 
-Posamezen niz se bo kasneje pretvoril v ``Jinja2.Template`` in nato v `LaTeX`-ov dokument. Zato je verjetno najlažje, da so nizi surovi (and. raw string),
-saj se tako izognemo težavam pri zapisu posameznih posebnih simbolov, kot je recimo poševnica nazaj.
+Posamezen niz se bo kasneje pretvoril v ``Jinja2.Template`` in nato v `LaTeX`-ov dokument. Zato je verjetno najlažje,
+da so nizi surovi (ang. raw string),
+saj se tako izognemo težavam pri zapisu posameznih posebnih `Python` simbolov, kot je recimo poševnica nazaj.
 
 .. TODO Kaj je raw niz
 
 Niz ``besedilo_posamezne`` je navodilo za reševanje naloge, ki ustreza vsem primerom sestavljene naloge. Namesto
 konkretnih primerov pa napišemo ``Jinja2`` spremenljivke. ``Jinja2`` za označevanje spremenljivk uporablja
-dvojne zavite oklepaje. Spremenljivke, ki bodo v `LaTeX`-u zapisane v matematičnem načinu moramo obdati z znakom '$'.
+dvojne zavite oklepaje in znotraj ime spremenljivke. Spremenljivke, ki bodo v `LaTeX`-u zapisane v matematičnem načinu
+moramo obdati z znakom '$'.
 Na mesto spremenljivke se bo kasneje dodala vrednost, ki jo bo sestavila metoda ``_poskusi_sestaviti``.
-Na enak način zapišemo tudi preostale nize. Niz ``resitev_posamezne`` je niz za izpis rešitev.
+Na enak način zapišemo tudi preostale nize. Niz ``resitev_posamezne`` je niz za izpis rešitev naloge z enim primerom.
 
 .. code-block:: python
 
     besedilo_posamezne = r'''Nariši graf {{naloga.ime_funkcije}} funkcije ${{naloga.matematicno_zapisana_spremenljivka}}$.''
 
-Knjižnica ``sympy`` s klicem funkcije ``latex`` pretvori python matematični zapis v latexov matematični zapis.
+Knjižnica ``sympy`` s klicem funkcije ``latex`` pretvori python matematični zapis v latex-ov matematični zapis.
 Za lažjo uporabo, sem ``sympy`` funkciji  ``latex``  in ``expand`` dodala med funkcije, ki jih ``Jinja2`` prepozna.
 
 .. Todo dodaj sklic na kodo v generiranju ki doda funkciji ali sklic na dodatek B
@@ -89,11 +90,13 @@ Program nam več primerov izpiše z pomočjo `for` zanke. Primer `Jinja` zanke s
 Metoda ``_poskusi_sestaviti``
 *********************************************
 Metoda ``_poskusi_sestaviti`` sestavi posamezen primer za nalogo in vrne slovar vrednosti, ki jih metoda ``generiranje.besedilo``
-vstavi na mesta spremenljivk v predlogah besedil in rešitev. Metoda ``_poskusi_sestaviti`` vedno vrne samo en primer.
-Če želimo nalogo z več primeri, program večkrat pokliče metodo ``generiranje.besedilo`` in tako vstavi vrednosti
-posameznih primerov znotraj naloge.
+vstavi na mesta spremenljivk v predlogah besedil in rešitev. Imena spremenljivk se morajo ujemati s ključi slovarja,
+vrednosti slovarja pa so dejanske vrednosti naloge. Metoda ``_poskusi_sestaviti`` vedno vrne samo en primer.
 
-.. TODO ali ta del paše sem ali bolje v opis impelementacije knjižnice
+Če želimo nalogo z več primeri, bo za to poskrbela metoda `generiranje.besedilo``, ki za vsak primer pokliče metodo
+``_poskusi_sestaviti``. Podrobnosti, o tem si lahko preberet v poglavju 4.
+.. todo sklic  na poglavje 4
+
 
 Lepe rešitve in funkcija preveri
 ###################################
