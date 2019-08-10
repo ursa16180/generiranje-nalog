@@ -44,8 +44,13 @@ templates_path = ['_templates']
 # Usually you set "language" from the command line for these cases.
 language = 'sl'
 
-# source_encoding = 'utf-8-sig'
-
+source_encoding = 'utf-8-sig'
+autorun_languages = {
+    'pycon': 'python -',
+    'pycon_prefix_chars': 4,
+    'pycon_input_encoding': 'utf-8',
+    'pycon_output_encoding': 'utf-8',
+}
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.

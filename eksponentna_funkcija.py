@@ -110,6 +110,13 @@ class Enacba(Naloga):
 
     :param vsota: enačba z enim členom ali vsota dveh členov
 
+    .. runblock:: pycon
+
+        >>> import sys # ignore
+        >>> sys.path.append('../') # ignore
+        >>> from eksponentna_funkcija import * # ignore
+        >>> Enacba().primer()
+
 
     >>> Enacba().sestavi()
     {'enacba': Eq((1/49)**(-x - 1), 1), 'resitev': -1}

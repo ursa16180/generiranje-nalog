@@ -25,7 +25,7 @@ class PotencaDvoclenika(Naloga):
     >>> PotencaDvoclenika(linearna_kombinacija=False, min_potenca=3).sestavi()
     {'izraz': (z + 4)**3, 'potenciran': z**3 + 12*z**2 + 48*z + 64}
     """
-    besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
+    besedilo_posamezne = r'''č Potenciraj izraz ${{latex(naloga.izraz)}}$'''
     besedilo_vecih = r'''Potenciraj izraze:
     \begin{enumerate}
     {% for naloga in naloge %}
