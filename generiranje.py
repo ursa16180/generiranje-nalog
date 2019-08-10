@@ -9,7 +9,9 @@ import importlib
 
 sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 
+import locale
 
+locale.setlocale(locale.LC_ALL, 'sl_SI.utf-8')
 # ~~~~~~~~~SESTAVLJANJE NALOG
 
 class NapacnaNaloga(Exception):
@@ -76,7 +78,7 @@ class Naloga:
     resitev_vecih = r'''Rešitve nalog:
         \begin{enumerate}
         {% for naloga in naloge %}
-        \item${{ naloga }}$
+        \item ${{ naloga }}$
         {% endfor %}
         \end{enumerate}
         '''
@@ -152,14 +154,25 @@ class Naloga:
                     'resitev': template_resitev_vecih.render(naloge=naloge)}
 
     def primer(self):
-        besedilo = self.besedilo_posamezne
-        slovar = self.sestavi()
-        # template = jinja2.Template(besedilo)
-        # koncno_besedilo = template.render(naloga=slovar)
-        # če želimo končno verzijo mormo v template uvozit latex in expand
-        print(besedilo)
-        print(slovar)
-        # print(koncno_besedilo)
+
+        template_besedilo_posamezne = jinja2.Template(self.besedilo_posamezne)
+        template_besedilo_vecih = jinja2.Template(self.besedilo_vecih)
+
+        razsiritve = {
+            'latex': moj_latex, 'expand': sympy.expand
+        }
+
+        for kljuc, vrednost in razsiritve.items():
+            template_besedilo_posamezne.globals[kljuc] = vrednost
+            template_besedilo_vecih.globals[kljuc] = vrednost
+
+        slovar = self.sestavi_vec(stevilo_nalog=3)
+        besedilo_solo = template_besedilo_posamezne.render(naloga=slovar[0])
+        besedilo_vec = template_besedilo_vecih.render(naloge=slovar)
+        print("Slovar posamezne: {}".format(slovar[0]))
+        print("Besedilo posamezne: {}".format(besedilo_solo))
+        print("Slovar vecih: {}".format(slovar))
+        print("Besedilo večih: {}".format(besedilo_vec))
 
 
 # ~~~~~~~SESTAVLJANJE TESTOV
@@ -181,6 +194,7 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
 
     podmapa = ime_testa
 
+    print("Sestavljam test {}.".format(podmapa))
 
     if os.path.exists(podmapa):  # Zbriše staro mapo s tem imenom in ustvari novo
         print('Mapa z imenom {} že obstaja.'.format(podmapa))
@@ -222,16 +236,22 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
     :param pot_naloge: mapa, kjer se shranjujejo naloge
     :param pdf: program ustvari tudi pdf testa
     """
+    print('Izpisujem test: {}'.format(ucenec))
     datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
     vzorec_testa = jinja2.Template(
         open("vzorci/vzorec_testa.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
     datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec))
     datoteka_test.close()
     if pdf:
-        subprocess.call(["pdflatex", '-output-directory', pot_naloge, "{0}/{1}.tex".format(pot_naloge, ucenec)],
-                        encoding="utf8")
-        os.unlink("{0}/{1}.aux".format(pot_naloge, ucenec))
-        os.unlink("{0}/{1}.log".format(pot_naloge, ucenec))
+        process = subprocess.run(
+            ["pdflatex", '-output-directory', pot_naloge, "{0}/{1}.tex".format(pot_naloge, ucenec)],
+            encoding="utf8", stdout=subprocess.DEVNULL)
+        if process.returncode == 0:
+            os.unlink("{0}/{1}.aux".format(pot_naloge, ucenec))
+            os.unlink("{0}/{1}.log".format(pot_naloge, ucenec))
+            # print('Končano')
+        else:
+            print('Prišlo je do napake. Poglejte datoteko {0}/{1}.log'.format(pot_naloge, ucenec))
 
 
 def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pdf):
@@ -244,17 +264,23 @@ def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pd
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
     """
+    print('Izpisujem rešitve: {}'.format(ucenec))
     datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
     vzorec_posameznih_resitev = jinja2.Template(
         open("vzorci/vzorec_posameznih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
     datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
     datoteka_test.close()
     if pdf:
-        subprocess.call(
+        process = subprocess.run(
             ["pdflatex", '-output-directory', pot_resitve, "{0}/{1}-rešitve.tex".format(pot_resitve, ucenec)],
-            encoding="utf8")
-        os.unlink("{0}/{1}-rešitve.log".format(pot_resitve, ucenec))
-        os.unlink("{0}/{1}-rešitve.aux".format(pot_resitve, ucenec))
+            encoding="utf8", stdout=subprocess.DEVNULL)
+        if process.returncode == 0:
+            os.unlink("{0}/{1}-rešitve.log".format(pot_resitve, ucenec))
+            os.unlink("{0}/{1}-rešitve.aux".format(pot_resitve, ucenec))
+            # print('Končano')
+        else:
+            print("Prišlo je do napake. Poglejte datoteko {0}/{1}-rešitve.log".format(pot_resitve, ucenec))
+
 
 
 def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # Napiše vse rešitve v 1 dokument
@@ -266,13 +292,18 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # 
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
     """
+    print("Izpisujem skupne rešitve za test {}.".format(ime_testa))
     datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
     vzorec_skupnih_resitev = jinja2.Template(
         open("vzorci/vzorec_skupnih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
     datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
     datoteka_test.close()
     if pdf:
-        subprocess.call(["pdflatex", '-output-directory', pot_resitve, "{0}/Resitve.tex".format(pot_resitve)],
-                        encoding="utf8")
-        os.unlink("{0}/Resitve.aux".format(pot_resitve))
-        os.unlink("{0}/Resitve.log".format(pot_resitve))
+        process = subprocess.run(["pdflatex", '-output-directory', pot_resitve, "{0}/Resitve.tex".format(pot_resitve)],
+                                 encoding="utf8", stdout=subprocess.DEVNULL)
+        if process.returncode == 0:
+            os.unlink("{0}/Resitve.aux".format(pot_resitve))
+            os.unlink("{0}/Resitve.log".format(pot_resitve))
+            # print('Končano')
+        else:
+            print("Prišlo je do napake. Poglejte datoteko {0}/Resitve.log".format(pot_resitve))
