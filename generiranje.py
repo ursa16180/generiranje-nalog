@@ -191,8 +191,13 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
         seznam_ljudi = ["Matematika"]
     else:
         seznam_ljudi = sorted(open(datoteka_seznam_dijakov, encoding="utf8").readlines())
+        seznam_ljudi = [x.strip() for x in seznam_ljudi if x.strip() != '']
+        # TODO  elegantno odstrani prazne vrstice ?
 
     podmapa = ime_testa
+
+    if not naloge:
+        raise ValueError('Seznam mora vsebovati vsaj eno nalogo.')
 
     print("Sestavljam test {}.".format(podmapa))
 
