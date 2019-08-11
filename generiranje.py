@@ -197,7 +197,7 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
     podmapa = ime_testa
 
     if not naloge:
-        raise ValueError('Seznam mora vsebovati vsaj eno nalogo.')
+        raise ValueError('Seznam nalog mora vsebovati vsaj eno nalogo.')
 
     print("Sestavljam test {}.".format(podmapa))
 
@@ -217,11 +217,13 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
     for ucenec in seznam_ljudi:
         ucenec = ucenec.strip()
         random.seed(ucenec)
-        seznam_nalog = [naloga.besedilo() for naloga in
-                        naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
+        seznam_nalog_resitev = [naloga.besedilo() for naloga in
+                                naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
+
+        seznam_nalog = [naloga['naloga'] for naloga in seznam_nalog_resitev]
         napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf)
 
-        seznam_resitev = [naloga['resitev'] for naloga in seznam_nalog]
+        seznam_resitev = [naloga['resitev'] for naloga in seznam_nalog_resitev]
         if zdruzene_resitve:
             seznam_vseh_resitev.append({'ucenec': ucenec, 'resitve': seznam_resitev})
         else:
@@ -259,12 +261,12 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
             print('Prišlo je do napake. Poglejte datoteko {0}/{1}.log'.format(pot_naloge, ucenec))
 
 
-def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pdf):
+def napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve, pdf):
     """
     Ustvari datoteko z rešitvami za posameznega dijaka.
 
     :param ime_testa: ime testa
-    :param seznam_resitvev: seznam rešitev posameznih nalog
+    :param seznam_resitev: seznam rešitev posameznih nalog
     :param ucenec: ime dijaka
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
@@ -273,7 +275,7 @@ def napisi_posamezno_resitev(ime_testa, seznam_resitvev, ucenec, pot_resitve, pd
     datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
     vzorec_posameznih_resitev = jinja2.Template(
         open("vzorci/vzorec_posameznih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
-    datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitvev, ucenec=ucenec))
+    datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitev, ucenec=ucenec))
     datoteka_test.close()
     if pdf:
         process = subprocess.run(

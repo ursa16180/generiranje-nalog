@@ -15,7 +15,7 @@
 \maketitle
 \begin{enumerate}
 {% for naloga in naloge %}
-\item {{naloga.naloga}}
+\item {{naloga}}
 {% endfor%}
 
 \end{enumerate}
