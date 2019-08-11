@@ -121,8 +121,8 @@ class Enacba(Naloga):
     >>> Enacba().sestavi()
     {'enacba': Eq((1/49)**(-x - 1), 1), 'resitev': -1}
 
-    >>> Enacba(vsota = False).sestavi()
-    {'enacba': Eq(5**(x/2 + 1/2), sqrt(5)/5), 'resitev': -2}
+    >>> Enacba(vsota = True).sestavi()
+    {'enacba': Eq(4**(x + 2) + 4**(x + 3), 5120), 'resitev': 3}
     """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
@@ -153,13 +153,14 @@ class Enacba(Naloga):
             b = random.choice([-2, -1, 1, 2])
             d = 0
             k = 0
+            x1 = random.choice([-3, -2, -1, 0, 1, 2, 3])
         else:
             osnova = random.choice([2, 3, 4, 5, 7, 10])
             a = 1
             b = random.choice([-3, -2, -1, 1, 2, 3])
             d = random.choice([-3, -2, -1, 1, 2, 3])
-            k = random.choice([-3, -2, -1, 1, 2, 3])
-        x1 = random.choice([-3, -2, -1, 0, 1, 2, 3])
+            k = random.choice([1, 2, 3])
+            x1 = random.choice([-1, 0, 1, 2, 3])
         vrednost = osnova ** (a * x1 + b) + k * (osnova) ** (x1 + d)
         enacba = sympy.Eq(sympy.Pow(osnova, (a * x + b)) + k * sympy.Pow(osnova, (x + d)), vrednost)
 
