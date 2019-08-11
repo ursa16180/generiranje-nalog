@@ -148,19 +148,20 @@ class Enacba(Naloga):
     def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
         if not self.vsota:
-            osnova = sympy.Pow(random.choice([2, 3, 4, 5, 7, 10]), random.choice([-2, -1, sympy.Rational(1, 2), 1, 2]))
+            osnova = sympy.Pow(random.choice([2, 3, 4, 5, 10]), random.choice([-2, -1, sympy.Rational(1, 2), 1, 2]))
             a = random.choice([-2, -1, 1, 2])
             b = random.choice([-2, -1, 1, 2])
             d = 0
             k = 0
             x1 = random.choice([-3, -2, -1, 0, 1, 2, 3])
         else:
-            osnova = random.choice([2, 3, 4, 5, 7, 10])
+            osnova = random.choice([2, 3, 4, 5, 10])
             a = 1
             b = random.choice([-3, -2, -1, 1, 2, 3])
             d = random.choice([-3, -2, -1, 1, 2, 3])
             k = random.choice([1, 2, 3])
             x1 = random.choice([-1, 0, 1, 2, 3])
+            preveri(-2 < (a * x1 + b) and -2 < (x1 + d))
         vrednost = osnova ** (a * x1 + b) + k * (osnova) ** (x1 + d)
         enacba = sympy.Eq(sympy.Pow(osnova, (a * x + b)) + k * sympy.Pow(osnova, (x + d)), vrednost)
 
