@@ -1,12 +1,25 @@
 Motivacija
 ============
 
-****************
-Motivacija
-****************
-#TODO test/preverjanje/naloge
-Pomembno vlogo pri učenju matematike v srednji šoli predstavljajo vaje in utrjevanje naučene snov. Učitelji morajo zato sestaviti veliko podobnih vaj z lepimi rešitvami, kar je lahko vzame veliko časa. Take naloge se da sprogramirati in celo prilagoditi zahtevnost posameznim dijakom. V mojem magistrskem delu sem v Python-u pripravila knjižnico nalog iz srednješolske snovi, ki je lahko v pomoč vsem učiteljem z zelo osnovnim razumevanjem programskega jezika.
-V knjižnici je zbranih #TODO 60 nalog iz različnih poglavij srednješolske matematike. Večina nalog je namenjena učenju in utrjevanju osnovnih pojmov in računskih postopkov, nekatere pa so primerne tudi za preverjanja znanja  in pripravam na maturo.
+Pomembno vlogo pri učenju matematike v srednji šoli predstavljajo vaje in utrjevanje naučene snov. Naloge lahko najdemo
+v različnih učbenikih in spletnih bazah nalog, vendar pa je njihovo število omejeno. Učitelji imajo pogosto dostop do
+različnih učbenikov, vendar pa če jih želijo deliti z dijaki, jih morajo fotokopirati ali celo pretipkati, še posebej
+če jih želimo imeti v elektronski obliki. Spletne baze nalog omogočajo, da lahko ustvarimo preverjanja, vendar pa so
+pogosto omejena s premajhnim številom nalog ali pa niso javno dostopna.
+Naloge, predvsem za utrjevanje, imajo pogosto enako navodilo, le vrednosti so različne. Baza nalog, kjer bi lahko
+vrednosti generirali naključno, a bi vseeno imeli zagotovljene lepe rezultate, bi bila lahko na tak način veliko bolj
+obširna. Morda celo dovolj, da bi lahko vsak učenec dobil drugačno preverjanje in bi tako zagotovili veliko različnih
+primerov, hkrati pa preprečili prepisovanje rezultatov ter morda celo povečali motivacijo za samostojno reševanje.
+V primeru, da bi bila baza dostopna tudi dijakom pa bi jim omogočili samostojno reševanje, kjer bi utrjevali razumevanje
+ reševanja in ne samo učenje rešitev na pamet.
+Sestavljanje nalog s psevdo-generiranimi vrednostmi se da avtomatizirati, vendar moramo ustvariti knjižnico nalog in z
+agotoviti,da so rešitve primerne. V nadaljevanju je predstavljena `Python` knjižnica, ki vsebuje
+.. todo koliko nalog
 
-Moje magistrsko delo je knjižnica posameznih nalog in kratek program, ki iz izbranih nalog sestavi teste in rešitve za dijake. Knjižnica ima splošen razred ``Naloga`` in več podrazredov, ki predstavljajo posamezne naloge iz snovi srednješolske matematike.
-Uporabnik izbere, katere naloge želi vključiti v test in program ``sestavi_vse_teste.py`` ustvari mapi `Naloge` in `Rešitve`, ki vsebujeta željene ``LateX``- datoteke za posameznega dijake.
+iz snovi srednješolske matematike. Večina nalog je namenjena učenju in utrjevanju osnovnih pojmov in računskih
+postopkov, nekatere pa so primerne tudi za preverjanja znanja in priprave na maturo. Knjižnica ima splošen razred
+``Naloga`` in več podrazredov, ki predstavljajo posamezne naloge iz snovi srednješolske matematike.
+Knjižnici je dodan še program, ki iz izbranih nalog nato sestavi preverjanje znanja oziroma učni list z vajami ter
+rešitve. Program s klicem funkcije ``sestavi_vse_teste.py`` ustvari `LaTeX` in po želji tudi `PDF` datoteke preverjanj
+in rešitev za vsakega dijaka s podanega seznama. Vsako preverjanje vsebuje enake naloge, vendar različne
+psevdo-generirane vrednosti.
