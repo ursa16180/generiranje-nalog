@@ -311,6 +311,5 @@ def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # 
         if process.returncode == 0:
             os.unlink("{0}/Resitve.aux".format(pot_resitve))
             os.unlink("{0}/Resitve.log".format(pot_resitve))
-            # print('Končano')
         else:
             print("Prišlo je do napake. Poglejte datoteko {0}/Resitve.log".format(pot_resitve))

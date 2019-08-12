@@ -7,7 +7,7 @@ class PotencaDvoclenika(Naloga):
     """
     Naloga iz potenciranja dvočlenika.
 
-    :param min_potenca: najmajši možen eksponent dvočlenika
+    :param min_potenca: najmanjši možen eksponent dvočlenika
     :param max_potenca: največji možen eksponent dvočlenika
     :param linearna_kombinacija: potenciranje linearne kombinacije 2 neznank, drugače enostaven dvočlenik
 
@@ -25,7 +25,7 @@ class PotencaDvoclenika(Naloga):
     >>> PotencaDvoclenika(linearna_kombinacija=False, min_potenca=3).sestavi()
     {'izraz': (z + 4)**3, 'potenciran': z**3 + 12*z**2 + 48*z + 64}
     """
-    besedilo_posamezne = r'''č Potenciraj izraz ${{latex(naloga.izraz)}}$'''
+    besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
     besedilo_vecih = r'''Potenciraj izraze:
     \begin{enumerate}
     {% for naloga in naloge %}
@@ -77,7 +77,7 @@ class PotencaDvoclenika(Naloga):
 class PotencaTroclenika(Naloga):
     """Naloga iz potenciranja tročlenika.
 
-    :param min_potenca: najmajši možen eksponent tročlenika
+    :param min_potenca: najmanjši možen eksponent tročlenika
     :param max_potenca: največji možen eksponent tročlenika
     :param linearna_kombinacija: potenciranje linearne kombinacije 3 neznank, drugače enostaven tročlenik
 

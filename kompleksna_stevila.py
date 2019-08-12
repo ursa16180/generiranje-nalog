@@ -78,7 +78,7 @@ class Ulomek(Naloga):
     """
     Naloga za seštevanje dveh kompleksnih ulomkov in racionalizacije ulomkov.
 
-    :param nicelna_komponenta_stevca: števec ima eno od komponent enako 0, drugače v števcu poljubnp kompleksno število
+    :param nicelna_komponenta_stevca: števec ima eno od komponent enako 0, drugače v števcu poljubno kompleksno število
 
 
     >>> Ulomek().sestavi()

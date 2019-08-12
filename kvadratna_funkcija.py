@@ -163,9 +163,9 @@ class IzracunajNicle(Naloga):
     def _poskusi_sestaviti(self):
         (a, b, c, splosna) = splosna_oblika()
         if not self.kompleksni_nicli:
-            preveri(diskriminanta(a, b, c) > 0 and abs(diskriminanta(a, b, c)) <= 200)
+            preveri(diskriminanta(a, b, c) >= 0 and abs(diskriminanta(a, b, c)) <= 200)
         else:
-            preveri(diskriminanta(a, b, c) <= 0 and abs(diskriminanta(a, b, c)) <= 200)
+            preveri(diskriminanta(a, b, c) < 0 and abs(diskriminanta(a, b, c)) <= 200)
         [x1, x2] = nicle(a, b, c)
         return {'splosna': splosna, 'x1': x1, 'x2': x2}
 

@@ -39,7 +39,7 @@ def kot_med_premicama(k1, k2):
     return kot
 
 
-def doloci_polinom(min_stopnja=2, max_stopnja=3):
+def izberi_polinom(min_stopnja=2, max_stopnja=3):
     """
     Vrne naključen polinom.
 
@@ -48,10 +48,10 @@ def doloci_polinom(min_stopnja=2, max_stopnja=3):
     :return: polinom
 
 
-    >>> doloci_polinom()
+    >>> izberi_polinom()
     -2*x**2 + x + 1
 
-    >>> doloci_polinom(max_stopnja=5)
+    >>> izberi_polinom(max_stopnja=5)
     -2*x**4 + x**3 + 2*x**2 + 2*x + 3
     """
     x = sympy.symbols('x')
@@ -61,7 +61,7 @@ def doloci_polinom(min_stopnja=2, max_stopnja=3):
     return polinom
 
 
-def doloci_racionalno(min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=1, max_stopnja_imenovalca=2):
+def izberi_racionalno(min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_imenovalca=1, max_stopnja_imenovalca=2):
     """
     Vrne naključno racionalno funkcijo.
 
@@ -72,10 +72,10 @@ def doloci_racionalno(min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_im
     :return: racionalno fukcijo (kvocient dveh polinomov)
 
 
-    >>> doloci_racionalno()
+    >>> izberi_racionalno()
     (-x**2 + x + 2)/(2*x - 1)
 
-    >>> doloci_racionalno(min_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3)
+    >>> izberi_racionalno(min_stopnja_stevca=3, min_stopnja_imenovalca=3, max_stopnja_imenovalca=3)
     (-2*x**3 + 3*x**2 - x + 1)/(x**3 + 3*x**2 - 3*x - 2)
     """
     x = sympy.symbols('x')
@@ -90,17 +90,17 @@ def doloci_racionalno(min_stopnja_stevca=2, max_stopnja_stevca=4, min_stopnja_im
     return racionalna
 
 
-def doloci_eksponentno(osnove=[sympy.E, 2, 3, 5]):
+def izberi_eksponentno(osnove=[sympy.E, 2, 3, 5]):
     """
     Vrne naključno eksponentno funkcijo z eno izmed podanih osnov.
 
     :param osnove: seznam izbora osnov
     :return: eksponentno funkcijo
 
-    >>> doloci_eksponentno()
+    >>> izberi_eksponentno()
     2**x
 
-    >>> doloci_eksponentno(osnove=[5])
+    >>> izberi_eksponentno(osnove=[5])
     5**x
     """
     x = sympy.symbols('x')
@@ -109,7 +109,7 @@ def doloci_eksponentno(osnove=[sympy.E, 2, 3, 5]):
     return eksponentna
 
 
-def doloci_logaritem(osnove=[sympy.E, 2, 3, 4, 5, 10]):
+def izberi_logaritem(osnove=[sympy.E, 2, 3, 4, 5, 10]):
     """
     Vrne naključno logaritemsko funkcijo z eno izmed podanih osnov.
     Opomba: Program vse logaritme spremeni v logaritme z osnovo :math:`e` in naravni logaritem izpiše kot :math:`log(x)`.
@@ -118,10 +118,10 @@ def doloci_logaritem(osnove=[sympy.E, 2, 3, 4, 5, 10]):
     :return: logaritemska fukcija
 
 
-    >>> doloci_logaritem()
+    >>> izberi_logaritem()
     log(x)/log(10)
 
-    >>> doloci_logaritem(osnove=[3,5])
+    >>> izberi_logaritem(osnove=[3,5])
     log(x)/log(5)
     """
     x = sympy.symbols('x')
@@ -131,17 +131,17 @@ def doloci_logaritem(osnove=[sympy.E, 2, 3, 4, 5, 10]):
     return logaritem
 
 
-def doloci_kotna():
+def izberi_kotna():
     """
     Vrne kosinus, sinus, tangens ali kotangens.
 
     :return: kotno funkcijo
 
 
-    >>> doloci_kotna()
+    >>> izberi_kotna()
     sin(x)
 
-    >>> doloci_kotna()
+    >>> izberi_kotna()
     cos(x)
     """
     x = sympy.symbols('x')
@@ -152,17 +152,17 @@ def doloci_kotna():
     return random.choice([kosinus, sinus, tangens, kotangens])
 
 
-def doloci_krozna():
+def izberi_krozna():
     """
     Vrne arkus kosinus, arkus sinus, arkus tangens ali arkus kotangens.
 
     :return: krožno funkcijo
 
 
-    >>> doloci_krozna()
+    >>> izberi_krozna()
     asin(x)
 
-    >>> doloci_krozna()
+    >>> izberi_krozna()
     acot(x)
     """
     x = sympy.symbols('x')
@@ -178,7 +178,7 @@ class KotMedPremicama(Naloga):
     """
     Naloga za izračun kota med dvema premicama.
 
-    :param abscina_os: kot med abscisno osjo in premico drugače pa med dvema premicama
+    :param abscina_os: izračunaj kot med abscisno osjo in premico drugače pa med dvema premicama
 
 
     >>> KotMedPremicama().sestavi()
@@ -279,28 +279,28 @@ class OdvodElementarne(Naloga):  # TODO preimenuj v odvod kompozituma
         else:
             izbrana2 = random.choice([x for x in self.funkcije if x != Funkcija.RACIONALNA])
             if izbrana2.value == 'polinom':
-                funkcija2 = doloci_polinom()
+                funkcija2 = izberi_polinom()
             if izbrana2.value == 'eksponentna':
-                funkcija2 = doloci_eksponentno()
+                funkcija2 = izberi_eksponentno()
             if izbrana2.value == 'logaritem':
-                funkcija2 = doloci_logaritem(osnove=[sympy.E])
+                funkcija2 = izberi_logaritem(osnove=[sympy.E])
             if izbrana2.value == 'kotna':
-                funkcija2 = doloci_kotna()
+                funkcija2 = izberi_kotna()
             if izbrana2.value == 'krozna':
-                funkcija2 = doloci_krozna()
+                funkcija2 = izberi_krozna()
 
         if izbrana1.value == 'polinom':  # TODO manj if-ov
-            funkcija1 = doloci_polinom()
+            funkcija1 = izberi_polinom()
         if izbrana1.value == 'racionalna':
-            funkcija1 = doloci_racionalno()
+            funkcija1 = izberi_racionalno()
         if izbrana1.value == 'eksponentna':
-            funkcija1 = doloci_eksponentno()  # Todo lepši izpis logaritmov
+            funkcija1 = izberi_eksponentno()  # Todo lepši izpis logaritmov
         if izbrana1.value == 'logaritem':
-            funkcija1 = doloci_logaritem(osnove=[sympy.E])
+            funkcija1 = izberi_logaritem(osnove=[sympy.E])
         if izbrana1.value == 'kotna':
-            funkcija1 = doloci_kotna()
+            funkcija1 = izberi_kotna()
         if izbrana1.value == 'krozna':
-            funkcija1 = doloci_krozna()
+            funkcija1 = izberi_krozna()
 
         funkcija = funkcija1.subs(x, funkcija2)
         odvod = funkcija.diff(x)
@@ -352,30 +352,30 @@ class OdvodSestavljene(Naloga):
         izbrana2 = random.choice(self.funkcije)
 
         if izbrana1.value == 'polinom':  # TODO manj if-ov
-            funkcija1 = doloci_polinom(min_stopnja=1, max_stopnja=2)
+            funkcija1 = izberi_polinom(min_stopnja=1, max_stopnja=2)
         if izbrana1.value == 'racionalna':
-            funkcija1 = doloci_racionalno()
+            funkcija1 = izberi_racionalno()
         if izbrana1.value == 'eksponentna':
-            funkcija1 = doloci_eksponentno()
+            funkcija1 = izberi_eksponentno()
         if izbrana1.value == 'logaritem':
-            funkcija1 = doloci_logaritem(osnove=[sympy.E])
+            funkcija1 = izberi_logaritem(osnove=[sympy.E])
         if izbrana1.value == 'kotna':
-            funkcija1 = doloci_kotna()
+            funkcija1 = izberi_kotna()
         if izbrana1.value == 'krozna':
-            funkcija1 = doloci_krozna()
+            funkcija1 = izberi_krozna()
 
         if izbrana2.value == 'polinom':
-            funkcija2 = doloci_polinom(min_stopnja=1, max_stopnja=2)
+            funkcija2 = izberi_polinom(min_stopnja=1, max_stopnja=2)
         if izbrana2.value == 'racionalna':
-            funkcija2 = doloci_racionalno()
+            funkcija2 = izberi_racionalno()
         if izbrana2.value == 'eksponentna':
-            funkcija2 = doloci_eksponentno()
+            funkcija2 = izberi_eksponentno()
         if izbrana2.value == 'logaritem':
-            funkcija2 = doloci_logaritem(osnove=[sympy.E])
+            funkcija2 = izberi_logaritem(osnove=[sympy.E])
         if izbrana2.value == 'kotna':
-            funkcija2 = doloci_kotna()
+            funkcija2 = izberi_kotna()
         if izbrana2.value == 'krozna':
-            funkcija2 = doloci_krozna()
+            funkcija2 = izberi_krozna()
 
         funkcija1 = funkcija1.subs(x, random.choice([-2, -1, 2]) * x)
         preveri(funkcija1 != funkcija2)
@@ -435,29 +435,29 @@ class Tangenta(Naloga):
         izbrana = random.choice(self.funkcije)
 
         if izbrana.value == 'polinom':
-            funkcija = doloci_polinom()
+            funkcija = izberi_polinom()
             x0 = random.randint(-2, 2)
 
         if izbrana.value == 'racionalna':
             stopnja_stevca = random.randint(2, 3)
             stopnja_imenovalca = 3 - stopnja_stevca
-            funkcija = doloci_racionalno(min_stopnja_stevca=stopnja_stevca, max_stopnja_stevca=stopnja_stevca,
+            funkcija = izberi_racionalno(min_stopnja_stevca=stopnja_stevca, max_stopnja_stevca=stopnja_stevca,
                                          min_stopnja_imenovalca=stopnja_imenovalca,
                                          max_stopnja_imenovalca=stopnja_imenovalca)
             x0 = random.randint(-2, 2)
         if izbrana.value == 'eksponentna':
             osnova = random.choice([sympy.E, 2, 3, 5])
-            funkcija = doloci_eksponentno(osnove=[osnova])
+            funkcija = izberi_eksponentno(osnove=[osnova])
             x0 = random.choice([sympy.log(n, osnova) for n in [1, 2, 3]])  # Todo lepši izpis logaritmov
 
         if izbrana.value == 'logaritem':
             # baza = random.choice([2, 3, 4, 5, 10])
             # logaritem = sympy.log(x, baza) #todo izpis log_baza v latexu
             # funkcije.append(logaritem)
-            funkcija = doloci_logaritem(osnove=[sympy.E])
+            funkcija = izberi_logaritem(osnove=[sympy.E])
             x0 = sympy.E ** (random.randint(-1, 2))
         if izbrana.value == 'kotna':
-            funkcija = doloci_kotna()
+            funkcija = izberi_kotna()
             x0 = random.choice(
                 [sympy.pi / x for x in [6, 3, 4, 2]])  # TODO dodaj 0 in pi, vendar pazi da ni izbran tna/cot
         if izbrana.value == 'krozna':  # TODO izberi krožne tudi tangens

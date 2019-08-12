@@ -4,7 +4,7 @@ import sympy
 from kvadratna_funkcija import splosna_oblika, nicle
 
 
-def naredi_polinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risanje=False):
+def izberi_polinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risanje=False):
     """
     Vrne naključen polinom.
 
@@ -16,10 +16,10 @@ def naredi_polinom(min_stopnja=3, max_stopnja=3, min_nicla=-9, max_nicla=9, risa
     :return: polinom
 
 
-    >>> naredi_polinom(max_stopnja=5)
+    >>> izberi_polinom(max_stopnja=5)
     (-3, [-9, -4, 4, 7], 4, '-3*((x-4)*(x--9)*(x--4)*(x-7))')
 
-    >>> naredi_polinom(max_stopnja=4, min_nicla=-3, max_nicla=4, risanje=True)
+    >>> izberi_polinom(max_stopnja=4, min_nicla=-3, max_nicla=4, risanje=True)
     (1/4, [1, 3, 4, 4], 4, '1/4*((x-4)*(x-1)*(x-3)*(x-4))')
     """
     x = sympy.symbols('x')
@@ -90,7 +90,7 @@ class NiclePolinoma(Naloga):
         self.max_nicla = max_nicla
 
     def _poskusi_sestaviti(self):
-        (vodilni_koeficient, nicle, stopnja, polinom) = naredi_polinom(self.min_stopnja, self.max_stopnja,
+        (vodilni_koeficient, nicle, stopnja, polinom) = izberi_polinom(self.min_stopnja, self.max_stopnja,
                                                                        self.min_nicla, self.max_nicla)
         preveri(min(self.min_stopnja, self.max_stopnja) <= len(nicle) <= max(self.min_stopnja, self.max_stopnja))
         x = sympy.symbols('x')
@@ -188,7 +188,7 @@ class ParametraDvojna(Naloga):
         x = sympy.symbols('x')
         dvojna = random.choice([-3, -2, -1, 2, 3])
 
-        (vodilni_koeficient, nicle, stopnja, polinomBrezDvojne) = naredi_polinom(self.min_stopnja - 2,
+        (vodilni_koeficient, nicle, stopnja, polinomBrezDvojne) = izberi_polinom(self.min_stopnja - 2,
                                                                                  self.max_stopnja - 2,
                                                                                  self.min_nicla, self.max_nicla)
         preveri(min(self.min_stopnja - 2, self.max_stopnja - 2) <= len(nicle) <= max(self.min_stopnja - 2,
@@ -279,7 +279,7 @@ class GrafPolinoma(Naloga):
 
     def _poskusi_sestaviti(self):
         x = sympy.symbols('x')
-        (vodilni_koeficient, nicle, stopnja, nicelna_oblika) = naredi_polinom(self.min_stopnja, self.max_stopnja,
+        (vodilni_koeficient, nicle, stopnja, nicelna_oblika) = izberi_polinom(self.min_stopnja, self.max_stopnja,
                                                                               self.min_nicla, self.max_nicla,
                                                                               risanje=True)
         preveri(min(self.min_stopnja, self.max_stopnja) <= len(nicle) <= max(self.min_stopnja, self.max_stopnja))
@@ -343,10 +343,10 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
         self.max_nicla = max_nicla
 
     def _poskusi_sestaviti(self):
-        (vodilni_stevca, nicle, stopnja_stevca, stevec) = naredi_polinom(self.min_stopnja_stevca,
+        (vodilni_stevca, nicle, stopnja_stevca, stevec) = izberi_polinom(self.min_stopnja_stevca,
                                                                          self.max_stopnja_stevca, self.min_nicla,
                                                                          self.max_nicla)
-        (vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec) = naredi_polinom(self.min_stopnja_imenovalca,
+        (vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec) = izberi_polinom(self.min_stopnja_imenovalca,
                                                                                     self.max_stopnja_imenovalca,
                                                                                     self.min_nicla, self.max_nicla)
         preveri(set(nicle) & set(poli) == set())
@@ -467,10 +467,10 @@ class GrafRacionalne(Naloga):
         self.vodoravna_asimptota = vodoravna_asimptota
 
     def _poskusi_sestaviti(self):
-        (vodilni_stevca, nicle, stopnja_stevca, stevec) = naredi_polinom(self.min_stopnja_stevca,
+        (vodilni_stevca, nicle, stopnja_stevca, stevec) = izberi_polinom(self.min_stopnja_stevca,
                                                                          self.max_stopnja_stevca, self.min_nicla,
                                                                          self.max_nicla, risanje=True)
-        (vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec) = naredi_polinom(self.min_stopnja_imenovalca,
+        (vodilni_imenovalca, poli, stopnja_imenovalca, imenovalec) = izberi_polinom(self.min_stopnja_imenovalca,
                                                                                     self.max_stopnja_imenovalca,
                                                                                     self.min_nicla, self.max_nicla,
                                                                                     risanje=True)
