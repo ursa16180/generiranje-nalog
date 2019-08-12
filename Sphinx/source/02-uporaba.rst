@@ -1,8 +1,11 @@
+.. _ref_uporaba:
+
 Uporaba
 ============
 
 Program za generiranje nalog je sestavljen iz knjižnice nalog iz različnih področij srednješolske matematike in programa
-za sestavljanje testov. Ko zaženemo program z želenimi parametri nam ustvari testov in rešitve v `LaTeX` obliki ter po želju tudi v `PDF` obliki.
+za sestavljanje testov. Ko zaženemo program z želenimi parametri nam ustvari teste in rešitve v `LaTeX` datotekah ter po
+želji tudi v `PDF` datotekah.
 
 ********
 Naloge
@@ -13,7 +16,7 @@ Vsebuje 60 takih nalog iz teh področij
 **************
 Izpis testov
 **************
-Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz programa ``generiranje.py``. Funkcija sprejme pet parametrov:
+Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz datoteke ``generiranje.py``. Funkcija sprejme pet parametrov
 
 #. seznam nalog
 #. ime testa
@@ -21,8 +24,8 @@ Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz programa
 #. izbira združenih ali ločenih rešitev
 #. izbira za avtomatično generiranje PDF datotek
 
-in ustvari teste ter rešitve kot `LaTeX` dokumente. Po želji pa lahko avtomatično ustvari dokumente v `PDF` formatu.
-`LaTeX` dokument je na voljo, zato da vedno lahko kaj naknadno spremenimo.
+in ustvari teste ter rešitve kot `LaTeX` dokumente. Če želimo lahko avtomatično ustvari dokumente tudi v `PDF` formatu.
+`LaTeX` dokument je na voljo zato, da vedno lahko kaj naknadno spremenimo alii popravimo.
 
 .. code-block:: python
 
@@ -94,7 +97,8 @@ Kadar mapa z enakim imenom že obstaja, nas program vpraša, če jo želimo prep
 Seznam nalog
 #############
 
-Parameter ``naloge`` je seznam nalog iz knjižnice, ki jih želimo na posameznem testu. Na seznamu lahko podamo poljubno število nalog.
+Parameter ``naloge`` je seznam nalog iz knjižnice, ki jih želimo na posameznem testu. Na seznamu lahko podamo poljubno
+število nalog, ne sme pa biti prazen.
 
 ``naloge=[izrazi.PotencaDvoclenika(st_nalog=3),izrazi.RazstaviRazliko(min_potenca=3),naravna_stevila.DeliteljVeckratnik()]``
 
@@ -102,7 +106,7 @@ Parameter ``naloge`` je seznam nalog iz knjižnice, ki jih želimo na posameznem
 
 Knjižnica vsebuje naloge z različnih področij. Naloge iz različnih področij imajo lahko enaka imena,
 zato moramo vedno nalogo klicati tako, da najprej napišemo ime poglavja in nato ime naloge. Naloge imajo različne
-parametre, ki so pojasnjeni v #TODOsklic točki.
+parametre, ki so pojasnjeni v razdelku :ref:'parametri'.
 
 ``ime_poglavja.ime_naloge(parametri)``.
 
@@ -127,8 +131,8 @@ Primer:
 Seznam dijakov
 ################
 Seznam dijakov napišemo v ločeni tekstovni datoteki (`.txt`), tako da so podatki posameznega dijaka v svoji vrstici.
-Podatki dijaka so lahko poljubni: ime, priimek, vpisna številka,... Namesto podatkov dijakov lahko podamo tudi naprimer imena skupin: A in B.
-Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datotetke posameznega testa ali rešitve.
+Podatki dijaka so lahko poljubni: ime, priimek, vpisna številka... Namesto podatkov dijakov lahko podamo tudi naprimer imena skupin: A in B.
+Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke posameznega testa ali rešitve.
 
 .. figure:: slike/dijaki.png
     :align: center
@@ -138,13 +142,13 @@ Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datotetke
 .. figure:: slike/testi.png
     :align: center
 
-    Primer mape z generirami testi.
+    Primer mape z generiranimi testi.
 
-Če datotetka s seznamom ni podana, bo program ustvaril samo 1 test s privzetim podnaslovom `Matematika`.
+Če datoteka s seznamom ni podana, bo program ustvaril samo 1 test s privzetim podnaslovom `Matematika`.
 
 Semena
 ********
-Vrednosti v posameznih nalogah so psevdo-naključno generirana. Za seme posameznega testa je uporabljen podnaslov testa,
+Vrednosti v posameznih nalogah so psevdo-naključno generirane. Za seme posameznega testa je uporabljen podnaslov testa,
 ki ga običajno predstavlja ime dijaka ali skupine. To nam zagotavlja, da bomo za posameznega dijaka oziroma skupino
 vedno dobili nalogo z enakimi podatki, ne glede na to, kolikokrat zaženemo program.
 Na tak način zagotovimo, da če nam je posamezna naloga všeč, se s popravljanjem drugih ne bo spremenila.
@@ -158,9 +162,9 @@ Rešitve nalog so lahko samostojna datoteka za vsakega dijaka ali pa so vse zdru
 
 PDF datoteke
 #############
-Testi in rešitve so `LaTeX` dokumenti, zato da imamo možnost spreminjanja in popravljanja. Ker pa za končno uporabo
+Testi in rešitve so `LaTeX` dokumenti, zato da imamo možnost spreminjanja in popravljanja. Ker pa za končno uporabo običajno
 potrebujemo `PDF` datoteke, nam jih lahko program avtomatično ustvari. Privzeto je ustvarjanje `PDF` datotek, vendar to
-poveča časovno zahtevnost programa. Če ne želimo avtomatično generiranih `PDF` datotek, moramo klicati ``pdf=False``.
+poveča časovno zahtevnost programa. Če ne želimo avtomatično generiranih `PDF` datotek, moramo nastaviti ``pdf=False``.
 
 .. code-block:: python
 
@@ -174,6 +178,8 @@ poveča časovno zahtevnost programa. Če ne želimo avtomatično generiranih `P
     Izpisujem skupne rešitve za test Izrazi in deljivost.
     Test Izrazi in deljivost je sestavljen.
 
+
+.. _ref-parametri:
 
 ***********************
 Spreminjanje parametrov
@@ -208,7 +214,7 @@ Ključi v slovarju, se morajo ujemati z imeni spremenljivk v predlogi.
 
 Parameter število nalog
 ########################
-Prav tako ima vsaka naloga parameter `število nalog`(``st_nalog``) s katerim določamo koliko primerov posamezne naloge želimo imeti.
+Prav tako ima vsaka naloga parameter `število nalog` (``st_nalog``) s katerim določamo koliko primerov posamezne naloge želimo imeti.
 Privzeta vrednost je en primer. Če želimo več primerov pa moramo podati naravno številsko vrednost, koliko primerov želimo.
 
 Naslednja koda, bi ustvarila test, z dvema enakima nalogama. Prva naloga ima samo 1 primer računa, druga naloga pa 5 primerov (glej sliko).
@@ -224,21 +230,103 @@ Naslednja koda, bi ustvarila test, z dvema enakima nalogama. Prva naloga ima sam
     Izpis naloge z enim primerom in s 5 primeri.
 
 
-Specifični/dodatni parametri
+Dodatni parametri
 ##############################
-Ostali parametri so specifični za vsako nalogo.
+Ostali parametri so specifični za vsako nalogo. Z njimi lahko uravnavamo zahtevnost naloge ali kako lepe so številske
+rešitve. Včasih pa je lahko zelo podobna naloga primerna za različne stopnje znanja in s parametri lahko določimo
+na kateri stopnji znanja so učenci. Vsi podani parametri imajo podane privzete vrednosti, tako da jih ni potrebno
+določati, če tega ne želimo.
 
-Pri nalogi `DeliteljVeckratnik` mora dijak izračunati najmanjši skupni večkratnik in največji skupni delitelj dveh števil.
-S parametrim ``do`` lahko določamo kako veliki sta lahko števili. Privzeta vrednost so števila do 200.
-S parametrom ``najvecje_prastevilo`` pa določimo kaj je navečje praštevilo, ki se lahko pojavi v praštevilskem razcepu števil. Privzeta vrednost je 17.
+V nadaljevanju bo predstavljenih nekaj zanimivih primerov nalog.
 
-
+Pri nalogi ``DeliteljVeckratnik`` mora dijak izračunati najmanjši skupni večkratnik in največji skupni delitelj dveh števil.
+S parametrim ``do`` lahko določamo kako veliki sta lahko števili in tako omejimo kako zahtevno bo računanje.
+Privzeta vrednost so števila do 200. S parametrom ``najvecje_prastevilo`` pa določimo kaj je navečje praštevilo, ki se lahko pojavi v praštevilskem razcepu števil. Privzeta vrednost je 17.
 
 .. literalinclude:: ..\..\naravna_stevila.py
    :pyobject: DeliteljVeckratnik
 
+Naloga ``SistemDvehEnacb`` iz poglanja linearn funkcija ima lahko različno zahtevne številske rešitve. Običajno nam je
+lažje izručunati celoštevilske rešitve. Če pa določimo parameter ``racionalne_resitve=True``, pa bo naloga bolj raznolika,
+saj bodo lahko rešitve tako celoštevilske kot tudi racionalne. Na tak način lahko dosežemo tudi večjo raznolikost nalog.
+
+.. literalinclude:: ..\..\linearna_funkcija.py
+   :pyobject: SistemDvehEnacb
+
+Podobno lahko tudi računanje prvih členov zaporedja naredimo malo računsko zahtevnejših, če lahko za prvi člen in
+diferenco določimo racionalna števila namesto celih.
+
+.. literalinclude:: ..\..\zaporedja.py
+   :pyobject: PrviCleniAritmeticnega
+
+Pri računanju ničel polinoma se zahtevnost hitro povečuje z višanjem stopnje polinoma. Zato je pomembno, da lahko
+s parametroma ``min_stopnja``, ki določa najmanjšo možno stopnjo polinoma, in ``max_stopnja``, ki določa
+najvišjo možno stopnjo polinoma, uravnavamo polinomom kakšnih stopenj bomo iskali ničle. Ker lahko določamo zgornjo
+in spodnjo mejo stopenj, tako obstaja nek razpon stopenj, da so naloge lahko raznolike. S parametroma
+``min_nicla`` in ``max_nicla`` pa lahko določimo s kako velikimi vrednostimi bomo računali.
+
+.. literalinclude:: ..\..\polinomska_racionalna_funkcija.py
+   :pyobject: NiclePolinoma
+
+Zahtevnost naloge lahko spreminjamo tudi z zahtevnostjo predpisa. Pri zapisu elementov izpeljane množice
+lahko podamo preprost predpis za :math:`n`
+:math:`\{n ; 1 < n < 5\}` ali pa malo zahtevnejši z linearno kombinacijo :math:`\{ 3 \cdot n -2 ; 1 < n < 5\}`.
+Ravno to spreminja parameter ``linearna_kombinacija`` naloge ``ElementiMnozice``.
+
+.. literalinclude:: ..\..\mnozice.py
+   :pyobject: ElementiMnozice
+
+Težavnost naloge lahko povečamo, če uvedemo dodaten korak ali znanje, ki je potrebno za rešitev naloge.
+Pri reševanju eksponentnih enačb, kjer nastopata dve različni osnovi, je pogosto potrebno samo izpostaviti
+vsako osnovo na svoji strani in izenačiti eksponenta. Vendar pa lahko nalogo napišemo tako, da je vsaka osnova pomnožena
+s potenco druge osnove. Tako moramo pri reševanju dodati še korak deljenja.
+
+.. literalinclude:: ..\..\eksponentna_funkcija.py
+   :pyobject: Enacba2osnovi
+
+Reševanje enačb s kompleksnimi števili lahko naredimo bolj raznolike, če poleg neznanega števila :math:`z` nastopa
+še njego konjugirana vrednost :math:`\overline{z}`. To lahko v nalogi ``Enacba`` določimo s parametrom
+``konjugirana_vrednost``.
+
+.. literalinclude:: ..\..\kompleksna_stevila.py
+   :pyobject: Enacba
+
+Včasih lahko podobne naloge rešujemo z različnimi stopnjami znanja, zato je potrebno nalogo prilagoditi trenutnemu
+znanju učencev. V poglavju stožnic se pogosto najprej spozna enačbe v središčni legi, kasneje pa šele v premaknjeni legi.
+Zato je smiselno, da lahko pri nalogi ``TemeGorisceEnacba``, kjer določamo teme in gorišča elipse, določimo s parametrom ``premaknjena``,
+ki lego elipse.
 
 
+.. literalinclude:: ..\..\stoznice.py
+   :pyobject: TemeGorisceEnacba
 
+V poglavju odvodi učenci postopoma spoznavajo odvode različnih funkcij. Nalogo ``OdvodSestavljene`` s parametrom
+``funkcije`` lahko prilagodimo za primerno znanje, oziroma lahko določamo njeno zahtevnost. Izbiramo lahko med
+eksponentnimi, logaritemskimi, racionalnimi, polinomskimi ali kotnimi funkcijami. Da program lahko ločuje,
+med vrstami funkcijami so imena funkcij določena z razredom ``Funkcija``.
 
+.. literalinclude:: ..\..\odvodi.py
+   :pyobject: Funkcija
+
+Funkcije, ki se lahko pojavijo v računu torej določimo s parametrom ``funkcije`` tako da jih naštejemo v seznamu.
+
+Primer: ``funkcije=[Funkcija.KOTNA, Funkcija.LOGARITEM]``
+
+.. literalinclude:: ..\..\odvodi.py
+   :pyobject: OdvodSestavljene
+
+Rešitvi kvadratne enačbe sta lahko kompleksni števili, vendar se lahko zgodi, da takih rešitev ne želimo ali
+da snovi kompleksnih števil še nismo obravnavali. Zato lahko nalogi ``IzracunajNicle`` s parametrom
+``kompleksni_nicli`` določimo ali želimo da sta rešitvi kompleksni ali realni števili.
+
+.. literalinclude:: ..\..\kvadratna_funkcija.py
+   :pyobject: IzracunajNicle
+
+Pri računanju algebrajskih izrazov, je za na videz podobne naloge potrebno različno znanje. Naloga ``PotencirajVecclenik``
+ima zato več parametrov. Parametra ``min_clenov`` in ``max_clenov`` določata ali v nalogi potenciramo dvočlenike,
+tročlenike ali malo mešano.  Parametra ``min_potenca`` in ``mix_potenca`` pa določata razpon potenc.
+ Na ta način lahko dobimo raznolike primere enega tipa naloge.
+
+.. literalinclude:: ..\..\izrazi.py
+   :pyobject: PotencirajVecclenik
 
