@@ -94,35 +94,8 @@ vstavi na mesta spremenljivk v predlogah besedil in rešitev. Imena spremenljivk
 vrednosti slovarja pa so dejanske vrednosti naloge. Metoda ``_poskusi_sestaviti`` vedno vrne samo en primer.
 
 Če želimo nalogo z več primeri, bo za to poskrbela metoda `generiranje.besedilo``, ki za vsak primer pokliče metodo
-``_poskusi_sestaviti``. Podrobnosti, o tem si lahko preberet v poglavju 4.
+``_poskusi_sestaviti``. Podrobnosti, o tem si lahko preberete v :ref:`ref-implementacija`.
 .. todo sklic  na poglavje 4
-
-
-Lepe rešitve in funkcija preveri
-###################################
-Lepe rešitve najlažje zagotovimo tako, da rešitve naloge izberemo vnaprej in nato okoli tega sestavimo nalogo ali pa da jih
-preverimo s metodo ``preveri``. Funkcija ``preveri`` zagotovi, da program zavrne naloge, ki ne ustrezajo pogoju. Na ta način
-lahko zagotovimo lepši rezultat ali pa preprečimo nesmiselne naloge.
-
-Vnaprej izbrana rešitev:
-
-.. literalinclude:: ..\..\kompleksna_stevila.py
-   :pyobject: Enacba._poskusi_sestaviti
-   :emphasize-lines: 4
-
-Funkcija `preveri` zagotovi lepši rezultat:
-
-..TODO najdi primer eksponentna.enacba2osnovi? al je tole vredu
-
-.. literalinclude:: ..\..\naravna_stevila.py
-   :pyobject: EvklidovAlgoritem._poskusi_sestaviti
-   :emphasize-lines: 4-5
-
-Funkcija `preveri` zagotovi smiseln rezultat.
-
-.. literalinclude:: ..\..\linearna_funkcija.py
-   :pyobject: PremicaSkoziTocki._poskusi_sestaviti
-   :emphasize-lines: 6
 
 Naključnost
 #############
@@ -165,7 +138,6 @@ Funkcije lahko generirajo tudi drugačne željene objekte.
 
 Naključno izbrani operatoji
 ****************************
-
 Včasih lahko raznolikost nalog dosežemo tudi tako, da namesto samo naključno generiranih vrednosti, tudi operacije med
 vrednostmi izberemo naključno.
 
@@ -186,6 +158,31 @@ pretvoriti v niz v `LaTeX` obliki.
     :pyobject: PreseciscaKroznic._poskusi_sestaviti
     :emphasize-lines: 2, 3, 13, 14, 15, 18, 19
 
+Lepe rešitve in funkcija preveri
+###################################
+Naključno izbrane vrednosti, nam še ne zagotavljajo, da bodo tudi rešitve lepe vrednosti.  Da bodo tudi rešitve lepe,
+najlažje zagotovimo tako, da rešitve naloge izberemo vnaprej in nato okoli tega sestavimo nalogo ali pa da jih
+preverimo s metodo ``preveri``. Funkcija ``preveri`` zagotovi, da program zavrne naloge, ki ne ustrezajo pogoju. Na ta način
+lahko zagotovimo lepši rezultat ali pa preprečimo nesmiselne naloge.
+
+Vnaprej izbrana rešitev:
+
+.. literalinclude:: ..\..\kompleksna_stevila.py
+   :pyobject: Enacba._poskusi_sestaviti
+   :emphasize-lines: 4
+
+Funkcija `preveri` zagotovi lepši rezultat:
+
+.. literalinclude:: ..\..\kvadratna_funkcija.py
+   :pyobject: NarisiGraf._poskusi_sestaviti
+   :emphasize-lines: 6
+
+Funkcija `preveri` zagotovi smiseln rezultat.
+
+.. literalinclude:: ..\..\linearna_funkcija.py
+   :pyobject: PremicaSkoziTocki._poskusi_sestaviti
+   :emphasize-lines: 6
+
 
 Grafi
 ######
@@ -203,12 +200,25 @@ Včasih je zato lažje, da funkcijo za risanje podamo kot produkt faktorjev (na 
 
 .. literalinclude:: ..\..\kvadratna_funkcija.py
     :pyobject: NarisiGraf._poskusi_sestaviti
+    :emphasize-lines: 3,8
 
 Zahtevnost naloge
 ###################
+S podajanjem parametrov, lahko nalogo spremenimo v lažjo ali težjo. Primeri, kako lahko s parametri spreminjamo
+zahtevnost nalog, so predstavljeni v poglavju :ref:`ref_uporaba`
+Če želimo prilagodljivo zahtevnost mora biti tudi metoda ``_poskusi_sestaviti`` prilagojena. Lahko s funkcijo ``preveri``
+zagotovimo primerno težke rešitve.
+
+.. literalinclude:: ..\..\kvadratna_funkcija.py
+   :pyobject: IzracunajNicle._poskusi_sestaviti
+
+Lahko pa že metodo napišemo razdeljeno za različno zahtevnost.
+
+.. literalinclude:: ..\..\eksponentna_funkcija.py
+   :pyobject: Enacba2osnovi._poskusi_sestaviti
 
 
-.. TODO  zanimivi primeri
+.. TODO  zanimivi primeri ?
 
 
 
