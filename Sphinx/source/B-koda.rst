@@ -1,3 +1,5 @@
+.. _ref-izvorna-koda:
+
 Izvorna koda programa
 =======================
 
