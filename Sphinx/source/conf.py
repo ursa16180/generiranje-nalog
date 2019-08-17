@@ -4,6 +4,19 @@
 # list see the documentation:
 # http://www.sphinx-doc.org/en/master/config
 
+# Nastavitev, da je velikost za primere kode manjša - če želiš drugačno velikost samo spremeni footnotesize
+from sphinx.highlighting import PygmentsBridge
+from pygments.formatters.latex import LatexFormatter
+
+
+class CustomLatexFormatter(LatexFormatter):
+    def __init__(self, **options):
+        super(CustomLatexFormatter, self).__init__(**options)
+        self.verboptions = r"formatcom=\scriptsize"
+
+
+PygmentsBridge.latex_formatter = CustomLatexFormatter
+
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
