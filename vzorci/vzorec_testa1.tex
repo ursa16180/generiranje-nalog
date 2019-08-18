@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{gensymb}
+
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+
+\title{ {{ime_testa}} }
+\author{ {{ucenec}} }
+\maketitle
+\begin{enumerate}
+{% for naloga in naloge %}
+\item {{naloga}}
+{% if tocke|length %}
+\begin{flushright}
+/ {{ tocke[loop.index0]}}
+\end{flushright}
+{% endif %}
+{% endfor %}
+
+\end{enumerate}
+\end{document}

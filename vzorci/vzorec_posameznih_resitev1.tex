@@ -10,12 +10,18 @@
 
 \begin{document}
 
-\title{ {{ime_testa}} }
+\title{Rešitve testa {{ime_testa}} }
 \author{ {{ucenec}} }
 \maketitle
+
 \begin{enumerate}
-{% for naloga in naloge %}
-\item {{naloga}}
+{% for resitev in resitve %}
+\item {{resitev}}
+{% if tocke|length %}
+\begin{flushright}
+{{ tocke[loop.index0]}}
+\end{flushright}
+{% endif %}
 {% endfor%}
 
 \end{enumerate}

@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{gensymb}
+
+\pgfplotsset{compat=1.7}
+
+\begin{document}
+\begin{flushright}
+\begin{tabular}{ |l|p{30mm}| } 
+	\hline
+	Ime in priimek:\qquad & \\
+	\hline
+	Datum:& \\
+	\hline
+		
+	Število točk:&
+	{% if tocke|length %}
+	\quad / {{ tocke|sum() }}\\ 
+	{% else %}
+	\quad / \quad\\ 
+	{% endif %}
+	\hline
+	Ocena:& \\
+	\hline
+\end{tabular}
+\end{flushright}
+
+\begin{center}
+\vspace{5mm}
+\textbf{\LARGE {{ime_testa}} }\\
+\vspace{5mm}
+\textbf{\large {{ucenec}} }
+\end{center}
+
+
+\begin{enumerate}
+{% for naloga in naloge %}
+\item {{naloga}}
+{% if tocke|length %}
+\begin{flushright}
+/ {{ tocke[loop.index0]}}
+\end{flushright}
+{% endif %}
+{% endfor %}
+\end{enumerate}
+
+\vfill
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+ \hline
+ Nezadostno & Zadostno & Dobro & Prav dobro & Odlično \\ 
+\hline
+ 0-49\% & 50-62 \% & 63-75\% &76-88\% &89-100\% \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\end{document}

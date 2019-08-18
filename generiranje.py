@@ -178,7 +178,7 @@ class Naloga:
 # ~~~~~~~SESTAVLJANJE TESTOV
 
 def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_dijakov=None,
-                      zdruzene_resitve=True, pdf=True):
+                      zdruzene_resitve=True, pdf=True, pot_vzorca_testa=None, pot_vzorca_resitev=None, tocke=[]):
     """Ustvari mapi za teste in rešitve. Sestavi teste za vse dijake s podanega seznama.
 
     :param naloge: seznam željenih nalog
@@ -186,6 +186,9 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
     :param datoteka_seznam_dijakov: besedilna datoteka, ki vsebuje seznam dijakov
     :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega dijaka v svoji datoteki
     :param pdf: program ustvari tudi pdf datoteke
+    :param pot_vzorca_testa: pot do željenega vzorca testa
+    :param pot_vzorca_resitev: pot do željenega vzorca rešitev
+    :param tocke: seznam možnih točk za posamezno nalogo
     """
     if not datoteka_seznam_dijakov:
         seznam_ljudi = ["Matematika"]
@@ -213,7 +216,7 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
     os.makedirs(pot_naloge)
     os.makedirs(pot_resitve)
 
-    seznam_vseh_resitev = []
+    seznam_vseh_nalog_resitev = []
     for ucenec in seznam_ljudi:
         ucenec = ucenec.strip()
         random.seed(ucenec)
@@ -221,19 +224,20 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
                                 naloge]  # Se mora klicat tukaj in ne v jinji, da dobimo naenkrat naloge in rešitve
 
         seznam_nalog = [naloga['naloga'] for naloga in seznam_nalog_resitev]
-        napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf)
+        napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf, pot_vzorca_testa, tocke)
 
         seznam_resitev = [naloga['resitev'] for naloga in seznam_nalog_resitev]
         if zdruzene_resitve:
-            seznam_vseh_resitev.append({'ucenec': ucenec, 'resitve': seznam_resitev})
+            seznam_vseh_nalog_resitev.append({'ucenec': ucenec, 'naloge': seznam_nalog, 'resitve': seznam_resitev})
         else:
-            napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve, pdf)
+            napisi_posamezno_resitev(ime_testa, seznam_nalog, seznam_resitev, ucenec, pot_resitve, pdf,
+                                     pot_vzorca_resitev, tocke)
     if zdruzene_resitve:  # če se izpisuje znotraj zanke ni potrebno imet dveh if-ov
-        napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf)
+        napisi_skupno_resitev(ime_testa, seznam_vseh_nalog_resitev, pot_resitve, pdf, pot_vzorca_resitev, tocke)
     print('Test {} je sestavljen.'.format(podmapa))
 
 
-def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
+def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf, pot_vzorca_testa, tocke):
     """
     Ustvari test za posameznega dijaka.
 
@@ -242,13 +246,21 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
     :param ucenec: ime dijaka
     :param pot_naloge: mapa, kjer se shranjujejo naloge
     :param pdf: program ustvari tudi pdf testa
+    :param pot_vzorca_testa: pot do željenega vzorca testa
+    :param tocke: seznam možnih točk za posamezno nalogo
     """
+    if tocke != [] and len(tocke) != len(seznam_nalog):
+        raise ValueError("Število nalog ni enako dolžini seznama točk.")
     print('Izpisujem test: {}'.format(ucenec))
     datoteka_test = open("{0}/{1}.tex".format(pot_naloge, ucenec), "w+", encoding="utf8")
+    if pot_vzorca_testa is None:
+        pot_vzorca_testa = "vzorci/vzorec_testa1.tex"
+
     vzorec_testa = jinja2.Template(
-        open("vzorci/vzorec_testa.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
-    datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec))
+        open(pot_vzorca_testa, "r", encoding="utf8").read())
+    datoteka_test.write(vzorec_testa.render(ime_testa=ime_testa, naloge=seznam_nalog, ucenec=ucenec, tocke=tocke))
     datoteka_test.close()
+
     if pdf:
         process = subprocess.run(
             ["pdflatex", '-output-directory', pot_naloge, "{0}/{1}.tex".format(pot_naloge, ucenec)],
@@ -256,26 +268,33 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf):
         if process.returncode == 0:
             os.unlink("{0}/{1}.aux".format(pot_naloge, ucenec))
             os.unlink("{0}/{1}.log".format(pot_naloge, ucenec))
-            # print('Končano')
         else:
             print('Prišlo je do napake. Poglejte datoteko {0}/{1}.log'.format(pot_naloge, ucenec))
 
 
-def napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve, pdf):
+def napisi_posamezno_resitev(ime_testa, seznam_nalog, seznam_resitev, ucenec, pot_resitve, pdf, pot_vzorca_resitev,
+                             tocke):
     """
     Ustvari datoteko z rešitvami za posameznega dijaka.
 
     :param ime_testa: ime testa
+    :param seznam_nalog: seznam besedil posameznih nalog
     :param seznam_resitev: seznam rešitev posameznih nalog
     :param ucenec: ime dijaka
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
+    :param pot_vzorca_resitev: pot do željenega vzorca rešitev
+    :param tocke: seznam možnih točk za posamezno nalogo
     """
     print('Izpisujem rešitve: {}'.format(ucenec))
+    if pot_vzorca_resitev is None:
+        pot_vzorca_resitev = "vzorci/vzorec_posameznih_resitev1.tex"
+
     datoteka_test = open("{0}/{1}-rešitve.tex".format(pot_resitve, ucenec), "w+", encoding="utf8")
     vzorec_posameznih_resitev = jinja2.Template(
-        open("vzorci/vzorec_posameznih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
-    datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, resitve=seznam_resitev, ucenec=ucenec))
+        open(pot_vzorca_resitev, "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+    datoteka_test.write(vzorec_posameznih_resitev.render(ime_testa=ime_testa, naloge=seznam_nalog,
+                                                         resitve=seznam_resitev, ucenec=ucenec, tocke=tocke))
     datoteka_test.close()
     if pdf:
         process = subprocess.run(
@@ -289,21 +308,26 @@ def napisi_posamezno_resitev(ime_testa, seznam_resitev, ucenec, pot_resitve, pdf
             print("Prišlo je do napake. Poglejte datoteko {0}/{1}-rešitve.log".format(pot_resitve, ucenec))
 
 
-
-def napisi_skupno_resitev(ime_testa, seznam_vseh_resitev, pot_resitve, pdf):  # Napiše vse rešitve v 1 dokument
+def napisi_skupno_resitev(ime_testa, seznam_vseh_nalog_resitev, pot_resitve, pdf, pot_vzorca_resitev,
+                          tocke):  # Napiše vse rešitve v 1 dokument
     """
     Ustvari datoteko z rešitvami vseh dijakov.
 
     :param ime_testa: ime testa
-    :param seznam_vseh_resitev: seznam seznamov rešitev za posameznega dijaka
+    :param seznam_vseh_nalog_resitev: seznam seznamov nalog in rešitev za posameznega dijaka
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
+    :param pot_vzorca_resitev: pot do željenega vzorca rešitev
+    :param tocke: seznam možnih točk za posamezno nalogo
     """
     print("Izpisujem skupne rešitve za test {}.".format(ime_testa))
+    if pot_vzorca_resitev is None:
+        pot_vzorca_resitev = "vzorci/vzorec_skupnih_resitev1.tex"
     datoteka_test = open("{0}/Resitve.tex".format(pot_resitve), "w+", encoding="utf8")
     vzorec_skupnih_resitev = jinja2.Template(
-        open("vzorci/vzorec_skupnih_resitev.txt", "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
-    datoteka_test.write(vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_resitev))
+        open(pot_vzorca_resitev, "r", encoding="utf8").read())  # TODO pretvori v ne raw, close?
+    datoteka_test.write(
+        vzorec_skupnih_resitev.render(ime_testa=ime_testa, seznam=seznam_vseh_nalog_resitev, tocke=tocke))
     datoteka_test.close()
     if pdf:
         process = subprocess.run(["pdflatex", '-output-directory', pot_resitve, "{0}/Resitve.tex".format(pot_resitve)],
