@@ -106,7 +106,7 @@ in rešitve.
 
     >>> generiranje.sestavi_vse_teste(
     ...     naloge=[mnozice.PotencnaMnozica(), izrazi.PotencaDvoclenika(st_nalog=3), naravna_stevila.DeliteljVeckratnik()],
-    ...     ime_testa='Množice, deljivost in izrazi', datoteka_seznam_dijakov='dijaki.txt', zdruzene_resitve=False)
+    ...     ime_testa='Množice, deljivost in izrazi', datoteka_seznam_ucencev='ucenci.txt', zdruzene_resitve=False)
     Sestavljam test Množice, deljivost in izrazi.
     Izpisujem test: 2717089
     Izpisujem rešitve: 2717089
@@ -131,14 +131,14 @@ Funkcija sprejme 5 argumentov:
 
 * ``naloge``
 * ``ime_testa``
-* ``datoteka_seznam_dijakov``
+* ``datoteka_seznam_ucencev``
 * ``zdruzene_resitve``
 * ``pdf``
 
 Najprej ustvari mapo z imenom testa in 2 podmapi za naloge in rešitve. Če ime ni določeno, uporabi trenutni datum.
 V primeru da mapa z imenom testa že obstaja, nas program vpraša, če jo želimo prepisati. Če izberemo "da", izbriše staro
 mapo in ustvari novo, drugače pa samo ustvari novo mapo z enakim imenom, ki mu doda trenutno uro.
-Nato za vsakega učenca s seznama, ki nastane iz leksikografsko urejene datoteke ``datoteka_seznam_dijakov``,
+Nato za vsakega učenca s seznama, ki nastane iz leksikografsko urejene datoteke ``datoteka_seznam_ucencev``,
 ustvari seznam nalog in rešitev. Slednje dobi tako, da za naloge s seznama ``naloge`` kliče metodo ``besedilo``.
 Če je seznam učencev ni podan, ustvari samo en test s podnaslovom `Matematika`.
 
@@ -148,7 +148,7 @@ Argument ``naloge`` je seznam nalog, ki jih želimo imeti v testu. Če je seznam
 nas program na to opozori.
 Program nato pokliče funkcijo ``napisi_test``, ki ustvari posamezne teste.
 Kadar želimo za vsakega učenca samostojne rešitve kliče še funkcijo ``napisi_posamezno_resitev``, ki sestavi posamezne
-rešitve. V primeru, da želimo eno datoteko z združenimi rešitvami za vse dijake, pa najprej naredi seznam vseh učencev
+rešitve. V primeru, da želimo eno datoteko z združenimi rešitvami za vse učence, pa najprej naredi seznam vseh učencev
 in pripadajočih rešitev, nato pa kliče funkcijo ``napisi_skupno_resitev``. Argument ``pdf`` je ``Bool`` vrednost, ki
 določa, če želimo že avtomatično ustvariti teste in rešitve tudi v `PDF`
 obliki. Če argument nastavimo na ``False``, bo program ustvaril samo `LaTeX` datoteke, če pa pustimo vrednost

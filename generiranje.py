@@ -177,23 +177,23 @@ class Naloga:
 
 # ~~~~~~~SESTAVLJANJE TESTOV
 
-def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_dijakov=None,
+def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), datoteka_seznam_ucencev=None,
                       zdruzene_resitve=True, pdf=True, pot_vzorca_testa=None, pot_vzorca_resitev=None, tocke=[]):
-    """Ustvari mapi za teste in rešitve. Sestavi teste za vse dijake s podanega seznama.
+    """Ustvari mapi za teste in rešitve. Sestavi teste za vse učence s podanega seznama.
 
     :param naloge: seznam željenih nalog
     :param ime_testa: ime testa
-    :param datoteka_seznam_dijakov: besedilna datoteka, ki vsebuje seznam dijakov
-    :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega dijaka v svoji datoteki
+    :param datoteka_seznam_ucencev: besedilna datoteka, ki vsebuje seznam učencev
+    :param zdruzene_resitve: rešitve v eni združeni datoteki ali za vsakega učenca v svoji datoteki
     :param pdf: program ustvari tudi pdf datoteke
     :param pot_vzorca_testa: pot do željenega vzorca testa
     :param pot_vzorca_resitev: pot do željenega vzorca rešitev
     :param tocke: seznam možnih točk za posamezno nalogo
     """
-    if not datoteka_seznam_dijakov:
+    if not datoteka_seznam_ucencev:
         seznam_ljudi = ["Matematika"]
     else:
-        seznam_ljudi = sorted(open(datoteka_seznam_dijakov, encoding="utf8").readlines())
+        seznam_ljudi = sorted(open(datoteka_seznam_ucencev, encoding="utf8").readlines())
         seznam_ljudi = [x.strip() for x in seznam_ljudi if x.strip() != '']
         # TODO  elegantno odstrani prazne vrstice ?
 
@@ -239,11 +239,11 @@ def sestavi_vse_teste(naloge=[], ime_testa=date.today().strftime("%d-%B-%Y"), da
 
 def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf, pot_vzorca_testa, tocke):
     """
-    Ustvari test za posameznega dijaka.
+    Ustvari test za posameznega učenca.
 
     :param ime_testa: ime testa
     :param seznam_nalog: seznam besedil posameznih nalog
-    :param ucenec: ime dijaka
+    :param ucenec: ime učenca
     :param pot_naloge: mapa, kjer se shranjujejo naloge
     :param pdf: program ustvari tudi pdf testa
     :param pot_vzorca_testa: pot do željenega vzorca testa
@@ -275,12 +275,12 @@ def napisi_test(ime_testa, seznam_nalog, ucenec, pot_naloge, pdf, pot_vzorca_tes
 def napisi_posamezno_resitev(ime_testa, seznam_nalog, seznam_resitev, ucenec, pot_resitve, pdf, pot_vzorca_resitev,
                              tocke):
     """
-    Ustvari datoteko z rešitvami za posameznega dijaka.
+    Ustvari datoteko z rešitvami za posameznega učenca.
 
     :param ime_testa: ime testa
     :param seznam_nalog: seznam besedil posameznih nalog
     :param seznam_resitev: seznam rešitev posameznih nalog
-    :param ucenec: ime dijaka
+    :param ucenec: ime učenca
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
     :param pot_vzorca_resitev: pot do željenega vzorca rešitev
@@ -311,10 +311,10 @@ def napisi_posamezno_resitev(ime_testa, seznam_nalog, seznam_resitev, ucenec, po
 def napisi_skupno_resitev(ime_testa, seznam_vseh_nalog_resitev, pot_resitve, pdf, pot_vzorca_resitev,
                           tocke):  # Napiše vse rešitve v 1 dokument
     """
-    Ustvari datoteko z rešitvami vseh dijakov.
+    Ustvari datoteko z rešitvami nalog vseh učencev.
 
     :param ime_testa: ime testa
-    :param seznam_vseh_nalog_resitev: seznam seznamov nalog in rešitev za posameznega dijaka
+    :param seznam_vseh_nalog_resitev: seznam seznamov nalog in rešitev za posameznega učenca
     :param pot_resitve: mapa, kjer se shranjujejo rešitve
     :param pdf: program ustvari tudi pdf rešitve
     :param pot_vzorca_resitev: pot do željenega vzorca rešitev

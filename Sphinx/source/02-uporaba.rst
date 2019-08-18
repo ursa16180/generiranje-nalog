@@ -20,7 +20,7 @@ Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz datoteke
 
 #. seznam nalog
 #. ime testa
-#. datoteko, ki vsebuje seznam dijakov
+#. datoteko, ki vsebuje seznam učencev
 #. izbira združenih ali ločenih rešitev
 #. izbira za avtomatično generiranje PDF datotek
 
@@ -32,7 +32,7 @@ in ustvari teste ter rešitve kot `LaTeX` dokumente. Če želimo lahko avtomati�
     >>>sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
                                           izrazi.RazstaviRazliko(min_potenca=3),
                                           naravna_stevila.DeliteljVeckratnik()],
-                                  ime_testa='Izrazi in deljivost', datoteka_seznam_dijakov='dijaki.txt',
+                                  ime_testa='Izrazi in deljivost', datoteka_seznam_učencev='ucenci.txt',
                                   zdruzene_resitve=False, pdf=False)
     Sestavljam test Izrazi in deljivost.
     Izpisujem test: 2717089
@@ -72,7 +72,7 @@ Kadar mapa z enakim imenom že obstaja, nas program vpraša, če jo želimo prep
     >>>sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
                                           izrazi.RazstaviRazliko(min_potenca=3),
                                           naravna_stevila.DeliteljVeckratnik()],
-                                  ime_testa='Izrazi in deljivost', datoteka_seznam_dijakov='dijaki.txt',
+                                  ime_testa='Izrazi in deljivost', datoteka_seznam_ucencev='ucenci.txt',
                                   zdruzene_resitve=False, pdf=False)
     Sestavljam test Izrazi in deljivost.
     Mapa z imenom Izrazi in deljivost že obstaja.
@@ -128,13 +128,13 @@ Primer:
 
 .. TODO ali želim tudi tukaj ponoviti kaj se zgodi če ime že obstaja
 
-Seznam dijakov
+Seznam učencev
 ################
-Seznam dijakov napišemo v ločeni tekstovni datoteki (`.txt`), tako da so podatki posameznega dijaka v svoji vrstici.
-Podatki dijaka so lahko poljubni: ime, priimek, vpisna številka... Namesto podatkov dijakov lahko podamo tudi naprimer imena skupin: A in B.
+Seznam učencev napišemo v ločeni tekstovni datoteki (`.txt`), tako da so podatki posameznega učenca v svoji vrstici.
+Podatki učenca so lahko poljubni: ime, priimek, vpisna številka... Namesto podatkov učencev lahko podamo tudi naprimer imena skupin: A in B.
 Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke posameznega testa ali rešitve.
 
-.. figure:: slike/dijaki.png
+.. figure:: slike/ucenci.png
     :align: center
 
     Primer tekstovne datotetke
@@ -149,7 +149,7 @@ Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke 
 Semena
 ********
 Vrednosti v posameznih nalogah so psevdo-naključno generirane. Za seme posameznega testa je uporabljen podnaslov testa,
-ki ga običajno predstavlja ime dijaka ali skupine. To nam zagotavlja, da bomo za posameznega dijaka oziroma skupino
+ki ga običajno predstavlja ime učenca ali skupine. To nam zagotavlja, da bomo za posameznega učenca oziroma skupino
 vedno dobili nalogo z enakimi podatki, ne glede na to, kolikokrat zaženemo program.
 Na tak način zagotovimo, da če nam je posamezna naloga všeč, se s popravljanjem drugih ne bo spremenila.
 Vendar se moramo zavedati, da na naključno generirane številke vpliva tudi vrstni red posameznih nalog.
@@ -157,7 +157,7 @@ Vendar se moramo zavedati, da na naključno generirane številke vpliva tudi vrs
 
 Združene rešitve
 ##################
-Rešitve nalog so lahko samostojna datoteka za vsakega dijaka ali pa so vse združene v eno datoteko. Privzete so združene rešitve.
+Rešitve nalog so lahko samostojna datoteka za vsakega učenca ali pa so vse združene v eno datoteko. Privzete so združene rešitve.
 Če želimo ločene moramo izbrati: ``zdruzene_resitve=False``.
 
 PDF datoteke
@@ -239,7 +239,7 @@ določati, če tega ne želimo.
 
 V nadaljevanju bo predstavljenih nekaj zanimivih primerov nalog.
 
-Pri nalogi ``DeliteljVeckratnik`` mora dijak izračunati najmanjši skupni večkratnik in največji skupni delitelj dveh števil.
+Pri nalogi ``DeliteljVeckratnik`` mora učenc izračunati najmanjši skupni večkratnik in največji skupni delitelj dveh števil.
 S parametrim ``do`` lahko določamo kako veliki sta lahko števili in tako omejimo kako zahtevno bo računanje.
 Privzeta vrednost so števila do 200. S parametrom ``najvecje_prastevilo`` pa določimo kaj je navečje praštevilo, ki se lahko pojavi v praštevilskem razcepu števil. Privzeta vrednost je 17.
 
@@ -325,7 +325,7 @@ da snovi kompleksnih števil še nismo obravnavali. Zato lahko nalogi ``Izracuna
 Pri računanju algebrajskih izrazov, je za na videz podobne naloge potrebno različno znanje. Naloga ``PotencirajVecclenik``
 ima zato več parametrov. Parametra ``min_clenov`` in ``max_clenov`` določata ali v nalogi potenciramo dvočlenike,
 tročlenike ali malo mešano.  Parametra ``min_potenca`` in ``mix_potenca`` pa določata razpon potenc.
- Na ta način lahko dobimo raznolike primere enega tipa naloge.
+Na ta način lahko dobimo raznolike primere enega tipa naloge.
 
 .. literalinclude:: ..\..\izrazi.py
    :pyobject: PotencirajVecclenik
