@@ -100,8 +100,8 @@ class Naloga:
             self.resitev_vecih = resitev_vecih
 
     def _poskusi_sestaviti(self):
-        """Poskusi sestaviti nalogo."""
-        pass
+        """Opozori, če metoda _poskusi_sestaviti za posamezno nalogo še ni sestavljena."""
+        raise NotImplementedError("Metoda _poskusi_sestaviti za nalogo še ni sestavljena.")
 
     def sestavi(self):
         """Sestavi nalogo, ki ustreza pogojem."""
