@@ -169,21 +169,20 @@ class Naloga:
         slovar = self.sestavi_vec(stevilo_nalog=3)
         besedilo_solo = template_besedilo_posamezne.render(naloga=slovar[0])
         besedilo_vec = template_besedilo_vecih.render(naloge=slovar)
-        def popravi_sumnike(niz):
-            # return niz
-            tabela = {
-                ord('č'): 'c',
-                ord('š'): 's',
-                ord('ž'): 'z',
-                ord('Č'): 'C',
-                ord('Š'): 'S',
-                ord('Ž'): 'Z',
-            }
-            return niz.translate(tabela)
-        print(popravi_sumnike("Slovar posameznega primera:\n{}".format(pprint.pformat(slovar[0]))))
-        print(popravi_sumnike("Besedilo posameznega primera:\n{}".format(besedilo_solo)))
-        print(popravi_sumnike("Slovar naloge z več primeri:\n{}".format(pprint.pformat(slovar))))
-        print(popravi_sumnike("Besedilo naloge z več primeri:\n{}".format(besedilo_vec)))
+        def izpisi(niz, zamik=''):
+            tabela = { ord('č'): 'c', ord('š'): 's', ord('ž'): 'z', ord('Č'): 'C', ord('Š'): 'S', ord('Ž'): 'Z'}
+            niz = niz.translate(tabela)
+            print(zamik + ('\n' + zamik).join(niz.splitlines()))
+        izpisi(">>> {modul}.{razred}({argumenti})".format(
+            modul=self.__class__.__module__,
+            razred=self.__class__.__name__,
+            argumenti=', '.join(('{}={}'.format(k, v) for k, v in vars(self).items() if k != 'st_nalog'))))
+        izpisi("SLOVAR S PODATKI PRVEGA PRIMERA:")
+        izpisi(pprint.pformat(slovar, width=120), zamik=' ')
+        izpisi("\nBESEDILO NALOGE S PRVIM PRIMEROM:")
+        izpisi(besedilo_solo, zamik=' ')
+        izpisi("\nBESEDILO NALOGE Z VSEMI PRIMERI:")
+        izpisi(besedilo_vec, zamik=' ')
 
 
 # ~~~~~~~SESTAVLJANJE TESTOV

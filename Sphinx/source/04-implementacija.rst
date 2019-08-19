@@ -98,20 +98,15 @@ Metoda ``primer`` prikaže, kako bi izgledal slovar z vrednostmi naloge in besed
 da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže tako besedilo za nalogo z enim primerom ali nalogo z
 več primeri.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import naravna_stevila
     >>> naravna_stevila.EvklidovAlgoritem().primer()
-    Slovar posameznega primera: {'stevilo1': 102, 'stevilo2': 660, 'najvecji_delitelj': 6}
-    Besedilo posameznega primera: Z Evklidovim algoritmom poišči največji skupni delitelj števil $102$ in $660$.
-    Slovar naloge z več primeri: [{'stevilo1': 102, 'stevilo2': 660, 'najvecji_delitelj': 6}, {'stevilo1': 190, 'stevilo2': 882, 'najvecji_delitelj': 2}, {'stevilo1': 163, 'stevilo2': 982, 'najvecji_delitelj': 1}]
-    Besedilo naloge z več primeri: Z Evklidovim algoritmom poišči največji skupni delitelj števil:
-        \begin{enumerate}
 
-        \item $102$, $660$
 
-        \item $190$, $882$
 
-        \item $163$, $982$
 
 .. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.primer

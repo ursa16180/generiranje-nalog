@@ -13,8 +13,8 @@ class PotencaDvoclenika(Naloga):
 
     .. runblock:: pycon
 
-        >>> import sys # ignore
-        >>> sys.path.append('../') # ignore
+        >>> import sys
+        >>> sys.path.append('../')
         >>> from izrazi import * # ignore
         >>> PotencaDvoclenika().primer()
 

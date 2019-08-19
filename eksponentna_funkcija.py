@@ -112,8 +112,8 @@ class Enacba(Naloga):
 
     .. runblock:: pycon
 
-        >>> import sys # ignore
-        >>> sys.path.append('../') # ignore
+        >>> import sys
+        >>> sys.path.append('../')
         >>> from eksponentna_funkcija import * # ignore
         >>> Enacba().primer()
 

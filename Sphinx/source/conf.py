@@ -63,6 +63,7 @@ autorun_languages = {
     'pycon_prefix_chars': 4,
     'pycon_input_encoding': 'utf-8',
     'pycon_output_encoding': 'utf-8',
+    'pycon_show_source': False,
 }
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
