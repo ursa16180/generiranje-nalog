@@ -85,6 +85,7 @@ Program nam več primerov izpiše z pomočjo `for` zanke. Primer `Jinja` zanke s
    :pyobject: Enacba
    :lines: 15-21, 23-29
 
+.. _ref-poskusi-sestaviti:
 
 *********************************************
 Metoda ``_poskusi_sestaviti``

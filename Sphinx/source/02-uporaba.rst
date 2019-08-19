@@ -6,12 +6,130 @@ Uporaba
 Program za generiranje nalog je sestavljen iz knjižnice nalog iz različnih področij srednješolske matematike in programa
 za sestavljanje testov. Ko zaženemo program z želenimi parametri nam ustvari teste in rešitve v `LaTeX` datotekah ter po
 želji tudi v `PDF` datotekah.
+Če želimo uporabiti že sestavljene naloge, program ne zahteva veliko razumevanja programiranja. Kogar zanima pa si lahko
+osnove programiranja v jeziku `Python` ogleda na spletu.
 
 ********
 Naloge
 ********
-Vsebuje 60 takih nalog iz teh področij
-.. todo katere naloge
+Knjižnica nalog vsebuje naloge iz različnih področij srednješolske matematike. Naloge so različno zahtevne. Nekatere so
+lahko primerne za spoznavanje konceptov, utrjevanje, pripravo na maturo ali celo kontrolne naloge. V času nastanka te
+knjižnica vsebuje 59 nalog, vendar je še veliko možnosti za dodajanje.
+
+Sklop `naravna_stevila`
+########################
+V tem sklopu sta 2 nalogi za izračun največjega skupnega delitelja in najmanjšega skupnega večkratnika dveh števil.
+Eno nalogo naj bi reševali z praštevilskim razcepom, drugo pa s pomočjo Evklidovega algoritme.
+Vsebuje nalogi:
+* ``DeliteljVeckratnik`` in
+* ``EvklidovAlgoritem``.
+
+Sklop `izrazi`
+#############
+Sklop izrazi je namenjen za utrjevanje računanja z algebrajskimi izrazi. Vsebuje naloge:
+* ``PotencaDvoclenika``,
+* ``PotencaTroclenika``,
+* ``RazstaviVieta``,
+* ``RazstaviRazliko`` in
+* ``PotencirajVecclenik``.
+
+Sklop `mnozice`
+################
+V sklopu so naloge za zapis elementov množic in različne operacije z množicami. Preverjajo znanje unije, preseka,
+komplementa, razlike in potenčne množice. V njem so naloge:
+* ``ElementiMnozice``,
+* ``PotencnaMnozica``,
+* ``UnijaPresekRazlika`` in
+* ``IzpeljaneMnozice``.
+
+Sklop `linearna_funkcija`
+##########################
+V tem sklopu so različne naloge, ki zahtevajo razumevanje linearne funkcije in enačb premic v ravnini. Pojavijo se tudi
+naloge z enačbami dveh in treh neznank.
+Vsebuje naloge:
+* ``PremicaSkoziTocki``,
+* ``RazdaljaMedTockama``,
+* ``OblikeEnacbPremice``,
+* ``PremiceTrikotnik``,
+* ``NarisiLinearnoFunkcijo``,
+* ``VrednostiLinearne``,
+* ``Neenacba``,
+* ``SistemDvehEnacb`` in
+* ``SistemTrehEnacb``.
+
+Sklop `kvadratna_funkcija`
+###########################
+Naloge iz sklopa utrjujejo znanje kvdaratne funkcije, različnih oblik zapisov funkcije, računanje ničel in risanje
+grafov:
+* ``IzracunajNicle``,
+* ``NarisiGraf``,
+* ``TemenskaOblika``,
+* ``Presecisce``,
+* ``Neenacba`` in
+* ``SkoziTocke``.
+
+Sklop `kompleksna_stevila`
+###########################
+V sklopu so naloge za začetno osvajanje računskih operacij s kompleksnimi števili ter pa nalogi,
+ki združujeta vse operacije. Vsebovane so naloge:
+* ``NarisiTocke``,
+* ``VsotaRazlika``,
+* ``Ulomek``,
+* ``Mnozenje``,
+* ``Racunanje`` in
+* ``Enacba``.
+
+Sklop `eksponentna_funkcija`
+###############################
+Naloge iz sklopa so namenjene utrjevanju znanju eksponentne funkcije in pripadajočih grafov ter enačb.
+Vsebuje naloge:
+* ``GrafEksponentne``,
+* ``Enacba`` in
+* ``Enacba2osnovi``.
+
+Sklop `polinomska_racionalna_funkcija`
+########################################
+V tem sklopu so naloge za računanje ničel, iskanje neznanih koeficientov in risanje grafov polinomov:
+* ``NiclePolinoma``,
+* ``DvojnaNicla``,
+* ``ParametraDvojna`` in
+* ``GrafPolinoma``.
+
+Ker je snov zelo povezana tudi z racionalno funkcijo, vsebuje tudi nalogi za računanje ničel, pol in asimptote ter graf racionalne funkcije:
+* ``DolociNiclePoleAsimptotoRacionalne`` in
+* ``GrafRacionalne``.
+
+Sklop `stoznice`
+#################
+Za reševanje nalog iz sklope `stoznice` je potrebno znanje enačbe krožnice in elipse v premaknjeni legi:
+* ``PreseciscaKroznic``,
+* ``TemeGorisceEnacba`` in
+* ``NarisiKrivuljo``.
+
+Sklop `odvodi`
+###############
+Za reševanje nalog iz sklopa odvodi je potrebno znanje kako odvajamo elementarne in sestavljene funkcije, ter
+razumevanje tangente na krivuljo. Vsebuje naloge:
+* ``OdvodElementarne``,
+* ``OdvodSestavljene``,
+* ``KotMedPremicama``,
+* ``Tangenta`` in
+* ``KotMedGrafoma``.
+
+Sklop `zaporedja`
+##################
+V sklopu `zaporedja` so naloge določanje splošnega člena poljubnega zaporedja, računanje prvih členov in vsote
+aritmetičnega in geometrijskega zaporedja:
+* ``SplosniClenZaporedja``,
+* ``PrviCleniAritmeticnega``,
+* ``SplosniClenAritmeticnegaZaporedja``,
+* ``SplosniClenAritmeticnegaEnacbi``,
+* ``VsotaAritmeticnega``,
+* ``PrviCleniGeometrijskega``,
+* ``SplosniClenGeometrijskega``,
+* ``SplosniClenGeometrijskegaEnacbi``,
+* ``VsotaGeometrijskega`` in
+* ``VsotaGeometrijskeVrste``.
 
 **************
 Izpis testov
@@ -345,6 +463,12 @@ Vsaka naloga ima 4 parametre, ki so predloge za:
 * besedilo rešitve naloge z enim primerom ``resitev_posamezne``
 * besedilo rešitve naloge z več rešitvami ``resitev_vecih``
 
+Za vsako nalogo želimo imeti prilagojeno besedilo, ki pravzaprav najpogosteje predstavlja navodilo za reševanje.
+Pri vsaki nalogi tako lahko prilagodimo navodila. Na enak način lahko prilagodimo tudi izpis rešitev.
+
+Naloge se pojavljajo v dveh oblikah - naloga z enim primerom ali naloga z več primeri. Ker se v takih primerih
+navodila pogosto razlikujejo imamo 2 različna parametra.
+
 Besedila so surovi nizi, ki se pretvorijo v predloge Python knjižnice Jinja2 (``Jinja2.Template``).
 V predlogo se na mesta spremenljivk označenih z dvojnimi zaviti oklepaji kasneje vstavijo posamezne vrednosti naloge.
 
@@ -353,10 +477,8 @@ V predlogo se na mesta spremenljivk označenih z dvojnimi zaviti oklepaji kasnej
    :lines: 16
 
 Metoda ``_poskusi_sestaviti`` vrne slovar vrednosti, ki se vstavijo na manjkajoča mesta v predlogo.
-Ključi v slovarju, se morajo ujemati z imeni spremenljivk v predlogi.
-
-.. literalinclude:: ..\..\naravna_stevila.py
-   :pyobject: DeliteljVeckratnik._poskusi_sestaviti
+Ključi v slovarju, se morajo ujemati z imeni spremenljivk v predlogi. O posameznih primerih metode si lahko preberete v
+razdelku :ref:'_ref-poskusi-sestaviti'.
 
 
 

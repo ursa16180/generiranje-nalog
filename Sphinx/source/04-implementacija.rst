@@ -203,8 +203,8 @@ ter ustvari posamezen test za učenca.
 
 V podmapi `Naloge` ustvari `LaTeX` datoteko z imenom argumenta ``ucenec`` (`ucenec.tex`). Datoteka je ustvarjena iz predloge za
 posamezen test, ki ga podamo z nizom ````pot_vzorca_testa````. Nekaj primerov predlog najdemo v mapi `vzorci`. Vzorec se
- spremeni v `Jinja2.Template` v katero se na mesta spremenljivk vstavijo ustrezne naloge iz seznama `seznam_nalog` in
- vrednosti možnih točk, kadar so podane.
+spremeni v `Jinja2.Template` v katero se na mesta spremenljivk vstavijo ustrezne naloge iz seznama `seznam_nalog` in
+vrednosti možnih točk, kadar so podane.
 
 Kadar je argument ``pdf`` nastavljen na vrednost ``True``, program zažene `LaTeX` datoteko testa. Če uspešno prevede
 `LaTeX` datoteko, program v isti mapi ustvari še `PDF` datoteko (`ucenec.pdf`) in izbriše datoteki `ucenec.log` ter `ucenec.aux`.

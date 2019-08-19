@@ -124,7 +124,7 @@ def diskriminanta(a, b, c):
     return b ** 2 - 4 * a * c
 
 
-# ~~~~~Naloge in sklopa: Kvadratna funkcija
+# ~~~~~Naloge iz sklopa: Kvadratna funkcija
 
 class IzracunajNicle(Naloga):
     """
