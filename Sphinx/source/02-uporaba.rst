@@ -168,6 +168,7 @@ Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke 
 Če datoteka s seznamom ni podana, bo program ustvaril samo 1 test s privzetim podnaslovom `Matematika`.
 
 .. _ref-semena:
+
 Semena
 ********
 Vrednosti v posameznih nalogah so psevdo-naključno generirane. Za seme posameznega testa je uporabljen podnaslov testa,

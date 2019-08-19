@@ -15,8 +15,9 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
    Implementacija <04-implementacija.rst>
    Zaključek <05-zakljucek.rst>
    Dokumentacija knjižnice <A-dokumentacija_knjiznice.rst>
-   Izvorna koda <B-koda.rst>
    Predloga za novo nalogo <C-vzorcna_datoteka.rst>
+.. Primeri testov
+.. todo dodaj PDF testov
 
 
 Indices and tables
