@@ -6,6 +6,7 @@ import shutil
 import jinja2
 import sympy
 import importlib
+import pprint
 
 sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 
@@ -154,7 +155,6 @@ class Naloga:
                     'resitev': template_resitev_vecih.render(naloge=naloge)}
 
     def primer(self):
-
         template_besedilo_posamezne = jinja2.Template(self.besedilo_posamezne)
         template_besedilo_vecih = jinja2.Template(self.besedilo_vecih)
 
@@ -169,10 +169,21 @@ class Naloga:
         slovar = self.sestavi_vec(stevilo_nalog=3)
         besedilo_solo = template_besedilo_posamezne.render(naloga=slovar[0])
         besedilo_vec = template_besedilo_vecih.render(naloge=slovar)
-        print("Slovar posameznega primera: {}".format(slovar[0]))
-        print("Besedilo posameznega primera: {}".format(besedilo_solo))
-        print("Slovar naloge z več primeri: {}".format(slovar))
-        print("Besedilo naloge z več primeri: {}".format(besedilo_vec))
+        def popravi_sumnike(niz):
+            # return niz
+            tabela = {
+                ord('č'): 'c',
+                ord('š'): 's',
+                ord('ž'): 'z',
+                ord('Č'): 'C',
+                ord('Š'): 'S',
+                ord('Ž'): 'Z',
+            }
+            return niz.translate(tabela)
+        print(popravi_sumnike("Slovar posameznega primera:\n{}".format(pprint.pformat(slovar[0]))))
+        print(popravi_sumnike("Besedilo posameznega primera:\n{}".format(besedilo_solo)))
+        print(popravi_sumnike("Slovar naloge z več primeri:\n{}".format(pprint.pformat(slovar))))
+        print(popravi_sumnike("Besedilo naloge z več primeri:\n{}".format(besedilo_vec)))
 
 
 # ~~~~~~~SESTAVLJANJE TESTOV
