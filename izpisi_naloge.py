@@ -72,20 +72,16 @@ import odvodi
 #     stoznice.NarisiKrivuljo(),stoznice.NarisiKrivuljo(st_nalog=3),
 #     stoznice.PreseciscaKroznic(),stoznice.PreseciscaKroznic(st_nalog=3),
 #     stoznice.TemeGorisceEnacba()
-#
 # ],
-#     "Tester")#, "ucenci.txt", zdruzene_resitve=False)
+#     ime_testa="Vse naloge", pdf=False, pot_vzorca_resitev="vzorci/vzorec_posameznih_resitev1.tex")
 #
-# generiranje.sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
-#                                       izrazi.RazstaviRazliko(min_potenca=3),
-#                                       naravna_stevila.DeliteljVeckratnik()],
-#                               ime_testa='Izrazi in deljivost',
-#                               datoteka_seznam_dijakov="ucenci.txt",
-#                               zdruzene_resitve=True)
+# generiranje.sestavi_vse_teste(
+#     naloge=[izrazi.PotencaDvoclenika(st_nalog=3), izrazi.RazstaviRazliko(min_potenca=3), naravna_stevila.DeliteljVeckratnik()],
+#     ime_testa='Izrazi in deljivost', datoteka_seznam_ucencev="ucenci.txt",
+#     zdruzene_resitve=False, pdf=True,
+#     pot_vzorca_testa="vzorci/vzorec_testa2.tex",
+#     pot_vzorca_resitev="vzorci/vzorec_posameznih_resitev3.tex", tocke=[5,5,7])
 
-# generiranje.sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje(st_nalog=5)], "ucenci.txt",  zdruzene_resitve=True)
-generiranje.sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.Mnozenje()], ime_testa='test-tock',
-                              zdruzene_resitve=True, pot_vzorca_testa="vzorci/vzorec_testa3.tex",
-                              pot_vzorca_resitev="vzorci/vzorec_skupnih_resitev2.tex", tocke=[5, 15])
-
-# eksponentna_funkcija.Enacba().primer()
+# generiranje.sestavi_vse_teste([kompleksna_stevila.Mnozenje(), kompleksna_stevila.NarisiTocke(st_nalog=5)],
+#                               ime_testa='Kompleksna števila', pot_vzorca_testa="vzorci/vzorec_testa4.tex",
+#                               pot_vzorca_resitev="vzorci/vzorec_skupnih_resitev3.tex", pdf=True)

@@ -127,6 +127,8 @@ Kadar mapa z enakim imenom že obstaja, nas program vpraša, če jo želimo prep
     Test Izrazi in deljivost-02-13-50 je sestavljen.
 
 
+V datoteki `izpisi_naloge.py` je predstavljenih nekaj različnih primerov testov. Če si želimo ogledati,
+kako program deluje, je to odlično mesto za začetek.
 Seznam nalog
 #############
 
