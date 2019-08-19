@@ -16,24 +16,24 @@ Vsebuje 60 takih nalog iz teh področij
 **************
 Izpis testov
 **************
-Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz datoteke ``generiranje.py``. Funkcija sprejme pet parametrov
+Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz datoteke ``generiranje.py``. Funkcija sprejme
+osem parametrov:
 
 #. seznam nalog
 #. ime testa
 #. datoteko, ki vsebuje seznam učencev
 #. izbira združenih ali ločenih rešitev
 #. izbira za avtomatično generiranje PDF datotek
+#. kateri vzorec za test želimo uporabiti
+#. kateri vzorec za rešitve želimo uporabiti
+#. seznam možnih točk pri posamezni nalogi
 
 in ustvari teste ter rešitve kot `LaTeX` dokumente. Če želimo lahko avtomatično ustvari dokumente tudi v `PDF` formatu.
-`LaTeX` dokument je na voljo zato, da vedno lahko kaj naknadno spremenimo alii popravimo.
+`LaTeX` dokument je na voljo zato, da vedno lahko kaj naknadno spremenimo ali popravimo.
 
 .. code-block:: python
 
-    >>>sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
-                                          izrazi.RazstaviRazliko(min_potenca=3),
-                                          naravna_stevila.DeliteljVeckratnik()],
-                                  ime_testa='Izrazi in deljivost', datoteka_seznam_učencev='ucenci.txt',
-                                  zdruzene_resitve=False, pdf=False)
+    >>> generiranje.sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3), izrazi.RazstaviRazliko(min_potenca=3), naravna_stevila.DeliteljVeckratnik()], ime_testa='Izrazi in deljivost', datoteka_seznam_ucencev="ucenci.txt", zdruzene_resitve=False, pdf=True, pot_vzorca_testa="vzorci/vzorec_testa2.tex", pot_vzorca_resitev="vzorci/vzorec_posameznih_resitev1.tex", tocke=[5,5,7])
     Sestavljam test Izrazi in deljivost.
     Izpisujem test: 2717089
     Izpisujem rešitve: 2717089
@@ -63,35 +63,56 @@ Program ustvari mapo z enakim imenom kot ime testa in 2 podmapi:
 
 Mapa `Naloge` vsebuje posamezne zgenerirane teste, mapa `Rešitve` pa rešitve zgeneriranih testov.
 
+Spodaj so prikazane prve strani treh testov. Primere testov si lahko v celoti ogledate v prilogi.
+.. todo ref na prilogo
+
+.. figure:: slike/test1.png
+    :align: center
+    :width: 30%
+.. figure:: slike/test2.png
+    :align: center
+    :width: 30%
+.. figure:: slike/test3.png
+    :align: center
+    :width: 30%
+
+    Primeri prvih strani testov
+
+Na slikah se vidi, kako izgledajo rešitve različnih učencev. V celoti so prav tako dostopni v prilogi.
+.. todo ref na prilog
+
+.. figure:: slike/resitve1.png
+    :align: center
+    :width: 30%
+.. figure:: slike/resitve2.png
+    :align: center
+    :width: 30%
+.. figure:: slike/resitve3.png
+    :align: center
+    :width: 30%
+
+    Primeri rešitev
+
+
 Kadar mapa z enakim imenom že obstaja, nas program vpraša, če jo želimo prepisati. Če izberemo možnost `da`, se stara mapa izbriše in ustvari nova.
 Če izberemo možnost `ne`, stara mapa ostane nespremenjena hkrati pa se ustvari nova mapa z enakim imenom kot ime testa in uro ustvarjanja testa.
 
 .. code-block:: python
-    :emphasize-lines: 7,8,23
+    :emphasize-lines: 3,4, 13
 
-    >>>sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3),
-                                          izrazi.RazstaviRazliko(min_potenca=3),
-                                          naravna_stevila.DeliteljVeckratnik()],
-                                  ime_testa='Izrazi in deljivost', datoteka_seznam_ucencev='ucenci.txt',
-                                  zdruzene_resitve=False, pdf=False)
+    >>> generiranje.sestavi_vse_teste(naloge=[izrazi.PotencaDvoclenika(st_nalog=3), izrazi.RazstaviRazliko(min_potenca=3), naravna_stevila.DeliteljVeckratnik()], ime_testa='Izrazi in deljivost', datoteka_seznam_ucencev="ucenci.txt", zdruzene_resitve=True, pdf=False, tocke=[5,5,7])
     Sestavljam test Izrazi in deljivost.
     Mapa z imenom Izrazi in deljivost že obstaja.
     Ali jo želite prepisati z novo vsebino? [da/NE]>? ne
     Izpisujem test: 2717089
-    Izpisujem rešitve: 2717089
     Izpisujem test: Ana
-    Izpisujem rešitve: Ana
     Izpisujem test: Julija
-    Izpisujem rešitve: Julija
     Izpisujem test: Katarina
-    Izpisujem rešitve: Katarina
     Izpisujem test: Marjan Novak
-    Izpisujem rešitve: Marjan Novak
     Izpisujem test: Matjaž
-    Izpisujem rešitve: Matjaž
     Izpisujem test: Tjaša
-    Izpisujem rešitve: Tjaša
-    Test Izrazi in deljivost-18-37-30 je sestavljen.
+    Izpisujem skupne rešitve za test Izrazi in deljivost.
+    Test Izrazi in deljivost-02-13-50 je sestavljen.
 
 
 Seznam nalog
@@ -146,6 +167,7 @@ Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke 
 
 Če datoteka s seznamom ni podana, bo program ustvaril samo 1 test s privzetim podnaslovom `Matematika`.
 
+.. _ref-semena:
 Semena
 ********
 Vrednosti v posameznih nalogah so psevdo-naključno generirane. Za seme posameznega testa je uporabljen podnaslov testa,
@@ -168,7 +190,7 @@ poveča časovno zahtevnost programa. Če ne želimo avtomatično generiranih `P
 
 .. code-block:: python
 
-    >>> sestavi_vse_teste(
+    >>> generiranje.sestavi_vse_teste(
         naloge=[izrazi.PotencaDvoclenika(st_nalog=3),izrazi.RazstaviRazliko(min_potenca=3),
         naravna_stevila.DeliteljVeckratnik()],
         ime_testa='Izrazi in deljivost',
@@ -180,6 +202,115 @@ poveča časovno zahtevnost programa. Če ne želimo avtomatično generiranih `P
 
 
 .. _ref-parametri:
+
+Vzorci testov
+##############
+V mapi `vzorci` so štirje različne predloge oziroma vzorci testov. Uporabnik se odloči, kateri je najprimernejši zanj in nastavi
+spremenljivko `pot_vzorca_testa` kot niz, do željenege predloge. Privzeta je predloga `vzorec_testa1.tex`.
+
+Primer: ``pot_vzorca_testa=vzorci/vzorec_testa2.tex``
+
+Predloga `vzorec_testa1.tex` je verjetno najprimernejša za utrjevanje znanja. Na vrhu je napisano ime testa, pod njim
+podnaslov, ki ga razbere iz seznama učencev. Nato so brez večjih razmakov naštete vse naloge.
+
+.. figure:: slike/vzorec_testa1.png
+    :align: center
+
+    Primer testa sestavljenega iz `vzorec_testa1.tex`
+
+Predlogi `vzorec_testa2.tex` in `vzorec_testa3.tex` sta primernejši za kontrolne naloge. Imata prostor za podpis učenca,
+ime testa, podnaslov in kriterij ocenjevanja. Če želimo da je pod nalogo prostor za reševanje, je bolj primeren vzorec
+`vzorec_testa2.tex`.
+
+.. figure:: slike/vzorec_testa2.png
+    :align: center
+
+    Primer testa sestavljenega iz `vzorec_testa2.tex`
+
+Če uporabimo predlogo `vzorec_testa3.tex`, so vse naloge naštete na eni strani.
+
+.. figure:: slike/vzorec_testa3.png
+    :align: center
+
+    Primer testa sestavljenega iz `vzorec_testa3.tex`
+
+Predloga `vzorec_testa4.tex` pa je bolj primerna za popravne izpite, saj ima nalovna stran veliko postora za
+natačno podane zahteve znanja in jasno zapisan kriterij. Vsaka naloga je na svoji strani, tako da imajo učenci dovolj
+prostora za reševanje na test.
+
+.. figure:: slike/vzorec_testa4.png
+    :align: center
+
+    Primer testa sestavljenega iz `vzorec_testa4.tex`
+
+Vzorci rešitev
+###############
+V mapi `vzorci` so tudi predloge oziroma vzorci za rešitve. Pozorni moramo biti, ali smo se odločili za združene
+rešitve ali ne, saj se predloge za njih razlikujejo.
+
+Združene rešitve
+*****************
+V primeru združenih rešitev, program sestavi samo eno datoteko z vsemi rešitvami. Privzeta nastavitev je predloga
+`vzorec_skupnih_resitev1.tex`. Za vsakega učenca se rešitve začnejo na novi strani in ima naštete samo rešitve.
+
+.. figure:: slike/vzorec_skupne1.png
+    :align: center
+
+    Primer rešitev sestavljenih iz `vzorec_skupnih_resitev1.tex`
+
+Predloga `vzorec_skupnih_resitev2.tex` ji je zelo podobna, le da se rešitve naslednjega učenca ne začnejo na novi strani.
+
+.. figure:: slike/vzorec_skupne2.png
+    :align: center
+
+    Primer rešitev sestavljenih iz `vzorec_skupnih_resitev2.tex`
+
+Če uporabimo predlogo `vzorec_skupnih_resitev3.tex` pa imamo najprej zapisano nalogo in šele nato rešitev.
+
+.. figure:: slike/vzorec_skupne3.png
+    :align: center
+
+    Primer rešitev sestavljenih iz `vzorec_skupnih_resitev3.tex`
+
+Posamezne rešitve
+*******************
+Privzeta predloga za posamezne rešitve je `vzorec_posameznih_resitev1.tex`. Na vrhu je naslov, nato pa so
+zaporedno naštete vse rešitve.
+
+.. figure:: slike/vzorec_posamezne1.png
+    :align: center
+
+    Primer rešitev sestavljenih iz `vzorec_posameznih_resitev1.tex`
+
+Če želimo, da imamo najprej zapisane naloge in nato rešitve, moramo izbrati predlogo `vzorec_posameznih_resitev2.tex`.
+
+.. figure:: slike/vzorec_posamezne2.png
+    :align: center
+
+    Primer rešitev sestavljenih iz `vzorec_posameznih_resitev2.tex`
+
+Včasih želimo učencem dati rešitve za samostojno preverjanje, vendar nočemo da se rešitve razberejo že ob prvem pogledu.
+Zato ima predloga `vzorec_posameznih_resitev3.tex` zelo majhno pisavo za katero se moramo potruditi, da jo lahko razberemo.
+
+.. figure:: slike/vzorec_posamezne3.png
+    :align: center
+
+    Primer rešitev sestavljenih iz `vzorec_posameznih_resitev3.tex`
+
+Točke
+######
+Na kontrolnih nalogah mora biti jasno zapisano, koliko točk je vredna posamezna naloga. Če želimo, da se vrednosti
+avtomatično izpišejo zraven posamezne naloge oziroma rešitev, moramo kot parameter `tocke` podati seznam možnih točk.
+Privzeta vrednost je prazen seznam - v tem primeru je namesto točk le prazen prostor.
+Pri podajanju parametra je pomemben vrstni red, saj prva vrednost na seznamu predstavlja število možnih točk pri prvi
+nalogi. Če naprimer podamo `tocke=[6,3,9]`, pomeni da je prva naloga vredna 6 točk, druga 3 točke, tretja pa 9 točk.
+
+Pomembno je, da je seznam nalog `naloge` enako dolg kot seznam točk `tocke`. V nasprotnem primeru nas program na to
+opozori.
+
+Včasih lahko zahtevnost naloge določimo šele, ko vidimo dejanske vrednosti v nalogi in ne prej. V tem primeru najprej
+zaženemo program brez podanega seznama točk in šele ko vemo koliko bodo posamezne naloge vredne, ponovno zaženemo
+program s podanim parametrom `tocke`. Semena (glej :ref:'ref-semena'.) nam zagotavljajo, da bomo v obeh primerih dobili enake vrednosti.
 
 ***********************
 Spreminjanje parametrov
