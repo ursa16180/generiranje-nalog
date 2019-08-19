@@ -11,14 +11,12 @@
 \begin{document}
 
 \textbf{\LARGE Skupne rešitve testa {{ime_testa}} }
+
 {% for posameznik in seznam %}
 \section*{ {{posameznik.ucenec}} }
 \begin{enumerate}
 {% for resitev in posameznik.resitve %}
-\item {{ posameznik.naloge[loop.index0]}}
-
-{{resitev}}
-
+\item {{resitev}}
 {% if tocke|length %}
 \begin{flushright}
 {{ tocke[loop.index0]}}
@@ -26,6 +24,6 @@
 {% endif %}
 {% endfor%}
 \end{enumerate}
-\newpage
 {% endfor%}
+
 \end{document}

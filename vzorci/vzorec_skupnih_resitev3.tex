@@ -10,21 +10,22 @@
 
 \begin{document}
 
-\title{Rešitve testa {{ime_testa}} }
-\author{ {{ucenec}} }
-\maketitle
-
+\textbf{\LARGE Skupne rešitve testa {{ime_testa}} }
+{% for posameznik in seznam %}
+\section*{ {{posameznik.ucenec}} }
 \begin{enumerate}
-{% for resitev in resitve %}
-\item {{ naloge[loop.index0] }}\\
+{% for resitev in posameznik.resitve %}
+\item {{ posameznik.naloge[loop.index0]}}
 
 {{resitev}}
+
 {% if tocke|length %}
 \begin{flushright}
 {{ tocke[loop.index0]}}
 \end{flushright}
 {% endif %}
 {% endfor%}
-
 \end{enumerate}
+\newpage
+{% endfor%}
 \end{document}
