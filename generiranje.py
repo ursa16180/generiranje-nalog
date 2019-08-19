@@ -6,6 +6,7 @@ import shutil
 import jinja2
 import sympy
 import importlib
+import pprint
 
 sympy_printing_latex = importlib.import_module('sympy.printing.latex')
 
@@ -154,7 +155,6 @@ class Naloga:
                     'resitev': template_resitev_vecih.render(naloge=naloge)}
 
     def primer(self):
-
         template_besedilo_posamezne = jinja2.Template(self.besedilo_posamezne)
         template_besedilo_vecih = jinja2.Template(self.besedilo_vecih)
 
@@ -169,10 +169,20 @@ class Naloga:
         slovar = self.sestavi_vec(stevilo_nalog=3)
         besedilo_solo = template_besedilo_posamezne.render(naloga=slovar[0])
         besedilo_vec = template_besedilo_vecih.render(naloge=slovar)
-        print("Slovar posameznega primera: {}".format(slovar[0]))
-        print("Besedilo posameznega primera: {}".format(besedilo_solo))
-        print("Slovar naloge z več primeri: {}".format(slovar))
-        print("Besedilo naloge z več primeri: {}".format(besedilo_vec))
+        def izpisi(niz, zamik=''):
+            tabela = { ord('č'): 'c', ord('š'): 's', ord('ž'): 'z', ord('Č'): 'C', ord('Š'): 'S', ord('Ž'): 'Z'}
+            niz = niz.translate(tabela)
+            print(zamik + ('\n' + zamik).join(niz.splitlines()))
+        izpisi(">>> {modul}.{razred}({argumenti})".format(
+            modul=self.__class__.__module__,
+            razred=self.__class__.__name__,
+            argumenti=', '.join(('{}={}'.format(k, v) for k, v in vars(self).items() if k != 'st_nalog'))))
+        izpisi("SLOVAR S PODATKI PRVEGA PRIMERA:")
+        izpisi(pprint.pformat(slovar, width=120), zamik=' ')
+        izpisi("\nBESEDILO NALOGE S PRVIM PRIMEROM:")
+        izpisi(besedilo_solo, zamik=' ')
+        izpisi("\nBESEDILO NALOGE Z VSEMI PRIMERI:")
+        izpisi(besedilo_vec, zamik=' ')
 
 
 # ~~~~~~~SESTAVLJANJE TESTOV

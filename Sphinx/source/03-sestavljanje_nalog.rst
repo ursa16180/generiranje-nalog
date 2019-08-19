@@ -9,7 +9,7 @@ Vsaka naloga v knjižnici je svoj razred, vse pa dedujejo lastnosti iz razreda `
 Na novo ustvarjeno poglavje nalog mora najprej uvoziti razred ``Naloga``  in metodo ``preveri`` iz ``generiranje.py``.
 Za naključno generirane vrednosti moramo uvoziti še paket ``random``. Paket ``sympy`` pa nam omogoča simbolno računanje.
 
-.. literalinclude:: ..\..\eksponentna_funkcija.py
+.. literalinclude:: ../../eksponentna_funkcija.py
    :lines: 1-3
 
 Da bomo naloge lahko dodajali v teste, moramo na koncu našo novo ustvarjeno poglavje uvoziti še v program ``generiranje.py``.
@@ -60,7 +60,7 @@ Za lažjo uporabo, sem ``sympy`` funkciji  ``latex``  in ``expand`` dodala med f
 
 .. Todo dodaj sklic na kodo v generiranju ki doda funkciji ali sklic na dodatek B
 
-.. literalinclude:: ..\..\eksponentna_funkcija.py
+.. literalinclude:: ../../eksponentna_funkcija.py
    :pyobject: Enacba
    :lines: 14, 22
 
@@ -81,7 +81,7 @@ Program nam več primerov izpiše z pomočjo `for` zanke. Primer `Jinja` zanke s
 
 .. todo vir za jinja zanko.
 
-.. literalinclude:: ..\..\eksponentna_funkcija.py
+.. literalinclude:: ../../eksponentna_funkcija.py
    :pyobject: Enacba
    :lines: 15-21, 23-29
 
@@ -115,7 +115,7 @@ Najpogosteje sem uporabila funkcije:
 * ``random.sample``, ki iz seznama izbere določeno število različnih elementov.
 
 
-.. literalinclude:: ..\..\naravna_stevila.py
+.. literalinclude:: ../../naravna_stevila.py
    :pyobject: DeliteljVeckratnik._poskusi_sestaviti
    :emphasize-lines: 2-3
 
@@ -124,17 +124,17 @@ nalog lahko najdemo nekaj pomožnih funkcij, ki vračajo željene naključne obj
 
 V poglavjih, ki obravnavajo posamezne funkcije ali odvode, najdemo generatorje željenih funkcij.
 
-.. literalinclude:: ..\..\kvadratna_funkcija.py
+.. literalinclude:: ../../kvadratna_funkcija.py
    :pyobject: splosna_oblika
 
 Lahko tudi v različnih oblikah.
 
-.. literalinclude:: ..\..\kvadratna_funkcija.py
+.. literalinclude:: ../../kvadratna_funkcija.py
    :pyobject: nicelna_oblika
 
 Funkcije lahko generirajo tudi drugačne željene objekte.
 
-.. literalinclude:: ..\..\mnozice.py
+.. literalinclude:: ../../mnozice.py
    :pyobject: izberi_mnozico
 
 Naključno izbrani operatoji
@@ -142,7 +142,7 @@ Naključno izbrani operatoji
 Včasih lahko raznolikost nalog dosežemo tudi tako, da namesto samo naključno generiranih vrednosti, tudi operacije med
 vrednostmi izberemo naključno.
 
-.. literalinclude:: ..\..\odvodi.py
+.. literalinclude:: ../../odvodi.py
     :pyobject: OdvodSestavljene._poskusi_sestaviti
     :emphasize-lines: 34-40
 
@@ -155,7 +155,7 @@ različnih objektov kot so polinomi (``Poly``), stožnice (``Circle``, ``Ellipse
 Na znanih objektih je možno uporabiti veliko funkcij in tako izračunati vrednosti izrazov, poenostaviti ali celo
 pretvoriti v niz v `LaTeX` obliki.
 
-.. literalinclude:: ..\..\stoznice.py
+.. literalinclude:: ../../stoznice.py
     :pyobject: PreseciscaKroznic._poskusi_sestaviti
     :emphasize-lines: 2, 3, 13, 14, 15, 18, 19
 
@@ -168,19 +168,19 @@ lahko zagotovimo lepši rezultat ali pa preprečimo nesmiselne naloge.
 
 Vnaprej izbrana rešitev:
 
-.. literalinclude:: ..\..\kompleksna_stevila.py
+.. literalinclude:: ../../kompleksna_stevila.py
    :pyobject: Enacba._poskusi_sestaviti
    :emphasize-lines: 4
 
 Funkcija `preveri` zagotovi lepši rezultat:
 
-.. literalinclude:: ..\..\kvadratna_funkcija.py
+.. literalinclude:: ../../kvadratna_funkcija.py
    :pyobject: NarisiGraf._poskusi_sestaviti
    :emphasize-lines: 6
 
 Funkcija `preveri` zagotovi smiseln rezultat.
 
-.. literalinclude:: ..\..\linearna_funkcija.py
+.. literalinclude:: ../../linearna_funkcija.py
    :pyobject: PremicaSkoziTocki._poskusi_sestaviti
    :emphasize-lines: 6
 
@@ -193,13 +193,13 @@ narisati, moramo najprej s funkcijo `sympy.latex` spremeniti v nize, ki jih `LaT
 moramo biti pozorni na oznako za potence. V matematičnem načinu zapišemo potence z oznako `**`, za risanje grafov pa
 jih moramo zapisati z znakom `^`.
 
-.. literalinclude:: ..\..\eksponentna_funkcija.py
+.. literalinclude:: ../../eksponentna_funkcija.py
     :pyobject: GrafEksponentne._poskusi_sestaviti
     :emphasize-lines: 7-8
 
 Včasih je zato lažje, da funkcijo za risanje podamo kot produkt faktorjev (na primer v ničelni obliki).
 
-.. literalinclude:: ..\..\kvadratna_funkcija.py
+.. literalinclude:: ../../kvadratna_funkcija.py
     :pyobject: NarisiGraf._poskusi_sestaviti
     :emphasize-lines: 3,8
 
@@ -210,12 +210,12 @@ zahtevnost nalog, so predstavljeni v poglavju :ref:`ref_uporaba`
 Če želimo prilagodljivo zahtevnost mora biti tudi metoda ``_poskusi_sestaviti`` prilagojena. Lahko s funkcijo ``preveri``
 zagotovimo primerno težke rešitve.
 
-.. literalinclude:: ..\..\kvadratna_funkcija.py
+.. literalinclude:: ../../kvadratna_funkcija.py
    :pyobject: IzracunajNicle._poskusi_sestaviti
 
 Lahko pa že metodo napišemo razdeljeno za različno zahtevnost.
 
-.. literalinclude:: ..\..\eksponentna_funkcija.py
+.. literalinclude:: ../../eksponentna_funkcija.py
    :pyobject: Enacba2osnovi._poskusi_sestaviti
 
 

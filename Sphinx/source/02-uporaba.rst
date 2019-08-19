@@ -496,7 +496,7 @@ navodila pogosto razlikujejo imamo 2 različna parametra.
 Besedila so surovi nizi, ki se pretvorijo v predloge Python knjižnice Jinja2 (``Jinja2.Template``).
 V predlogo se na mesta spremenljivk označenih z dvojnimi zaviti oklepaji kasneje vstavijo posamezne vrednosti naloge.
 
-.. literalinclude:: ..\..\naravna_stevila.py
+.. literalinclude:: ../../naravna_stevila.py
    :pyobject: DeliteljVeckratnik
    :lines: 16
 
@@ -537,112 +537,19 @@ Pri nalogi ``DeliteljVeckratnik`` mora učenc izračunati najmanjši skupni več
 S parametrom ``do`` lahko določamo kako veliki sta lahko števili in tako omejimo kako zahtevno bo računanje.
 Privzeta vrednost so števila do 200. S parametrom ``najvecje_prastevilo`` pa določimo kaj je navečje praštevilo, ki se lahko pojavi v praštevilskem razcepu števil. Privzeta vrednost je 17.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import naravna_stevila
     >>> naravna_stevila.DeliteljVeckratnik().primer()
-    Slovar posameznega primera: {'stevilo1': 130, 'stevilo2': 121, 'najvecji_delitelj': 1, 'najmanjsi_veckratnik': 15730}
-    Besedilo posameznega primera: Določi največji skupni delitelj in najmanjši skupni večkratnik števil $130$ in $121$.
-    Slovar naloge z več primeri: [{'stevilo1': 130, 'stevilo2': 121, 'najvecji_delitelj': 1, 'najmanjsi_veckratnik': 15730}, {'stevilo1': 165, 'stevilo2': 121, 'najvecji_delitelj': 11, 'najmanjsi_veckratnik': 1815}, {'stevilo1': 64, 'stevilo2': 110, 'najvecji_delitelj': 2, 'najmanjsi_veckratnik': 3520}]
-    Besedilo naloge z več primeri: Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
-        \begin{enumerate}
 
-        \item $130$ in $121$
+.. runblock:: pycon
 
-        \item $165$ in $121$
-
-        \item $64$ in $110$
-
-        \end{enumerate}
-
-    >>> naravna_stevila.DeliteljVeckratnik(do=500,najvecje_prastevilo=41).primer()
-    Slovar posameznega primera: {'stevilo1': 272, 'stevilo2': 198, 'najvecji_delitelj': 2, 'najmanjsi_veckratnik': 26928}
-    Besedilo posameznega primera: Določi največji skupni delitelj in najmanjši skupni večkratnik števil $272$ in $198$.
-    Slovar naloge z več primeri: [{'stevilo1': 272, 'stevilo2': 198, 'najvecji_delitelj': 2, 'najmanjsi_veckratnik': 26928}, {'stevilo1': 396, 'stevilo2': 261, 'najvecji_delitelj': 9, 'najmanjsi_veckratnik': 11484}, {'stevilo1': 91, 'stevilo2': 385, 'najvecji_delitelj': 7, 'najmanjsi_veckratnik': 5005}]
-    Besedilo naloge z več primeri: Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
-        \begin{enumerate}
-
-        \item $272$ in $198$
-
-        \item $396$ in $261$
-
-        \item $91$ in $385$
-
-        \end{enumerate}
-
-Naloga ``SistemDvehEnacb`` iz poglavja linearne funkcija ima lahko različno zahtevne številske rešitve. Običajno nam je
-lažje izračunati celoštevilske rešitve. Če pa določimo parameter ``racionalne_resitve=True``, pa bo naloga bolj raznolika,
-saj bodo lahko rešitve tako celoštevilske kot tudi racionalne. Na tak način lahko dosežemo tudi večjo raznolikost nalog.
-
-.. code-block:: python
-
-    >>> linearna_funkcija.SistemDvehEnacb().primer()
-    Slovar posameznega primera: {'enacba1': Eq(-x - 5*y, 8), 'enacba2': Eq(5*x - y, -14), 'x': -3, 'y': -1}
-    Besedilo posameznega primera: Reši sistem enačb $- x - 5 y = 8$ in $5 x - y = -14$.
-    Slovar naloge z več primeri: [{'enacba1': Eq(-x - 5*y, 8), 'enacba2': Eq(5*x - y, -14), 'x': -3, 'y': -1}, {'enacba1': Eq(3*x + 2*y, -4), 'enacba2': Eq(4*x + 5*y, 4), 'x': -4, 'y': 4}, {'enacba1': Eq(2*x - 3*y, 1), 'enacba2': Eq(5*x - 3*y, 16), 'x': 5, 'y': 3}]
-    Besedilo naloge z več primeri: Reši sistem enačb:
-        \begin{enumerate}
-
-        \item $- x - 5 y = 8$, $5 x - y = -14$
-
-        \item $3 x + 2 y = -4$, $4 x + 5 y = 4$
-
-        \item $2 x - 3 y = 1$, $5 x - 3 y = 16$
-
-        \end{enumerate}
-
-
-    >>> linearna_funkcija.SistemDvehEnacb(racionalne_resitve=True).primer()
-    Slovar posameznega primera: {'enacba1': Eq(-4*x - 5*y, -1), 'enacba2': Eq(-5*x - y, -3), 'x': 2/3, 'y': -1/3}
-    Besedilo posameznega primera: Reši sistem enačb $- 4 x - 5 y = -1$ in $- 5 x - y = -3$.
-    Slovar naloge z več primeri: [{'enacba1': Eq(-4*x - 5*y, -1), 'enacba2': Eq(-5*x - y, -3), 'x': 2/3, 'y': -1/3}, {'enacba1': Eq(-x + 2*y, -3/2), 'enacba2': Eq(5*x - 3*y, -3), 'x': -3/2, 'y': -3/2}, {'enacba1': Eq(-2*x + 5*y, -29), 'enacba2': Eq(4*x - 3*y, 23), 'x': 2, 'y': -5}]
-    Besedilo naloge z več primeri: Reši sistem enačb:
-        \begin{enumerate}
-
-        \item $- 4 x - 5 y = -1$, $- 5 x - y = -3$
-
-        \item $- x + 2 y = - \frac{3}{2}$, $5 x - 3 y = -3$
-
-        \item $- 2 x + 5 y = -29$, $4 x - 3 y = 23$
-
-        \end{enumerate}
-
-
-Podobno lahko tudi računanje prvih členov zaporedja naredimo malo računsko zahtevnejših, če lahko za prvi člen in
-diferenco določimo racionalna števila namesto celih.
-
-.. code-block:: python
-
-    >>> zaporedja.PrviCleniAritmeticnega().primer()
-    Slovar posameznega primera: {'cleni': [-2, -5, -8, -11, -14], 'a1': -2, 'd': -3, 'splosni': -3*(n - 1) - 2}
-    Besedilo posameznega primera: Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1=-2$
-             in diferenco $d=-3$.
-    Slovar naloge z več primeri: [{'cleni': [-2, -5, -8, -11, -14], 'a1': -2, 'd': -3, 'splosni': -3*(n - 1) - 2}, {'cleni': [11, 9, 7, 5, 3], 'a1': 11, 'd': -2, 'splosni': 11 - 2*(n - 1)}, {'cleni': [-9, -10, -11, -12, -13], 'a1': -9, 'd': -1, 'splosni': -(n - 1) - 9}]
-    Besedilo naloge z več primeri: Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1$ in diferenco $d$:
-        \begin{enumerate}
-
-        \item $a_1=-2$, $d=-3$
-
-        \item $a_1=11$, $d=-2$
-
-        \item $a_1=-9$, $d=-1$
-
-        \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import zaporedja
     >>> zaporedja.PrviCleniAritmeticnega(racionalne_vrednosti=True).primer()
-    Slovar posameznega primera: {'cleni': [-1, 0, 1, 2, 3], 'a1': -1, 'd': 1, 'splosni': n - 1 - 1}
-    Besedilo posameznega primera: Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1=-1$
-             in diferenco $d=1$.
-    Slovar naloge z več primeri: [{'cleni': [-1, 0, 1, 2, 3], 'a1': -1, 'd': 1, 'splosni': n - 1 - 1}, {'cleni': [-1/2, -2/3, -5/6, -1, -7/6], 'a1': -1/2, 'd': -1/6, 'splosni': -(n - 1)/6 - 1/2}, {'cleni': [-2/3, -7/6, -5/3, -13/6, -8/3], 'a1': -2/3, 'd': -1/2, 'splosni': -(n - 1)/2 - 2/3}]
-    Besedilo naloge z več primeri: Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1$ in diferenco $d$:
-        \begin{enumerate}
-
-        \item $a_1=-1$, $d=1$
-
-        \item $a_1=- \frac{1}{2}$, $d=- \frac{1}{6}$
-
-        \item $a_1=- \frac{2}{3}$, $d=- \frac{1}{2}$
-
-        \end{enumerate}
 
 Pri računanju ničel polinoma se zahtevnost hitro povečuje z višanjem stopnje polinoma. Zato je pomembno, da lahko
 s parametroma ``min_stopnja``, ki določa najmanjšo možno stopnjo polinoma, in ``max_stopnja``, ki določa
@@ -650,156 +557,76 @@ najvišjo možno stopnjo polinoma, uravnavamo polinomom kakšnih stopenj bomo is
 in spodnjo mejo stopenj, tako obstaja nek razpon stopenj, da so naloge lahko raznolike. S parametroma
 ``min_nicla`` in ``max_nicla`` pa lahko določimo s kako velikimi vrednostmi bomo računali.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import polinomska_racionalna_funkcija
     >>> polinomska_racionalna_funkcija.NiclePolinoma().primer()
-    Slovar posameznega primera: {'polinom': 3*x**3 - 21*x**2 - 12*x + 84, 'nicle': [-2, 2, 7]}
-    Besedilo posameznega primera: Poišči ničle polinoma $p(x)=3 x^{3} - 21 x^{2} - 12 x + 84$.
-    Slovar naloge z več primeri: [{'polinom': 3*x**3 - 21*x**2 - 12*x + 84, 'nicle': [-2, 2, 7]}, {'polinom': -x**3 - 4*x**2 + 17*x + 60, 'nicle': [-5, -3, 4]}, {'polinom': -3*x**3 - 36*x**2 - 63*x + 294, 'nicle': [-7, -7, 2]}]
-    Besedilo naloge z več primeri: Poišči ničle sledečih polinomov:
-            \begin{enumerate}
 
-            \item $p(x)=3 x^{3} - 21 x^{2} - 12 x + 84$
+.. runblock:: pycon
 
-            \item $p(x)=- x^{3} - 4 x^{2} + 17 x + 60$
-
-            \item $p(x)=- 3 x^{3} - 36 x^{2} - 63 x + 294$
-
-            \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import polinomska_racionalna_funkcija
     >>> polinomska_racionalna_funkcija.NiclePolinoma(max_stopnja=5, min_nicla=0, max_nicla=10).primer()
-    Slovar posameznega primera: {'polinom': 3*x**4 - 39*x**3 + 138*x**2 - 144*x, 'nicle': [0, 2, 3, 8]}
-    Besedilo posameznega primera: Poišči ničle polinoma $p(x)=3 x^{4} - 39 x^{3} + 138 x^{2} - 144 x$.
-    Slovar naloge z več primeri: [{'polinom': 3*x**4 - 39*x**3 + 138*x**2 - 144*x, 'nicle': [0, 2, 3, 8]}, {'polinom': -3*x**5 + 99*x**4 - 1212*x**3 + 6636*x**2 - 15120*x + 9600, 'nicle': [1, 4, 8, 10, 10]}, {'polinom': x**5 - 22*x**4 + 161*x**3 - 428*x**2 + 288*x, 'nicle': [0, 1, 4, 8, 9]}]
-    Besedilo naloge z več primeri: Poišči ničle sledečih polinomov:
-            \begin{enumerate}
-
-            \item $p(x)=3 x^{4} - 39 x^{3} + 138 x^{2} - 144 x$
-
-            \item $p(x)=- 3 x^{5} + 99 x^{4} - 1212 x^{3} + 6636 x^{2} - 15120 x + 9600$
-
-            \item $p(x)=x^{5} - 22 x^{4} + 161 x^{3} - 428 x^{2} + 288 x$
-
-            \end{enumerate}
 
 Zahtevnost naloge lahko spreminjamo tudi z zahtevnostjo predpisa. Pri zapisu elementov izpeljane množice
 lahko podamo preprost predpis za :math:`n`
 :math:`\{n ; 1 < n < 5\}` ali pa malo zahtevnejši z linearno kombinacijo :math:`\{ 3 \cdot n -2 ; 1 < n < 5\}`.
 Ravno to spreminja parameter ``linearna_kombinacija`` naloge ``ElementiMnozice``.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import mnozice
     >>> mnozice.ElementiMnozice().primer()
-    Slovar posameznega primera: {'n': 3*n, 'pogoj': '<', 'stevilo': 7, 'mnozica': {3, 6, 9, 12, 15, 18}}
-    Besedilo posameznega primera: Zapiši elemente množice $ \mathcal{A} =\{ 3 n;
-        (n \in \mathbb{N}) \land (n< 7 ) \} $.
-    Slovar naloge z več primeri: [{'n': 3*n, 'pogoj': '<', 'stevilo': 7, 'mnozica': {3, 6, 9, 12, 15, 18}}, {'n': n, 'pogoj': '|', 'stevilo': 37, 'mnozica': {1, 37}}, {'n': n - 1, 'pogoj': '|', 'stevilo': 37, 'mnozica': {36}}]
-    Besedilo naloge z več primeri: Zapiši elemente množic:
-        \begin{enumerate}
 
-        \item $ \mathcal{A} =\{ 3 n;
-        (n \in \mathbb{N}) \land (n< 7 ) \} $
+.. runblock:: pycon
 
-        \item $ \mathcal{A} =\{ n;
-        (n \in \mathbb{N}) \land (n| 37 ) \} $
-
-        \item $ \mathcal{A} =\{ n - 1;
-        (n \in \mathbb{N}) \land (n| 37 ) \} $
-
-        \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import mnozice
     >>> mnozice.ElementiMnozice(linearna_kombinacija=True).primer()
-    Slovar posameznega primera: {'n': n - 2, 'pogoj': '|', 'stevilo': 24, 'mnozica': {1, 2, 4, 6, 10, 22}}
-    Besedilo posameznega primera: Zapiši elemente množice $ \mathcal{A} =\{ n - 2;
-        (n \in \mathbb{N}) \land (n| 24 ) \} $.
-    Slovar naloge z več primeri: [{'n': n - 2, 'pogoj': '|', 'stevilo': 24, 'mnozica': {1, 2, 4, 6, 10, 22}}, {'n': 2*n - 2, 'pogoj': '|', 'stevilo': 30, 'mnozica': {2, 4, 8, 10, 18, 28, 58}}, {'n': 2*n + 2, 'pogoj': '<', 'stevilo': 9, 'mnozica': {2, 4, 6, 8, 10, 12, 14, 16, 18}}]
-    Besedilo naloge z več primeri: Zapiši elemente množic:
-        \begin{enumerate}
-
-        \item $ \mathcal{A} =\{ n - 2;
-        (n \in \mathbb{N}) \land (n| 24 ) \} $
-
-        \item $ \mathcal{A} =\{ 2 n - 2;
-        (n \in \mathbb{N}) \land (n| 30 ) \} $
-
-        \item $ \mathcal{A} =\{ 2 n + 2;
-        (n \in \mathbb{N}) \land (n< 9 ) \} $
-
-        \end{enumerate}
 
 Težavnost naloge lahko povečamo, če uvedemo dodaten korak ali znanje, ki je potrebno za rešitev naloge.
 Pri reševanju eksponentnih enačb, kjer nastopata dve različni osnovi, je pogosto potrebno samo izpostaviti
 vsako osnovo na svoji strani in izenačiti eksponenta. Vendar pa lahko nalogo napišemo tako, da je vsaka osnova pomnožena
 s potenco druge osnove. Tako moramo pri reševanju dodati še korak deljenja.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import eksponentna_funkcija
     >>> eksponentna_funkcija.Enacba2osnovi().primer()
-    Slovar posameznega primera: {'enacba': Eq(5*3**x - 5*7**x, 14*3**x/3 - 34*7**x/7), 'resitev': 1}
-    Besedilo posameznega primera: Reši enačbo $5 \cdot 3^{x} - 5 \cdot 7^{x} = \frac{14 \cdot 3^{x}}{3} - \frac{34 \cdot 7^{x}}{7}$.
-    Slovar naloge z več primeri: [{'enacba': Eq(5*3**x - 5*7**x, 14*3**x/3 - 34*7**x/7), 'resitev': 1}, {'enacba': Eq(-10*2**x + 12*3**x, -9*2**x + 11*3**x), 'resitev': 0}, {'enacba': Eq(-100000*10**x + 192*2**x, -90000*10**x + 176*2**x), 'resitev': -4}]
-    Besedilo naloge z več primeri: Reši enačbe:
-        \begin{enumerate}
-
-        \item $5 \cdot 3^{x} - 5 \cdot 7^{x} = \frac{14 \cdot 3^{x}}{3} - \frac{34 \cdot 7^{x}}{7}$.
-
-        \item $- 10 \cdot 2^{x} + 12 \cdot 3^{x} = - 9 \cdot 2^{x} + 11 \cdot 3^{x}$.
-
-        \item $- 100000 \cdot 10^{x} + 192 \cdot 2^{x} = - 90000 \cdot 10^{x} + 176 \cdot 2^{x}$.
-
-        \end{enumerate}
 
 
+.. runblock:: pycon
+
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import eksponentna_funkcija
     >>> eksponentna_funkcija.Enacba2osnovi(deli_z_osnovo=True).primer()
-    Slovar posameznega primera: {'enacba': Eq(-80*2**x + 27*3**x, -76*2**x + 21*3**x), 'resitev': -1}
-    Besedilo posameznega primera: Reši enačbo $- 80 \cdot 2^{x} + 27 \cdot 3^{x} = - 76 \cdot 2^{x} + 21 \cdot 3^{x}$.
-    Slovar naloge z več primeri: [{'enacba': Eq(-80*2**x + 27*3**x, -76*2**x + 21*3**x), 'resitev': -1}, {'enacba': Eq(-3*2**x/16 + 4*3**x/27, -3*2**x/64 + 34*3**x/243), 'resitev': 7}, {'enacba': Eq(5*2**x/8 - 2*5**x/15625, 19*2**x/32 - 42*5**x/390625), 'resitev': 8}]
-    Besedilo naloge z več primeri: Reši enačbe:
-        \begin{enumerate}
-
-        \item $- 80 \cdot 2^{x} + 27 \cdot 3^{x} = - 76 \cdot 2^{x} + 21 \cdot 3^{x}$.
-
-        \item $- \frac{3 \cdot 2^{x}}{16} + \frac{4 \cdot 3^{x}}{27} = - \frac{3 \cdot 2^{x}}{64} + \frac{34 \cdot 3^{x}}{243}$.
-
-        \item $\frac{5 \cdot 2^{x}}{8} - \frac{2 \cdot 5^{x}}{15625} = \frac{19 \cdot 2^{x}}{32} - \frac{42 \cdot 5^{x}}{390625}$.
-
-        \end{enumerate}
 
 Reševanje enačb s kompleksnimi števili lahko naredimo bolj raznolike, če poleg neznanega števila :math:`z` nastopa
 še njeno konjugirana vrednost :math:`\overline{z}`. To lahko v nalogi ``Enacba`` določimo s parametrom
 ``konjugirana_vrednost``.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import kompleksna_stevila
     >>> kompleksna_stevila.Enacba().primer()
-    Slovar posameznega primera: {'enacba': Eq(z*(1 - 4*I), -17), 'resitev': -1 - 4*I, 'imaginarna': -4, 'realna': -1, 'absolutna': sqrt(17)}
-    Besedilo posameznega primera: Katero kompleksno število $z$ zadošča enačbi $z \left(1 - 4 i\right) = -17$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.
-    Slovar naloge z več primeri: [{'enacba': Eq(z*(1 - 4*I), -17), 'resitev': -1 - 4*I, 'imaginarna': -4, 'realna': -1, 'absolutna': sqrt(17)}, {'enacba': Eq(z*(2 + 4*I), 12 + 14*I), 'resitev': 4 - I, 'imaginarna': -1, 'realna': 4, 'absolutna': sqrt(17)}, {'enacba': Eq(z*(2 - 2*I), -12 - 4*I), 'resitev': -2 - 4*I, 'imaginarna': -4, 'realna': -2, 'absolutna': 2*sqrt(5)}]
-    Besedilo naloge z več primeri: Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
-        \begin{enumerate}
 
-        \item $z=z \left(1 - 4 i\right) = -17$
+.. runblock:: pycon
 
-        \item $z=z \left(2 + 4 i\right) = 12 + 14 i$
-
-        \item $z=z \left(2 - 2 i\right) = -12 - 4 i$
-
-        \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import kompleksna_stevila
     >>> kompleksna_stevila.Enacba(konjugirana_vrednost=True).primer()
-    Slovar posameznega primera: {'enacba': Eq(z*(4 + 4*I) + (-2 + 5*I)*conjugate(z), 14 + 69*I), 'resitev': 5 + 4*I, 'imaginarna': 4, 'realna': 5, 'absolutna': sqrt(41)}
-    Besedilo posameznega primera: Katero kompleksno število $z$ zadošča enačbi $z \left(4 + 4 i\right) + \left(-2 + 5 i\right) \overline{z} = 14 + 69 i$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.
-    Slovar naloge z več primeri: [{'enacba': Eq(z*(4 + 4*I) + (-2 + 5*I)*conjugate(z), 14 + 69*I), 'resitev': 5 + 4*I, 'imaginarna': 4, 'realna': 5, 'absolutna': sqrt(41)}, {'enacba': Eq(z*(1 + 5*I) + (-3 - 4*I)*conjugate(z), -42 + 19*I), 'resitev': 3 + 4*I, 'imaginarna': 4, 'realna': 3, 'absolutna': 5}, {'enacba': Eq(z*(-2 + 3*I) + (-3 - 3*I)*conjugate(z), -3 - 2*I), 'resitev': 3 - 2*I, 'imaginarna': -2, 'realna': 3, 'absolutna': sqrt(13)}]
-    Besedilo naloge z več primeri: Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
-        \begin{enumerate}
-
-        \item $z=z \left(4 + 4 i\right) + \left(-2 + 5 i\right) \overline{z} = 14 + 69 i$
-
-        \item $z=z \left(1 + 5 i\right) + \left(-3 - 4 i\right) \overline{z} = -42 + 19 i$
-
-        \item $z=z \left(-2 + 3 i\right) + \left(-3 - 3 i\right) \overline{z} = -3 - 2 i$
-
-        \end{enumerate}
 
 
 Včasih lahko podobne naloge rešujemo z različnimi stopnjami znanja, zato je potrebno nalogo prilagoditi trenutnemu
@@ -807,154 +634,82 @@ znanju učencev. V poglavju stožnic se pogosto najprej spozna enačbe v središ
 Zato je smiselno, da lahko pri nalogi ``TemeGorisceEnacba``, kjer določamo teme in gorišča elipse, določimo s parametrom ``premaknjena``,
 ki lego elipse.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import stoznice
     >>> stoznice.TemeGorisceEnacba().primer()
-    Slovar posameznega primera: {'teme': (0, -1), 'gorisce': (sqrt(3), 0), 'sredisce': (0, 0), 'elipsa': Eq(x**2/4 + y**2, 1)}
-    Besedilo posameznega primera: Zapiši enačbo elipse s središčem $S\left( 0, 0\right)$, temenom $T_1\left( 0, -1\right)$ in goriščem $F_1\left( \sqrt{3}, 0\right)$.
-    Slovar naloge z več primeri: [{'teme': (0, -1), 'gorisce': (sqrt(3), 0), 'sredisce': (0, 0), 'elipsa': Eq(x**2/4 + y**2, 1)}, {'teme': (-2, 0), 'gorisce': (sqrt(3), 0), 'sredisce': (0, 0), 'elipsa': Eq(x**2/4 + y**2, 1)}, {'teme': (-2, 0), 'gorisce': (0, -2*sqrt(3)), 'sredisce': (0, 0), 'elipsa': Eq(x**2/4 + y**2/16, 1)}]
-    Besedilo naloge z več primeri: Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:
-        \begin{enumerate}
 
-        \item $S(\left( 0, 0\right))$, $T_1\left( 0, -1\right)$, $F_1\left( \sqrt{3}, 0\right)$
+.. runblock:: pycon
 
-        \item $S(\left( 0, 0\right))$, $T_1\left( -2, 0\right)$, $F_1\left( \sqrt{3}, 0\right)$
-
-        \item $S(\left( 0, 0\right))$, $T_1\left( -2, 0\right)$, $F_1\left( 0, - 2 \sqrt{3}\right)$
-
-        \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import stoznice
     >>> stoznice.TemeGorisceEnacba(premaknjena=True).primer()
-    Slovar posameznega primera: {'teme': (5, 7), 'gorisce': (sqrt(5) + 5, 5), 'sredisce': (5, 5), 'elipsa': Eq((x/3 - 5/3)**2 + (y/2 - 5/2)**2, 1)}
-    Besedilo posameznega primera: Zapiši enačbo elipse s središčem $S\left( 5, 5\right)$, temenom $T_1\left( 5, 7\right)$ in goriščem $F_1\left( \sqrt{5} + 5, 5\right)$.
-    Slovar naloge z več primeri: [{'teme': (5, 7), 'gorisce': (sqrt(5) + 5, 5), 'sredisce': (5, 5), 'elipsa': Eq((x/3 - 5/3)**2 + (y/2 - 5/2)**2, 1)}, {'teme': (-4, -5), 'gorisce': (-8, -2), 'sredisce': (-4, -2), 'elipsa': Eq((x/5 + 4/5)**2 + (y/3 + 2/3)**2, 1)}, {'teme': (-1, 1), 'gorisce': (-3 + sqrt(3), 1), 'sredisce': (-3, 1), 'elipsa': Eq((x/2 + 3/2)**2 + (y - 1)**2, 1)}]
-    Besedilo naloge z več primeri: Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:
-        \begin{enumerate}
-
-        \item $S(\left( 5, 5\right))$, $T_1\left( 5, 7\right)$, $F_1\left( \sqrt{5} + 5, 5\right)$
-
-        \item $S(\left( -4, -2\right))$, $T_1\left( -4, -5\right)$, $F_1\left( -8, -2\right)$
-
-        \item $S(\left( -3, 1\right))$, $T_1\left( -1, 1\right)$, $F_1\left( -3 + \sqrt{3}, 1\right)$
-
-        \end{enumerate}
 
 V poglavju odvodi učenci postopoma spoznavajo odvode različnih funkcij. Nalogo ``OdvodSestavljene`` s parametrom
 ``funkcije`` lahko prilagodimo za primerno znanje, oziroma lahko določamo njeno zahtevnost. Izbiramo lahko med
 eksponentnimi, logaritemskimi, racionalnimi, polinomskimi ali kotnimi funkcijami. Da program lahko ločuje,
 med vrstami funkcijami so imena funkcij določena z razredom ``Funkcija``.
 
-.. literalinclude:: ..\..\odvodi.py
+.. literalinclude:: ../../odvodi.py
    :pyobject: Funkcija
 
 Funkcije, ki se lahko pojavijo v računu torej določimo s parametrom ``funkcije`` tako da jih naštejemo v seznamu.
 
 Primer: ``funkcije=[odvodi.Funkcija.KOTNA, odvodi.Funkcija.LOGARITEM]``
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import odvodi
     >>> odvodi.OdvodSestavljene().primer()
-    Slovar posameznega primera: {'funkcija': -2**x + 3**(-x), 'odvod': -3**(-x)*6**x*log(6) - 3**(-x)*(1 - 6**x)*log(3)}
-    Besedilo posameznega primera: Določi odvod funkcije $f(x)=- 2^{x} + 3^{- x}$.
-    Slovar naloge z več primeri: [{'funkcija': -2**x + 3**(-x), 'odvod': -3**(-x)*6**x*log(6) - 3**(-x)*(1 - 6**x)*log(3)}, {'funkcija': -3**x + tan(2*x), 'odvod': -3**x*log(3) + 2*tan(2*x)**2 + 2}, {'funkcija': (-x**2 - 3*x + 2)*log(-2*x)/(x*(x - 3)), 'odvod': -(2*x + 3)*log(-2*x)/(x*(x - 3)) + (x**2 + 3*x - 2)*log(-2*x)/(x*(x - 3)**2) + (x**2 + 3*x - 2)*log(-2*x)/(x**2*(x - 3)) - (x**2 + 3*x - 2)/(x**2*(x - 3))}]
-    Besedilo naloge z več primeri: Določi odvod funkcije $f$:
-        \begin{enumerate}
 
-        \item $f(x)=- 2^{x} + 3^{- x}$
+.. runblock:: pycon
 
-        \item $f(x)=- 3^{x} + \tan{\left(2 x \right)}$
-
-        \item $f(x)=\frac{\left(- x^{2} - 3 x + 2\right) \ln{\left(- 2 x \right)}}{x \left(x - 3\right)}$
-
-        \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import odvodi
     >>> odvodi.OdvodSestavljene(funkcije=[odvodi.Funkcija.KOTNA, odvodi.Funkcija.LOGARITEM]).primer()
-    Slovar posameznega primera: {'funkcija': log(-2*x) + cos(x), 'odvod': -sin(x) + 1/x}
-    Besedilo posameznega primera: Določi odvod funkcije $f(x)=\ln{\left(- 2 x \right)} + \cos{\left(x \right)}$.
-    Slovar naloge z več primeri: [{'funkcija': log(-2*x) + cos(x), 'odvod': -sin(x) + 1/x}, {'funkcija': log(-x) - log(x), 'odvod': 0}, {'funkcija': sin(2*x) + cos(x), 'odvod': -sin(x) + 2*cos(2*x)}]
-    Besedilo naloge z več primeri: Določi odvod funkcije $f$:
-        \begin{enumerate}
-
-        \item $f(x)=\ln{\left(- 2 x \right)} + \cos{\left(x \right)}$
-
-        \item $f(x)=\ln{\left(- x \right)} - \ln{\left(x \right)}$
-
-        \item $f(x)=\sin{\left(2 x \right)} + \cos{\left(x \right)}$
-
-        \end{enumerate}
 
 
 Rešitvi kvadratne enačbe sta lahko kompleksni števili, vendar se lahko zgodi, da takih rešitev ne želimo ali
 da snovi kompleksnih števil še nismo obravnavali. Zato lahko nalogi ``IzracunajNicle`` s parametrom
 ``kompleksni_nicli`` določimo ali želimo da sta rešitvi kompleksni ali realni števili.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import kvadratna_funkcija
     >>> kvadratna_funkcija.IzracunajNicle().primer()
-    Slovar posameznega primera: {'splosna': 3*x**2 + 3*x/2 - 5/3, 'x1': -1/4 + sqrt(89)/12, 'x2': -sqrt(89)/12 - 1/4}
-    Besedilo posameznega primera: Izračunaj ničli kvadratne funkcije $f(x)=3 x^{2} + \frac{3 x}{2} - \frac{5}{3}$.
-    Slovar naloge z več primeri: [{'splosna': 3*x**2 + 3*x/2 - 5/3, 'x1': -1/4 + sqrt(89)/12, 'x2': -sqrt(89)/12 - 1/4}, {'splosna': -x**2/3 - 11*x/3 - 2, 'x1': -11/2 - sqrt(97)/2, 'x2': -11/2 + sqrt(97)/2}, {'splosna': 10*x**2/3 + 14*x/3 - 2, 'x1': -7/10 + sqrt(109)/10, 'x2': -sqrt(109)/10 - 7/10}]
-    Besedilo naloge z več primeri: Izračunaj ničli naslednjih kvadratnih funkcij:
-        \begin{enumerate}
 
-        \item $f(x)=3 x^{2} + \frac{3 x}{2} - \frac{5}{3}$
+.. runblock:: pycon
 
-        \item $f(x)=- \frac{x^{2}}{3} - \frac{11 x}{3} - 2$
-
-        \item $f(x)=\frac{10 x^{2}}{3} + \frac{14 x}{3} - 2$
-
-        \end{enumerate}
-
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import kvadratna_funkcija
     >>> kvadratna_funkcija.IzracunajNicle(kompleksni_nicli=True).primer()
-    Slovar posameznega primera: {'splosna': x**2/3 + 2*x + 7/2, 'x1': -3 + sqrt(6)*I/2, 'x2': -3 - sqrt(6)*I/2}
-    Besedilo posameznega primera: Izračunaj ničli kvadratne funkcije $f(x)=\frac{x^{2}}{3} + 2 x + \frac{7}{2}$.
-    Slovar naloge z več primeri: [{'splosna': x**2/3 + 2*x + 7/2, 'x1': -3 + sqrt(6)*I/2, 'x2': -3 - sqrt(6)*I/2}, {'splosna': -11*x**2/3 - 3*x/2 - 7/2, 'x1': -9/44 - sqrt(1767)*I/44, 'x2': -9/44 + sqrt(1767)*I/44}, {'splosna': 4*x**2/3 + 7*x/2 + 4, 'x1': -21/16 + sqrt(327)*I/16, 'x2': -21/16 - sqrt(327)*I/16}]
-    Besedilo naloge z več primeri: Izračunaj ničli naslednjih kvadratnih funkcij:
-        \begin{enumerate}
-
-        \item $f(x)=\frac{x^{2}}{3} + 2 x + \frac{7}{2}$
-
-        \item $f(x)=- \frac{11 x^{2}}{3} - \frac{3 x}{2} - \frac{7}{2}$
-
-        \item $f(x)=\frac{4 x^{2}}{3} + \frac{7 x}{2} + 4$
-
-        \end{enumerate}
 
 Pri računanju algebrajskih izrazov, je za na videz podobne naloge potrebno različno znanje. Naloga ``PotencirajVecclenik``
 ima zato več parametrov. Parametra ``min_clenov`` in ``max_clenov`` določata ali v nalogi potenciramo dvočlenike,
 tročlenike ali malo mešano.  Parametra ``min_potenca`` in ``mix_potenca`` pa določata razpon potenc.
 Na ta način lahko dobimo raznolike primere enega tipa naloge.
 
-.. code-block:: python
+.. runblock:: pycon
 
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import izrazi
     >>> izrazi.PotencirajVecclenik().primer()
-    Slovar posameznega primera: {'izraz': (y - 10)**2}
-    Besedilo posameznega primera: Potenciraj izraz $\left(y - 10\right)^{2}$.
-    Slovar naloge z več primeri: [{'izraz': (y - 10)**2}, {'izraz': (z - 1)**3}, {'izraz': (x - 3)**3}]
-    Besedilo naloge z več primeri: Potenciraj izraze:
-        \begin{enumerate}
-
-        \item$\left(y - 10\right)^{2}$
-
-        \item$\left(z - 1\right)^{3}$
-
-        \item$\left(x - 3\right)^{3}$
-
-        \end{enumerate}
 
 
+.. runblock:: pycon
+
+    >>> import sys
+    >>> sys.path.append('../')
+    >>> import izrazi
     >>> izrazi.PotencirajVecclenik(max_clenov=2,max_potenca=5).primer()
-    Slovar posameznega primera: {'izraz': (x - 4)**3}
-    Besedilo posameznega primera: Potenciraj izraz $\left(x - 4\right)^{3}$.
-    Slovar naloge z več primeri: [{'izraz': (x - 4)**3}, {'izraz': (t - 4)**5}, {'izraz': (c - 3)**3}]
-    Besedilo naloge z več primeri: Potenciraj izraze:
-        \begin{enumerate}
-
-        \item$\left(x - 4\right)^{3}$
-
-        \item$\left(t - 4\right)^{5}$
-
-        \item$\left(c - 3\right)^{3}$
-
-        \end{enumerate}
 
