@@ -15,6 +15,9 @@ Vse naloge v knjižnici dedujejo atribute in metode razreda ``Naloga``.
 
 .. literalinclude:: ..\..\generiranje.py
     :pyobject: Naloga
+    :lines: 1-42
+
+.. todo preveri da vključene prave vrstice
 
 Razred ima 5 atributov
 
@@ -83,7 +86,7 @@ Metoda ``besedilo``
 *******************************
 Metoda ``besedilo`` spremeni surove nize besedil nalog in rešitev v  ``Jinja2`` predloge (``Jinja2.Template``) in vanje vstavi
 konkretne vrednosti naloge ,ki jih dobi s klicem metode ``sestavi`` ali ``sestavi_vec``.
-Prva se kliče, če želimo nalogo samo z enim primerom, druga pa če želimo nalogo zveč primeri.
+Prva se kliče, če želimo nalogo samo z enim primerom, druga pa če želimo nalogo z več primeri.
 Metoda vrne slovar, ki vsebuje nalogo in rešitev. Slednji sta se spremenili v končen niz besedila z vstavljenimi vrednostmi.
 
 .. literalinclude:: ..\..\generiranje.py
@@ -91,24 +94,28 @@ Metoda vrne slovar, ki vsebuje nalogo in rešitev. Slednji sta se spremenili v k
 
 Metoda ``primer``
 *******************************
-Metoda ``primer`` prikaže, kako bi izgledal slovar z vrednostimi naloge in besedilo naloge z vstavljenimi vrednostimi,
+Metoda ``primer`` prikaže, kako bi izgledal slovar z vrednostmi naloge in besedilo naloge z vstavljenimi vrednostmi,
 da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže tako besedilo za nalogo z enim primerom ali nalogo z
-večimi primeri.
+več primeri.
 
 .. code-block:: python
 
     >>> naravna_stevila.EvklidovAlgoritem().primer()
-    Slovar posamezne: {'stevilo1': 187, 'stevilo2': 996, 'najvecji_delitelj': 1}
-    Besedilo posamezne: Z Evklidovim algoritmom poišči največji skupni delitelj števil $187$ in $996$.
-    Slovar vecih: [{'stevilo1': 187, 'stevilo2': 996, 'najvecji_delitelj': 1}, {'stevilo1': 89, 'stevilo2': 655, 'najvecji_delitelj': 1}, {'stevilo1': 96, 'stevilo2': 810, 'najvecji_delitelj': 6}]
-    Besedilo večih: Z Evklidovim algoritmom poišči največji skupni delitelj števil:
+    Slovar posameznega primera: {'stevilo1': 102, 'stevilo2': 660, 'najvecji_delitelj': 6}
+    Besedilo posameznega primera: Z Evklidovim algoritmom poišči največji skupni delitelj števil $102$ in $660$.
+    Slovar naloge z več primeri: [{'stevilo1': 102, 'stevilo2': 660, 'najvecji_delitelj': 6}, {'stevilo1': 190, 'stevilo2': 882, 'najvecji_delitelj': 2}, {'stevilo1': 163, 'stevilo2': 982, 'najvecji_delitelj': 1}]
+    Besedilo naloge z več primeri: Z Evklidovim algoritmom poišči največji skupni delitelj števil:
         \begin{enumerate}
 
-        \item $187$, $996$
+        \item $102$, $660$
 
-        \item $89$, $655$
+        \item $190$, $882$
 
-        \item $96$, $810$
+        \item $163$, $982$
+
+        \end{enumerate}
+
+
 
 
 .. literalinclude:: ..\..\generiranje.py
@@ -194,14 +201,14 @@ Funkcija ``napisi_test`` sprejme 7 argumentov
 
 ter ustvari posamezen test za učenca.
 
-V podmapi `Naloge` ustvari `LaTeX` datoteko z imenom arguemnta ``ucenec`` (`ucenec.tex`). Datoteka je ustvarjena iz predloge za
-posamezen test, ki ga podamo z nizem ````pot_vzorca_testa````. Nekaj primerov predlog najdemo v mapi `vzorci`. Vzorec se
+V podmapi `Naloge` ustvari `LaTeX` datoteko z imenom argumenta ``ucenec`` (`ucenec.tex`). Datoteka je ustvarjena iz predloge za
+posamezen test, ki ga podamo z nizom ````pot_vzorca_testa````. Nekaj primerov predlog najdemo v mapi `vzorci`. Vzorec se
  spremeni v `Jinja2.Template` v katero se na mesta spremenljivk vstavijo ustrezne naloge iz seznama `seznam_nalog` in
  vrednosti možnih točk, kadar so podane.
 
 Kadar je argument ``pdf`` nastavljen na vrednost ``True``, program zažene `LaTeX` datoteko testa. Če uspešno prevede
 `LaTeX` datoteko, program v isti mapi ustvari še `PDF` datoteko (`ucenec.pdf`) in izbriše datoteki `ucenec.log` ter `ucenec.aux`.
-Drgače pa javi napako, o kateri si uporabnik lahko več prebere v datoteki `ucenec.log`.
+Drugače pa javi napako, o kateri si uporabnik lahko več prebere v datoteki `ucenec.log`.
 
 
 .. literalinclude:: ..\..\generiranje.py
@@ -214,8 +221,9 @@ Funkcija ``napisi_posamezno_resitev`` deluje zelo podobno kot funkcija ``napisi_
 datoteko z imenom argumenta ``ucenec`` in dodatkom `-resitve` (`ucenec-resitve.tex`). Na podlagi izbranega vzorca za rešitve
 posameznika podanega s potjo ``pot_vzorca_resitev`` (na primer `vzorci/vzorec_posameznih_resitev2.txt` ) nato ustvari
 `LaTeX` datoteko z vstavljenimi rešitvami s seznama
-``seznam_resitev``.Kadar želimo, da se pred rešitvami izpišemo tudi naloge, moramo za to izbrati primereno predlogo, v
-katero se nato vstavijo vrednosti s seznama ``seznam_nalog``. Če je argument ``pdf`` nastavljen na vrednost ``True``, poskusi v isti mapi ustvariti še `PDF`
+``seznam_resitev``.Kadar želimo, da se pred rešitvami izpišemo tudi naloge, moramo za to izbrati primerno predlogo, v
+katero se nato vstavijo vrednosti s seznama ``seznam_nalog``. Če je argument ``pdf`` nastavljen na vrednost ``True``,
+poskusi v isti mapi ustvariti še `PDF`
 datoteko rešitev (`ucenec-resitve.pdf`).
 
 
@@ -238,6 +246,11 @@ poskusi v isti mapi ustvariti še `PDF` datoteko rešitev (`Resitve.pdf`)
 ************************
 Razred NapacnaNaloga
 ************************
+Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`).Razred izjem pomaga pri opozarjanju na napake.
+Več si lahko o njem preberete na spletu.
+.. todo link https://docs.python.org/3/library/exceptions.html
+
+Izjema `NapacnaNaloga` se sproži kadar sestavljene vrednosti niso ustrezne.
 
 
 .. literalinclude:: ..\..\generiranje.py
@@ -246,7 +259,8 @@ Razred NapacnaNaloga
 ************************
 Funkcija preveri
 ************************
-
+Funkcija `preveri` sproži izjemo `NapacnaNaloga`, kadar vrednosti niso ustrezne. S funkcijo preveri zagotavljamo, da so
+rešitve smiselne in ustrezajo vsem želenim parametrom. Včasih pa funkcija pomaga zagotoviti lepše rešitve.
 
 .. literalinclude:: ..\..\generiranje.py
     :pyobject: preveri

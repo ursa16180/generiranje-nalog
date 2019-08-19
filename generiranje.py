@@ -169,10 +169,10 @@ class Naloga:
         slovar = self.sestavi_vec(stevilo_nalog=3)
         besedilo_solo = template_besedilo_posamezne.render(naloga=slovar[0])
         besedilo_vec = template_besedilo_vecih.render(naloge=slovar)
-        print("Slovar posamezne: {}".format(slovar[0]))
-        print("Besedilo posamezne: {}".format(besedilo_solo))
-        print("Slovar vecih: {}".format(slovar))
-        print("Besedilo večih: {}".format(besedilo_vec))
+        print("Slovar posameznega primera: {}".format(slovar[0]))
+        print("Besedilo posameznega primera: {}".format(besedilo_solo))
+        print("Slovar naloge z več primeri: {}".format(slovar))
+        print("Besedilo naloge z več primeri: {}".format(besedilo_vec))
 
 
 # ~~~~~~~SESTAVLJANJE TESTOV
