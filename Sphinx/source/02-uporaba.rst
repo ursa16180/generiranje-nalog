@@ -496,7 +496,7 @@ navodila pogosto razlikujejo imamo 2 različna parametra.
 Besedila so surovi nizi, ki se pretvorijo v predloge Python knjižnice Jinja2 (``Jinja2.Template``).
 V predlogo se na mesta spremenljivk označenih z dvojnimi zaviti oklepaji kasneje vstavijo posamezne vrednosti naloge.
 
-.. literalinclude:: ..\..\naravna_stevila.py
+.. literalinclude:: ../../naravna_stevila.py
    :pyobject: DeliteljVeckratnik
    :lines: 16
 
@@ -844,7 +844,7 @@ V poglavju odvodi učenci postopoma spoznavajo odvode različnih funkcij. Nalogo
 eksponentnimi, logaritemskimi, racionalnimi, polinomskimi ali kotnimi funkcijami. Da program lahko ločuje,
 med vrstami funkcijami so imena funkcij določena z razredom ``Funkcija``.
 
-.. literalinclude:: ..\..\odvodi.py
+.. literalinclude:: ../../odvodi.py
    :pyobject: Funkcija
 
 Funkcije, ki se lahko pojavijo v računu torej določimo s parametrom ``funkcije`` tako da jih naštejemo v seznamu.

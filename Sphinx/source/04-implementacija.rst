@@ -13,7 +13,7 @@ Razred Naloga
 ****************
 Vse naloge v knjižnici dedujejo atribute in metode razreda ``Naloga``.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: Naloga
     :lines: 1-42
 
@@ -62,7 +62,7 @@ Vsaka posamezna naloga mora imeti metodo ``_poskusi_sestaviti``, drugače naloga
 posamezna naloga nima definirane metode, kliče metodo nadrazreda, ki opozori, da metoda še ni bila implementirana in
 da jo se potrebno napisati.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: Naloga._poskusi_sestaviti
 
 Metoda ``sestavi``
@@ -70,7 +70,7 @@ Metoda ``sestavi``
 Metoda ``sestavi`` vrne slovar z vrednosti posamezne naloge, ki ustrezajo želenim pogojem. To doseže tako, da kliče metodo
 ``_poskusi_sestaviti``, dokler ne dobi slovarja z želenimi vrednostmi.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.sestavi
 
 Metoda ``sestavi_vec``
@@ -78,7 +78,7 @@ Metoda ``sestavi_vec``
 Metoda ``sestavi_vec`` vrne seznam slovarjev, ki vsebujejo ustrezne vrednosti posameznih primerov naloge. Posamezne
 elemente seznama pa dobi tako, da kliče metodo ``sestavi``.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.sestavi_vec
 
 
@@ -89,7 +89,7 @@ konkretne vrednosti naloge ,ki jih dobi s klicem metode ``sestavi`` ali ``sestav
 Prva se kliče, če želimo nalogo samo z enim primerom, druga pa če želimo nalogo z več primeri.
 Metoda vrne slovar, ki vsebuje nalogo in rešitev. Slednji sta se spremenili v končen niz besedila z vstavljenimi vrednostmi.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.besedilo
 
 Metoda ``primer``
@@ -113,12 +113,7 @@ več primeri.
 
         \item $163$, $982$
 
-        \end{enumerate}
-
-
-
-
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.primer
 
 *****************************************
@@ -184,7 +179,7 @@ določa, če želimo že avtomatično ustvariti teste in rešitve tudi v `PDF`
 obliki. Če argument nastavimo na ``False``, bo program ustvaril samo `LaTeX` datoteke, če pa pustimo vrednost
 nastavljeno na `True`, bo ustvaril tudi `PDF` dokumente. Argument ``tocke`` je seznam možnih točk pri posamezni nalogi.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: sestavi_vse_teste
 
 Funkcija ``napisi_test``
@@ -211,7 +206,7 @@ Kadar je argument ``pdf`` nastavljen na vrednost ``True``, program zažene `LaTe
 Drugače pa javi napako, o kateri si uporabnik lahko več prebere v datoteki `ucenec.log`.
 
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: napisi_test
 
 Funkcija ``napisi_posamezno_resitev``
@@ -227,7 +222,7 @@ poskusi v isti mapi ustvariti še `PDF`
 datoteko rešitev (`ucenec-resitve.pdf`).
 
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: napisi_posamezno_resitev
 
 Funkcija ``napisi_skupno_resitev``
@@ -240,7 +235,7 @@ Vrstni red rešitev je določen z abecednim
 redom učencev. Če je argument ``pdf`` nastavljen na vrednost ``True``,
 poskusi v isti mapi ustvariti še `PDF` datoteko rešitev (`Resitve.pdf`)
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: napisi_skupno_resitev
 
 ************************
@@ -253,7 +248,7 @@ Več si lahko o njem preberete na spletu.
 Izjema `NapacnaNaloga` se sproži kadar sestavljene vrednosti niso ustrezne.
 
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: NapacnaNaloga
 
 ************************
@@ -262,5 +257,5 @@ Funkcija preveri
 Funkcija `preveri` sproži izjemo `NapacnaNaloga`, kadar vrednosti niso ustrezne. S funkcijo preveri zagotavljamo, da so
 rešitve smiselne in ustrezajo vsem želenim parametrom. Včasih pa funkcija pomaga zagotoviti lepše rešitve.
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
     :pyobject: preveri

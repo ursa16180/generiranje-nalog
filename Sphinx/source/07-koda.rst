@@ -1,7 +1,7 @@
 Koda
 ======
 
-.. literalinclude:: ..\..\generiranje.py
+.. literalinclude:: ../../generiranje.py
 
-.. literalinclude:: ..\..\izpisi_naloge.py
+.. literalinclude:: ../../izpisi_naloge.py
 
