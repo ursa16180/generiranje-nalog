@@ -7,7 +7,7 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
 ==============================================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 5
 
    Motivacija <01-motivacija.rst>
    Uporaba <02-uporaba.rst>
@@ -18,11 +18,3 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
    Predloga za novo nalogo <C-vzorcna_datoteka.rst>
 .. Primeri testov
 .. todo dodaj PDF testov
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

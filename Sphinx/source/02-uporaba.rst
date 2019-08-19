@@ -21,12 +21,14 @@ Sklop `naravna_stevila`
 V tem sklopu sta 2 nalogi za izračun največjega skupnega delitelja in najmanjšega skupnega večkratnika dveh števil.
 Eno nalogo naj bi reševali z praštevilskim razcepom, drugo pa s pomočjo Evklidovega algoritme.
 Vsebuje nalogi:
+
 * ``DeliteljVeckratnik`` in
 * ``EvklidovAlgoritem``.
 
 Sklop `izrazi`
-#############
+################
 Sklop izrazi je namenjen za utrjevanje računanja z algebrajskimi izrazi. Vsebuje naloge:
+
 * ``PotencaDvoclenika``,
 * ``PotencaTroclenika``,
 * ``RazstaviVieta``,
@@ -37,6 +39,7 @@ Sklop `mnozice`
 ################
 V sklopu so naloge za zapis elementov množic in različne operacije z množicami. Preverjajo znanje unije, preseka,
 komplementa, razlike in potenčne množice. V njem so naloge:
+
 * ``ElementiMnozice``,
 * ``PotencnaMnozica``,
 * ``UnijaPresekRazlika`` in
@@ -47,6 +50,7 @@ Sklop `linearna_funkcija`
 V tem sklopu so različne naloge, ki zahtevajo razumevanje linearne funkcije in enačb premic v ravnini. Pojavijo se tudi
 naloge z enačbami dveh in treh neznank.
 Vsebuje naloge:
+
 * ``PremicaSkoziTocki``,
 * ``RazdaljaMedTockama``,
 * ``OblikeEnacbPremice``,
@@ -61,6 +65,7 @@ Sklop `kvadratna_funkcija`
 ###########################
 Naloge iz sklopa utrjujejo znanje kvdaratne funkcije, različnih oblik zapisov funkcije, računanje ničel in risanje
 grafov:
+
 * ``IzracunajNicle``,
 * ``NarisiGraf``,
 * ``TemenskaOblika``,
@@ -72,6 +77,7 @@ Sklop `kompleksna_stevila`
 ###########################
 V sklopu so naloge za začetno osvajanje računskih operacij s kompleksnimi števili ter pa nalogi,
 ki združujeta vse operacije. Vsebovane so naloge:
+
 * ``NarisiTocke``,
 * ``VsotaRazlika``,
 * ``Ulomek``,
@@ -83,6 +89,7 @@ Sklop `eksponentna_funkcija`
 ###############################
 Naloge iz sklopa so namenjene utrjevanju znanju eksponentne funkcije in pripadajočih grafov ter enačb.
 Vsebuje naloge:
+
 * ``GrafEksponentne``,
 * ``Enacba`` in
 * ``Enacba2osnovi``.
@@ -90,18 +97,21 @@ Vsebuje naloge:
 Sklop `polinomska_racionalna_funkcija`
 ########################################
 V tem sklopu so naloge za računanje ničel, iskanje neznanih koeficientov in risanje grafov polinomov:
+
 * ``NiclePolinoma``,
 * ``DvojnaNicla``,
 * ``ParametraDvojna`` in
 * ``GrafPolinoma``.
 
 Ker je snov zelo povezana tudi z racionalno funkcijo, vsebuje tudi nalogi za računanje ničel, pol in asimptote ter graf racionalne funkcije:
+
 * ``DolociNiclePoleAsimptotoRacionalne`` in
 * ``GrafRacionalne``.
 
 Sklop `stoznice`
 #################
 Za reševanje nalog iz sklope `stoznice` je potrebno znanje enačbe krožnice in elipse v premaknjeni legi:
+
 * ``PreseciscaKroznic``,
 * ``TemeGorisceEnacba`` in
 * ``NarisiKrivuljo``.
@@ -110,6 +120,7 @@ Sklop `odvodi`
 ###############
 Za reševanje nalog iz sklopa odvodi je potrebno znanje kako odvajamo elementarne in sestavljene funkcije, ter
 razumevanje tangente na krivuljo. Vsebuje naloge:
+
 * ``OdvodElementarne``,
 * ``OdvodSestavljene``,
 * ``KotMedPremicama``,
@@ -120,6 +131,7 @@ Sklop `zaporedja`
 ##################
 V sklopu `zaporedja` so naloge določanje splošnega člena poljubnega zaporedja, računanje prvih členov in vsote
 aritmetičnega in geometrijskega zaporedja:
+
 * ``SplosniClenZaporedja``,
 * ``PrviCleniAritmeticnega``,
 * ``SplosniClenAritmeticnegaZaporedja``,
@@ -291,11 +303,13 @@ Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke 
 
 .. figure:: slike/ucenci.png
     :align: center
+    :width: 50%
 
     Primer tekstovne datotetke
 
 .. figure:: slike/testi.png
     :align: center
+    :width: 50%
 
     Primer mape z generiranimi testi.
 
@@ -350,6 +364,7 @@ podnaslov, ki ga razbere iz seznama učencev. Nato so brez večjih razmakov naš
 
 .. figure:: slike/vzorec_testa1.png
     :align: center
+    :height: 450px
 
     Primer testa sestavljenega iz `vzorec_testa1.tex`
 
@@ -359,6 +374,7 @@ ime testa, podnaslov in kriterij ocenjevanja. Če želimo da je pod nalogo prost
 
 .. figure:: slike/vzorec_testa2.png
     :align: center
+    :height: 450px
 
     Primer testa sestavljenega iz `vzorec_testa2.tex`
 
@@ -366,6 +382,7 @@ ime testa, podnaslov in kriterij ocenjevanja. Če želimo da je pod nalogo prost
 
 .. figure:: slike/vzorec_testa3.png
     :align: center
+    :height: 450px
 
     Primer testa sestavljenega iz `vzorec_testa3.tex`
 
@@ -375,6 +392,7 @@ prostora za reševanje na test.
 
 .. figure:: slike/vzorec_testa4.png
     :align: center
+    :height: 450px
 
     Primer testa sestavljenega iz `vzorec_testa4.tex`
 
@@ -390,6 +408,7 @@ V primeru združenih rešitev, program sestavi samo eno datoteko z vsemi rešitv
 
 .. figure:: slike/vzorec_skupne1.png
     :align: center
+    :height: 450px
 
     Primer rešitev sestavljenih iz `vzorec_skupnih_resitev1.tex`
 
@@ -397,6 +416,7 @@ Predloga `vzorec_skupnih_resitev2.tex` ji je zelo podobna, le da se rešitve nas
 
 .. figure:: slike/vzorec_skupne2.png
     :align: center
+    :height: 450px
 
     Primer rešitev sestavljenih iz `vzorec_skupnih_resitev2.tex`
 
@@ -404,6 +424,7 @@ Predloga `vzorec_skupnih_resitev2.tex` ji je zelo podobna, le da se rešitve nas
 
 .. figure:: slike/vzorec_skupne3.png
     :align: center
+    :height: 450px
 
     Primer rešitev sestavljenih iz `vzorec_skupnih_resitev3.tex`
 
@@ -414,6 +435,7 @@ zaporedno naštete vse rešitve.
 
 .. figure:: slike/vzorec_posamezne1.png
     :align: center
+    :height: 450px
 
     Primer rešitev sestavljenih iz `vzorec_posameznih_resitev1.tex`
 
@@ -421,6 +443,7 @@ zaporedno naštete vse rešitve.
 
 .. figure:: slike/vzorec_posamezne2.png
     :align: center
+    :height: 450px
 
     Primer rešitev sestavljenih iz `vzorec_posameznih_resitev2.tex`
 
@@ -429,6 +452,7 @@ Zato ima predloga `vzorec_posameznih_resitev3.tex` zelo majhno pisavo za katero 
 
 .. figure:: slike/vzorec_posamezne3.png
     :align: center
+    :height: 450px
 
     Primer rešitev sestavljenih iz `vzorec_posameznih_resitev3.tex`
 

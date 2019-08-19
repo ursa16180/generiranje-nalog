@@ -13,7 +13,7 @@ primerov, hkrati pa preprečili prepisovanje rezultatov ter morda celo povečali
 V primeru, da bi bila baza dostopna tudi učencem pa bi jim omogočili samostojno reševanje, kjer bi utrjevali razumevanje
 reševanja in ne samo učenje rešitev na pamet.
 Sestavljanje nalog s psevdo-generiranimi vrednostmi se da avtomatizirati, vendar moramo ustvariti knjižnico nalog in
-zagotoviti, da so rešitve primerne. V nadaljevanju je predstavljena `Python` knjižnica, ki vsebuje
+zagotoviti, da so rešitve primerne. V nadaljevanju je predstavljena `Python` knjižnica, ki vsebuje 59 nalog.
 .. todo koliko nalog
 
 iz snovi srednješolske matematike. Večina nalog je namenjena učenju in utrjevanju osnovnih pojmov in računskih
