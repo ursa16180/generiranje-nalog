@@ -223,7 +223,7 @@ class Enacba(Naloga):
     besedilo_vecih = r'''Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
     \begin{enumerate}
     {% for naloga in naloge %}
-    \item $z={{latex(naloga.enacba)}}$
+    \item ${{latex(naloga.enacba)}}$
     {% endfor %}
     \end{enumerate}
     '''
@@ -330,9 +330,12 @@ class NarisiTocke(Naloga):
         z3 = izberi_kompleksno_stevilo(-5, 5)
         z4 = izberi_kompleksno_stevilo(-5, 5)
         preveri(len({z1, z2, z3, z4}) == 4)
-        koordinatiz1 = (sympy.re(z1), sympy.im(z1))
-        koordinatiz2 = (sympy.re(z2), sympy.im(z2))
-        koordinatiz3 = (sympy.re(z3), sympy.im(z3))
-        koordinatiz4 = (sympy.re(z4), sympy.im(z4))
+        koordinatiz1 = '(axis cs: {0}, {1})'.format(sympy.re(z1), sympy.im(z1))
+        koordinatiz2 = '(axis cs: {0}, {1})'.format(sympy.re(z2), sympy.im(z2))
+        koordinatiz3 = '(axis cs: {0}, {1})'.format(sympy.re(z3), sympy.im(z3))
+        koordinatiz4 = '(axis cs: {0}, {1})'.format(sympy.re(z4), sympy.im(z4))
         return {'z1': z1, 'z2': z2, 'z3': z3, 'z4': z4, 'koordinatiz1': koordinatiz1, 'koordinatiz2': koordinatiz2,
                 'koordinatiz3': koordinatiz3, 'koordinatiz4': koordinatiz4}
+
+
+NarisiTocke().sestavi()
