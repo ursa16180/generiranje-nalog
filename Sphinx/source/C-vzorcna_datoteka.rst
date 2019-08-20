@@ -1,3 +1,5 @@
+.. _ref-vzorcna:
+
 Predloga za sestavljanje nove naloge
 ======================================
 

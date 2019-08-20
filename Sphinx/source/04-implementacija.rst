@@ -4,9 +4,9 @@ Implementacija knjižnice in izpis testov
 ==========================================
 
 Knjižnici nalog je dodana še datoteka ``generiranje.py``, ki vključuje program za izpis testov in razred ``Naloga``,
-katerega metode in vrednosti dedujejo posamezne naloge. Dodana je tudi mapa `vzorci`, ki vsebuje vzorce za `LaTeX`
-datoteke posameznega test, posameznih rešitev in skupnih rešitev. Slednje lahko po potrebi tudi prilagajmo, vendar
-moramo biti pozorni, da ne spreminjamo imena spremenljivk znotraj dvojnih zavitih oklepajev.
+katerega metode in vrednosti dedujejo posamezne naloge. Dodani sta mapa `vzorci`, ki vsebuje vzorce za `LaTeX`
+datoteke posameznega test, posameznih rešitev in skupnih rešitev in mapa `Primeri testov`, ki vsebuje nekaj primerov
+rabe programa.
 
 ****************
 Razred Naloga
@@ -21,29 +21,27 @@ Vse naloge v knjižnici dedujejo atribute in metode razreda ``Naloga``.
 
 Razred ima 5 atributov
 
-* ``st_nalog``,
-* ``besedilo_posamezne``,
-* ``besedilo_vecih``,
-* ``resitev_posamezne`` in
-* ``resitev_vecih``
+#. ``st_nalog``,
+#. ``besedilo_posamezne``,
+#. ``besedilo_vecih``,
+#. ``resitev_posamezne`` in
+#. ``resitev_vecih``
 
 ter 5 metod
 
-* ``_poskusi_sestaviti``,
-* ``sestavi``,
-* ``sestavi_vec``,
-* ``besedilo`` in
-* ``primer``.
+#. ``_poskusi_sestaviti``,
+#. ``sestavi``,
+#. ``sestavi_vec``,
+#. ``besedilo`` in
+#. ``primer``.
 
-
-.. todo ali je smiselno opisovati atribute
 
 Atributi
 #########
 
 Besedila nalog in rešitev
 **************************
-Razred naloga ima zelo podana splošna besedila, v katere se na mesto spremenljivke vstavi kar celoten slovar,
+Razred naloga ima podana zelo splošna besedila, v katere se na mesto spremenljivke vstavi kar celoten slovar,
 ki ga vrne metoda ``_poskusi_sestaviti``. Veliko bolj jasno je, če za posamezno nalogo napišemo podrobnejša besedila,
 ki primerno razbijejo slovar. Atributi posamezne naloge prepišejo vrednosti teh zelo splošnih atributov.
 
@@ -60,14 +58,14 @@ Metoda ``_poskusi_sestaviti``
 *******************************
 Vsaka posamezna naloga mora imeti metodo ``_poskusi_sestaviti``, drugače naloga nima nobene vsebine. V primeru, da
 posamezna naloga nima definirane metode, kliče metodo nadrazreda, ki opozori, da metoda še ni bila implementirana in
-da jo se potrebno napisati.
+da jo še potrebno napisati.
 
 .. literalinclude:: ../../generiranje.py
     :pyobject: Naloga._poskusi_sestaviti
 
 Metoda ``sestavi``
 *******************************
-Metoda ``sestavi`` vrne slovar z vrednosti posamezne naloge, ki ustrezajo želenim pogojem. To doseže tako, da kliče metodo
+Metoda ``sestavi`` vrne slovar z vrednostmi posamezne naloge, ki ustrezajo želenim pogojem. To doseže tako, da kliče metodo
 ``_poskusi_sestaviti``, dokler ne dobi slovarja z želenimi vrednostmi.
 
 .. literalinclude:: ../../generiranje.py
@@ -85,7 +83,7 @@ elemente seznama pa dobi tako, da kliče metodo ``sestavi``.
 Metoda ``besedilo``
 *******************************
 Metoda ``besedilo`` spremeni surove nize besedil nalog in rešitev v  ``Jinja2`` predloge (``Jinja2.Template``) in vanje vstavi
-konkretne vrednosti naloge ,ki jih dobi s klicem metode ``sestavi`` ali ``sestavi_vec``.
+konkretne vrednosti naloge, ki jih dobi s klicem metode ``sestavi`` ali ``sestavi_vec``.
 Prva se kliče, če želimo nalogo samo z enim primerom, druga pa če želimo nalogo z več primeri.
 Metoda vrne slovar, ki vsebuje nalogo in rešitev. Slednji sta se spremenili v končen niz besedila z vstavljenimi vrednostmi.
 
@@ -95,8 +93,8 @@ Metoda vrne slovar, ki vsebuje nalogo in rešitev. Slednji sta se spremenili v k
 Metoda ``primer``
 *******************************
 Metoda ``primer`` prikaže, kako bi izgledal slovar z vrednostmi naloge in besedilo naloge z vstavljenimi vrednostmi,
-da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže tako besedilo za nalogo z enim primerom ali nalogo z
-več primeri.
+da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže seznam s tremi primeri ter besedilo za nalogo z enim
+(prvim) primerom in besedilo naloge z več primeri.
 
 .. runblock:: pycon
 
@@ -106,38 +104,34 @@ več primeri.
     >>> naravna_stevila.EvklidovAlgoritem().primer()
 
 
-
-
 .. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.primer
 
 *****************************************
 Uporaba programa za izpis testov
 *****************************************
-Za sestavitev testov moramo iz datoteke ``generiranje.py`` klicati funkcijo ``sestavi_vse_teste``, ki ustvari vse teste
+Za sestavo testov moramo iz datoteke ``generiranje.py`` klicati funkcijo ``sestavi_vse_teste``, ki ustvari vse teste
 in rešitve.
 
 .. code-block:: python
 
-    >>> generiranje.sestavi_vse_teste(
-    ...     naloge=[mnozice.PotencnaMnozica(), izrazi.PotencaDvoclenika(st_nalog=3), naravna_stevila.DeliteljVeckratnik()],
-    ...     ime_testa='Množice, deljivost in izrazi', datoteka_seznam_ucencev='ucenci.txt', zdruzene_resitve=False)
-    Sestavljam test Množice, deljivost in izrazi.
-    Izpisujem test: 2717089
-    Izpisujem rešitve: 2717089
-    Izpisujem test: Ana
-    Izpisujem rešitve: Ana
-    Izpisujem test: Julija
-    Izpisujem rešitve: Julija
-    Izpisujem test: Katarina
-    Izpisujem rešitve: Katarina
-    Izpisujem test: Marjan Novak
-    Izpisujem rešitve: Marjan Novak
-    Izpisujem test: Matjaž
-    Izpisujem rešitve: Matjaž
-    Izpisujem test: Tjaša
-    Izpisujem rešitve: Tjaša
-    Test Množice, deljivost in izrazi je sestavljen.
+    >>> generiranje.sestavi_vse_teste(naloge=[zaporedja.SplosniClenAritmeticnegaZaporedja(od=-10, do=0),
+                                          zaporedja.SplosniClenAritmeticnegaEnacbi(),
+                                          zaporedja.VsotaAritmeticnega(podan_splosni_clen=False),
+                                          zaporedja.SplosniClenGeometrijskegaEnacbi(),
+                                          zaporedja.VsotaGeometrijskeVrste(lazji_podatki=False)],
+                                  ime_testa="3. kontrolna naloga - Zaporedja",
+                                  datoteka_seznam_ucencev="skupine.txt",
+                                  zdruzene_resitve=False,
+                                  pdf=True,
+                                  pot_vzorca_testa="vzorci/vzorec_testa2.tex",
+                                  pot_vzorca_resitev="vzorci/vzorec_skupnih_resitev2.tex")
+    Sestavljam test 3. kontrolna naloga - Zaporedja.
+    Izpisujem test: A
+    Izpisujem rešitve: A
+    Izpisujem test: B
+    Izpisujem rešitve: B
+    Test 3. kontrolna naloga - Zaporedja je sestavljen.
 
 Funkcija ``sestavi_vse_teste``
 ################################
@@ -154,7 +148,7 @@ Funkcija sprejme 8 argumentov:
 * ``tocke``
 
 Najprej ustvari mapo z imenom testa in 2 podmapi za naloge in rešitve. Če ime ni določeno, uporabi trenutni datum.
-V primeru da mapa z imenom testa že obstaja, nas program vpraša, če jo želimo prepisati. Če izberemo "da", izbriše staro
+V primeru, da mapa z imenom testa že obstaja, nas program vpraša, če jo želimo prepisati. Če izberemo "da", izbriše staro
 mapo in ustvari novo, drugače pa samo ustvari novo mapo z enakim imenom, ki mu doda trenutno uro.
 Nato za vsakega učenca s seznama, ki nastane iz leksikografsko urejene datoteke ``datoteka_seznam_ucencev``,
 ustvari seznam nalog in rešitev. Slednje dobi tako, da za naloge s seznama ``naloge`` kliče metodo ``besedilo``.
@@ -163,14 +157,17 @@ ustvari seznam nalog in rešitev. Slednje dobi tako, da za naloge s seznama ``na
 .. todo a hočemo tukaj pojasniti semena?
 
 Argument ``naloge`` je seznam nalog, ki jih želimo imeti v testu. Če je seznam prazen ali vsebuje neobstoječe naloge,
-nas program na to opozori.
-Program drugače pokliče funkcijo ``napisi_test``, ki ustvari posamezne teste. Kako oblikovane teste želimo, pa določimo
+nas program na to opozori. Program drugače pokliče funkcijo ``napisi_test``, ki ustvari posamezen test.
+
+Kako oblikovane teste želimo, pa določimo
 z izbiro vzorca test, tako da podamo niz poti do predloge ``pot_vzorca_testa``. Na enak način izberemo tudi obliko rešitev,
-tako da kot niz napišemo pot do predloge ``pot_vzorca_resitev``. Kadar želimo za vsakega učenca samostojne rešitve kliče
-še funkcijo ``napisi_posamezno_resitev``, ki sestavi posamezne
+tako da kot niz napišemo pot do predloge ``pot_vzorca_resitev``.
+
+Kadar želimo za vsakega učenca samostojne rešitve kliče še funkcijo ``napisi_posamezno_resitev``, ki sestavi posamezne
 rešitve. V primeru, da želimo eno datoteko z združenimi rešitvami za vse učence, pa najprej naredi seznam vseh učencev
-in pripadajočih rešitev, nato pa kliče funkcijo ``napisi_skupno_resitev``. Argument ``pdf`` je ``Bool`` vrednost, ki
-določa, če želimo že avtomatično ustvariti teste in rešitve tudi v `PDF`
+in pripadajočih rešitev, nato pa kliče funkcijo ``napisi_skupno_resitev``.
+
+Argument ``pdf`` je ``Bool`` vrednost, ki določa, če želimo že avtomatično ustvariti teste in rešitve tudi v `PDF`
 obliki. Če argument nastavimo na ``False``, bo program ustvaril samo `LaTeX` datoteke, če pa pustimo vrednost
 nastavljeno na `True`, bo ustvaril tudi `PDF` dokumente. Argument ``tocke`` je seznam možnih točk pri posamezni nalogi.
 
@@ -192,7 +189,7 @@ Funkcija ``napisi_test`` sprejme 7 argumentov
 ter ustvari posamezen test za učenca.
 
 V podmapi `Naloge` ustvari `LaTeX` datoteko z imenom argumenta ``ucenec`` (`ucenec.tex`). Datoteka je ustvarjena iz predloge za
-posamezen test, ki ga podamo z nizom ````pot_vzorca_testa````. Nekaj primerov predlog najdemo v mapi `vzorci`. Vzorec se
+posamezen test, katerega podamo z nizom ``pot_vzorca_testa``. Nekaj primerov predlog najdemo v mapi `vzorci`. Vzorec se
 spremeni v `Jinja2.Template` v katero se na mesta spremenljivk vstavijo ustrezne naloge iz seznama `seznam_nalog` in
 vrednosti možnih točk, kadar so podane.
 
@@ -211,9 +208,9 @@ Funkcija ``napisi_posamezno_resitev`` deluje zelo podobno kot funkcija ``napisi_
 datoteko z imenom argumenta ``ucenec`` in dodatkom `-resitve` (`ucenec-resitve.tex`). Na podlagi izbranega vzorca za rešitve
 posameznika podanega s potjo ``pot_vzorca_resitev`` (na primer `vzorci/vzorec_posameznih_resitev2.txt` ) nato ustvari
 `LaTeX` datoteko z vstavljenimi rešitvami s seznama
-``seznam_resitev``.Kadar želimo, da se pred rešitvami izpišemo tudi naloge, moramo za to izbrati primerno predlogo, v
+``seznam_resitev``. Kadar želimo, da se pred rešitvami izpišejo tudi naloge, moramo za to izbrati primerno predlogo, v
 katero se nato vstavijo vrednosti s seznama ``seznam_nalog``. Če je argument ``pdf`` nastavljen na vrednost ``True``,
-poskusi v isti mapi ustvariti še `PDF`
+poskusi program v isti mapi ustvariti še `PDF`
 datoteko rešitev (`ucenec-resitve.pdf`).
 
 
@@ -222,12 +219,12 @@ datoteko rešitev (`ucenec-resitve.pdf`).
 
 Funkcija ``napisi_skupno_resitev``
 #####################################
-Funkcija ``napisi_skupno_resitev`` v podmapi `Rešitve` ustvari `LaTeX` datoteko `Resitve.tex`. Datoteka je ustvarjena iz
+Funkcija ``napisi_skupno_resitev`` v podmapi `Rešitve` ustvari eno `LaTeX` datoteko `Resitve.tex`. Datoteka je ustvarjena iz
 predloge podane s potjo ``pot_vzorca_resitev``. Na ustrezna mesta spremenljivk se vstavijo imena učencev in njihovim nalogam
 pripadajoče rešitve s seznama seznamov nalog in rešitev ``seznam_vseh_nalog_resitev``. Kadar želimo, da se pred rešitvijo izpiše
-tudi naloga, moramo izbrati za to ustrezno predlogo v katero se vstavijo tudi naloge s seznama ``seznam_vseh_nalog_resitev``.
+tudi naloga, moramo izbrati za to ustrezno predlogo, v katero se vstavijo tudi naloge s seznama ``seznam_vseh_nalog_resitev``.
 Vrstni red rešitev je določen z abecednim
-redom učencev. Če je argument ``pdf`` nastavljen na vrednost ``True``,
+redom učencev. Če je argument ``pdf`` nastavljen na vrednost ``True``, program
 poskusi v isti mapi ustvariti še `PDF` datoteko rešitev (`Resitve.pdf`)
 
 .. literalinclude:: ../../generiranje.py
@@ -236,7 +233,7 @@ poskusi v isti mapi ustvariti še `PDF` datoteko rešitev (`Resitve.pdf`)
 ************************
 Razred NapacnaNaloga
 ************************
-Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`).Razred izjem pomaga pri opozarjanju na napake.
+Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`). Razred izjem pomaga pri opozarjanju na napake.
 Več si lahko o njem preberete na spletu.
 .. todo link https://docs.python.org/3/library/exceptions.html
 
