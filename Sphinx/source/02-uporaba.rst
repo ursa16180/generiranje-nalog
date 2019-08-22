@@ -9,7 +9,7 @@ za sestavljanje testov. Ko zaženemo program z želenimi parametri nam ustvari t
 Kadar uporabimo že sestavljene naloge, program ne zahteva veliko razumevanja programiranja. Kogar zanima si lahko
 osnove programiranja v jeziku `Python` ogleda na spletu.
 
-..todo link za python učbenik
+..todo link za python učbenik ali vir
 
 ********
 Naloge
@@ -31,6 +31,19 @@ z različnih področij:
 #. `zaporedja` - določanje splošnega člena poljubnega zaporedja, računanje prvih členov in vsote aritmetičnega ali geometrijskega zaporedja
 
 Ideje za naloge sem črpala iz lastnih pedagoških izkušenj in različnih srednješolskih učbenikov.
+:cite:`brilej2004omega1`
+:cite:`brilej2005omega2a`
+:cite:`brilej2005omega2b`
+:cite:`brilej2006omega3`
+:cite:`brilej2005omega4`
+:cite:`arnus2009matematika1`
+:cite:`arnus2010matematika2`
+:cite:`bon2011matematika3`
+:cite:`bon2012matematika4`
+:cite:`alt2006matematika`
+:cite:`benko2014matematika`
+:cite:`kavka2014matematika`
+
 
 **************
 Izpis testov

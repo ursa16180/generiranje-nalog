@@ -100,9 +100,9 @@ Naključnost
 Raznolikost primerov zagotovimo tako, da v sestavljanje naloge vključimo naključnost. To nam omogoča `Python` knjižnica
 ``Random``, ki generira psevdo-naključne vrednosti. Knjižnica vsebuje funkcije, ki lahko psevdo-naključno premešajo
 vrstni red, izberejo vzorec s seznam, izberejo število in še mnogo več. Če želimo, da so rezultati ponovljivi lahko
-določimo seme generatorja s funkcijo ``random.seed``. Več si lahko o knjižnici preberete v uradni dokumentaciji na spletu.
+določimo seme generatorja s funkcijo ``random.seed``. Več si lahko o knjižnici preberete v uradni dokumentaciji na spletu. :cite:`random`
 
-..TODO vir random https://docs.python.org/3/library/random.html
+..TODO link vs cite
 
 Sama sem najpogosteje sem uporabila funkcije:
 
@@ -145,7 +145,7 @@ vrednostmi izberemo naključno.
 
 Simbolno računanje
 ###################
-Za računanje z neznankami, mora program podpirati simbolno računanje. V ta namen je uporabljena knjižnica ``sympy``, ki
+Za računanje z neznankami, mora program podpirati simbolno računanje. V ta namen je uporabljena knjižnica ``sympy``:cite:`sympy`, ki
 omogoča da določimo nek niz kot simbol in ga lahko uporabimo v matematičnih operacijah. Knjižnica ima tudi veliko
 različnih objektov kot so polinomi (``Poly``), stožnice (``Circle``, ``Ellipse``), racionalna števila (``Rational``) …
 Na znanih objektih je možno uporabiti veliko funkcij in tako izračunati vrednosti izrazov, jih poenostaviti ali celo
@@ -183,7 +183,7 @@ Funkcija `preveri` zagotovi smiseln rezultat.
 
 Grafi
 ######
-V naloge oziroma njihove rešitve lahko vključujemo tudi grafe. To nam omogoča `LaTeX` paket `pgfplots`, ki avtomatično
+V naloge oziroma njihove rešitve lahko vključujemo tudi grafe. To nam omogoča `LaTeX` paket `pgfplots`,:cite:`pgfplots` ki avtomatično
 generira slike grafov. Pomembno je, da grafe podamo v obliki, ki jo `pgfplots` zna razbrati. Funkcije, ki jih želimo
 narisati, moramo najprej s funkcijo `sympy.latex` spremeniti v nize, ki jih `LaTeX` generator zna prevesti. Vendar
 moramo biti pozorni na oznako za potence. V matematičnem načinu zapišemo potence z oznako `**`, za risanje grafov pa

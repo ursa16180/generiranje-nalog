@@ -18,3 +18,5 @@ računalnikom. Če bi želeli omogočiti širšo uporabo, bi bilo potrebno ustva
 
 Mislim, da bo predstavljen program odličen didaktičen pripomoček za moje nadaljnje delo, želim pa si, da bi ga
 lahko razširili, naredili uporabniku prijaznejšega in nekoč morda celo naredili javno dostopnega.
+
+.. bibliography:: literatura.bib
