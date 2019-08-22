@@ -30,11 +30,21 @@ class VsotaRazlika(Naloga):
     Naloga za seštevanje in odštevanje treh kompleksnih števil.
 
 
-    >>> VsotaRazlika().sestavi()
-    {'racun': 2 - 3*I + (1 - 5*I)/4 - (-5 - 2*I), 'rezultat': 29/4 - 9*I/4}
+    .. runblock:: pycon
 
-    >>> VsotaRazlika().sestavi()
-    {'racun': -3*(1 + 3*I) + 4 - 5*I - (5 - 5*I)/2, 'rezultat': -3/2 - 23*I/2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> VsotaRazlika().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> VsotaRazlika().primer()
+
     """
     besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
     besedilo_vecih = r'''Izračunaj:
@@ -81,11 +91,21 @@ class Ulomek(Naloga):
     :param nicelna_komponenta_stevca: števec ima eno od komponent enako 0, drugače v števcu poljubno kompleksno število
 
 
-    >>> Ulomek().sestavi()
-    {'racun': (-3 - I)/(2 - I) + (-1 - 3*I)/(3 + 3*I), 'rezultat': -5/3 - 4*I/3}
+    .. runblock:: pycon
 
-    >>> Ulomek(nicelna_komponenta_stevca=True).sestavi()
-    {'racun': 1/(-3 + 2*I) + (4*I)/(2 + 3*I), 'rezultat': 9/13 + 6*I/13}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Ulomek().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Ulomek(nicelna_komponenta_stevca=True).primer()
+
     """
     besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
     besedilo_vecih = r'''Izračunaj:
@@ -136,11 +156,21 @@ class Mnozenje(Naloga):
     Naloga za množenje dveh kompleksnih števil.
 
 
-    >>> Mnozenje().sestavi()
-    {'racun': (-2 - 2*I)*(3 - 3*I), 'rezultat': -12}
+    .. runblock:: pycon
 
-    >>> Mnozenje().sestavi()
-    {'racun': (4 + 4*I)*(5 - I), 'rezultat': 24 + 16*I}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Mnozenje().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Mnozenje().primer()
+
     """
     besedilo_posamezne = r'''Izračunaj $z={{latex(naloga.racun)}}$.'''
     besedilo_vecih = r'''Izračunaj:
@@ -172,11 +202,21 @@ class Racunanje(Naloga):
     Naloga za računanje absolutne vrednosti, potenciranja in konjugiranje kompleksnega števila ter višje potence števila :math:`i`.
 
 
-    >>> Racunanje().sestavi()
-    {'stevilo': -2 - 5*I, 'racun': z**2 + I**2000*conjugate(z) + Abs(z)**2, 'rezultat': 6 + 25*I}
+    .. runblock:: pycon
 
-    >>> Racunanje().sestavi()
-    {'stevilo': 3 + I, 'racun': z**3 + I**2009*conjugate(z) + Abs(z)**2, 'rezultat': 29 + 29*I}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Racunanje().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Racunanje().primer()
+
     """
     besedilo_posamezne = r'''Dano je kompleksno število $z={{latex(naloga.stevilo)}}$. Izračunaj število $w={{latex(naloga.racun)}}$.'''
 
@@ -213,11 +253,21 @@ class Enacba(Naloga):
     :param konjugirana_vrednost: v enačbi poleg :math:`z` nastopa tudi :math:`\overline{z}`
 
 
-    >>> Enacba().sestavi()
-    {'enacba': Eq(z*(3 - 2*I), -5 - 14*I), 'resitev': 1 - 4*I, 'imaginarna': -4, 'realna': 1, 'absolutna': sqrt(17)}
+    .. runblock:: pycon
 
-    >>> Enacba(konjugirana_vrednost=True).sestavi()
-    {'enacba': Eq(z*(1 + 3*I) + (-5 + 3*I)*conjugate(z), -16 + 6*I), 'resitev': 4 - 3*I, 'imaginarna': -3, 'realna': 4, 'absolutna': 5}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Enacba().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> Enacba(konjugirana_vrednost=True).primer()
+
     """
     besedilo_posamezne = r'''Katero kompleksno število $z$ zadošča enačbi ${{latex(naloga.enacba)}}$? Zapiši $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunaj $\left| z \right|$.'''
     besedilo_vecih = r'''Izračunaj katero število $z$ reši enačbo in zapiši še $\operatorname{Re}(z)$ in $\operatorname{Im}(z)$ ter izračunajte $\left| z \right|$:
@@ -263,11 +313,21 @@ class NarisiTocke(Naloga):
     Naloga za risanje kompleksnih števil v kompleksno ravnino.
 
 
-    >>> NarisiTocke().sestavi()
-    {'z1': 5 - 3*I, 'z2': 1 - 5*I, 'z3': -1 + 3*I, 'z4': -2 - 5*I, 'koordinatiz1': (5, -3), 'koordinatiz2': (1, -5), 'koordinatiz3': (-1, 3), 'koordinatiz4': (-2, -5)}
+    .. runblock:: pycon
 
-    >>> NarisiTocke().sestavi()
-    {'z1': -1 + 2*I, 'z2': -4 + 4*I, 'z3': -2 - 2*I, 'z4': -4 + I, 'koordinatiz1': (-1, 2), 'koordinatiz2': (-4, 4), 'koordinatiz3': (-2, -2), 'koordinatiz4': (-4, 1)}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> NarisiTocke().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kompleksna_stevila import *
+        >>> NarisiTocke().primer()
+
     """
     besedilo_posamezne = r'''V kompleksno ravnino nariši števila $z_1={{latex(naloga.z1)}}$, $z_2={{latex(naloga.z2)}}$, $z_3={{latex(naloga.z3)}}$ in $z_4={{latex(naloga.z4)}}$.'''
 

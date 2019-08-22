@@ -114,11 +114,21 @@ class SplosniClenZaporedja(Naloga):
     :param zamik_alternirajoce: določa, če so v izbor predpisa vljučena zamaknjena zaporedja iz kvadratov in  kubov ter alternirajoča zaporedja
 
 
-    >>> SplosniClenZaporedja().sestavi()
-    {'cleni': [1, 3, 5, 7, 9], 'splosni': 2*n - 1}
+    .. runblock:: pycon
 
-    >>> SplosniClenZaporedja(zamik_alternirajoce=True).sestavi()
-    {'cleni': [0, 7, 26, 63, 124], 'splosni': n**3 - 1}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenZaporedja().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenZaporedja(zamik_alternirajoce=True).primer()
+
 
     """
     besedilo_posamezne = r'''Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja {% for clen in naloga.cleni %}${{latex(clen)}}$, {% endfor %}...'''
@@ -169,11 +179,21 @@ class PrviCleniAritmeticnega(Naloga):
     :param racionalne_vrednosti: prvi člen in diferenca zaporedja sta lahko racionalni vrednosti
 
 
-    >>> PrviCleniAritmeticnega().sestavi()
-    {'cleni': [-9, -5, -1, 3, 7], 'a1': -9, 'd': 4, 'splosni': 4*(n - 1) - 9}
+    .. runblock:: pycon
 
-    >>> PrviCleniAritmeticnega(racionalne_vrednosti=True).sestavi()
-    {'cleni': [1/4, -1/12, -5/12, -3/4, -13/12], 'a1': 1/4, 'd': -1/3, 'splosni': 1/4 - (n - 1)/3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> PrviCleniAritmeticnega().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> PrviCleniAritmeticnega(racionalne_vrednosti=True).primer()
+
     """
     besedilo_posamezne = r'''Zapiši prvih pet členov in splošni člen aritmetičnega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
          in diferenco $d={{latex(naloga.d)}}$.'''
@@ -223,11 +243,21 @@ class SplosniClenAritmeticnegaZaporedja(Naloga):
     :param do: največja možna vrednost za prvi člen in diferenco
 
 
-    >>> SplosniClenAritmeticnegaZaporedja().sestavi()
-    {'n1': 5, 'an1': 23/2, 'n2': 9, 'an2': 47/2, 'a1': -1/2, 'd': 3}
+    .. runblock:: pycon
 
-    >>> SplosniClenAritmeticnegaZaporedja(od=1).sestavi()
-    {'n1': 5, 'an1': 19, 'n2': 14, 'an2': 119/2, 'a1': 1, 'd': 9/2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenAritmeticnegaZaporedja().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenAritmeticnegaZaporedja(od=1).primer()
+
     """
     besedilo_posamezne = r'''Določi splošni člen aritmetičnega zaporedja, če je $a_{ {{latex(naloga.n1)}} }={{latex(naloga.an1)}}$ in $a_{ {{latex(naloga.n2)}} }={{latex(naloga.an2)}}$.'''
     besedilo_vecih = r'''Določi splošne člene aritmetičnih zaporedij, če poznaš naslednja dva člena:
@@ -268,8 +298,13 @@ class SplosniClenAritmeticnegaEnacbi(Naloga):
     """
     Naloga za zapis splošnega člena aritmetičnega zaporedja, če imaš podani dve enačbi z različnimi členi zaporedja.
 
-    >>> SplosniClenAritmeticnegaEnacbi().sestavi()
-    {'n1': 3, 'n2': 14, 'n3': 12, 'n4': 6, 'operator': '-', 'vrednost1': -49, 'vrednost2': -18, 'a1': -2, 'd': -3}
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenAritmeticnegaEnacbi().primer()
+
 
     >>> SplosniClenAritmeticnegaEnacbi().sestavi()
     {'n1': 18, 'n2': 3, 'n3': 2, 'n4': 16, 'operator': '\\cdot', 'vrednost1': -43/2, 'vrednost2': 351/4, 'a1': -6, 'd': -1/2
@@ -315,11 +350,20 @@ class VsotaAritmeticnega(Naloga):
     :param podan_splosni_clen: podan splošni člen zaporedja ali dva člena zaporedja
 
 
-    >>> VsotaAritmeticnega().sestavi()
-    {'izraz': '$a_n=3 \\left(n - 1\\right) + 1$', 'n': 28, 'vsota': 1162}
+    .. runblock:: pycon
 
-    >>> VsotaAritmeticnega(podan_splosni_clen=False).sestavi()
-    {'izraz': '$s_{2}=-15$ in $s_{5}=-45$', 'n': 28, 'vsota': -574}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> VsotaAritmeticnega().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> VsotaAritmeticnega(podan_splosni_clen=False).primer()
     """
     besedilo_posamezne = r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov aritmetičnega zaporedja, če je {{naloga.izraz}}.'''
     besedilo_vecih = r'''Izračunaj vsoto prvih n členov aritmetičnega zaporedja, če je:
@@ -367,11 +411,21 @@ class PrviCleniGeometrijskega(Naloga):
     :param racionalne_vrednosti: prvi člen in kvocient zaporedja sta lahko racionalni vrednosti
 
 
-    >>> PrviCleniGeometrijskega().sestavi()
-    {'cleni': [4, -12, 36, -108, 324], 'a1': 4, 'q': -3, 'splosni': 4*(-3)**(n - 1)}
+    .. runblock:: pycon
 
-    >>> PrviCleniGeometrijskega(racionalne_vrednosti=True).sestavi()
-    {'cleni': [1/2, 1/6, 1/18, 1/54, 1/162], 'a1': 1/2, 'q': 1/3, 'splosni': (1/3)**(n - 1)/2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> PrviCleniGeometrijskega().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> PrviCleniGeometrijskega(racionalne_vrednosti=True).primer()
+
     """
     besedilo_posamezne = r'''Zapiši prvih pet členov in splošni člen geometrijskega zaporedja s prvim členom $a_1={{latex(naloga.a1)}}$
          in količnikom $q={{latex(naloga.q)}}$.'''
@@ -416,11 +470,19 @@ class SplosniClenGeometrijskega(Naloga):
     Naloga za zapis splošnega člena aritmetičnega zaporedja, če poznaš dva člena zaporedja ali en člen in količnik zaporedja.
 
 
-    >>> SplosniClenGeometrijskega().sestavi()
-    {'podatek1': 'q=-1/3', 'podatek2': 'a_{12}=-7/177147', 'splosni': 7*(-1/3)**(n - 1)}
+    .. runblock:: pycon
 
-    >>> SplosniClenGeometrijskega().sestavi()
-    {'podatek1': 'a_{12}=10240', 'podatek2': 'q=2', 'splosni': 5*2**(n - 1)}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenGeometrijskega().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenGeometrijskega().primer()
     """
     besedilo_posamezne = r'''Določi splošni člen geometrijskega zaporedja, če je ${{naloga.podatek1}}$ in ${{latex(naloga.podatek2)}}$.'''
     besedilo_vecih = r'''Določi splošne člene geometrijskih zaporedij, če je:
@@ -458,11 +520,21 @@ class SplosniClenGeometrijskegaEnacbi(Naloga):
     Naloga za zapis splošnega člena geometrijskega zaporedja, če imaš podani dve enačbi z različnimi členi zaporedja.
 
 
-    >>> SplosniClenGeometrijskegaEnacbi().sestavi()
-    {'n1': 5, 'n2': 6, 'n3': 3, 'operator': '\\cdot', 'vrednost1': 64, 'vrednost2': 2048, 'a1': 4, 'q': 2}
+    .. runblock:: pycon
 
-    >>> SplosniClenGeometrijskegaEnacbi().sestavi()
-    {'n1': 5, 'n2': 7, 'n3': 6, 'operator': '\\cdot', 'vrednost1': -324, 'vrednost2': -2834352, 'a1': -4, 'q': -3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenGeometrijskegaEnacbi().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> SplosniClenGeometrijskegaEnacbi().primer()
+
     """
     besedilo_posamezne = r'''Določi prvi člen in količnik geometrijskega zaporedja, pri katerem je 
         $a_{ {{naloga.n1}} }={{latex(naloga.vrednost1)}}$ in 
@@ -513,11 +585,19 @@ class VsotaGeometrijskega(Naloga):
     :param podan_splosni_clen: podan splošni člen zaporedja ali dva člena zaporedja
 
 
-    >>> VsotaGeometrijskega().sestavi()
-    {'izraz': '$a_n=3 \\left(-3\\right)^{n - 1}$', 'n': 5, 'vsota': 183}
+    .. runblock:: pycon
 
-    >>> VsotaGeometrijskega(podan_splosni_clen=False).sestavi()
-    {'izraz': '$a_{3}=-1/8$ in $a_{7}=-1/128$', 'n': 6, 'vsota': -63/64}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> VsotaGeometrijskega().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> VsotaGeometrijskega(podan_splosni_clen=False).primer()
     """
     besedilo_posamezne = r'''Izračunaj vsoto prvih ${{naloga.n}}$ členov geometrijskega zaporedja, če je {{naloga.izraz}}.'''
     besedilo_vecih = r'''Izračunaj vsoto prvih n členov geometrijskega zaporedja, če je:
@@ -563,11 +643,19 @@ class VsotaGeometrijskeVrste(Naloga):
     :param lazji_podatki: na začetku podana dva lažja podatka (prvi člen, kvocient ali vsota vrste) ali lahko tudi težja (poljuben člen ali delna vsota)
 
 
-    >>> VsotaGeometrijskeVrste().sestavi()
-    {'podatek1': 'q', 'vrednost1': sqrt(2)/3, 'podatek2': 's', 'vrednost2': -6/(1 - sqrt(2)/3), 'vrsta': '-6+- 2 \\sqrt{2}+- \\frac{4}{3}+- \\frac{4 \\sqrt{2}}{9}+...'}
+    .. runblock:: pycon
 
-    >>> VsotaGeometrijskeVrste(lazji_podatki=False).sestavi()
-    {'podatek1': 'a_1', 'vrednost1': 1, 'podatek2': 'a_4', 'vrednost2': -1/64, 'vrsta': '1+- \\frac{1}{4}+\\frac{1}{16}+- \\frac{1}{64}+...'}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> VsotaGeometrijskeVrste().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from zaporedja import *
+        >>> VsotaGeometrijskeVrste(lazji_podatki=False).primer()
     """
     besedilo_posamezne = r'''Zapiši geometrijsko vrsto, če je ${{latex(naloga.podatek1)}}={{latex(naloga.vrednost1)}}$ in
          ${{latex(naloga.podatek2)}}={{latex(naloga.vrednost2)}}$.'''

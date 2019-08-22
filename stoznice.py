@@ -11,11 +11,21 @@ class PreseciscaKroznic(Naloga):
     Naloga za iskanje presečišč dveh krožnic.
 
 
-    >>> PreseciscaKroznic().sestavi()
-    {'kroznica1': Eq((x + 5)**2 + (y + 4)**2, 4), 'kroznica2': Eq(x**2 + (y - 4)**2, 61), 'presek': [(-5, -2), (-285/89, -278/89)]}
+    .. runblock:: pycon
 
-    >>> PreseciscaKroznic().sestavi()
-    {'kroznica1': Eq(x**2 + y**2, 41), 'kroznica2': Eq(y**2 + (x - 2)**2, 25), 'presek': [(5, -4), (5, 4)]}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from stoznice import *
+        >>> PreseciscaKroznic().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from stoznice import *
+        >>> PreseciscaKroznic().primer()
+
     """
     besedilo_posamezne = r'''Določi medsebojno lego krožnic $\mathcal{K}_1:{{latex(naloga.kroznica1)}}$ in $\mathcal{K}_2:{{latex(naloga.kroznica2)}}$ ter določi presešišča, če obstajajo.'''
     besedilo_vecih = r'''Določi medsebojno lego krožnic $\mathcal{K}_1$ in $\mathcal{K}_2$ ter določi presešišča, če obstajajo:
@@ -64,11 +74,21 @@ class TemeGorisceEnacba(Naloga):
     :param premaknjena: elipsa v premaknjeni ali središčni legi
 
 
-    >>> TemeGorisceEnacba().sestavi()
-    {'teme': (-1, 5), 'gorisce': (-1, -sqrt(21)), 'sredisce': (-1, 0), 'elipsa': Eq(y**2/25 + (x/2 + 1/2)**2, 1)}
+    .. runblock:: pycon
 
-    >>> TemeGorisceEnacba(premaknjena=True).sestavi()
-    {'teme': (-5, -4), 'gorisce': (-4, -4 + 2*sqrt(6)), 'sredisce': (-4, -4), 'elipsa': Eq((x + 4)**2 + (y/5 + 4/5)**2, 1)}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from stoznice import *
+        >>> TemeGorisceEnacba().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from stoznice import *
+        >>> TemeGorisceEnacba(premaknjena=True).primer()
+
     """
     besedilo_posamezne = r'''Zapiši enačbo elipse s središčem $S{{latex(naloga.sredisce)}}$, temenom $T_1{{latex(naloga.teme)}}$ in goriščem $F_1{{latex(naloga.gorisce)}}$.'''
     besedilo_vecih = r'''Zapiši enačbo elipse s središčem $S$, temenom $T_1$ in goriščem $F_1$:

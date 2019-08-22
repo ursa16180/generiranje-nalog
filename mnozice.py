@@ -35,11 +35,19 @@ class ElementiMnozice(Naloga):
     :param linearna_kombinacija: predpis vsebuje linearno kombinacijo :math:`a*n +b`, drugače samo :math:`n`
 
 
-    >>> ElementiMnozice().sestavi()
-    {'n': 3*n - 2, 'pogoj': '<', 'stevilo': 5, 'mnozica': {1, 4, 7, 10}}
+    .. runblock:: pycon
 
-    >>> ElementiMnozice(linearna_kombinacija=False).sestavi()
-    {'n': n, 'pogoj': '|', 'stevilo': 27, 'mnozica': {1, 3, 9, 27}}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> ElementiMnozice().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> ElementiMnozice(linearna_kombinacija=False).primer()
     """
     besedilo_posamezne = r'''Zapiši elemente množice $ \mathcal{A} =\{ {{latex(naloga.n)}}; 
     (n \in \mathbb{N}) \land (n{{latex(naloga.pogoj)}} {{latex(naloga.stevilo)}} ) \} $.'''
@@ -92,11 +100,19 @@ class PotencnaMnozica(Naloga):
     Naloga za zapis potenčne množice.
 
 
-    >>> PotencnaMnozica().sestavi()
-    {'mnozica': {beta, alpha}, 'potencna': {EmptySet(), {beta}, {alpha}, {beta, alpha}}}
+    .. runblock:: pycon
 
-    >>> PotencnaMnozica().sestavi()
-    {'mnozica': {a, b, c}, 'potencna': {EmptySet(), {a}, {b}, {c}, {a, b}, {a, c}, {b, c}, {a, b, c}}}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> PotencnaMnozica().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> PotencnaMnozica().primer()
     """
     besedilo_posamezne = r'''Zapiši potenčno množico množice $ \mathcal{A} ={{latex(naloga.mnozica)}}$'''
     besedilo_vecih = r'''Zapiši potenčno množico množice $ \mathcal{A} $:
@@ -129,11 +145,19 @@ class UnijaPresekRazlika(Naloga):  # Todo ali potrebne 3 množice - za unijo pre
     Naloga za zapis unije, presek, razlike in kartezičnega produkta množic.
 
 
-    >>> UnijaPresekRazlika().sestavi()
-    {'A': {1, 2, 5, 6}, 'B': {2, 3, 6}, 'C': {2, 4}, 'AunijaC': {1, 2, 4, 5, 6}, 'ApresekB': {2, 6}, 'AbrezC': {1, 5, 6}, 'CbrezB': {4}, 'AkartezicnoC': {(1, 2), (1, 4), (2, 2), (2, 4), (5, 2), (5, 4), (6, 2), (6, 4)}, 'AunijaCbrezApresekB': {1, 4, 5}}
+    .. runblock:: pycon
 
-    >>> UnijaPresekRazlika().sestavi()
-    {'A': {1, 3, 4, 6}, 'B': {1, 2, 3}, 'C': {4, 5}, 'AunijaC': {1, 3, 4, 5, 6}, 'ApresekB': {1, 3}, 'AbrezC': {1, 3, 6}, 'CbrezB': {4, 5}, 'AkartezicnoC': {(1, 4), (1, 5), (3, 4), (3, 5), (4, 4), (4, 5), (6, 4), (6, 5)}, 'AunijaCbrezApresekB': {4, 5, 6}}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> UnijaPresekRazlika().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> UnijaPresekRazlika().primer()
     """
     besedilo_posamezne = r'''Dane so množice $ \mathcal{A} ={{latex(naloga.A)}}$, $ \mathcal{B} ={{latex(naloga.B)}}$ in $ \mathcal{C} ={{latex(naloga.C)}}$.
     Zapiši množice $ \mathcal{A} \cup  \mathcal{C} $, $ \mathcal{A} \cap  \mathcal{B} $, $ \mathcal{A} - \mathcal{C} $, $ \mathcal{C} - \mathcal{B} $, $ \mathcal{A} \times  \mathcal{C} $ in $( \mathcal{A} \cup  \mathcal{C} )-( \mathcal{A} \cap  \mathcal{B} )$.'''
@@ -177,11 +201,19 @@ class IzpeljaneMnozice(Naloga):
     Naloga za izračun komplementa, unije in razlike množic ter izpis elementov izpeljane množice pri podani univerzalni množici.
 
 
-    >>> IzpeljaneMnozice().sestavi()
-    {'navodiloA': 5*k - 1, 'navodiloB': 5*k - 4, 'A': {4, 9, 14}, 'B': {1, 6, 11}, 'C': {1, 2, 5, 8, 9, 11, 14, 18}, 'AunijaB': {1, 4, 6, 9, 11, 14}, 'Ckomplement': {3, 4, 6, 7, 10, 12, 13, 15, 16, 17}, 'BbrezA': {1, 6, 11}, 'velikost_univerzalne': 18}
+    .. runblock:: pycon
 
-    >>> IzpeljaneMnozice().sestavi()
-    {'navodiloA': 2*k, 'navodiloB': 2*k - 3, 'A': {2, 4, 6, 8, 10, 12}, 'B': {-1, 1, 3, 5, 7, 9}, 'C': {2, 4, 6, 7, 8, 10, 11, 12}, 'AunijaB': {-1, 1, 2, ..., 9, 10, 12}, 'Ckomplement': {1, 3, 5, 9, 13}, 'BbrezA': {-1, 1, 3, 5, 7, 9}, 'velikost_univerzalne': 13}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> IzpeljaneMnozice().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from mnozice import *
+        >>> IzpeljaneMnozice().primer()
     """
     besedilo_posamezne = r'''Dana je univerzalna množica $ \mathcal{U} =\mathbb{N}_{ {{naloga.velikost_univerzalne}} }$ 
     in njene pomnožice $ \mathcal{A} =\{ {{latex(naloga.navodiloA)}}; k \in \mathbb{N} \}$, $ \mathcal{B} =\{ {{latex(naloga.navodiloB)}}; k \in \mathbb{N} \}$, 

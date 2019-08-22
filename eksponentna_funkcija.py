@@ -37,11 +37,21 @@ class GrafEksponentne(Naloga):
 
     :param cela_osnova: določi, če ima funkcija lahko samo celoštevilsko osnovo ali tudi racionalno
 
-    >>> GrafEksponentne().sestavi()
-    {'eksponentna1': 2**x, 'eksponentna2': -2**x - 1, 'narisi_eksponentna1': '2^x', 'narisi_eksponentna2': '-2^x - 1', 'premik2': -1}
+    .. runblock:: pycon
 
-    >>> GrafEksponentne(cela_osnova=False).sestavi()
-    {'eksponentna1': (4/3)**x, 'eksponentna2': (4/3)**x + 3, 'narisi_eksponentna1': '(4/3)^x', 'narisi_eksponentna2': '(4/3)^x + 3', 'premik2': 3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from eksponentna_funkcija import *
+        >>> GrafEksponentne().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from eksponentna_funkcija import *
+        >>> GrafEksponentne(cela_osnova=False).primer()
+
     """
     besedilo_posamezne = r'''V isti koordinatni sistem nariši grafa funkcij $f(x)={{latex(naloga.eksponentna1)}}$ in $g(x)={{latex(naloga.eksponentna2)}}$.'''
 
@@ -118,11 +128,21 @@ class Enacba(Naloga):
         >>> Enacba().primer()
 
 
-    >>> Enacba().sestavi()
-    {'enacba': Eq((1/49)**(-x - 1), 1), 'resitev': -1}
+    .. runblock:: pycon
 
-    >>> Enacba(vsota = True).sestavi()
-    {'enacba': Eq(4**(x + 2) + 4**(x + 3), 5120), 'resitev': 3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from eksponentna_funkcija import *
+        >>> Enacba().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from eksponentna_funkcija import *
+        >>> Enacba(vsota = True).primer()
+
     """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:
@@ -175,8 +195,13 @@ class Enacba2osnovi(Naloga):
     :param deli_z_osnovo: ali je v zadnjem koraku potrebno vrednosti deliti z nasprotno osnovo
 
 
-    >>> Enacba2osnovi().sestavi()
-    {'enacba': Eq(2**x/4 - 5*7**x/2401, 7*2**x/32 - 34*7**x/16807), 'resitev': 5}
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from eksponentna_funkcija import *
+        >>> Enacba2osnovi().primer()
+
 
     >>> Enacba2osnovi(deli_z_osnovo=True).sestavi()
     {'enacba': Eq(2**(x + 2) - 3**(x - 1), 13*2**x/4 - 3**x/9), 'resitev': 3

@@ -19,11 +19,21 @@ class PotencaDvoclenika(Naloga):
         >>> PotencaDvoclenika().primer()
 
 
-    >>> PotencaDvoclenika().sestavi()
-    {'izraz': (5*t**4 - 5*y**5)**2, 'potenciran': 25*t**8 - 50*t**4*y**5 + 25*y**10}
+    .. runblock:: pycon
 
-    >>> PotencaDvoclenika(linearna_kombinacija=False, min_potenca=3).sestavi()
-    {'izraz': (z + 4)**3, 'potenciran': z**3 + 12*z**2 + 48*z + 64}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> PotencaDvoclenika().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> PotencaDvoclenika(linearna_kombinacija=False, min_potenca=3).primer()
+
     """
     besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
     besedilo_vecih = r'''Potenciraj izraze:
@@ -82,11 +92,21 @@ class PotencaTroclenika(Naloga):
     :param linearna_kombinacija: potenciranje linearne kombinacije 3 neznank, drugače enostaven tročlenik
 
 
-    >>> PotencaTroclenika().sestavi()
-    {'izraz': (2*a + 3*t - z)**2, 'potenciran': 4*a**2 + 12*a*t - 4*a*z + 9*t**2 - 6*t*z + z**2}
+    .. runblock:: pycon
 
-    >>> PotencaTroclenika(linearna_kombinacija=False, max_potenca=3).sestavi()
-    {'izraz': (a + b + 3)**3, 'potenciran': a**3 + 3*a**2*b + 9*a**2 + 3*a*b**2 + 18*a*b + 27*a + b**3 + 9*b**2 + 27*b + 27}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> PotencaTroclenika().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> PotencaTroclenika(linearna_kombinacija=False, max_potenca=3).primer()
+
 
     """
     besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$'''
@@ -140,11 +160,21 @@ class RazstaviVieta(Naloga):
     :param vodilni_koeficient: vodilni koeficient ni enak 1
 
 
-    >>> RazstaviVieta(minimalna_vrednost=-3).sestavi()
-    {'izraz': (x - 3)*(x + 3)}
+    .. runblock:: pycon
 
-    >>> RazstaviVieta(minimalna_vrednost=-4, maksimalna_vrednost=3, vodilni_koeficient=True).sestavi()
-    {'izraz': 3*(x + 2)*(x + 4)}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> RazstaviVieta(minimalna_vrednost=-3).primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> RazstaviVieta(minimalna_vrednost=-4, maksimalna_vrednost=3, vodilni_koeficient=True).primer()
+
     """
     besedilo_posamezne = r'''Razstavi izraz ${{latex(expand(naloga.izraz))}}$.'''
     besedilo_vecih = r'''Razstavi naslednje izraze
@@ -191,11 +221,21 @@ class RazstaviRazliko(Naloga):
     :param linearna_kombinacija: linearna kombinacija dveh neznank, drugače enostaven dvočlenik
 
 
-    >>> RazstaviRazliko(max_potenca=5).sestavi()
-    {'izraz': b**5 - 1, 'razstavljen': (b - 1)*(b**4 + b**3 + b**2 + b + 1)}
+    .. runblock:: pycon
 
-    >>> RazstaviRazliko(linearna_kombinacija=True).sestavi()
-    {'izraz': -81*v**2 + 64*z**6, 'razstavljen': (-9*v + 8*z**3)*(9*v + 8*z**3)}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> RazstaviRazliko(max_potenca=5).primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> RazstaviRazliko(linearna_kombinacija=True).primer()
+
     """
     besedilo_posamezne = r'''Razstavi izraz ${{latex(naloga.izraz)}}$.'''
     besedilo_vecih = r'''Razstavi izraze:
@@ -262,11 +302,21 @@ class PotencirajVecclenik(Naloga):
     :param linearna_kombinacija: potenciranje linearne kombinacije dveh ali treh neznank, drugače enostaven veččlenik
 
 
-    >>> PotencirajVecclenik(max_clenov=3).sestavi()
-    {'izraz': (4*a + v + 3)**3}
+    .. runblock:: pycon
 
-    >>> PotencirajVecclenik(linearna_kombinacija=True).sestavi()
-    {'izraz': (4*t**3 - z**3)**3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> PotencirajVecclenik(max_clenov=3).primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from izrazi import *
+        >>> PotencirajVecclenik(linearna_kombinacija=True).primer()
+
     """
     besedilo_posamezne = r'''Potenciraj izraz ${{latex(naloga.izraz)}}$.'''
     besedilo_vecih = r'''Potenciraj izraze:

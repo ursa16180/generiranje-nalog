@@ -133,11 +133,21 @@ class IzracunajNicle(Naloga):
     :param kompleksni_nicli: kompleksne ali realna ničle
 
 
-    >>> IzracunajNicle().sestavi()
-    {'splosna': 3*x**2 + 8*x/3 + 1/3, 'x1': -4/9 + sqrt(7)/9, 'x2': -4/9 - sqrt(7)/9}
+    .. runblock:: pycon
 
-    >>> IzracunajNicle(kompleksni_nicli=True).sestavi()
-    {'splosna': -3*x**2 - x - 4, 'x1': -1/6 - sqrt(47)*I/6, 'x2': -1/6 + sqrt(47)*I/6}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> IzracunajNicle().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> IzracunajNicle(kompleksni_nicli=True).primer()
+
     """
     besedilo_posamezne = r'''Izračunaj ničli kvadratne funkcije $f(x)={{latex(naloga.splosna)}}$.'''
     besedilo_vecih = r'''Izračunaj ničli naslednjih kvadratnih funkcij:
@@ -175,11 +185,21 @@ class NarisiGraf(Naloga):
     Naloga za risanje grafa kvadratne funkcije.
 
 
-    >>> NarisiGraf().sestavi()
-    {'funkcija': x**2/2 + 5*x/6 + 1/3, 'narisiFunkcijo': (x + 2/3)*(x + 1)/2, 'p': -5/6, 'q': -1/72, 'x1': -1, 'x2': -2/3, 'zacetna': 1/3}
+    .. runblock:: pycon
 
-    >>> NarisiGraf().sestavi()
-    {'funkcija': -x**2 - 5*x/3 + 14/9, 'narisiFunkcijo': -(x - 2/3)*(x + 7/3), 'p': -5/6, 'q': 9/4, 'x1': 2/3, 'x2': -7/3, 'zacetna': 14/9}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> NarisiGraf().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> NarisiGraf().primer()
+
     """
     besedilo_posamezne = r'''Nariši graf funkcije $f(x)={{latex(naloga.funkcija)}}$'''
     besedilo_vecih = r'''Nariši grafe funkcij:
@@ -246,11 +266,21 @@ class TemenskaOblika(Naloga):
     Naloga za dopoljevanje do popolnega kvadrata.
 
 
-    >>> TemenskaOblika().sestavi()
-    {'splosna': x**2 - 4*x - 1/2, 'p': 2, 'q': -9/2, 'a': 1}
+    .. runblock:: pycon
 
-    >>> TemenskaOblika().sestavi()
-    {'splosna': -4*x**2 - 2*x + 3, 'p': -1/4, 'q': 13/4, 'a': -4}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> TemenskaOblika().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> TemenskaOblika().primer()
+
     """
     besedilo_posamezne = r'''Zapiši temensko obliko funkcije $f(x)={{latex(naloga.splosna)}}$.'''
     besedilo_vecih = r'''Zapiši temensko obliko naslednjih kvadratnih funkcij:
@@ -283,11 +313,21 @@ class Presecisce(Naloga):  # TODO zagotovi lepše rezultate
     Naloga za računanje presečišč parabole in premice.
 
 
-    >>> Presecisce().sestavi()
-    {'parabola': x**2/2 - 137*x/78 - 173/39, 'premica': 317/78 - 11*x/26, 'x1': -3, 'x2': 17/3, 'y1': 16/3, 'y2': 5/3}
+    .. runblock:: pycon
 
-    >>> Presecisce().sestavi()
-    {'parabola': -x**2/2 - 7*x/10 + 13/5, 'premica': -6*x/5 - 2/5, 'x1': 3, 'x2': -2, 'y1': -4, 'y2': 2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> Presecisce().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> Presecisce().primer()
+
     """
     besedilo_posamezne = r'''Izračunaj presečišče parabole $y={{latex(naloga.parabola)}}$ in premice $y={{latex(naloga.premica)}}$.'''
     besedilo_vecih = r'''Izračunaj presečišče parabole in premice:
@@ -330,11 +370,21 @@ class Neenacba(Naloga):
     :param primerjava_stevilo: kvadratno enačbo izenači s številom ali drugo kvadratno funkcijo
 
 
-    >>> Neenacba().sestavi()
-    {'neenakost': -x**2/2 - 4*x + 11/3 <= -4/3, 'resitev': Union(Interval(-oo, -sqrt(26) - 4), Interval(-4 + sqrt(26), oo))}
+    .. runblock:: pycon
 
-    >>> Neenacba(primerjava_stevilo=False).sestavi()
-    {'neenakost': 2*x**2 + 4*x/3 + 1 <= 11*x**2/3 - 4*x + 5/2, 'resitev': Union(Interval(-oo, 8/5 - sqrt(166)/10), Interval(sqrt(166)/10 + 8/5, oo))}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> Neenacba().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> Neenacba(primerjava_stevilo=False).primer()
+
     """
     besedilo_posamezne = r'''Reši kvadratno neenačbo ${{latex(naloga.neenakost)}}$.'''
     besedilo_vecih = r'''Reši kvadratne neenačbe:
@@ -385,11 +435,21 @@ class SkoziTocke(Naloga):
     :param nakljucne_tocke: izbrane so 3 naključne točke ali ničla, začetna vrednost in ena naključna vrednost
 
 
-    >>> SkoziTocke().sestavi()
-    {'x1': -3, 'x2': 0, 'x3': 2, 'y1': 0, 'y2': -30, 'y3': -30, 'funkcija': 2*x**2 - 4*x - 30}
+    .. runblock:: pycon
 
-    >>> SkoziTocke(nakljucne_tocke=True).sestavi()
-    {'x1': -5, 'x2': -3, 'x3': -4, 'y1': -13/3, 'y2': 0, 'y3': -5/3, 'funkcija': -x**2/2 - 11*x/6 - 1}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> SkoziTocke().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from kvadratna_funkcija import *
+        >>> SkoziTocke(nakljucne_tocke=True).primer()
+
     """
     besedilo_posamezne = r'''Graf kvadratne funkcije $f$ poteka skozi točke $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$, 
         $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$ in $C({{latex(naloga.x3)}},{{latex(naloga.y3)}})$. Določi 

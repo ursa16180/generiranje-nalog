@@ -55,11 +55,21 @@ class NiclePolinoma(Naloga):
     :param max_nicla: največja možna ničla polinoma
 
 
-    >>> NiclePolinoma(max_stopnja=4).sestavi()
-    {'polinom': 2*x**3 + 14*x**2 - 40*x - 192, 'nicle': [-8, -3, 4]}
+    .. runblock:: pycon
 
-    >>> NiclePolinoma(min_stopnja=4, max_stopnja=6, min_nicla=0).sestavi()
-    {'polinom': 2*x**4 - 26*x**3 + 100*x**2 - 112*x, 'nicle': [0, 2, 4, 7]}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> NiclePolinoma(max_stopnja=4).primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> NiclePolinoma(min_stopnja=4, max_stopnja=6, min_nicla=0).primer()
+
     """
     besedilo_posamezne = r'''Poišči ničle polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
@@ -105,11 +115,21 @@ class DvojnaNicla(Naloga):
     Naloga za izračun ničel polinoma, če že poznaš dvojno ničlo.
 
 
-    >>> DvojnaNicla().sestavi()
-    {'polinom': 5*x**4/3 + 19*x**3/3 - 6*x**2 - 27*x + 9, 'dvojna': -3, 'x3': sqrt(61)/10 + 11/10, 'x4': 11/10 - sqrt(61)/10}
+    .. runblock:: pycon
 
-    >>> DvojnaNicla().sestavi()
-    {'polinom': 3*x**4/2 - 10*x**3 + 43*x**2/2 - 21*x + 18, 'dvojna': 3, 'x3': 1/3 + sqrt(11)*I/3, 'x4': 1/3 - sqrt(11)*I/3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> DvojnaNicla().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> DvojnaNicla().primer()
+
     """
     besedilo_posamezne = r'''Pokaži, da je število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$ in poišči še preostali ničli.'''
     besedilo_vecih = r''' Pokaži, da je  $x_1$ dvojna ničla polinoma in poišči preostali ničli:
@@ -148,11 +168,21 @@ class ParametraDvojna(Naloga):
     :param max_nicla: največja možna ničla polinoma
 
 
-    >>> ParametraDvojna(min_nicla=-10, max_nicla=0).sestavi()
-    {'polinom': a*x**2 + b*x - x**4 - 8*x**3 - 5, 'polinom_resitev': -x**4 - 8*x**3 - 18*x**2 - 16*x - 5, 'dvojna': -1, 'a': -18, 'b': -16}
+    .. runblock:: pycon
 
-    >>> ParametraDvojna(max_stopnja=5).sestavi()
-    {'polinom': a*x**2 + b*x - 2*x**3 - 40, 'polinom_resitev': -2*x**3 - 18*x**2 - 48*x - 40, 'dvojna': -2, 'a': -18, 'b': -48}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> ParametraDvojna(min_nicla=-10, max_nicla=0).primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> ParametraDvojna(max_stopnja=5).primer()
+
     """
     besedilo_posamezne = r''' Določi števili $a$ in $b$ tako, da bo število ${{naloga.dvojna}}$ dvojna ničla polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
@@ -215,11 +245,21 @@ class GrafPolinoma(Naloga):
     :param max_nicla: največja možna ničla polinoma
 
 
-    >>> GrafPolinoma().sestavi()
-    {'polinom': x**4/4 - x**3/4 - 3*x**2/4 + x/4 + 1/2, 'nicelna': '1/4*((x--1)*(x-2)*(x-1)*(x--1))', 'nicle': [-1, -1, 1, 2], 'zacetna': 1/2}
+    .. runblock:: pycon
 
-    >>> GrafPolinoma(max_stopnja=3, min_nicla=0).sestavi()
-    {'polinom': -x**3/4 + 3*x**2/2 - 11*x/4 + 3/2, 'nicelna': '-1/4*((x-2)*(x-1)*(x-3))', 'nicle': [1, 2, 3], 'zacetna': 3/2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> GrafPolinoma().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> GrafPolinoma(max_stopnja=3, min_nicla=0).primer()
+
     """
     besedilo_posamezne = r'''Nariši graf polinoma $p(x)={{latex(naloga.polinom)}}$.'''
 
@@ -303,11 +343,19 @@ class DolociNiclePoleAsimptotoRacionalne(Naloga):
     :param max_nicla: največja možna ničla polinomov v števcu in imenovalcu
 
 
-    >>> DolociNiclePoleAsimptotoRacionalne().sestavi()
-    {'racionalna': '\\frac{- 3 x^{3} - 12 x^{2} + 60 x + 144}{- 3 x^{3} - 30 x^{2} - 63 x}', 'nicle': [-6, -2, 4], 'poli': [-7, -3, 0], 'asimptota': 1}
+    .. runblock:: pycon
 
-    >>> DolociNiclePoleAsimptotoRacionalne(min_stopnja_stevca=1, min_nicla=2, max_nicla=6).sestavi()
-    {'racionalna': '\\frac{x - 3}{x^{3} - 15 x^{2} + 74 x - 120}', 'nicle': [3], 'poli': [4, 5, 6], 'asimptota': 0}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> DolociNiclePoleAsimptotoRacionalne().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> DolociNiclePoleAsimptotoRacionalne(min_stopnja_stevca=1, min_nicla=2, max_nicla=6).primer()
     """
     besedilo_posamezne = r'''Določi ničle, pole in asimptoto racionalne funkcije $r(x)={{naloga.racionalna}}$.'''
 
@@ -381,11 +429,19 @@ class GrafRacionalne(Naloga):
     :param vodoravna_asimptota: vodoravna asimptota, drugače poševna asimptota ali parabola
 
 
-    >>> GrafRacionalne().sestavi()
-    {'racionalna': '\\frac{- \\frac{x^{4}}{2} - 6 x^{3} - \\frac{45 x^{2}}{2} - 25 x}{\\frac{x^{4}}{2} + \\frac{3 x^{3}}{2} - 10 x^{2} - 24 x + 32}', 'nicelna': '(-1/2*((x--5)*(x--5)*(x--2)*(x-0)))/(1/2*((x--4)*(x--4)*(x-1)*(x-4)))', 'nicle': [-5, -5, -2, 0], 'poli': [-4, -4, 1, 4], 'asimptota': -1, 'domena_poli': [-5.8, 1, -4, 4, 5.8]}
+    .. runblock:: pycon
 
-    >>> GrafRacionalne(max_nicla=10, vodoravna_asimptota=False).sestavi()
-    {'racionalna': '\\frac{- \\frac{x^{3}}{4} + \\frac{5 x^{2}}{4} + \\frac{25 x}{2}}{\\frac{x^{2}}{2} - 2 x + \\frac{3}{2}}', 'nicelna': '(-1/4*((x-10)*(x--5)*(x-0)))/(1/2*((x-3)*(x-1)))', 'nicle': [-5, 0, 10], 'poli': [1, 3], 'asimptota': 1/2 - x/2, 'domena_poli': [-5.8, 1, 3, 5.8]}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> GrafRacionalne().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from polinomska_racionalna_funkcija import *
+        >>> GrafRacionalne(max_nicla=10, vodoravna_asimptota=False).primer()
     """
     besedilo_posamezne = r'''Nariši graf racionalne funkcije $r(x)= {{naloga.racionalna}}$.'''
 

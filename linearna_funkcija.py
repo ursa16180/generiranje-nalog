@@ -158,11 +158,19 @@ class PremicaSkoziTocki(Naloga):
     Naloga za določanje enačbe premice skozi 2 točki.
 
 
-    >>> PremicaSkoziTocki().sestavi()
-    {'x1': 7/2, 'y1': -14/3, 'x2': 2, 'y2': -5, 'premica': '\\frac{2 x}{9} - \\frac{49}{9}'}
+    .. runblock:: pycon
 
-    >>> PremicaSkoziTocki().sestavi()
-    {'x1': 11/3, 'y1': 4, 'x2': -10, 'y2': 10, 'premica': '\\frac{230}{41} - \\frac{18 x}{41}'}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> PremicaSkoziTocki().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> PremicaSkoziTocki().primer()
     """
     besedilo_posamezne = r'''Zapiši enačbo premice skozi točki $A({{latex(naloga.x1)}},{{latex(naloga.y1)}})$ in $B({{latex(naloga.x2)}},{{latex(naloga.y2)}})$.'''
     besedilo_vecih = r'''Zapiši enačbo premice skozi točki:
@@ -196,11 +204,19 @@ class RazdaljaMedTockama(Naloga):  # Todo težja racionalne koordinate? #TODO pr
     Naloga za računanje razdalje med dvema točkama v koordinatenm sistemu.
 
 
-    >>> RazdaljaMedTockama().sestavi()
-    {'x1': -10, 'y1': 5, 'x2': 9, 'y2': -2, 'razdalja': '\\sqrt{410}'}
+    .. runblock:: pycon
 
-    >>> RazdaljaMedTockama().sestavi()
-    {'x1': -6, 'y1': 0, 'x2': 8, 'y2': -7, 'razdalja': '7 \\sqrt{5}'}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> RazdaljaMedTockama().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> RazdaljaMedTockama().primer()
     """
     besedilo_posamezne = r'''Natančno izračunaj razdaljo med točkama $A({{naloga.x1}},{{naloga.y1}})$ in $B({{naloga.x2}},{{naloga.y2}})$.'''
     besedilo_vecih = r'''Natančno izračunaj razdaljo med točkama
@@ -232,11 +248,19 @@ class OblikeEnacbPremice(Naloga):  # TODO preveri jinja latex
     Naloga za pretvarjanje med različnimi oblikami enačbe premice.
 
 
-    >>> OblikeEnacbPremice().sestavi()
-    {'implicitna': '5 x + 9 y - 8 = 0', 'eksplicitna': 'y = \\frac{8}{9} - \\frac{5 x}{9}', 'odsekovna': '\\frac{x}{\\frac{8}{5}} + \\frac{y}{\\frac{8}{9}} = 1'}
+    .. runblock:: pycon
 
-    >>> OblikeEnacbPremice().sestavi()
-    {'implicitna': '- 7 x - 8 y + 7 = 0', 'eksplicitna': 'y = \\frac{7}{8} - \\frac{7 x}{8}', 'odsekovna': '\\frac{x}{1} + \\frac{y}{\\frac{7}{8}} = 1'}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> OblikeEnacbPremice().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> OblikeEnacbPremice().primer()
     """
     besedilo_posamezne = r'''Zapiši implicitno in odsekovno obliko premice podane z enačbo ${{naloga.implicitna}}$'''
     besedilo_vecih = r''' Zapiši implicitno in odsekovno obliko premice podane z enačbo:
@@ -274,11 +298,19 @@ class PremiceTrikotnik(Naloga):  # TODO preveri jinja latex
     Naloga za računanje ploščine trikotnika, ki ga dve premici oklepata z abscisno osjo.
 
 
-    >>> PremiceTrikotnik().sestavi()
-    {'premica1': 'y = \\frac{3 x}{4} - \\frac{3}{4}', 'premica2': 'y = x', 'ploscina': '1.5'}
+    .. runblock:: pycon
 
-    >>> PremiceTrikotnik().sestavi()
-    {'premica1': 'y = 4 - 4 x', 'premica2': 'y = - \\frac{4 x}{3} - \\frac{4}{3}', 'ploscina': '4'}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> PremiceTrikotnik().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> PremiceTrikotnik().primer()
     """
     besedilo_posamezne = r''' Izračunaj ploščino trikotnika, ki ga premici ${{naloga.premica1}}$ in ${{naloga.premica2}}$ oklepata z abscisno osjo. '''
     besedilo_vecih = r''' Izračunaj ploščino trikotnika, ki ga premici oklepata z abscisno osjo:
@@ -331,11 +363,21 @@ class NarisiLinearnoFunkcijo(Naloga):
     Naloga za risanje grafa linearne premice.
 
 
-    >>> NarisiLinearnoFunkcijo().sestavi()
-    {'linearna': 3*x + 2/3, 'n': 2/3, 'nicla': -2/9}
+    .. runblock:: pycon
 
-    >>> NarisiLinearnoFunkcijo().sestavi()
-    {'linearna': 1/3 - 4*x/3, 'n': 1/3, 'nicla': 1/4}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> NarisiLinearnoFunkcijo().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> NarisiLinearnoFunkcijo().primer()
+
     """
     besedilo_posamezne = r'''Nariši graf funkcije linearne $f(x) = {{latex(naloga.linearna)}}$.'''
     besedilo_vecih = r''' Nariši graf linearne funkcije:
@@ -401,11 +443,19 @@ class VrednostiLinearne(Naloga):
     Naloga za računanje vrednosti x oziroma f(x) linearne funkcije. Potrebno določiti tudi kdaj je funkcija negativna.
 
 
-    >>> VrednostiLinearne().sestavi()
-    {'linearna': 'f(x) = x + \\frac{5}{3}', 'x1': '\\frac{11}{3}', 'x2': '- \\frac{5}{2}', 'y1': '\\frac{16}{3}', 'y2': '- \\frac{5}{6}', 'negativno': '\\left(-\\infty, - \\frac{5}{3}\\right)'}
+    .. runblock:: pycon
 
-    >>> VrednostiLinearne().sestavi()
-    {'linearna': 'f(x) = \\frac{x}{3} + \\frac{14}{3}', 'x1': '- \\frac{5}{2}', 'x2': '2', 'y1': '\\frac{23}{6}', 'y2': '\\frac{16}{3}', 'negativno': '\\left(-\\infty, -14\\right)'}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> VrednostiLinearne().primer()
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> VrednostiLinearne().primer()
     """
     besedilo_posamezne = r'''Dana je funkcija s predpisom ${{naloga.linearna}}$. Izračunajte vrednost $f({{naloga.x1}})$ in za kateri $x$ je $f(x)={{naloga.y2}}$. Za katere vrednosti $x$ so vrednosti funkcije negativne? '''
 
@@ -453,11 +503,21 @@ class Neenacba(Naloga):
     :param kvadratna: v računu nastopa kvadratni člen, ki se odšteje
 
 
-    >>> Neenacba().sestavi()
-    {'neenacba': x - 2 > 1 - 2*x, 'resitev': Interval.open(1, oo)}
+    .. runblock:: pycon
 
-    >>> Neenacba(kvadratna=True).sestavi()
-    {'neenacba': -2*(x - 4)*(x + 5) < (4 - 2*x)*(x + 2), 'resitev': Interval.open(16, oo)}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> Neenacba().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> Neenacba(kvadratna=True).primer()
+
     """
     besedilo_posamezne = r'''Reši neenačbo ${{latex(naloga.neenacba)}}$.'''
     besedilo_vecih = r'''Reši neenačbo:
@@ -512,11 +572,21 @@ class SistemDvehEnacb(Naloga):
     :param racionalne_resitve: naloga ima racionalne ali celoštevilske rešitve
 
 
-    >>> SistemDvehEnacb().sestavi()
-    {'enacba1': Eq(-x - 3*y, -9), 'enacba2': Eq(4*x - 3*y, -9), 'x': 0, 'y': 3}
+    .. runblock:: pycon
 
-    >>> SistemDvehEnacb(racionalne_resitve=True).sestavi()
-    {'enacba1': Eq(3*x - 5*y, -43/4), 'enacba2': Eq(3*x - 3*y, -27/4), 'x': -1/4, 'y': 2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> SistemDvehEnacb().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> SistemDvehEnacb(racionalne_resitve=True).primer()
+
     """
     besedilo_posamezne = r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$ in ${{latex(naloga.enacba2)}}$.'''
     besedilo_vecih = r'''Reši sistem enačb:
@@ -570,11 +640,21 @@ class SistemTrehEnacb(Naloga):
     :param manjsi_koeficienti: koeficienti (in rešitve) so med -2 in 2, drugače pa med -5 in 5
 
 
-    >>> SistemTrehEnacb().sestavi()
-    {'enacba1': Eq(2*x + y - z, -1), 'enacba2': Eq(-x - y + z, 2), 'enacba3': Eq(2*x + 2*y + 2*z, 0), 'x': 1, 'y': -2, 'z': 1}
+    .. runblock:: pycon
 
-    >>> SistemTrehEnacb(manjsi_koeficienti=False).sestavi()
-    {'enacba1': Eq(3*x + 4*y + 5*z, 47), 'enacba2': Eq(2*x + 3*y - z, 20), 'enacba3': Eq(4*x - 3*y + 4*z, 13), 'x': 4, 'y': 5, 'z': 3}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> SistemTrehEnacb().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from linearna_funkcija import *
+        >>> SistemTrehEnacb(manjsi_koeficienti=False).primer()
+
     """
     besedilo_posamezne = r'''Reši sistem enačb ${{latex(naloga.enacba1)}}$, ${{latex(naloga.enacba2)}}$ in ${{latex(naloga.enacba3)}}$.'''
     besedilo_vecih = r'''Reši sistem enačb:

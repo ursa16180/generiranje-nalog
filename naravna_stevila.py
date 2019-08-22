@@ -12,11 +12,21 @@ class DeliteljVeckratnik(Naloga):
     :param najvecje_prastevilo: največje možno praštevilo v praštevilskem razcepu
 
 
-    >>> DeliteljVeckratnik().sestavi()
-    {'stevilo1': 192, 'stevilo2': 100, 'najvecji_delitelj': 4, 'najmanjsi_veckratnik': 4800}
+    .. runblock:: pycon
 
-    >>> DeliteljVeckratnik(do=100, najvecje_prastevilo=11).sestavi()
-    {'stevilo1': 56, 'stevilo2': 75, 'najvecji_delitelj': 1, 'najmanjsi_veckratnik': 4200}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from naravna_stevila import *
+        >>> DeliteljVeckratnik().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from naravna_stevila import *
+        >>> DeliteljVeckratnik(do=100, najvecje_prastevilo=11).primer()
+
     """
     besedilo_posamezne = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$.'''
     besedilo_vecih = r'''Določi največji skupni delitelj in najmanjši skupni večkratnik števil:
@@ -143,11 +153,21 @@ class EvklidovAlgoritem(Naloga):
     Naloga za izračun največjega skupnega delitelja dveh števil z Evklidovim algoritmom.
 
 
-    >>> EvklidovAlgoritem().sestavi()
-    {'stevilo1': 142, 'stevilo2': 519, 'najvecji_delitelj': 1}
+    .. runblock:: pycon
 
-    >>> EvklidovAlgoritem().sestavi()
-    {'stevilo1': 90, 'stevilo2': 336, 'najvecji_delitelj': 6}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from naravna_stevila import *
+        >>> EvklidovAlgoritem().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from naravna_stevila import *
+        >>> EvklidovAlgoritem().primer()
+
     """
     besedilo_posamezne = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil ${{naloga.stevilo1}}$ in ${{naloga.stevilo2}}$. '''
     besedilo_vecih = r'''Z Evklidovim algoritmom poišči največji skupni delitelj števil:

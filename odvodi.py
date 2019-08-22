@@ -181,11 +181,21 @@ class KotMedPremicama(Naloga):
     :param abscina_os: izračunaj kot med abscisno osjo in premico drugače pa med dvema premicama
 
 
-    >>> KotMedPremicama().sestavi()
-    {'premica1': -6*x - 4, 'premica2': 'abscisna os', 'stopinje': 80, 'minute': 32}
+    .. runblock:: pycon
 
-    >>> KotMedPremicama(abscisna_os=False).sestavi()
-    {'premica1': 2 - 5*x, 'premica2': '$y = 4 x + 3$', 'stopinje': 25, 'minute': 21}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> KotMedPremicama().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> KotMedPremicama(abscisna_os=False).primer()
+
     """
     besedilo_posamezne = r'''Izračunaj kot, ki ga oklepata $y={{latex(naloga.premica1)}}$ in {{naloga.premica2}}.'''
     # TODO kako različna navodila za lažjo in težjo? Je potrebno ali pustim tako kot je?
@@ -237,11 +247,21 @@ class OdvodElementarne(Naloga):  # TODO preimenuj v odvod kompozituma
     :param kompozitum: kompozitum elemntarne funkcije in polinoma, drugače kompozitum dveh elementarnih funkcij
 
 
-    >>> OdvodElementarne().sestavi()
-    {'funkcija': 2**x, 'odvod': 2**x*log(2)}
+    .. runblock:: pycon
 
-    >>> OdvodElementarne(kompozitum=True).sestavi()
-    {'funkcija': sin(exp(x)), 'odvod': exp(x)*cos(exp(x))}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> OdvodElementarne().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> OdvodElementarne(kompozitum=True).primer()
+
     """
     besedilo_posamezne = r'''Določi odvod funkcije $f(x)={{latex(naloga.funkcija)}}$.'''
     besedilo_vecih = r'''Določi odvod funkcije $f$:
@@ -314,11 +334,21 @@ class OdvodSestavljene(Naloga):
     :param funkcije: seznam izbora elementarnih funkcij
 
 
-    >>> OdvodSestavljene().sestavi()
-    {'funkcija': -log(x) + 2**(-x), 'odvod': -1/x - 2**(-x)*log(2)}
+    .. runblock:: pycon
 
-    >>> OdvodSestavljene(funkcije=[Funkcija.KOTNA, Funkcija.LOGARITEM]).sestavi()
-    {'funkcija': log(-x)/tan(x), 'odvod': (-tan(x)**2 - 1)*log(-x)/tan(x)**2 + 1/(x*tan(x))}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> OdvodSestavljene().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> OdvodSestavljene(funkcije=[Funkcija.KOTNA, Funkcija.LOGARITEM]).primer()
+
     """
     besedilo_posamezne = r'''Določi odvod funkcije $f(x)={{latex(naloga.funkcija)}}$.'''
     besedilo_vecih = r'''Določi odvod funkcije $f$:
@@ -397,11 +427,21 @@ class Tangenta(Naloga):
     :param funkcije: seznam izbora elementarnih funkcij
 
 
-    >>> Tangenta().sestavi()
-    {'funkcija': (x**2 + x + 1/2)/(x + 1), 'abscisa': 0, 'tangenta': x/2 + 1/2}
+    .. runblock:: pycon
 
-    >>> Tangenta(funkcije=[Funkcija.KOTNA, Funkcija.LOGARITEM]).sestavi()
-    {'funkcija': log(x), 'abscisa': exp(-1), 'tangenta': E*x - 2}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> Tangenta().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> Tangenta(funkcije=[Funkcija.KOTNA, Funkcija.LOGARITEM]).primer()
+
     """
     besedilo_posamezne = r'''Zapiši enačbo tangente na graf funkcije $f(x)={{latex(naloga.funkcija)}}$ v točki z absciso $x_0={{latex(naloga.abscisa)}}$.'''
 
@@ -481,11 +521,21 @@ class KotMedGrafoma(Naloga):
     Naloga za izračun kota med grafoma dveh funkcij (kvadratnih, logaritmov ali eksponentnih).
 
 
-    >>> KotMedGrafoma().sestavi()
-    {'funkcija1': x**2 - 4, 'funkcija2': x**2 + 4*x + 4, 'stopinje': 75, 'minute': 58}
+    .. runblock:: pycon
 
-    >>> KotMedGrafoma().sestavi()
-    {'funkcija1': log(x + 3), 'funkcija2': log(-x - 2), 'stopinje': 53, 'minute': 8}
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> KotMedGrafoma().primer()
+
+
+    .. runblock:: pycon
+
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from odvodi import *
+        >>> KotMedGrafoma().primer()
+
     """
     besedilo_posamezne = r'''Na minuto natančno izračunaj kot med grafoma funkcij $f(x)={{latex(naloga.funkcija1)}}$ in $g(x)={{latex(naloga.funkcija2)}}$.'''
     besedilo_vecih = r'''Na minuto natančno izračunaj kot med grafoma funkcij $f$ in $g$
