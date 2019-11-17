@@ -177,7 +177,7 @@ class Naloga:
             modul=self.__class__.__module__,
             razred=self.__class__.__name__,
             argumenti=', '.join(('{}={}'.format(k, v) for k, v in vars(self).items() if k != 'st_nalog'))))
-        izpisi("SLOVAR S PODATKI PRVEGA PRIMERA:")
+        izpisi("SLOVAR S PODATKI VSEH PRIMEROV:")
         izpisi(pprint.pformat(slovar, width=120), zamik=' ')
         izpisi("\nBESEDILO NALOGE S PRVIM PRIMEROM:")
         izpisi(besedilo_solo, zamik=' ')
