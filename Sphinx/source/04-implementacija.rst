@@ -36,26 +36,22 @@ ter 5 metod
 #. ``primer``.
 
 
-Atributi
-#########
-
 Besedila nalog in rešitev
-**************************
+#############################
 Razred naloga ima podana zelo splošna besedila, v katere se na mesto spremenljivke vstavi kar celoten slovar,
 ki ga vrne metoda ``_poskusi_sestaviti``. Veliko bolj jasno je, če za posamezno nalogo napišemo podrobnejša besedila,
 ki primerno razbijejo slovar. Atributi posamezne naloge prepišejo vrednosti teh zelo splošnih atributov.
 
 
 Število nalog
-**************
+#############################
 Atribut ``st_nalog`` določa število posameznih primerov naloge. Njegova privzeta vrednost je ``None`` in pomeni 1 primer.
 Če želimo več primerov posamezne naloge, mora biti podano naravno število.
 
-Metode
-#######
+.. _ref_poskusi_sestaviti:
 
 Metoda ``_poskusi_sestaviti``
-*******************************
+###############################
 Vsaka posamezna naloga mora imeti metodo ``_poskusi_sestaviti``, drugače naloga nima nobene vsebine. V primeru, da
 posamezna naloga nima definirane metode, kliče metodo nadrazreda, ki opozori, da metoda še ni bila implementirana in
 da jo še potrebno napisati.
@@ -64,7 +60,7 @@ da jo še potrebno napisati.
     :pyobject: Naloga._poskusi_sestaviti
 
 Metoda ``sestavi``
-*******************************
+#############################
 Metoda ``sestavi`` vrne slovar z vrednostmi posamezne naloge, ki ustrezajo želenim pogojem. To doseže tako, da kliče metodo
 ``_poskusi_sestaviti``, dokler ne dobi slovarja z želenimi vrednostmi.
 
@@ -72,7 +68,7 @@ Metoda ``sestavi`` vrne slovar z vrednostmi posamezne naloge, ki ustrezajo žele
     :pyobject: Naloga.sestavi
 
 Metoda ``sestavi_vec``
-*******************************
+#############################
 Metoda ``sestavi_vec`` vrne seznam slovarjev, ki vsebujejo ustrezne vrednosti posameznih primerov naloge. Posamezne
 elemente seznama pa dobi tako, da kliče metodo ``sestavi``.
 
@@ -81,7 +77,7 @@ elemente seznama pa dobi tako, da kliče metodo ``sestavi``.
 
 
 Metoda ``besedilo``
-*******************************
+#############################
 Metoda ``besedilo`` spremeni surove nize besedil nalog in rešitev v  ``Jinja2`` predloge (``Jinja2.Template``) in vanje vstavi
 konkretne vrednosti naloge, ki jih dobi s klicem metode ``sestavi`` ali ``sestavi_vec``.
 Prva se kliče, če želimo nalogo samo z enim primerom, druga pa če želimo nalogo z več primeri.
@@ -91,7 +87,7 @@ Metoda vrne slovar, ki vsebuje nalogo in rešitev. Slednji sta se spremenili v k
     :pyobject: Naloga.besedilo
 
 Metoda ``primer``
-*******************************
+#############################
 Metoda ``primer`` prikaže, kako bi izgledal slovar z vrednostmi naloge in besedilo naloge z vstavljenimi vrednostmi,
 da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže seznam s tremi primeri ter besedilo za nalogo z enim
 (prvim) primerom in besedilo naloge z več primeri.
@@ -107,11 +103,33 @@ da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže seznam s tremi p
 .. literalinclude:: ../../generiranje.py
     :pyobject: Naloga.primer
 
+************************
+Razred NapacnaNaloga
+************************
+Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`). Razred izjem pomaga pri opozarjanju na napake.
+Več si lahko o njem preberete na spletu.
+.. todo link https://docs.python.org/3/library/exceptions.html
+
+Izjema `NapacnaNaloga` se sproži kadar sestavljene vrednosti niso ustrezne.
+
+
+.. literalinclude:: ../../generiranje.py
+    :pyobject: NapacnaNaloga
+
+************************
+Funkcija preveri
+************************
+Funkcija `preveri` sproži izjemo `NapacnaNaloga`, kadar vrednosti niso ustrezne. S funkcijo preveri zagotavljamo, da so
+rešitve smiselne in ustrezajo vsem želenim parametrom. Včasih pa funkcija pomaga zagotoviti lepše rešitve.
+
+.. literalinclude:: ../../generiranje.py
+    :pyobject: preveri
+
 *****************************************
-Uporaba programa za izpis testov
+Implementacija programa za izpis testov
 *****************************************
 Za sestavo testov moramo iz datoteke ``generiranje.py`` klicati funkcijo ``sestavi_vse_teste``, ki ustvari vse teste
-in rešitve.
+in rešitve s klici drugih pomožnih funkcij.
 
 .. code-block:: python
 
@@ -133,46 +151,7 @@ in rešitve.
     Izpisujem rešitve: B
     Test 3. kontrolna naloga - Zaporedja je sestavljen.
 
-Funkcija ``sestavi_vse_teste``
-################################
 
-Funkcija sprejme 8 argumentov:
-
-* ``naloge``
-* ``ime_testa``
-* ``datoteka_seznam_ucencev``
-* ``zdruzene_resitve``
-* ``pdf``
-* ``pot_vzorca_testa``
-* ``pot_vzorca_resitev``
-* ``tocke``
-
-Najprej ustvari mapo z imenom testa in 2 podmapi za naloge in rešitve. Če ime ni določeno, uporabi trenutni datum.
-V primeru, da mapa z imenom testa že obstaja, nas program vpraša, če jo želimo prepisati. Če izberemo "da", izbriše staro
-mapo in ustvari novo, drugače pa samo ustvari novo mapo z enakim imenom, ki mu doda trenutno uro.
-Nato za vsakega učenca s seznama, ki nastane iz leksikografsko urejene datoteke ``datoteka_seznam_ucencev``,
-ustvari seznam nalog in rešitev. Slednje dobi tako, da za naloge s seznama ``naloge`` kliče metodo ``besedilo``.
-Če seznam učencev ni podan, ustvari samo en test s podnaslovom `Matematika`.
-
-.. todo a hočemo tukaj pojasniti semena?
-
-Argument ``naloge`` je seznam nalog, ki jih želimo imeti v testu. Če je seznam prazen ali vsebuje neobstoječe naloge,
-nas program na to opozori. Program drugače pokliče funkcijo ``napisi_test``, ki ustvari posamezen test.
-
-Kako oblikovane teste želimo, pa določimo
-z izbiro vzorca test, tako da podamo niz poti do predloge ``pot_vzorca_testa``. Na enak način izberemo tudi obliko rešitev,
-tako da kot niz napišemo pot do predloge ``pot_vzorca_resitev``.
-
-Kadar želimo za vsakega učenca samostojne rešitve kliče še funkcijo ``napisi_posamezno_resitev``, ki sestavi posamezne
-rešitve. V primeru, da želimo eno datoteko z združenimi rešitvami za vse učence, pa najprej naredi seznam vseh učencev
-in pripadajočih rešitev, nato pa kliče funkcijo ``napisi_skupno_resitev``.
-
-Argument ``pdf`` je ``Bool`` vrednost, ki določa, če želimo že avtomatično ustvariti teste in rešitve tudi v `PDF`
-obliki. Če argument nastavimo na ``False``, bo program ustvaril samo `LaTeX` datoteke, če pa pustimo vrednost
-nastavljeno na `True`, bo ustvaril tudi `PDF` dokumente. Argument ``tocke`` je seznam možnih točk pri posamezni nalogi.
-
-.. literalinclude:: ../../generiranje.py
-    :pyobject: sestavi_vse_teste
 
 Funkcija ``napisi_test``
 ################################
@@ -230,24 +209,29 @@ poskusi v isti mapi ustvariti še `PDF` datoteko rešitev (`Resitve.pdf`)
 .. literalinclude:: ../../generiranje.py
     :pyobject: napisi_skupno_resitev
 
-************************
-Razred NapacnaNaloga
-************************
-Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`). Razred izjem pomaga pri opozarjanju na napake.
-Več si lahko o njem preberete na spletu.
-.. todo link https://docs.python.org/3/library/exceptions.html
+Funkcija ``sestavi_vse_teste``
+################################
+Kaj funkcija naredi in kako vplivajo vrednosti parametrov, smo že predstavili (glej :ref:`ref_sestavi_vse_teste`).
 
-Izjema `NapacnaNaloga` se sproži kadar sestavljene vrednosti niso ustrezne.
+Funkcija sprejme 8 argumentov:
+
+* ``naloge``
+* ``ime_testa``
+* ``datoteka_seznam_ucencev``
+* ``zdruzene_resitve``
+* ``pdf``
+* ``pot_vzorca_testa``
+* ``pot_vzorca_resitev``
+* ``tocke``
+
+Najprej preveri, če so vrednosti parametrov smiselne in nastavi privzete vrednosti, kadar niso določene.
+Če so vrednosti parametrov veljavne, funkcija pokliče funkcijo ``napisi_test``, ki ustvari posamezen test, sicer javi napako.
+
+Kadar želimo za vsakega učenca samostojne rešitve kliče še funkcijo ``napisi_posamezno_resitev``, ki sestavi posamezne
+rešitve. V primeru, da želimo eno datoteko z združenimi rešitvami za vse učence, pa najprej naredi seznam vseh učencev
+in pripadajočih rešitev, nato pa kliče funkcijo ``napisi_skupno_resitev``.
 
 
 .. literalinclude:: ../../generiranje.py
-    :pyobject: NapacnaNaloga
+    :pyobject: sestavi_vse_teste
 
-************************
-Funkcija preveri
-************************
-Funkcija `preveri` sproži izjemo `NapacnaNaloga`, kadar vrednosti niso ustrezne. S funkcijo preveri zagotavljamo, da so
-rešitve smiselne in ustrezajo vsem želenim parametrom. Včasih pa funkcija pomaga zagotoviti lepše rešitve.
-
-.. literalinclude:: ../../generiranje.py
-    :pyobject: preveri

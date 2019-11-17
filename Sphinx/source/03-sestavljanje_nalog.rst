@@ -2,7 +2,7 @@ Sestavljanje nalog
 ======================================================
 
 Vsaka naloga v knjižnici je svoj razred, vse pa dedujejo lastnosti iz razreda ``Naloga``, ki je podrobneje predstavljen
-v poglavju :ref:`ref-implementacija`.
+v poglavju :numref:`ref-implementacija`.
 
 
 Če želimo sestaviti novo nalogo, jo lahko dodamo v katero od obstoječih poglavij ali pa ustvarimo popolnoma novo datoteko.
@@ -34,12 +34,12 @@ Potrebno je sestaviti 4 nize:
 Posamezen niz se bo kasneje pretvoril v ``Jinja2.Template`` in nato v `LaTeX` dokument. Zato je verjetno najlažje,
 da so nizi surovi (ang. raw string),
 saj se tako izognemo težavam pri zapisu posameznih posebnih `Python` simbolov, kot je recimo poševnica nazaj.
+Kljub temu, se moramo zavedati, da je možno da `LaTeX` zapis ne bo vedno idealen, saj se deloma avtomatično generira.
 
 .. TODO Kaj je raw niz
 
 Niz ``besedilo_posamezne`` je navodilo za reševanje naloge, ki ustreza vsem primerom sestavljene naloge. Namesto
-konkretnih primerov pa napišemo ``Jinja2`` spremenljivke. ``Jinja2`` za označevanje spremenljivk uporablja
-dvojne zavite oklepaje in znotraj ime spremenljivke. Spremenljivke, ki bodo v `LaTeX`-u zapisane v matematičnem načinu
+konkretnih primerov pa napišemo ``Jinja2`` spremenljivke. Spremenljivke, ki bodo v `LaTeX`-u zapisane v matematičnem načinu
 moramo obdati z znakom `$`.
 Na mesto spremenljivke se bo kasneje dodala vrednost, ki jo bo sestavila metoda ``_poskusi_sestaviti``.
 Na enak način zapišemo tudi preostale nize. Niz ``resitev_posamezne`` je niz za izpis rešitev naloge z enim primerom.
@@ -58,29 +58,18 @@ Za lažjo uporabo sem ``sympy`` funkciji  ``latex``  in ``expand`` dodala med fu
    :lines: 17, 25
 
 
-
 Niza ``besedilo_vecih`` in ``resitev_vecih`` sta za izpis besedila oziroma rešitev naloge z več primeri.
 Običajno je navodilo samo eno, nato pa sledi (oštevilčeni) seznam primerov. Testi se izpisujejo v obliki ``LaTeX`` dokumentov,
 zato je najpogosteje smiselno, da v nizu pripravimo izpis ``LaTeX`` seznama. To naredimo tako, da uporabimo okolje
 ``itemize`` za neoštevilčeni seznam ali okolje ``enumerate`` za oštevilčeni seznam. Pred posamezno točko seznama kličemo
-element `\item`.
-..TODO vir za latex sezname
+element `\item`. Več o `LaTeX` seznamih lahko izveste na različnih `spletu<https://www.overleaf.com/learn/latex/Lists>`_.
 Program nam več primerov izpiše z pomočjo `for` zanke. Primer `Jinja` zanke spremenljivke:
 
-.. code-block:: python
-
-	{% for element in seznam %}
-    {{element.spremenljivka}}
-    {% endfor %}
-
-.. todo vir za jinja zanko.
 .. todo preveri vrstice
 
 .. literalinclude:: ../../eksponentna_funkcija.py
    :pyobject: Enacba
    :lines: 24-26, 32-34
-
-
 
 .. _ref-poskusi-sestaviti:
 

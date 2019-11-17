@@ -3,74 +3,24 @@
 Uporaba
 ============
 
-Program za generiranje nalog je sestavljen iz knjižnice nalog iz različnih področij srednješolske matematike in programa
-za sestavljanje testov. Ko zaženemo program z želenimi parametri nam ustvari teste in rešitve v `LaTeX` datotekah ter po
-želji tudi v `PDF` datotekah.
-Kadar uporabimo že sestavljene naloge, program ne zahteva veliko razumevanja programiranja. Kogar zanima si lahko
-osnove programiranja v jeziku `Python` ogleda na spletu.
-
-..todo link za python učbenik ali vir
-
-********
-Naloge
-********
-Knjižnica nalog vsebuje naloge iz različnih področij srednješolske matematike. Naloge so različno zahtevne. Nekatere so
-lahko primerne za spoznavanje konceptov, utrjevanje, priprave na maturo ali celo kontrolne naloge. Knjižnica ima 59 nalog
-z različnih področij:
-
-#. `naravna_stevila` - izračun največjega skupnega delitelja in najmanjšega skupnega večkratnika dveh števil
-#. `izrazi` - računanje z algebrajskimi izrazi
-#. `mnozice` -  zapis elementov množic in različne operacije z množicami
-#. `linearna_funkcija` - graf in lastnosti linearne funkcije ter enačbe premic v ravnini
-#. `kvadratna_funkcija` - različne oblike zapisov funkcije, računanje ničel in risanje grafov
-#. `kompleksna_stevila` - računske operacije s kompleksnimi števili
-#. `eksponentna_funkcija` - reševanje eksponentnih enačb in graf eksponentne funkcije
-#. `polinomska_racionalna_funkcija` - računanje ničel, polov, risanje grafov racionalne in polinomske funkcije
-#. `stoznice` -  enačbe krožnice in elipse v premaknjeni legi
-#. `odvodi` - odvodi elementarnih in sestavljenih funkcij in razumevanje tangente na krivuljo
-#. `zaporedja` - določanje splošnega člena poljubnega zaporedja, računanje prvih členov in vsote aritmetičnega ali geometrijskega zaporedja
-
-Ideje za naloge sem črpala iz lastnih pedagoških izkušenj in različnih srednješolskih učbenikov.
-:cite:`brilej2004omega1`
-:cite:`brilej2005omega2a`
-:cite:`brilej2005omega2b`
-:cite:`brilej2006omega3`
-:cite:`brilej2005omega4`
-:cite:`arnus2009matematika1`
-:cite:`arnus2010matematika2`
-:cite:`bon2011matematika3`
-:cite:`bon2012matematika4`
-:cite:`alt2006matematika`
-:cite:`benko2014matematika`
-:cite:`kavka2014matematika`
-
+.. _ ref_sestavi_vse_teste:
 
 **************
 Izpis testov
 **************
-Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz datoteke ``generiranje.py``. Funkcija sprejme
-osem parametrov:
-
-#. seznam nalog
-#. ime testa
-#. datoteko, ki vsebuje seznam učencev
-#. izbiro združenih ali ločenih rešitev
-#. izbiro za avtomatično generiranje PDF datotek
-#. kateri vzorec za test želimo uporabiti
-#. kateri vzorec za rešitve želimo uporabiti
-#. seznam možnih točk pri posamezni nalogi
-
-in ustvari teste ter rešitve kot `LaTeX` dokumente. Če želimo lahko avtomatično ustvari dokumente tudi v `PDF` formatu.
-`LaTeX` dokument je na voljo zato, da vedno lahko kaj naknadno spremenimo ali popravimo.
-
 Knjižnici je dodana mapa `Primeri testov`, kjer imamo pripravljene 3 primere rabe knjižnice. Ogledali si bomo primer,
 kako pripraviti vaje za utrjevanje znanja kompleksnih števil. Najprej ustvarimo novo `Python` datoteko (ime_datoteke.py).
 Vedno moramo uvoziti modul `generiranje` in module, ki vsebujejo želene naloge. V našem primeru sta to modula
 `kompleksna_stevila` in `kvadratna_funkcija`.
 
-Če želimo sestaviti teste, moramo poklicati funkcijo `sestavi_vse_teste` z želenimi parametri. Recimo, da želimo za vsakega
-učenca s seznama v datoteki `ucenci.txt` ustvariti test z naslovom `Vaje kompleksna števila`, ki vsebuje 6 različnih nalog iz računanja s
-kompleksnimi števili in risanjem v kompleksno ravnino. Spodaj si lahko ogledamo, kako bi izgledala naša datoteka.
+Za izpis testov je potrebno poklicati funkcijo ``sestavi_vse_teste`` iz datoteke ``generiranje.py`` z želenimi parametri.
+Sprejme osem parametrov, ki so natančneje opisani kasneje. Uspešno zagnana funkcija ustvari teste ter rešitve kot `LaTeX`
+dokumente. Če želimo lahko avtomatično ustvari dokumente tudi v `PDF` formatu.
+`LaTeX` dokument je na voljo zato, da vedno lahko kaj naknadno spremenimo ali popravimo.
+
+Recimo, da želimo za vsakega učenca s seznama v datoteki `ucenci.txt` ustvariti test z naslovom `Vaje kompleksna števila`,
+ki vsebuje 6 različnih nalog iz računanja s kompleksnimi števili in risanjem v kompleksno ravnino.
+Spodaj si lahko ogledamo, kako bi izgledala naša datoteka.
 
 .. code-block:: python
 
@@ -171,13 +121,16 @@ Kadar mapa z enakim imenom že obstaja, nas program vpraša, če jo želimo prep
 
 
 V mapi `Primeri testov` si lahko ogledamo primere za kontrolno nalogo, popravni izpit ali utrjevanje. V posamezni mapi
-sta poleg `Python` datoteke tudi želena vzorca in seznam učencev, čeprav to ni nujno potrebno, saj lahko pri imenu napišemo kar celo pot do datoteke.
+sta poleg `Python` datoteke tudi želena vzorca in seznam učencev, čeprav to ni nujno potrebno, saj lahko za vrednosti
+parametrov ``datoteka_seznam_ucencev``, ``pot_vzorca_testa`` in ``pot_vzorca_resitev``  napišemo kar celo poti do želenih datotek.
+
 
 Seznam nalog
 #############
 
 Parameter ``naloge`` je seznam nalog iz knjižnice, ki jih želimo na posameznem testu. Na seznamu lahko podamo poljubno
-število nalog, ne sme pa biti prazen.
+število nalog, ne sme pa biti prazen. Če je seznam prazen ali vsebuje neobstoječe naloge,
+nas program na to opozori.
 
 .. code-block:: python
 
@@ -204,7 +157,7 @@ Primera:
 Ime testa
 ############
 Parameter ``ime_testa`` je niz želenega imena testa. Izbrano ime je lahko poljubno in lahko vsebuje tudi presledke,
-šumnike in druge znake. Pozorni moramo biti na posebne `LaTeX` in `Jinja2` znake, kot so recimo podčrtaj `_`, znak za
+šumnike in druge znake. Pozorni moramo biti le, da ne uporabljamo posebnih `LaTeX` in `Jinja2` znakov, kot so recimo podčrtaj `_`, znak za
 dolar `$` ali zavita oklepaja `{}`. Ime testa se izpiše na vrhu posameznega testa in rešitev. Enako ime ima tudi na novo ustvarjena
 mapa, ki vsebuje teste in rešitve. Če imena testa ne podamo, se namesto njega izpiše današnji datum.
 
@@ -212,7 +165,8 @@ Primer:
 
 ``ime_testa='Vaje kompleksna števila'``
 
-.. TODO ali želim tudi tukaj ponoviti kaj se zgodi če ime že obstaja
+
+.. _ref-semena:
 
 Seznam učencev
 ################
@@ -236,10 +190,7 @@ Podatek v posamezni vrstici predstavlja podnaslov našega testa in ime datoteke 
 
 Če datoteka s seznamom ni podana, bo program ustvaril samo 1 test s privzetim podnaslovom `Matematika`.
 
-.. _ref-semena:
 
-Semena
-********
 Vrednosti v posameznih nalogah so psevdo-naključno generirane. Za seme posameznega testa je uporabljen podnaslov testa,
 ki ga običajno predstavlja ime učenca ali skupine. To nam zagotavlja, da bomo za posameznega učenca oziroma skupino
 vedno dobili nalogo z enakimi podatki, ne glede na to, kolikokrat zaženemo program.
@@ -382,7 +333,8 @@ opozori.
 
 Včasih lahko zahtevnost naloge določimo šele, ko vidimo dejanske vrednosti v nalogi in ne prej. V tem primeru najprej
 zaženemo program brez podanega seznama točk in šele ko vemo koliko bodo posamezne naloge vredne, ponovno zaženemo
-program s podanim parametrom `tocke`. Semena (glej :ref:`ref-semena`.) nam zagotavljajo, da bomo v obeh primerih dobili enake vrednosti.
+program s podanim parametrom `tocke`. Semena (opisana v :ref:`ref-semena`.) nam zagotavljajo, da bomo v obeh primerih dobili enake vrednosti.
+
 
 ***********************
 Spreminjanje parametrov
@@ -395,10 +347,10 @@ Parametri za besedilo nalog in rešitev
 ########################################
 Vsaka naloga ima 4 parametre, ki so predloge za:
 
-* besedilo naloge z enim primerom ``besedilo_posamezne``
-* besedilo naloge z več primeri ``besedilo_vecih``
-* besedilo rešitve naloge z enim primerom ``resitev_posamezne``
-* besedilo rešitve naloge z več primeri ``resitev_vecih``
+* besedilo naloge z enim primerom - ``besedilo_posamezne``
+* besedilo naloge z več primeri - ``besedilo_vecih``
+* besedilo rešitve naloge z enim primerom - ``resitev_posamezne``
+* besedilo rešitve naloge z več primeri - ``resitev_vecih``
 
 Za vsako nalogo želimo imeti prilagojeno besedilo, ki pravzaprav najpogosteje predstavlja navodilo za reševanje.
 Pri vsaki nalogi tako lahko prilagodimo navodila. Na enak način lahko prilagodimo tudi izpis rešitev.
@@ -413,9 +365,9 @@ V predlogo se na mesta spremenljivk označenih z dvojnimi zaviti oklepaji kasnej
    :pyobject: DeliteljVeckratnik
    :lines: 16
 
-Metoda ``_poskusi_sestaviti`` vrne slovar vrednosti, ki se vstavijo na manjkajoča mesta v predlogo.
-Ključi v slovarju, se morajo ujemati z imeni spremenljivk v predlogi. O posameznih primerih metode si lahko preberete v
-razdelku :ref:`ref-poskusi-sestaviti`.
+Metoda ``_poskusi_sestaviti``, ki si jo bomo kasneje ogledali v :ref:`ref_poskusi_sestaviti`, vrne slovar vrednosti,
+ki se vstavijo na manjkajoča mesta v predlogo. Ključi v slovarju, se morajo ujemati z imeni spremenljivk v predlogi.
+Če spreminjamo predlogo, moramo paziti, da obdržimo enaka imena spremenljivk, saj so vezana na ključe slovarja.
 
 
 
@@ -627,4 +579,93 @@ Na ta način lahko dobimo raznolike primere posameznega tipa naloge.
     >>> sys.path.append('../')
     >>> import izrazi
     >>> izrazi.PotencirajVecclenik(max_clenov=2,max_potenca=5).primer()
+
+**********************************************
+Sestavljanje predlog za teste in rešitve
+**********************************************
+
+Predloge za teste in rešitve lahko sestavimo tudi sami. Za to potrebujemo osnovno znanje `LaTeX`-a
+in razumevanje, kako se vrednosti vstavijo v predloge.
+Predloge so `LaTeX` datoteke, ki imajo namesto konkretnih vrednosti napisane spremenljive. Na mesta
+slednjih se s pomočjo paketa ``Jinja2`` vstavijo želene vrednosti.
+``Jinja2`` za označevanje spremenljivk uporablja
+dvojne zavite oklepaje in znotraj ime spremenljivke.
+
+
+Na mesto spremenljivke lahko `Python` program vstavi konkretne vrednosti. Podan mora
+biti slovar, ki ima za ključ točno ime spremenljivke, za vrednost pa vrednost te spremenljivke.
+Zato je pomembno, da v predlogo točno zapišemo imena spremenljivk.
+
+Primer:
+
+.. code-block:: latex
+
+    Lepo pozdravljeni {{ime_priimek}}!
+
+.. code-block:: python
+
+    {'ime_priimek' : 'Marjan Novak'}
+
+.. code-block:: latex
+
+    Lepo pozdravljeni Marjan Novak!
+
+V primeru, da bo spremenljivka v `LaTeX`-u obdana z okoljem, ki ga določamo z zavitimi oklepaji, moramo biti pozorni, da
+naredimo presledek med oklepaji okolja in oklepajema spremenljivke.
+
+.. literalinclude:: ../../vzorci/vzorec_testa1.tex
+   :lines: 14-15
+
+`Jinja` pozna tudi `if` stavek in `for` zanko, ki nam pogosto prideta prav in ju lahko tudi kombiniramo.
+
+.. code-block:: latex
+
+    {% for element in seznam %}
+        {{element.spremenljivka}}
+    {% endfor %}
+
+.. code-block:: latex
+
+    {% if pogoj %}
+        To se izpiše, če je pogoj izpolnjen.
+    {% else %}
+        To se izpiše, če pogoj ni izpolnjen.
+    {% endif%}
+
+V naslednjem primeru si lahko ogledamo primer `for` zanke, ki za vsako nalogo iz seznama nalog, doda
+nov element na `LaTeX` seznam in če seznam točk obstaja (ima dolžino), doda še vrednost točk s seznama točk
+z enakim indeksom kot ga ima `for` zanka za naloge.
+Uporabimo lahko tudi nekatere funkcije, ki jih ima `Jinja` vgrajene.
+Več o uporabi paketa `Jinja` si lahko preberte v
+`spletni dokumentaciji Jinja <https://jinja.palletsprojects.com/en/2.10.x/>`_.
+
+.. literalinclude:: ../../vzorci/vzorec_testa1.tex
+   :lines: 17-25
+
+Ko sestavljamo svojo predlogo za teste ali rešitve, moramo poznati imena spremenljivk, ki jih
+vrne funkcija `sestavi_vse_teste`. Ustvarimo `LaTeX` dokument in sestavimo želeno obliko testa.
+Namesto konkretnih vrednosti pa zapišemo `Jinja` spremenljivke.
+Ime testa je podano s spremenljivko ``ime_testa``, ime učenca ali skupine pa s spremenljivko
+``ucenec``. Seznam nalog za posameznega učenca je podan z imenom
+``naloge`` pripadajoči seznam točk pa s spremenljivko ``tocke``.
+
+.. literalinclude:: ../../vzorci/vzorec_testa1.tex
+
+Pri sestavljanju predlog za rešitve moramo ločiti kadar imamo skupne rešitve vseh učencev v eni
+datoteki ali posamezen dokument rešitev za vsakega učenca.
+
+V primeru skupnih rešitev ustvarimo eno `LaTeX` datoteko in nato naredimo `for` zanko, ki za vsakega
+učenca s seznama ``seznam`` naredi svoj del dokumenta. Spremenljivki ``ime_testa`` in ``tocke`` sta za vse učence enake.
+Posamezni elementi seznama ``seznam`` so slovarji, ki vsebujejo ime učenca ``ucenec``, seznam nalog za tega učenca
+``naloge`` in pripadajoče rešitve ``resitve``.
+
+.. literalinclude:: ../../vzorci/vzorec_skupnih_resitev1.tex
+
+Kadar sestavljamo posamezne rešitve, ustvarimo `LaTeX` dokument v katerega lahko zapišemo ime testa ``ime_testa`` in
+ime učenca ``ucenec``. Seznam nalog je podan s spremenljivko ``naloge``, seznam rešitev s spremenljivko ``resitve`` in
+seznam točk s spremenljivko ``tocke``. Da jih lahko zapišemo posamezno, uporabimo `for` zanko.
+Ujemanje indeksov nalog, rešitev in točk najlažje dosežemo tako, da naredimo zanko po enem od
+seznamov in za ostale kličemo samo element z istim indeksom s pomočjo števca ``loop.index0``.
+
+.. literalinclude:: ../../vzorci/vzorec_posameznih_resitev2.tex
 

@@ -26,6 +26,7 @@ PygmentsBridge.latex_formatter = CustomLatexFormatter
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
+numfig = True
 
 
 # -- Project information -----------------------------------------------------
@@ -65,6 +66,7 @@ autorun_languages = {
     'pycon_output_encoding': 'utf-8',
     'pycon_show_source': False,
 }
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
