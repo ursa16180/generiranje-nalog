@@ -121,9 +121,7 @@ Funkcije lahko generirajo tudi drugačne želene objekte.
 .. literalinclude:: ../../mnozice.py
    :pyobject: izberi_mnozico
 
-Naključno izbrani operatoji
-****************************
-Včasih lahko raznolikost nalog dosežemo tudi tako, da namesto samo naključno generiranih vrednosti, tudi operacije med
+Včasih lahko raznolikost nalog dosežemo tudi tako, da namesto samo naključno generiranih vrednosti, tudi operatorje med
 vrednostmi izberemo naključno.
 
 .. literalinclude:: ../../odvodi.py
