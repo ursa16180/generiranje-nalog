@@ -74,7 +74,10 @@ exclude_patterns = []
 
 # Latex nastavitve
 latex_elements = {'figure_align': 'H', }
+
 latex_toplevel_sectioning = 'section'
+numfig_format = {}
+numfig_format = {'section': '%s', 'figure': 'Slika %s', 'table': 'Tabela %s', 'code-block': 'Koda %s'}
 
 
 
