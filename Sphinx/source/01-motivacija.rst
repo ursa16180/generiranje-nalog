@@ -54,6 +54,4 @@ in rešitev za vsakega učenca s podanega seznama. Vsako preverjanje vsebuje ena
 psevdo-generirane vrednosti.
 
 Kadar uporabimo že sestavljene naloge, program ne zahteva veliko razumevanja programiranja. Kogar zanima, pa si lahko
-osnove programiranja v jeziku `Python` ogleda na spletu.
-
-..todo link za python učbenik ali vir
+osnove programiranja v jeziku `Python` ogleda na `spletu<https://docs.python.org/3/tutorial/>`_.
