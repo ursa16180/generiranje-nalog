@@ -7,6 +7,7 @@ Welcome to Dokumentacija za generiranje nalog's documentation!
 ==============================================================
 
 .. toctree::
+   :numbered:
    :maxdepth: 5
 
    Motivacija <01-motivacija.rst>
