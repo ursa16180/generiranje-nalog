@@ -107,8 +107,7 @@ da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže seznam s tremi p
 Razred NapacnaNaloga
 ************************
 Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`). Razred izjem pomaga pri opozarjanju na napake.
-Več si lahko o njem preberete na spletu.
-.. todo link https://docs.python.org/3/library/exceptions.html
+Več si lahko o njem preberete na `spletu<https://docs.python.org/3/library/exceptions.html>`_.
 
 Izjema `NapacnaNaloga` se sproži kadar sestavljene vrednosti niso ustrezne.
 
@@ -211,7 +210,7 @@ poskusi v isti mapi ustvariti še `PDF` datoteko rešitev (`Resitve.pdf`)
 
 Funkcija ``sestavi_vse_teste``
 ################################
-Kaj funkcija naredi in kako vplivajo vrednosti parametrov, smo že predstavili (glej :ref:`ref_sestavi_vse_teste`).
+Kaj funkcija naredi in kako vplivajo vrednosti parametrov, smo že predstavili (glej razdelek :numref:`ref_sestavi_vse_teste`).
 
 Funkcija sprejme 8 argumentov:
 
