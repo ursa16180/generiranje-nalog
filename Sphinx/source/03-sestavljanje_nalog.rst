@@ -17,7 +17,7 @@ Sedaj smo pripravljeni, da napišemo svojo nalogo, sestavljeno iz dveh glavnih d
 #. predlog za besedilo naloge in rešitev in
 #. metode ``_poskusi_sestaviti``.
 
-V dodatku :ref:`ref-vzorcna` je za pomoč pripravljena predloga za novo nalogo.
+V dodatku :numref:`ref-vzorcna` je za pomoč pripravljena predloga za novo nalogo.
 
 
 *********************************************
@@ -36,7 +36,6 @@ da so nizi surovi (ang. raw string),
 saj se tako izognemo težavam pri zapisu posameznih posebnih `Python` simbolov, kot je recimo poševnica nazaj.
 Kljub temu, se moramo zavedati, da je možno da `LaTeX` zapis ne bo vedno idealen, saj se deloma avtomatično generira.
 
-.. TODO Kaj je raw niz
 
 Niz ``besedilo_posamezne`` je navodilo za reševanje naloge, ki ustreza vsem primerom sestavljene naloge. Namesto
 konkretnih primerov pa napišemo ``Jinja2`` spremenljivke. Spremenljivke, ki bodo v `LaTeX`-u zapisane v matematičnem načinu
@@ -81,7 +80,7 @@ vstavi na mesta spremenljivk v predlogah besedil in rešitev. Imena spremenljivk
 vrednosti slovarja pa so dejanske vrednosti naloge. Metoda ``_poskusi_sestaviti`` vedno vrne samo en primer.
 
 Če želimo nalogo z več primeri, bo za to poskrbela metoda `generiranje.besedilo`, ki za vsak primer pokliče metodo
-``_poskusi_sestaviti``. Podrobnosti, o tem si lahko preberete v :ref:`ref-implementacija`.
+``_poskusi_sestaviti``. Podrobnosti, o tem si lahko preberete v poglavju :numref:`ref-implementacija`.
 
 Naključnost
 #############
@@ -89,9 +88,9 @@ Naključnost
 Raznolikost primerov zagotovimo tako, da v sestavljanje naloge vključimo naključnost. To nam omogoča `Python` knjižnica
 ``Random``, ki generira psevdo-naključne vrednosti. Knjižnica vsebuje funkcije, ki lahko psevdo-naključno premešajo
 vrstni red, izberejo vzorec s seznam, izberejo število in še mnogo več. Če želimo, da so rezultati ponovljivi lahko
-določimo seme generatorja s funkcijo ``random.seed``. Več si lahko o knjižnici preberete v uradni dokumentaciji na spletu. :cite:`random`
+določimo seme generatorja s funkcijo ``random.seed``. Več si lahko o knjižnici preberete v uradni dokumentaciji na
+`spletu<https://docs.python.org/3/library/random.html>`_.
 
-..TODO link vs cite
 
 Sama sem najpogosteje sem uporabila funkcije:
 
@@ -191,7 +190,7 @@ Včasih je zato lažje, da funkcijo za risanje podamo kot produkt faktorjev (na 
 Zahtevnost naloge
 ###################
 S podajanjem parametrov, lahko nalogo spremenimo v lažjo ali težjo. Primeri, kako lahko s parametri spreminjamo
-zahtevnost nalog, so predstavljeni v poglavju :ref:`ref_uporaba`
+zahtevnost nalog, so predstavljeni v poglavju :numref:`ref_uporaba`
 Če želimo prilagodljivo zahtevnost mora biti tudi metoda ``_poskusi_sestaviti`` prilagojena. S funkcijo ``preveri`` lahko
 zagotovimo primerno težke rešitve.
 
@@ -203,8 +202,6 @@ Lahko pa že metodo napišemo razdeljeno za različno zahtevnost.
 .. literalinclude:: ../../eksponentna_funkcija.py
    :pyobject: Enacba2osnovi._poskusi_sestaviti
 
-
-.. TODO  zanimivi primeri ?
 
 
 
