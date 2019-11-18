@@ -3,7 +3,7 @@
 Uporaba
 ============
 
-.. _ ref_sestavi_vse_teste:
+.. _ref_sestavi_vse_teste:
 
 **************
 Izpis testov
@@ -144,7 +144,7 @@ nas program na to opozori.
 
 Knjižnica vsebuje naloge z različnih področij. Naloge iz različnih področij imajo lahko enaka imena,
 zato moramo vedno nalogo klicati tako, da najprej napišemo ime poglavja in nato ime naloge. Naloge imajo različne
-parametre, ki so pojasnjeni v razdelku :ref:'ref-parametri'.
+parametre, ki so pojasnjeni v razdelku :numref:'ref-parametri'.
 
 ``ime_poglavja.ime_naloge(parametri)``.
 
@@ -203,16 +203,11 @@ Združene rešitve
 Rešitve nalog so lahko samostojna datoteka za vsakega učenca ali pa so vse združene v eno datoteko. Privzete so združene rešitve.
 Če želimo ločene moramo izbrati: ``zdruzene_resitve=False``.
 
-.. todo ali želimo primer kode za združene False
-
 PDF datoteke
 #############
 Testi in rešitve so `LaTeX` dokumenti, kar zagotavlja da imamo možnost spreminjanja in popravljanja. Ker pa za končno uporabo običajno
 potrebujemo `PDF` datoteke, nam jih lahko program avtomatično ustvari. Privzeto je ustvarjanje `PDF` datotek, vendar to
 poveča časovno zahtevnost programa. Če ne želimo avtomatično generiranih `PDF` datotek, moramo nastaviti ``pdf=False``.
-
-.. todo ali želimo primer kode za pdf False
-
 
 .. _ref-parametri:
 
@@ -333,7 +328,8 @@ opozori.
 
 Včasih lahko zahtevnost naloge določimo šele, ko vidimo dejanske vrednosti v nalogi in ne prej. V tem primeru najprej
 zaženemo program brez podanega seznama točk in šele ko vemo koliko bodo posamezne naloge vredne, ponovno zaženemo
-program s podanim parametrom `tocke`. Semena (opisana v :ref:`ref-semena`.) nam zagotavljajo, da bomo v obeh primerih dobili enake vrednosti.
+program s podanim parametrom `tocke`. Semena (opisana v razdelku :numref:`ref-semena`.) nam zagotavljajo, da bomo v obeh
+primerih dobili enake vrednosti.
 
 
 ***********************
@@ -365,7 +361,7 @@ V predlogo se na mesta spremenljivk označenih z dvojnimi zaviti oklepaji kasnej
    :pyobject: DeliteljVeckratnik
    :lines: 16
 
-Metoda ``_poskusi_sestaviti``, ki si jo bomo kasneje ogledali v :ref:`ref_poskusi_sestaviti`, vrne slovar vrednosti,
+Metoda ``_poskusi_sestaviti``, ki si jo bomo kasneje ogledali v razdelku :numref:`ref_poskusi_sestaviti`, vrne slovar vrednosti,
 ki se vstavijo na manjkajoča mesta v predlogo. Ključi v slovarju, se morajo ujemati z imeni spremenljivk v predlogi.
 Če spreminjamo predlogo, moramo paziti, da obdržimo enaka imena spremenljivk, saj so vezana na ključe slovarja.
 
