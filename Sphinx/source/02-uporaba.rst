@@ -255,13 +255,12 @@ prostora za reševanje na test.
 
     Primer testa sestavljenega iz `vzorec_testa4.tex`
 
-Vzorci rešitev
-###############
+
+Vzorci združenih rešitev
+###########################
+
 V mapi `vzorci` so tudi predloge oziroma vzorci za rešitve. Pozorni moramo biti, ali smo se odločili za združene
 rešitve ali ne, saj se predloge za njih razlikujejo.
-
-Združene rešitve
-*****************
 V primeru združenih rešitev program sestavi samo eno datoteko z vsemi rešitvami. Privzeta nastavitev je predloga
 `vzorec_skupnih_resitev1.tex`. Za vsakega učenca se rešitve začnejo na novi strani, ki ima naštete samo rešitve.
 
@@ -287,8 +286,9 @@ Predloga `vzorec_skupnih_resitev2.tex` ji je zelo podobna, le da se rešitve nas
 
     Primer rešitev sestavljenih iz `vzorec_skupnih_resitev3.tex`
 
-Posamezne rešitve
-*******************
+Vzorci posameznih rešitev
+############################
+
 Privzeta predloga za posamezne rešitve je `vzorec_posameznih_resitev1.tex`. Na vrhu je naslov, nato pa so
 zaporedno naštete vse rešitve.
 
