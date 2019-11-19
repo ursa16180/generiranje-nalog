@@ -107,7 +107,7 @@ da si uporabnik lažje predstavlja sestavljeno nalogo. Prikaže seznam s tremi p
 Razred NapacnaNaloga
 ************************
 Razred ``NapacnaNaloge`` je podrazred izjem (`Exception`). Razred izjem pomaga pri opozarjanju na napake.
-Več si lahko o njem preberete na `spletu<https://docs.python.org/3/library/exceptions.html>`_.
+Več si lahko o njem preberete na `spletu <https://docs.python.org/3/library/exceptions.html>`_.
 
 Izjema `NapacnaNaloga` se sproži kadar sestavljene vrednosti niso ustrezne.
 

@@ -77,16 +77,14 @@ Program najprej ustvari mapo z enakim imenom kot ime testa in 2 podmapi:
 
 Mapa `Naloge` vsebuje posamezne zgenerirane teste, mapa `Rešitve` pa rešitve zgeneriranih testov.
 
-Spodaj so prikazane prve strani treh testov. Primere testov si lahko v celoti ogledate v prilogi.
-.. todo ref na prilogo
+Spodaj so prikazane prve strani treh testov. Dejanski primeri pa so v mapi `Primeri testov` programa.
 
 .. figure:: slike/testi-sestavljeni.PNG
     :align: center
 
     Primeri prvih strani testov
 
-Na slikah se vidi, kako izgledajo rešitve različnih učencev. V celoti so prav tako dostopni v prilogi.
-.. todo ref na prilog
+Na slikah se vidi, kako izgledajo rešitve različnih učencev. V celoti so prav tako na voljo v mapi `Primeri testov`.
 
 .. figure:: slike/resitve-sestavljene.png
     :align: center

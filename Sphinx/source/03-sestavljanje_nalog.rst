@@ -61,7 +61,7 @@ Niza ``besedilo_vecih`` in ``resitev_vecih`` sta za izpis besedila oziroma reši
 Običajno je navodilo samo eno, nato pa sledi (oštevilčeni) seznam primerov. Testi se izpisujejo v obliki ``LaTeX`` dokumentov,
 zato je najpogosteje smiselno, da v nizu pripravimo izpis ``LaTeX`` seznama. To naredimo tako, da uporabimo okolje
 ``itemize`` za neoštevilčeni seznam ali okolje ``enumerate`` za oštevilčeni seznam. Pred posamezno točko seznama kličemo
-element `\item`. Več o `LaTeX` seznamih lahko izveste na različnih `spletu<https://www.overleaf.com/learn/latex/Lists>`_.
+element `\item`. Več o `LaTeX` seznamih lahko izveste na različnih `spletu <https://www.overleaf.com/learn/latex/Lists>`_.
 Program nam več primerov izpiše z pomočjo `for` zanke. Primer `Jinja` zanke spremenljivke:
 
 .. todo preveri vrstice
@@ -89,7 +89,7 @@ Raznolikost primerov zagotovimo tako, da v sestavljanje naloge vključimo naklju
 ``Random``, ki generira psevdo-naključne vrednosti. Knjižnica vsebuje funkcije, ki lahko psevdo-naključno premešajo
 vrstni red, izberejo vzorec s seznam, izberejo število in še mnogo več. Če želimo, da so rezultati ponovljivi lahko
 določimo seme generatorja s funkcijo ``random.seed``. Več si lahko o knjižnici preberete v uradni dokumentaciji na
-`spletu<https://docs.python.org/3/library/random.html>`_.
+`spletu <https://docs.python.org/3/library/random.html>`_.
 
 
 Sama sem najpogosteje sem uporabila funkcije:
