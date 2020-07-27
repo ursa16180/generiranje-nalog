@@ -561,8 +561,12 @@ class KotMedGrafoma(Naloga):
             osnova = random.choice([sympy.E, 2, 3, 5])
             eksponentna = osnova ** x
             a = random.randint(1, 2)
-            funkcija1 = eksponentna.subs(x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr())
-            funkcija2 = eksponentna.subs(x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr())
+            eksponent1 = sympy.Poly([a, random.randint(-3, 3)], x).as_expr()
+            eksponent2 = sympy.Poly([-a, random.randint(-3, 3)], x).as_expr()
+            funkcija1 = eksponentna.subs(x, eksponent1)
+            funkcija2 = eksponentna.subs(x, eksponent2)
+            presek = sympy.solve((eksponent1 - eksponent2),
+                                 x)  # Poenostavljen presek, ker sympy ne zna izračunati vseh eksponentnih enačb
         if izbor == 'logaritem':
             # osnova = random.choice([2, 3, 4, 5, 10])
             # logaritem = sympy.log(x, osnova) #todo izpis log_baza v latexu
@@ -571,6 +575,7 @@ class KotMedGrafoma(Naloga):
             a = random.randint(1, 2)
             funkcija1 = naravni_logaritem.subs(x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr())
             funkcija2 = naravni_logaritem.subs(x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr())
+            presek = sympy.solve((funkcija1 - funkcija2), x)
         if izbor == 'kvadratna':
             x0 = random.choice([-2, -1, 1, 2])
             y0 = random.randint(-2, 2)
@@ -581,7 +586,7 @@ class KotMedGrafoma(Naloga):
             b2 = (y0 - a * x0 ** 2 - c2) / x0
             funkcija1 = sympy.Poly([int(a), int(b1), int(c1)], x).as_expr()
             funkcija2 = sympy.Poly([int(a), int(b2), int(c2)], x).as_expr()
-        presek = sympy.solve((funkcija1 - funkcija2), x)
+            presek = sympy.solve((funkcija1 - funkcija2), x)
         preveri(len(presek) == 1)
         k1 = funkcija1.diff().subs(x, *presek)
         k2 = funkcija2.diff().subs(x, *presek)
