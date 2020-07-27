@@ -69,10 +69,11 @@ class GrafEksponentne(Naloga):
     \centering
     \begin{tikzpicture}[baseline]
     \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+    restrict y to domain=-5.5:5.5, 
     xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} };
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} } node[right, pos=1]{ {{latex(naloga.eksponentna1)}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} } node[right, pos=0.98]{ {{latex(naloga.eksponentna2)}}};
     \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
     \end{axis}
     \end{tikzpicture}
@@ -86,10 +87,11 @@ class GrafEksponentne(Naloga):
     \centering
     \begin{tikzpicture}[baseline]
     \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
-    xtick={-5,-4,...,5}, ytick={-5,-4,...,5}, 
+    xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+    restrict y to domain=-5.5:5.5, 
     xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} };
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} } node[right, pos=1]{ {{latex(naloga.eksponentna1)}} };
+    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} } node[right, pos=0.98]{ {{latex(naloga.eksponentna2)}}};
     \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
     \end{axis}
     \end{tikzpicture}
@@ -125,14 +127,6 @@ class Enacba(Naloga):
         >>> import sys
         >>> sys.path.append('../')
         >>> from eksponentna_funkcija import * # ignore
-        >>> Enacba().primer()
-
-
-    .. runblock:: pycon
-
-        >>> import sys
-        >>> sys.path.append('../')
-        >>> from eksponentna_funkcija import *
         >>> Enacba().primer()
 
 
@@ -202,9 +196,13 @@ class Enacba2osnovi(Naloga):
         >>> from eksponentna_funkcija import *
         >>> Enacba2osnovi().primer()
 
+    .. runblock:: pycon
 
-    >>> Enacba2osnovi(deli_z_osnovo=True).sestavi()
-    {'enacba': Eq(2**(x + 2) - 3**(x - 1), 13*2**x/4 - 3**x/9), 'resitev': 3
+        >>> import sys
+        >>> sys.path.append('../')
+        >>> from eksponentna_funkcija import *
+        >>> Enacba2osnovi(deli_z_osnovo=True).primer()
+
     """
     besedilo_posamezne = r'''Reši enačbo ${{latex(naloga.enacba)}}$.'''
     besedilo_vecih = r'''Reši enačbe:

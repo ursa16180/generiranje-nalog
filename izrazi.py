@@ -24,14 +24,6 @@ class PotencaDvoclenika(Naloga):
         >>> import sys
         >>> sys.path.append('../')
         >>> from izrazi import *
-        >>> PotencaDvoclenika().primer()
-
-
-    .. runblock:: pycon
-
-        >>> import sys
-        >>> sys.path.append('../')
-        >>> from izrazi import *
         >>> PotencaDvoclenika(linearna_kombinacija=False, min_potenca=3).primer()
 
     """
